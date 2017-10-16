@@ -1,0 +1,66 @@
+.if n .ds / /
+.if t .ds / \z/\h&#39;\w&#39;*&#39;u&#39;
+.th UNITS VI 8/30/74
+.sh NAME
+units \*- conversion program
+.sh SYNOPSIS
+.it Units
+converts quantities expressed
+in various standard scales to
+their equivalents in other scales.
+It works interactively in this fashion:
+.s3
+.it &quot;	You have:&quot;
+inch
+.br
+.it &quot;	You want:&quot;
+cm
+.br
+.it &quot;		* 2.54000e+00
+.br
+.it &quot;		\*/ 3.93701e\-01
+.s3
+A quantity is specified as a multiplicative combination of
+units optionally preceded by a numeric multiplier.
+Powers are indicated by suffixed positive integers,
+division by the usual sign:
+.s3
+.it &quot;	You have:&quot;
+15 pounds force/in2
+.br
+.it &quot;	You want:&quot;
+atm
+.br
+.it &quot;		* 1.02069e+00&quot;
+.br
+.it &quot;		\*/ 9.79730e\-01&quot;
+.s3
+.it Units 
+only does multiplicative scale changes.
+Thus it can convert Kelvin to Rankine, but not Centigrade to
+Fahrenheit.
+Most familiar units,
+abbreviations, and metric prefixes are recognized,
+together with a generous leavening of exotica
+and a few constants of nature including:
+.s3
+.nf
+	pi	ratio of circumference to diameter
+	c	speed of light
+	e	charge on an electron
+	g	acceleration of gravity 
+	force	same as g
+	mole	Avogadro&#39;s number
+	water	pressure head per unit height of water
+	au	astronomical unit
+.s3
+.fi
+`Pound&#39; is a unit of
+mass.
+Compound names are run together, e.g. `lightyear&#39;.
+British units that differ from their US counterparts
+are prefixed thus: `brgallon&#39;.
+For a complete list of units, `cat /usr/lib/units&#39;.
+.sh FILES
+/usr/lib/units
+.sh BUGS

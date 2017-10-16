@@ -1,0 +1,59 @@
+int	bct[4];
+int	optr[4];
+char	bsp[2048];
+
+char	*obuf[4]	{bsp,
+			bsp + 512,
+			bsp + 1024,
+			bsp + 1536
+			};
+
+int	nflush;
+
+put(fil,string,n)
+	char	*string;
+{
+	extern	utmp;
+	int	i;
+	char	*o;
+
+/*printf(&quot;%d %c %d\n&quot;,fil,*string,n);/*DEBUG*/
+
+	string--;
+
+	if((i = optr[fil] + n - 512) &gt;= 0) {
+		n =- i;
+		o = &amp;obuf[fil][optr[fil]] -1;
+		while(--n &gt;= 0)
+			*++o = *++string;
+		optr[fil] = 512;
+		flsh(fil);
+		n = i;
+	}
+
+	o = &amp;obuf[fil][optr[fil]] - 1;
+	optr[fil] =+ n;
+
+	while(--n &gt;= 0) {
+		*++o = *++string;
+	}
+	return(0);
+}
+
+flsh(fil)
+{
+	extern	tp[],utmp;
+
+	if(optr[fil] &lt;= 0)	return(optr[fil]);
+
+	if(bct[fil]++ &gt;= 128 &amp;&amp; utmp == 0) {
+		printf(&quot;Wraparound temp file %d\n&quot;,fil);
+		dexit();
+	}
+	nflush++;
+	if(write(tp[fil],obuf[fil],optr[fil]) != optr[fil])
+		return(-1);
+	optr[fil] = 0;
+	return(0);
+}
+

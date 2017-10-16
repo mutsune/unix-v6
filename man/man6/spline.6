@@ -1,0 +1,185 @@
+.th SPLINE VI 5/15/74
+.sh NAME
+spline \*- interpolate smooth curve
+.sh SYNOPSIS
+.bd spline
+[ option ] ...
+.sh DESCRIPTION
+.it Spline
+takes pairs of numbers from the standard input as abcissas and ordinates
+of a function.
+It produces a similar set, which
+is approximately equally spaced and
+includes the input set, on the standard output.
+The cubic spline output
+(R. W. Hamming,
+.ft I
+Numerical Methods for Scientists and Engineers,
+.ft R
+2nd ed., 349ff)
+has two continuous derivatives,
+and sufficiently many points to look smooth when plotted, for
+example by
+.it plot
+(I).
+.s3
+The following options are recognized,
+each as a separate argument.
+.s3
+.lp +5 5
+\fBa\fR	Supply abscissas automatically (they are missing from
+the input); spacing is given by the next
+argument, or is assumed to be 1 if next argument is not a number.
+.s3
+.lp +5 5
+\fBk\fR	The constant \fIk\fR used in the boundary value computation
+.s3
+.if n .ig
+.ti +1.5i
+.ds &#39; \h&#39;-\w&#39;\(fm\(fm&#39;u&#39;
+.EQ
+.nr 99 \n(.s
+.nr 98 \n(.f
+&#39;ps 10
+.ft I
+.ds 11 &quot;y\(fm\(fm
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\*&#39;
+.nr 12 \w&#39;\*(12&#39;
+&#39;ps 8
+.ds 13 &quot;\fR0\fP
+.nr 13 \w&#39;\*(13&#39;
+.as 12 \v&#39;18u&#39;\s8\*(13\|\s10\v&#39;-18u&#39;
+&#39;ps 10
+.nr 12 \n(12+\n(13+\w&#39;\s8\|&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|=\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;ky\(fm\(fm
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\*&#39;
+.nr 12 \w&#39;\*(12&#39;
+&#39;ps 8
+.ds 13 &quot;\fR1\fP
+.nr 13 \w&#39;\*(13&#39;
+.as 12 \v&#39;18u&#39;\s8\*(13\|\s10\v&#39;-18u&#39;
+&#39;ps 10
+.nr 12 \n(12+\n(13+\w&#39;\s8\|&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;,
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;y\(fm\(fm
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\*&#39;
+.nr 12 \w&#39;\*(12&#39;
+&#39;ps 8
+.ds 13 &quot;n
+.nr 13 \w&#39;\*(13&#39;
+.as 12 \v&#39;18u&#39;\s8\*(13\|\s10\v&#39;-18u&#39;
+&#39;ps 10
+.nr 12 \n(12+\n(13+\w&#39;\s8\|&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|=\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\|\|
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;ky\(fm\(fm
+.nr 12 \w&#39;\*(12&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 12 &quot;\*&#39;
+.nr 12 \w&#39;\*(12&#39;
+&#39;ps 8
+.ds 13 &quot;n\|\(mi\|\fR1\fP
+.nr 13 \w&#39;\*(13&#39;
+.as 12 \v&#39;18u&#39;\s8\*(13\|\s10\v&#39;-18u&#39;
+&#39;ps 10
+.nr 12 \n(12+\n(13+\w&#39;\s8\|&#39;
+.as 11 &quot;\*(12
+.nr 11 \w&#39;\*(11&#39;
+.ds 11 \x&#39;0&#39;\fI\*(11\s\n(99\f\n(98
+.ne 78u
+\*(11
+&#39;ps \n(99
+.ft \n(98
+.EN
+..
+.if t .ig
+.ce
+(2nd deriv. at end) = k*(2nd deriv. next to end)
+..
+.s3
+.br
+is set by the next argument.
+By default \fIk\fR = 0.
+.s3
+.lp +5 5
+\fBn\fR	Space output points
+so that approximately
+.it n
+points occur between the lower and upper
+.it x
+limits.
+(Default
+.it n
+= 100.)
+.s3
+.lp +5 5
+\fBp\fR	Make output periodic, i.e. match
+derivatives at ends.
+First and last input values should normally agree.
+.s3
+.lp +5 5
+\fBx\fR	Next 
+1 (or 2) arguments are lower (and upper) 
+.it x
+limits.
+Normally these limits are calculated from the data.
+Automatic abcissas start at lower limit
+(default 0).
+.i0
+.sh &quot;SEE ALSO&quot;
+plot (I)
+.sh AUTHOR
+M. D. McIlroy
+.sh BUGS
+A limit of 1000 input points is enforced silently.

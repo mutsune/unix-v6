@@ -1,0 +1,193 @@
+.H1
+Special Characters
+.H2
+.PG
+You may have noticed that things just don&#39;t work right when you used
+some characters like ``.&#39;&#39;, ``*&#39;&#39;, ``$&#39;&#39;, and others in
+context searches and the substitute command.
+The reason is rather complex, although the cure is simple.
+Basically,
+.ul
+ed
+treats these characters as special, with special meanings.
+For instance,
+.ul
+in a context search or the first string of the substitute command only,
+\*. means ``any character,&#39;&#39; not a period, so
+.X1
+/x\*.y/
+.X2
+means ``a line with an  x,
+.ul
+any character,
+and a y,&#39;&#39;
+.ul
+not
+just ``a line with an x, a period, and a y.&#39;&#39;~
+A complete list of the special characters
+that can cause trouble is the following:
+.X1
+^    \*.    $    [    *    \\
+.X2
+.ul
+Warning:
+The backslash character \\ is special to
+.ul
+ed.
+For safety&#39;s sake, 
+avoid it where possible.
+If you have to use one of the special characters
+in a substitute command,
+you can turn off its magic meaning temporarily
+by preceding it with the backslash.
+Thus
+.X1
+s/\\\\\\\*.\\*/backslash dot star/
+.X2
+will change ``\\\*.*&#39;&#39; into ``backslash dot star&#39;&#39;.
+.PG
+Here is a hurried synopsis of the other special characters.
+First, the circumflex `` ^ &#39;&#39;
+signifies
+the beginning of a line.
+Thus
+.X1
+/^string/
+.X2
+finds ``string&#39;&#39; only if it is at the beginning of a line:
+it will find
+.X1
+string
+.X2
+but not
+.X1
+the string...
+.X2
+The dollar-sign ``$&#39;&#39; is just the opposite of the circumflex;
+it means the end of a line:
+.X1
+/string$/
+.X2
+will only find an occurrence of ``string&#39;&#39;
+that is at the end of some line.
+This implies, of course,
+that
+.X1
+/^string$/
+.X2
+will find only a line that contains just ``string&#39;&#39;,
+and
+.X1
+/^\*.$/
+.X2
+finds a line containing exactly one character.
+.PG
+The character ``\*.&#39;&#39;, as we mentioned above,
+matches anything;
+.X1
+/x\*.y/
+.X2
+matches any of
+.X1
+x+y
+x-y
+x y
+x\*.y
+.X2
+This is useful in conjunction with ``*&#39;&#39;,
+which is a repetition character;
+``a*&#39;&#39; is a shorthand for ``any number of a&#39;s,&#39;&#39;
+so ``\*.*&#39;&#39; matches any number of anythings.
+This is used like this:
+.X1
+s/\*.*/stuff/
+.X2
+which changes an entire line,
+or
+.X1
+s/\*.*,//
+.X2
+which deletes all characters in the line up to and
+including the last comma.
+(Since
+``\*.*&#39;&#39; finds the longest possible match,
+this goes up to the last comma.)
+.PG
+``[&#39;&#39; is used with ``]&#39;&#39; to form ``character classes&#39;&#39;;
+for example,
+.X1
+/[1234567890]/
+.X2
+matches any single digit _
+any one of the characters inside the braces
+will cause a match.
+.PG
+Finally, the ``&amp;&#39;&#39; is another shorthand character -
+it is used only on the right-hand part of a substitute command
+where it means ``whatever was matched on the left-hand side&#39;&#39;.
+It is used to save typing.
+Suppose the current line contained
+.X1
+Now is the time
+.X2
+and we wanted to put parentheses around it.
+We could just retype the line, but
+this is tedious.
+Or we could say
+.X1
+s/^/(/
+s/$/)/
+.X2
+using our knowledge of ``^&#39;&#39; and ``$&#39;&#39;.
+But the easiest way uses the ``&amp;&#39;&#39;:
+.X1
+s/\*.*/(&amp;)/
+.X2
+This says ``match the whole line, and replace it
+by itself surrounded by parens.&#39;&#39;~
+The ``&amp;&#39;&#39; can be used several times in a line;
+consider
+using
+.X1
+s/\*.*/&amp;?  &amp;!!/
+.X2
+to produce
+.X1
+Now is the time?  Now is the time!!
+.X2
+.PG
+We don&#39;t have to match the whole line, of course:
+if the buffer contains
+.X1
+the end of the world
+.X2
+we could type
+.X1
+/world/s//&amp; is at hand/
+.X2
+to produce
+.X1
+the end of the world is at hand
+.X2
+Observe this expression carefully,
+for it illustrates how to take advantage of
+.ul
+ed
+to save typing.
+The string ``/world/&#39;&#39;
+found the desired line;
+the shorthand ``//&#39;&#39; found the same
+word in the line;
+and the ``&amp;&#39;&#39; saved us from typing it again.
+.PG
+The ``&amp;&#39;&#39; is a special character only within
+the replacement text of a substitute command,
+and has no special meaning elsewhere.
+We can turn off the special meaning of ``&amp;&#39;&#39;
+by preceding it with a ``\\&#39;&#39;:
+.X1
+s/ampersand/\\&amp;/
+.X2
+will convert the word ``ampersand&#39;&#39; into the literal symbol
+``&amp;&#39;&#39;
+in the current line.

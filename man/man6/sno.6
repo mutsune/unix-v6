@@ -1,0 +1,84 @@
+.th SNO VI 2/9/73
+.sh NAME
+sno \*- Snobol interpreter
+.sh SYNOPSIS
+.bd sno
+[ file ]
+.sh DESCRIPTION
+.it Sno
+is a Snobol III (with slight differences)
+compiler and interpreter.
+.it Sno
+obtains input from the
+concatenation of
+.it file
+and the standard input.
+All input through a statement
+containing the label `end&#39; is
+considered program and is compiled.
+The rest is available to `syspit&#39;.
+.s3
+.it Sno
+differs from Snobol III in the following ways.
+.s3
+There are no unanchored searches.
+To get the same effect:
+.s3
+	a ** b		unanchored search for b
+.br
+	a *x* b = x c	unanchored assignment
+.s3
+There is no back referencing.
+.s3
+	x = &quot;abc&quot;
+.br
+	a *x* x		is an unanchored search for `abc&#39;
+.s3
+.i0
+Function declaration is different.
+The function declaration is
+done at compile time by the use of the label `define&#39;.
+Thus there is no ability to define functions at run time
+and the use of the name `define&#39; is preempted.
+There is also no provision for automatic variables
+other than the parameters.
+For example:
+.s3
+.lp +8 8
+.bd &quot;define	f( )&quot;
+.s3
+.i0
+or
+.s3
+.lp +8 8
+.bd &quot;define	f(a,b,c)&quot;
+.s3
+.i0
+All labels except `define&#39; (even `end&#39;)
+must have a non-empty statement.
+.s3
+If `start&#39; is a label in the program,
+program execution will start there.
+If not, execution begins with the first
+executable statement.
+`define&#39; is not an executable statement.
+.s3
+There are no builtin functions.
+.s3
+Parentheses for arithmetic are not needed.
+Normal precedence applies.
+Because of this, the arithmetic
+operators `/&#39; and `*&#39;
+must be set off by space.
+.s3
+The right side of assignments
+must be non-empty.
+.s3
+Either \*a or &quot; may be used for literal quotes.
+.s3
+The pseudo-variable `sysppt&#39; is not available.
+.sh &quot;SEE ALSO&quot;
+Snobol III manual.
+(JACM;
+Vol. 11 No. 1; Jan 1964; pp 21)
+.sh BUGS
