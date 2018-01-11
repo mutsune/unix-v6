@@ -2,7 +2,7 @@
  * The user structure.
  * One allocated per process.
  * Contains all per process data
- * that doesn&#39;t need to be referenced
+ * that doesn't need to be referenced
  * while the process is swapped.
  * The user block is USIZE*64 bytes
  * long; resides at virtual kernel
@@ -47,8 +47,8 @@ struct user
 	int	u_signal[NSIG];		/* disposition of signals */
 	int	u_utime;		/* this process user time */
 	int	u_stime;		/* this process system time */
-	int	u_cutime[2];		/* sum of childs&#39; utimes */
-	int	u_cstime[2];		/* sum of childs&#39; stimes */
+	int	u_cutime[2];		/* sum of childs' utimes */
+	int	u_cstime[2];		/* sum of childs' stimes */
 	int	*u_ar0;			/* address of users saved R0 */
 	int	u_prof[4];		/* profile arguments */
 	char	u_intflg;		/* catch intr from sys */

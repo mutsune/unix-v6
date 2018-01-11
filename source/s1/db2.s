@@ -1,7 +1,7 @@
 / db2 -- debugger
 
 lookupn:
-	cmp	symbol,$&#39;.
+	cmp	symbol,$'.
 	bne	1f
 	mov	dot,taddr
 	rts	pc
@@ -132,7 +132,7 @@ printo:
 	inc	r2
 	movb	r0,-(r1)
 	bicb	$!7,(r1)
-	bisb	$&#39;0,(r1)
+	bisb	$'0,(r1)
 	clc
 	ror	r0
 	asr	r0
@@ -155,31 +155,31 @@ mesg:
 	rts	r5
 
 pnl:
-	jsr	r5,mesg; &lt;\n\0&gt;
+	jsr	r5,mesg; <\n\0>
 	rts	pc
 
 psp:
-	jsr	r5,mesg; &lt; \0&gt;
+	jsr	r5,mesg; < \0>
 	rts	pc
 
 pstar:
-	jsr	r5,mesg; &lt;*\0&gt;
+	jsr	r5,mesg; <*\0>
 	rts	pc
 
 plp:
-	jsr	r5,mesg; &lt;(\0&gt;
+	jsr	r5,mesg; <(\0>
 	rts	pc
 
 prp:
-	jsr	r5,mesg; &lt;)\0&gt;
+	jsr	r5,mesg; <)\0>
 	rts	pc
 
 pb:
-	jsr	r5,mesg; &lt;b\0&gt;
+	jsr	r5,mesg; <b\0>
 	rts	pc
 
 pcom:
-	jsr	r5,mesg; &lt;,\0&gt;
+	jsr	r5,mesg; <,\0>
 	rts	pc
 
 put:
@@ -254,7 +254,7 @@ incr:
 1:
 	jsr	pc,plp
 	jsr	pc,preg
-	jsr	r5,mesg; &lt;)+\0&gt;; .even
+	jsr	r5,mesg; <)+\0>; .even
 	br	9f
 
 decr:
@@ -262,7 +262,7 @@ decr:
 	beq	1f
 	jsr	pc,pstar
 1:
-	jsr	r5,mesg; &lt;-(\0&gt;; .even
+	jsr	r5,mesg; <-(\0>; .even
 	jsr	pc,preg
 	jsr	pc,prp
 	br	9f
@@ -289,7 +289,7 @@ pcadr:
 1:
 	bit	$40,r3
 	bne	6f
-	jsr	r5,mesg; &lt;$\0&gt;
+	jsr	r5,mesg; <$\0>
 	jsr	pc,get1
 	jsr	pc,pname
 	br	5f
@@ -318,14 +318,14 @@ preg:
 	rts	pc
 
 regtab:
-	&quot;r0
-	&quot;r1
-	&quot;r2
-	&quot;r3
-	&quot;r4
-	&quot;r5
-	&quot;sp
-	&quot;pc
+	"r0
+	"r1
+	"r2
+	"r3
+	"r4
+	"r5
+	"sp
+	"pc
 
 pname:
 	mov	r5,-(sp)
@@ -353,10 +353,10 @@ pname:
 	cmp	12(r2),r5
 	beq	1f
 	blt	2f
-	jsr	r5,mesg; &lt;-\0&gt;
+	jsr	r5,mesg; <-\0>
 	br	3f
 2:
-	jsr	r5,mesg; &lt;+\0&gt;
+	jsr	r5,mesg; <+\0>
 3:
 	mov	r3,r0
 5:

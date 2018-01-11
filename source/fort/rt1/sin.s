@@ -1,7 +1,7 @@
 /
 /
 
-/ sin &amp; dsin fortran functions
+/ sin & dsin fortran functions
 
 .globl	sin.
 .globl	dsin.

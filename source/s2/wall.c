@@ -14,30 +14,30 @@ char *argv[];
 	register i, *p;
 	int f;
 
-	f = open(&quot;/etc/utmp&quot;, 0);
-	if(f &lt; 0) {
-		printf(&quot;utmp?\n&quot;);
+	f = open("/etc/utmp", 0);
+	if(f < 0) {
+		printf("utmp?\n");
 		exit();
 	}
 	read(f, utmp, sizeof utmp);
 	close(f);
 	f = 0;
-	if(argc &gt;= 2) {
+	if(argc >= 2) {
 		f = open(argv[1], 0);
-		if(f &lt; 0) {
-			printf(&quot;%s?\n&quot;, argv[1]);
+		if(f < 0) {
+			printf("%s?\n", argv[1]);
 			exit();
 		}
 	}
-	while((i = read(f, &amp;mesg[msize], sizeof mesg - msize)) &gt; 0)
+	while((i = read(f, &mesg[msize], sizeof mesg - msize)) > 0)
 		msize =+ i;
 	close(f);
-	for(i=0; i&lt;sizeof utmp/sizeof utmp[0]; i++) {
-		p = &amp;utmp[i];
-		if(p-&gt;tty[0] == 0)
+	for(i=0; i<sizeof utmp/sizeof utmp[0]; i++) {
+		p = &utmp[i];
+		if(p->tty[0] == 0)
 			continue;
 		sleep(1);
-		sendmes(p-&gt;tty[0]);
+		sendmes(p->tty[0]);
 	}
 }
 
@@ -48,21 +48,21 @@ sendmes(tty)
 
 	i = fork();
 	if(i == -1) {
-		printf(&quot;try again\n&quot;);
+		printf("try again\n");
 		return;
 	}
 	if(i)
 		return;
-	s = &quot;/dev/ttyx&quot;;
+	s = "/dev/ttyx";
 	s[8] = tty;
 	i = open(s, 1);
-	if(i &lt; 0) {
-		printf(&quot;cannot open tty%c\n&quot;, tty);
+	if(i < 0) {
+		printf("cannot open tty%c\n", tty);
 		exit();
 	}
 	close(1);
 	dup(i);
-	printf(&quot;Broadcast Message ...\n\n&quot;);
+	printf("Broadcast Message ...\n\n");
 	write(1, mesg, msize);
 	exit();
 }

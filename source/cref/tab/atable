@@ -4,9 +4,9 @@ skip2 sk
 
 cont coll save out asym agobl csym cgobl incl decl sk2 sk
 
-collect/&#39;/agobl;
-collect/&quot;/agobl;
-collect/&lt;/agobl;
+collect/'/agobl;
+collect/"/agobl;
+collect/</agobl;
 collect/\//agobl;
 collect/\\/agobl;
 collect/:/asym;
@@ -76,9 +76,9 @@ collect/./cont;
 collect/_/cont;
 collect/
 /out;
-skip/&#39;/agobl;
-skip/&quot;/agobl;
-skip/&lt;/agobl;
+skip/'/agobl;
+skip/"/agobl;
+skip/</agobl;
 skip/\//agobl;
 skip/\\/agobl;
 skip/

@@ -55,7 +55,7 @@ swrit:
 	clr	-(sp)
 
 1:
-	cmpb	(r1)+,$&#39;(
+	cmpb	(r1)+,$'(
 	bne	8f
 	jsr	r5,intexp
 	mov	$blocks,blockp
@@ -72,7 +72,7 @@ swrit:
 	mov	(sp),r0
 	mov	iotype(r0),r0
 	jsr	r5,code
-		&lt;	%s\n\0&gt;; .even
+		<	%s\n\0>; .even
 		r0
 1:
 	tstb	(r1)
@@ -85,7 +85,7 @@ swrit:
 	jsr	r5,error; 41.
 9:
 	jsr	r5,code
-		&lt;	endio\n\0&gt;; .even
+		<	endio\n\0>; .even
 	tst	(sp)+
 	rts	r5
 
@@ -97,15 +97,15 @@ iotype:
 	5f
 
 1:
-	&lt;iowu\0&gt;
+	<iowu\0>
 2:
-	&lt;ioru\0&gt;
+	<ioru\0>
 3:
-	&lt;iowf\0&gt;
+	<iowf\0>
 4:
-	&lt;iorf\0&gt;
+	<iorf\0>
 5:
-	&lt;iowp\0&gt;
+	<iowp\0>
 	.even
 
 getfmt:
@@ -123,9 +123,9 @@ getfmt:
 	jsr	r5,geticon
 		br 8f
 	mov	r0,temp
-	jsr	r5,ptemp; &#39;i; temp; line	/ register use of format
+	jsr	r5,ptemp; 'i; temp; line	/ register use of format
 	jsr	r5,code
-		&lt;	lval; .%d\n\0&gt;; .even
+		<	lval; .%d\n\0>; .even
 		r0
 	jsr	r5,getsym
 	mov	r0,-(sp)
@@ -142,7 +142,7 @@ list:
 
 lstitm:
 	mov	$blocks,blockp
-	cmpb	(r1),$&#39;(		/ test for sublist
+	cmpb	(r1),$'(		/ test for sublist
 	beq	1f
 	jsr	r5,e2
 	jsr	r5,iserror
@@ -163,28 +163,28 @@ lstitm:
 	add	(sp)+,r3
 	mov	(r3),r3
 	jsr	r5,code
-		&lt;	slist1; d%d\n2:\0&gt;; .even
+		<	slist1; d%d\n2:\0>; .even
 		r3
 2:
 	jsr	r5,lvalue
 	tst	(sp)
 	beq	3f
 	jsr	r5,code
-		&lt;	slist3\n\0&gt;; .even
+		<	slist3\n\0>; .even
 3:
-	mov	$&quot;io,r0
+	mov	$"io,r0
 	jsr	r5,genop
 	tst	(sp)+
 	beq	2f
 	jsr	r5,code
-		&lt;\n	slist2; 2b\0&gt;; .even
+		<\n	slist2; 2b\0>; .even
 2:
 	jsr	r5,newline
 	mov	(sp)+,r0
 	rts	r5
 1:
 	inc	r1
-	jsr	r5,levzer; &#39;=
+	jsr	r5,levzer; '=
 		br  1f			/ yes, implied do
 	jsr	r5,list
 	jsr	r5,chkel
@@ -193,11 +193,11 @@ lstitm:
 1:
 	cmp	r1,r0
 	bhis	8f
-	cmpb	-(r0),$&#39;,		/ look backwards
+	cmpb	-(r0),$',		/ look backwards
 	bne	1b
 	mov	r0,-(sp)
 	mov	r1,-(sp)
-	movb	$&#39;),(r0)		/ fake!!
+	movb	$'),(r0)		/ fake!!
 	mov	r0,r1
 	inc	r1
 	clr	r0
@@ -211,7 +211,7 @@ lstitm:
 	clr	r0
 	jsr	r5,doend
 	mov	(sp)+,r1
-	movb	$&#39;,,*(sp)+		/ unfake!!
+	movb	$',,*(sp)+		/ unfake!!
 	jsr	r5,getsym
 	rts	r5
 
@@ -239,7 +239,7 @@ sendf:
 	jsr	r5,intexp
 	mov	(sp),r2
 	jsr	r5,code
-		&lt;	%s\n\0&gt;; .even
+		<	%s\n\0>; .even
 		r2
 	cmp	r0,$40.			/ =|
 	beq	9f
@@ -250,9 +250,9 @@ sendf:
 	rts	r5
 
 bksp:
-	&lt;bksp\0&gt;
+	<bksp\0>
 rewi:
-	&lt;rewi\0&gt;
+	<rewi\0>
 enfl:
-	&lt;enfl\0&gt;
+	<enfl\0>
 

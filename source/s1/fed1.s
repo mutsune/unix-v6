@@ -16,9 +16,9 @@ loop:
 	clr	iflag
 1:
 	jsr	pc,tfiget
-	cmpb	$&#39; ,r0
+	cmpb	$' ,r0
 	beq	1f
-	cmpb	$&#39;\n,r0
+	cmpb	$'\n,r0
 	bne	2f
 	clrb	(r2)
 	br	4f
@@ -32,9 +32,9 @@ loop:
 	mov	$arg,r2
 2:
 	jsr	pc,tfiget
-	cmpb	$&#39; ,r0
+	cmpb	$' ,r0
 	beq	1f
-	cmpb	$&#39;\n,r0
+	cmpb	$'\n,r0
 	beq	1f
 	movb	r0,(r2)+
 	br	2b
@@ -57,7 +57,7 @@ loop:
 	mov	sp,(r3)
 	add	$1,(r3)+
 2:
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	3b
 1:
 	mov	-(r3),-(sp)
@@ -95,15 +95,15 @@ error:
 /
 tabl: c1; c2; c3; c4; c5; c6; c7; c8; 
 tend:	0
-c1:	&lt;n\0&gt;
-c2:	&lt;p\0&gt;
-c3:	&lt;e\0&gt;
-c4:	&lt;d\0&gt;
-c5:	&lt;m\0&gt;
-c6:	&lt;fin\0&gt;
-c7:	&lt;q\0&gt;
-c8:	&lt;c\0&gt;
-err:	&lt;?\n&gt;
+c1:	<n\0>
+c2:	<p\0>
+c3:	<e\0>
+c4:	<d\0>
+c5:	<m\0>
+c6:	<fin\0>
+c7:	<q\0>
+c8:	<c\0>
+err:	<?\n>
 endt:	.even
 jtable: list; listf; ed; remove; rename;  fin; q; memck;
 spi:	.=.+2

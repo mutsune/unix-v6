@@ -5,8 +5,8 @@
 
 */
 
-#include &quot;/usr/sys/param.h&quot;
-#include &quot;/usr/sys/user.h&quot;
+#include "/usr/sys/param.h"
+#include "/usr/sys/user.h"
 
 #define	DSP	0
 #define	ISP	1
@@ -43,7 +43,7 @@ int	ssymval;
 int	signo;
 char	line[128];
 int	regbuf[512];
-char	**uregs	&amp;regbuf[512];
+char	**uregs	&regbuf[512];
 char	*rtsize;
 int	loccsv;
 int	locsr5;
@@ -69,15 +69,15 @@ struct reglist {
 	char	*rname;
 	int	roffs;
 } reglist[] {
-	&quot;ps&quot;, ps,
-	&quot;pc&quot;, pc,
-	&quot;sp&quot;, sp,
-	&quot;r5&quot;, r5,
-	&quot;r4&quot;, r4,
-	&quot;r3&quot;, r3,
-	&quot;r2&quot;, r2,
-	&quot;r1&quot;, r1,
-	&quot;r0&quot;, r0,
+	"ps", ps,
+	"pc", pc,
+	"sp", sp,
+	"r5", r5,
+	"r4", r4,
+	"r3", r3,
+	"r2", r2,
+	"r1", r1,
+	"r0", r0,
 };
 
 struct sfregs {
@@ -96,11 +96,11 @@ int	frnames[] { 0, 3, 4, 5, 1, 2 };
 int	dot;
 int	tdot;
 int	dotinc 2;
-int	lastcom &#39;/&#39;;
-int	lastype	&#39;o&#39;;
+int	lastcom '/';
+int	lastype	'o';
 int	modifier;
-char	*symfil	&quot;a.out&quot;;
-char	*corfil	&quot;core&quot;;
+char	*symfil	"a.out";
+char	*corfil	"core";
 int	callist[50];
 int	entpt[50];
 int	callev;
@@ -108,22 +108,22 @@ int	pid;
 int	adrflg;
 int	idsep;
 char	*signals[] {
-	&quot;&quot;,
-	&quot;Hangup&quot;,
-	&quot;Interrupt&quot;,
-	&quot;Quit&quot;,
-	&quot;Illegal instruction&quot;,
-	&quot;Trace/BTP&quot;,
-	&quot;IOT&quot;,
-	&quot;EMT&quot;,
-	&quot;Floating exception&quot;,
-	&quot;Killed&quot;,
-	&quot;Bus error&quot;,
-	&quot;Memory fault&quot;,
-	&quot;Bad system call&quot;,
-	&quot;&quot;,
-	&quot;&quot;,
-	&quot;&quot;,
+	"",
+	"Hangup",
+	"Interrupt",
+	"Quit",
+	"Illegal instruction",
+	"Trace/BTP",
+	"IOT",
+	"EMT",
+	"Floating exception",
+	"Killed",
+	"Bus error",
+	"Memory fault",
+	"Bad system call",
+	"",
+	"",
+	"",
 };
 
 main(argc, argv)
@@ -131,41 +131,41 @@ char **argv;
 {
 	int onintr();
 
-	if (argc&gt;1)
+	if (argc>1)
 		symfil = argv[1];
-	if (argc&gt;2)
+	if (argc>2)
 		corfil = argv[2];
 	fcore = open(corfil, 0);
-	if ((fsym = open(symfil, 0)) &lt; 0) {
-		printf(&quot;%s not found\n&quot;, symfil);
+	if ((fsym = open(symfil, 0)) < 0) {
+		printf("%s not found\n", symfil);
 		return;
 	}
 	read(fsym, regbuf, 020);
 	if (regbuf[0]==0411)			/* I/D separated */
 		idsep++;
-	else if (regbuf[0]!=0410 &amp;&amp; regbuf[0]!=0407) {	/* magic */
-		printf(&quot;Bad format: %s\n&quot;, symfil);
+	else if (regbuf[0]!=0410 && regbuf[0]!=0407) {	/* magic */
+		printf("Bad format: %s\n", symfil);
 		return;
 	}
 	symoff = regbuf[1] + regbuf[2];
 	symlen = regbuf[4];
 	if (regbuf[7] != 1)
-		symoff =&lt;&lt; 1;
+		symoff =<< 1;
 	symoff =+ 020;
 	seek(fsym, symoff, 0);
 	symcor = read(fsym, symbuf, sizeof symbuf);
-	if (symcor&gt;0)
+	if (symcor>0)
 		symoff =+ symcor;
-	symcor =&gt;&gt; 1;
+	symcor =>> 1;
 	read(fcore, regbuf, 1024);
-	signo = regbuf[0].u_arg[0]&amp;017;
-	regbuf-&gt;u_tsize =&lt;&lt; 6;
-	regbuf-&gt;u_dsize =&lt;&lt; 6;
-	regbuf-&gt;u_ssize =&lt;&lt; 6;
-	rtsize = (regbuf-&gt;u_tsize+017777) &amp; ~017777;
-	if (symlook(&quot;csv\0\0\0\0&quot;))
+	signo = regbuf[0].u_arg[0]&017;
+	regbuf->u_tsize =<< 6;
+	regbuf->u_dsize =<< 6;
+	regbuf->u_ssize =<< 6;
+	rtsize = (regbuf->u_tsize+017777) & ~017777;
+	if (symlook("csv\0\0\0\0"))
 		loccsv = ssymval;
-	if (symlook(&quot;savr5\0\0\0&quot;))
+	if (symlook("savr5\0\0\0"))
 		locsr5 = ssymval;
 	setstack();
 	signal(SIGINS, onintr);
@@ -173,12 +173,12 @@ char **argv;
 	signal(SIGINT, onintr);
 loop:
 	if (errflg) {
-		printf(&quot;?\n&quot;);
+		printf("?\n");
 		errflg = 0;
 	}
 	lp = line;
-	while ((*lp = getchar()) != &#39;\n&#39;)
-		if (*lp++ == &#39;\0&#39;) {
+	while ((*lp = getchar()) != '\n')
+		if (*lp++ == '\0') {
 			if (pid)
 				ptrace(EXIT, pid, 0, 0);
 			return;
@@ -196,21 +196,21 @@ command()
 	if (errflg)
 		return;
 	n = getcnt();
-	if (lastcom==&#39;$&#39;)
-		lastcom = &#39;/&#39;;
-	if (*lp == &#39;\n&#39;) {
+	if (lastcom=='$')
+		lastcom = '/';
+	if (*lp == '\n') {
 		if (!adrflg)
 			dot =+ dotinc;
 	} else
 		lastcom = *lp++;
 	modifier = 0;
-	if (*lp != &#39;\n&#39;)
+	if (*lp != '\n')
 		modifier = *lp++;
-	if (lastcom==&#39;%&#39; &amp;&amp; modifier==&#39;r&#39;) {
+	if (lastcom=='%' && modifier=='r') {
 		runcom();
 		return;
 	}
-	if (*lp != &#39;\n&#39;) {
+	if (*lp != '\n') {
 		errflg++;
 		return;
 	}
@@ -234,81 +234,81 @@ scommand(n)
 
 	switch(lastcom) {
 
-	case &#39;/&#39;:
+	case '/':
 		w = cget(dot, DSP);
 		if (modifier)
 			lastype = modifier;
 		switch(lastype) {
 
-		case &#39;o&#39;:
-			printf(&quot;%.1o\n&quot;, w);
+		case 'o':
+			printf("%.1o\n", w);
 			dotinc = 2;
 			return;
 
-		case &#39;i&#39;:
-			printf(&quot;%d\n&quot;, w);
+		case 'i':
+			printf("%d\n", w);
 			dotinc = 2;
 			return;
 
-		case &#39;f&#39;:
+		case 'f':
 			fw = 0;
 			fw.i[0] = w;
 			fw.i[1] = cget(dot+2, DSP);
-			printf(&quot;%e\n&quot;, fw);
+			printf("%e\n", fw);
 			dotinc = 4;
 			return;
 
-		case &#39;d&#39;:
+		case 'd':
 			fw.i[0] = w;
 			fw.i[1] = cget(dot+2, DSP);
 			fw.i[2] = cget(dot+4, DSP);
 			fw.i[3] = cget(dot+6, DSP);
-			printf(&quot;%e\n&quot;, fw);
+			printf("%e\n", fw);
 			dotinc = 8;
 			return;
 		}
 		errflg++;
 		return;
 
-	case &#39;\\&#39;:
-		printf(&quot;%.1o\n&quot;, cget(dot, DSP)&amp;0377);
+	case '\\':
+		printf("%.1o\n", cget(dot, DSP)&0377);
 		dotinc = 1;
 		return;
 
-	case &#39;=&#39;:
-		printf(&quot;%.1o\n&quot;, dot);
+	case '=':
+		printf("%.1o\n", dot);
 		return;
 
-	case &#39;\&#39;&#39;:
-		printc(cget(dot, DSP) &amp; 0377);
-		if (n&lt;=1)
-			putchar(&#39;\n&#39;);
+	case '\'':
+		printc(cget(dot, DSP) & 0377);
+		if (n<=1)
+			putchar('\n');
 		dotinc = 1;
 		return;
 
-	case &#39;&quot;&#39;:
+	case '"':
 		w = cget(dot, DSP);
-		while(c = cget(w++, DSP)&amp;0377)
+		while(c = cget(w++, DSP)&0377)
 			printc(c);
-		putchar(&#39;\n&#39;);
+		putchar('\n');
 		return;
 
-	case &#39;&amp;&#39;:
+	case '&':
 		psymoff(cget(dot, DSP), 0100000);
-		printf(&quot;\n&quot;);
+		printf("\n");
 		return;
 
-	case &#39;$&#39;:
-		printf(&quot;%s\n&quot;, signals[signo]);
+	case '$':
+		printf("%s\n", signals[signo]);
 		printtrace();
 		return;
 
-	case &#39;?&#39;:
+	case '?':
 		printins(0);
-		printf(&quot;\n&quot;);
+		printf("\n");
 		return;
 
-	case &#39;%&#39;:
+	case '%':
 		runcom();
 		signal(SIGINT, onintr);
 		return;
@@ -321,7 +321,7 @@ getcnt()
 {
 	register t1, t2;
 
-	if (*lp != &#39;,&#39;)
+	if (*lp != ',')
 		return(1);
 	lp++;
 	t1 = tdot;
@@ -346,10 +346,10 @@ cget(n, space)
 
 printc(c)
 {
-	if (c&lt;&#39; &#39; || c&gt;&#39;~&#39;)
-		printf(&quot;\\%o&quot;, c);
+	if (c<' ' || c>'~')
+		printf("\\%o", c);
 	else
-		printf(&quot;%c&quot;, c);
+		printf("%c", c);
 }
 
 expr()
@@ -358,18 +358,18 @@ expr()
 
 	tdot = 0;
 	adrflg = 0;
-	lastop = &#39;+&#39;;
+	lastop = '+';
 	ssymval = 0;
 	donef = 0;
 loop:
 	fsymbol[0] = 0;
 	if (symchar(0)) {
 		adrflg++;
-		symcollect(&#39;_&#39;);
-		if (*lp++==&#39;:&#39; &amp;&amp; symchar(0)) {
-			for (i=0; i&lt;8; i++)
+		symcollect('_');
+		if (*lp++==':' && symchar(0)) {
+			for (i=0; i<8; i++)
 				fsymbol[i] = tsym[i];
-			fsymbol[0] = &#39;~&#39;;
+			fsymbol[0] = '~';
 			symcollect(0);
 		} else 
 			lp--;
@@ -379,16 +379,16 @@ loop:
 		}
 		goto loop;
 	}
-	if (*lp&gt;=&#39;0&#39; &amp;&amp; *lp&lt;=&#39;9&#39;) {
+	if (*lp>='0' && *lp<='9') {
 		adrflg++;
 		ssymval = 0;
-		if (*lp == &#39;0&#39;)
+		if (*lp == '0')
 			b = 8;
 		else
 			b = 10;
-		while (*lp&gt;=&#39;0&#39; &amp;&amp; *lp&lt;=&#39;9&#39;) {
+		while (*lp>='0' && *lp<='9') {
 			ssymval =* b;
-			ssymval =+ *lp++ -&#39;0&#39;;
+			ssymval =+ *lp++ -'0';
 		}
 		goto loop;
 	}
@@ -397,15 +397,15 @@ loop:
 	default:
 		donef++;
 
-	case &#39;+&#39;:
-	case &#39;-&#39;:
+	case '+':
+	case '-':
 		switch(lastop) {
 
-		case &#39;+&#39;:
+		case '+':
 			tdot =+ ssymval;
 			goto op;
 
-		case &#39;-&#39;:
+		case '-':
 			tdot =- ssymval;
 
 		op:
@@ -416,20 +416,20 @@ loop:
 		}
 		goto loop;
 
-	case &#39; &#39;:
-	case &#39;\t&#39;:
+	case ' ':
+	case '\t':
 		lp++;
 		goto loop;
 
-	case &#39;[&#39;:
+	case '[':
 		lp++;
 		t1 = ssymval;
 		t2 = tdot;
 		if (expr() == 0)
 			tdot = 0;
-		ssymval = cget(t1 + (tdot&lt;&lt;1), DSP);
+		ssymval = cget(t1 + (tdot<<1), DSP);
 		tdot = t2;
-		if (*lp == &#39;]&#39;)
+		if (*lp == ']')
 			lp++;
 		goto loop;
 	}
@@ -443,19 +443,19 @@ symcollect(c)
 	if (c)
 		*p++ = c;
 	while (symchar(1)) {
-		if (p &lt; &amp;tsym[8])
+		if (p < &tsym[8])
 			*p++ = *lp;
 		lp++;
 	}
-	while (p &lt; &amp;tsym[8])
+	while (p < &tsym[8])
 		*p++ = 0;
 }
 
 symchar(dig)
 {
-	if (*lp&gt;=&#39;a&#39;&amp;&amp;*lp&lt;=&#39;z&#39; || *lp==&#39;_&#39;)
+	if (*lp>='a'&&*lp<='z' || *lp=='_')
 		return(1);
-	if (dig &amp;&amp; *lp&gt;=&#39;0&#39; &amp;&amp; *lp&lt;=&#39;9&#39;)
+	if (dig && *lp>='0' && *lp<='9')
 		return(1);
 	return(0);
 }
@@ -470,11 +470,11 @@ printtrace()
 {
 	int tpc, tr5, narg, argp, i;
 
-	if (modifier==&#39;r&#39;) {
+	if (modifier=='r') {
 		printregs();
 		return;
 	}
-	if (modifier==&#39;f&#39; || modifier==&#39;d&#39;) {
+	if (modifier=='f' || modifier=='d') {
 		printfregs();
 		return;
 	}
@@ -487,15 +487,15 @@ printtrace()
 	callev = 0;
 	while (errflg == 0) {
 		narg = findroutine(tpc, tr5);
-		printf(&quot;%2d: %.8s(&quot;, callev, ssymbol);
-		if (--narg &gt;= 0)
-			printf(&quot;%.1o&quot;, get(tr5+4, DSP));
+		printf("%2d: %.8s(", callev, ssymbol);
+		if (--narg >= 0)
+			printf("%.1o", get(tr5+4, DSP));
 		argp = tr5+4;
-		while(--narg &gt;= 0)
-			printf(&quot;,%.1o&quot;, get(argp =+ 2, DSP));
-		printf(&quot;)\n&quot;);
+		while(--narg >= 0)
+			printf(",%.1o", get(argp =+ 2, DSP));
+		printf(")\n");
 		tpc = get(tr5+2, DSP);
-		if (callev &lt; 50) {
+		if (callev < 50) {
 			entpt[callev] = ssymval;
 			callist[callev++] = tr5;
 		}
@@ -518,7 +518,7 @@ setstack()
 	while (errflg == 0) {
 		findroutine(tpc, tr5);
 		tpc = get(tr5+2, DSP);
-		if (callev &gt;= 50)
+		if (callev >= 50)
 			break;
 		entpt[callev] = ssymval;
 		callist[callev++] = tr5;
@@ -533,13 +533,13 @@ printfregs()
 	register i;
 	double f;
 
-	printf(&quot;fpsr	%.1o\n&quot;, regbuf[0].fpsr);
-	for (i=0; i&lt;6; i++) {
-		if (regbuf[0].fpsr&amp;0200)	/* long mode */
+	printf("fpsr	%.1o\n", regbuf[0].fpsr);
+	for (i=0; i<6; i++) {
+		if (regbuf[0].fpsr&0200)	/* long mode */
 			f = regbuf[0].lfr[frnames[i]];
 		else
 			f = regbuf[0].sfr[frnames[i]];
-		printf(&quot;fr%d	%e\n&quot;, i, f);
+		printf("fr%d	%e\n", i, f);
 	}
 }
 
@@ -548,15 +548,15 @@ printregs()
 	register struct reglist *p;
 	register char *v, *d;
 
-	for (p=reglist; p &lt; &amp;reglist[9]; p++) {
-		printf(&quot;%s	%.1o&quot;, p-&gt;rname, v=uregs[p-&gt;roffs]);
+	for (p=reglist; p < &reglist[9]; p++) {
+		printf("%s	%.1o", p->rname, v=uregs[p->roffs]);
 		d = vallook(v);
-		if (d &lt; 010000) {
-			printf(&quot;	%.8s&quot;, ssymbol);
+		if (d < 010000) {
+			printf("	%.8s", ssymbol);
 			if (d)
-				printf(&quot;+%.1o&quot;, d);
+				printf("+%.1o", d);
 		}
-		printf(&quot;\n&quot;);
+		printf("\n");
 	}
 }
 
@@ -567,7 +567,7 @@ findroutine(rpc, rr5)
 	callpt = get(rr5+2, DSP);
 	if ((inst=get(callpt-4, ISP)) == 04737)	/* jsr pc,*$... */
 		narg = 1;
-	else if ((inst&amp;~077)==04700)		/* jsr pc,... */
+	else if ((inst&~077)==04700)		/* jsr pc,... */
 		narg = 0;
 	else {
 		errflg++;
@@ -575,7 +575,7 @@ findroutine(rpc, rr5)
 	}
 	inst = vallook((inst==04767?callpt:0) + get(callpt-2, ISP));
 	if (inst) {
-		ssymbol[0] = &#39;?&#39;;
+		ssymbol[0] = '?';
 		ssymbol[1] = 0;
 		ssymval = 0;
 	}
@@ -598,16 +598,16 @@ runcom()
 
 
 	/* delete breakpoint */
-	case &#39;d&#39;:
+	case 'd':
 		if (adrflg==0)
 			error();
-		for (w=0; w&lt;NBKP; w++) {
+		for (w=0; w<NBKP; w++) {
 			i = bkptl[w].loc;
-			if (bkptl[w].flag &amp; BADJST)
+			if (bkptl[w].flag & BADJST)
 				i =- 4;
 			if (dot==i) {
 				if (lastbp==bkptl[w].loc) {
-					ptrace(WUREGS,pid,2*(512+ps),uregs[ps]&amp;~020);
+					ptrace(WUREGS,pid,2*(512+ps),uregs[ps]&~020);
 					lastbp = 0;
 				} else {
 					ptrace(WUSER,pid,bkptl[w].loc,bkptl[w].ins);
@@ -620,17 +620,17 @@ runcom()
 		error();
 
 	/* set breakpoint */
-	case &#39;b&#39;:
+	case 'b':
 		if (adrflg==0)
 			error();
-		for (w=0; w&lt;NBKP; w++) {
+		for (w=0; w<NBKP; w++) {
 			i = bkptl[w].loc;
-			if (bkptl[w].flag&amp;BADJST)
+			if (bkptl[w].flag&BADJST)
 				i =- 4;
 			if (i==dot)
 				return;
 		}
-		for (w=0; w&lt;NBKP; w++)
+		for (w=0; w<NBKP; w++)
 			if (bkptl[w].loc==0) {
 				bkptl[w].loc = dot;
 				return;
@@ -638,7 +638,7 @@ runcom()
 		error();
 
 	/* run program */
-	case &#39;r&#39;:
+	case 'r':
 		lastbp = 0;
 		if (pid) {
 			ptrace(EXIT, pid, 0, 0);
@@ -649,14 +649,14 @@ runcom()
 			signal(SIGINT, 0);
 			signal(SIGINS, 0);
 			doexec();
-			printf(&quot;Can&#39;t execute %s\n&quot;, symfil);
+			printf("Can't execute %s\n", symfil);
 			exit(0);
 		}
 		bpwait(0);
 		setbp(1);
 		ptrace(WUREGS, pid, 2*(512+ps), 0170000);
 
-	case &#39;c&#39;:
+	case 'c':
 		if (pid==0)
 			error();
 		setbp(0);
@@ -665,26 +665,26 @@ runcom()
 			ptrace(CONTIN, pid, 0, 0);
 			bpwait(1);
 			ptrace(WUSER, pid, w, 03);
-			ptrace(WUREGS, pid, 2*(512+ps), uregs[ps]&amp;~020);
+			ptrace(WUREGS, pid, 2*(512+ps), uregs[ps]&~020);
 			lastbp = 0;
 		}
 		ptrace(CONTIN, pid, 0, 0);
 		bpwait(1);
 		w = uregs[pc]-2;
-		for (i=0; i&lt;NBKP; i++)
+		for (i=0; i<NBKP; i++)
 			if (bkptl[i].loc == w)
 				break;
-		if (i &gt;= NBKP) {
-			printf(&quot;%s\n&quot;, signals[signo]);
+		if (i >= NBKP) {
+			printf("%s\n", signals[signo]);
 			return;
 		}
 		lastbp = w;
 		ptrace(WUSER, pid, w, bkptl[i].ins);
 		ptrace(WUREGS, pid, 2*(512+pc), w);
 		ptrace(WUREGS, pid, 2*(512+ps), uregs[ps]|020);
-		printf(&quot;Breakpoint: &quot;);
+		printf("Breakpoint: ");
 		psymoff(w, 0777);
-		printf(&quot;\n&quot;);
+		printf("\n");
 		return;
 	}
 	error();
@@ -702,16 +702,16 @@ doexec()
 	*ap++ = symfil;
 	p = lp;
 	do {
-		while (*p==&#39; &#39;)
+		while (*p==' ')
 			p++;
-		if (*p==&#39;\n&#39; || *p==&#39;\0&#39;)
+		if (*p=='\n' || *p=='\0')
 			break;
 		*ap++ = p;
-		while (*p!=&#39; &#39; &amp;&amp; *p!=&#39;\n&#39;)
+		while (*p!=' ' && *p!='\n')
 			p++;
 		c = *p;
-		*p++ = &#39;\0&#39;;
-	} while (c != &#39;\n&#39;);
+		*p++ = '\0';
+	} while (c != '\n');
 	*ap++ = 0;
 	execv(symfil, argl);
 }
@@ -721,9 +721,9 @@ setbp(runflag)
 	register w, i1, l;
 	int i2;
 
-	for (w=0; w&lt;NBKP; w++) {
+	for (w=0; w<NBKP; w++) {
 		l = bkptl[w].loc;
-		if (l &amp;&amp; (runflag||bkptl[w].ins==0)) {
+		if (l && (runflag||bkptl[w].ins==0)) {
 			i1 = ptrace(RUSER, pid, l, 0);
 			if (i1==04567) {	/* jsr r5,... */
 				i2 = ptrace(RUSER, pid, l+2, 0);
@@ -737,9 +737,9 @@ setbp(runflag)
 			bkptl[w].ins = i1;
 			ptrace(WUSER, pid, l, 03);
 			if (errno) {
-				printf(&quot;Can&#39;t set breakpoint &quot;);
+				printf("Can't set breakpoint ");
 				psymoff(bkptl[w].loc);
-				printf(&quot;\n&quot;);
+				printf("\n");
 			}
 		}
 	}
@@ -753,28 +753,28 @@ bpwait(f)
 
     loop:
 	signal(SIGINT, 1);
-	while ((w = wait(&amp;stat))!=pid &amp;&amp; w != -1);
+	while ((w = wait(&stat))!=pid && w != -1);
 	signal(SIGINT, onintr);
 	if (w == -1) {
 		ptrace(EXIT, pid, 0, 0);
 		pid = 0;
-		printf(&quot;Wait error\n&quot;);
+		printf("Wait error\n");
 		reset();
 	}
-	if ((stat &amp; 0377) != 0177) {
-		if (signo = stat&amp;0177)
-			printf(&quot;%s\n&quot;, signals[signo]);
-		printf(&quot;Process terminated.\n&quot;);
+	if ((stat & 0377) != 0177) {
+		if (signo = stat&0177)
+			printf("%s\n", signals[signo]);
+		printf("Process terminated.\n");
 		if (pid == w) {
 			pid = 0;
 			reset();
 		}
 		goto loop;
 	}
-	signo = stat&gt;&gt;8;
+	signo = stat>>8;
 	collinfo();
 	if (signo!=SIGTRC) {
-		printf(&quot;%s\n&quot;, signals[signo]);
+		printf("%s\n", signals[signo]);
 		reset();
 	}
 }
@@ -783,7 +783,7 @@ collinfo()
 {
 	register i;
 
-	for (i=0; i&lt;9; i++)
+	for (i=0; i<9; i++)
 		uregs[reglist[i].roffs] =
 		    ptrace(RUREGS, pid, 2*(512+reglist[i].roffs), 0);
 	setstack();
@@ -807,10 +807,10 @@ char *symstr;
 	}
 	while (symget()) {
 		/* wait for function symbol */
-		if (symbol[0]!=&#39;~&#39; || !eqstr(symbol, fsymbol))
+		if (symbol[0]!='~' || !eqstr(symbol, fsymbol))
 			continue;
 		symv = symval;
-		while (symget()&amp;&amp; symbol[0]!=&#39;~&#39; &amp;&amp;symflg!=037)
+		while (symget()&& symbol[0]!='~' &&symflg!=037)
 			if (eqstr(symbol, symstr))
 				return(localsym(symv));
 		return(0);
@@ -822,13 +822,13 @@ localsym(s)
 	register i, xr5;
 
 	/* label, static */
-	if (symflg&gt;=2 &amp;&amp; symflg&lt;=4) {
+	if (symflg>=2 && symflg<=4) {
 		ssymval = symval;
 		return(1);
 	}
 	/* auto, arg */
 	if (symflg==1) {
-		for (i=0; i&lt;callev; i++)
+		for (i=0; i<callev; i++)
 			if (entpt[i]==s) {
 				ssymval = symval+callist[i];
 				return(1);
@@ -837,7 +837,7 @@ localsym(s)
 	}
 	/* register */
 	if (symflg==20) {
-		for (i=0; i&lt;callev; i++)
+		for (i=0; i<callev; i++)
 			if (entpt[i]==s) {
 				if (i==0) {
 					return(0); /* temp, no reg lvalue */
@@ -857,7 +857,7 @@ int *as1, *as2;
 
 	s1 = as1;
 	s2 = as2;
-	for (es1 = s1+8; s1 &lt; es1; )
+	for (es1 = s1+8; s1 < es1; )
 		if (*s1++ != *s2++)
 			return(0);
 	return(1);
@@ -871,10 +871,10 @@ char *value;
 	diff = 0177777;
 	symset();
 	while (symget())
-		if (symflg&amp;040 &amp;&amp; value-symval&lt;=diff) {
-			if (symflg==1 &amp;&amp; value!=symval)
+		if (symflg&040 && value-symval<=diff) {
+			if (symflg==1 && value!=symval)
 				continue;
-			savsym(&#39;_&#39;);
+			savsym('_');
 			diff = value-symval;
 		}
 	return(diff);
@@ -890,29 +890,29 @@ char *aaddr;
 	addr = aaddr;
 	if (pid) {		/* tracing on? */
 		w = ptrace(space==DSP?RUSER:RIUSER, pid, addr, 0);
-		if (addr&amp;01) {
+		if (addr&01) {
 			w1 = ptrace(space==DSP?RUSER:RIUSER, pid, addr+1, 0);
-			w = (w&gt;&gt;8)&amp;0377 | (w1&lt;&lt;8);
+			w = (w>>8)&0377 | (w1<<8);
 		}
 		errflg = errno;
 		return(w);
 	}
 	w = 0;
-	if (idsep==0&amp;&amp;addr&lt;regbuf-&gt;u_tsize || idsep&amp;&amp;space==ISP) {
+	if (idsep==0&&addr<regbuf->u_tsize || idsep&&space==ISP) {
 		seek(fsym, addr+020, 0);
-		if (read(fsym, &amp;w, 2) != 2)
+		if (read(fsym, &w, 2) != 2)
 			errflg++;
 		return(w);
 	}
-	if (addr &lt; rtsize+regbuf-&gt;u_dsize) {
+	if (addr < rtsize+regbuf->u_dsize) {
 		if (idsep==0)
 			addr =- rtsize;
-	} else if (-addr &lt; regbuf-&gt;u_ssize)
-		addr =+ regbuf-&gt;u_dsize + regbuf-&gt;u_ssize;
+	} else if (-addr < regbuf->u_ssize)
+		addr =+ regbuf->u_dsize + regbuf->u_ssize;
 	else
 		errflg++;
 	seek(fcore, addr+1024, 0);
-	if (read(fcore, &amp;w, 2) &lt; 2)
+	if (read(fcore, &w, 2) < 2)
 		errflg++;
 	return(w);
 }
@@ -927,11 +927,11 @@ symset()
 symget()
 {
 	register int *p, *q;
-	if ((symct =- 12) &lt; 0)
+	if ((symct =- 12) < 0)
 		return(0);
-	if (symptr &lt; &amp;symbuf[symcor]) {
+	if (symptr < &symbuf[symcor]) {
 		p = symptr;
-		for (q=symbol; q &lt;= &amp;symval;)
+		for (q=symbol; q <= &symval;)
 			*q++ = *p++;
 		symptr = p;
 		return(1);
@@ -946,20 +946,20 @@ savsym(skip)
 
 	p = symbol;
 	q = ssymbol;
-	while (p&lt;symbol+8 &amp;&amp; (ch = *p++)) {
+	while (p<symbol+8 && (ch = *p++)) {
 		if (ch == skip)
 			continue;
 		*q++ = ch;
 	}
-	while (q &lt; ssymbol+8)
-		*q++ = &#39;\0&#39;;
+	while (q < ssymbol+8)
+		*q++ = '\0';
 	ssymflg = symflg;
 	ssymval = symval;
 }
 
 onintr()
 {
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 	errflg++;
 	reset();
 }

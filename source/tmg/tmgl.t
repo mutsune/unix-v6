@@ -8,50 +8,50 @@ pr2:	comment\pr2
 	putcharcl
 	parse(last);
 
-first:	parse(( fref = {&lt;1 &gt; 1 *}))
-	getfref line = { 2&lt;:&gt; 1 };
+first:	parse(( fref = {<1 > 1 *}))
+	getfref line = { 2<:> 1 };
 
-error:	smark ignore(none) any(!&lt;&lt;&gt;&gt;) string(!&lt;&lt;;&gt;&gt;) scopy 
-	( &lt;;&gt; = {&lt;;&gt;} | null )
-	= { * &lt;??? &gt; 2 1 * };
+error:	smark ignore(none) any(!<<>>) string(!<<;>>) scopy 
+	( <;> = {<;>} | null )
+	= { * <??? > 2 1 * };
 
 line:
 	labels
-	( charcl &lt;;&gt;
+	( charcl <;>
 	| statement
 	| numbers
-	| trule &lt;;&gt; )
+	| trule <;> )
 	= { 2 * 1 * };
 
-numbers: number &lt;;&gt; numbers/done = { 2 * 1 };
+numbers: number <;> numbers/done = { 2 * 1 };
 
 labels:	label labels/done = { 2 * 1 };
 
-label:	name &lt;:&gt; = { 1 &lt;:&gt; };
+label:	name <:> = { 1 <:> };
 
-last:	= {	&lt;.pn:1 .pxs;12&gt; *
-		&lt;.tn:1 .txs;12&gt; * };
+last:	= {	<.pn:1 .pxs;12> *
+		<.tn:1 .txs;12> * };
 
-comment: &lt;/*&gt;
-co1:	ignore(!&lt;&lt;*&gt;&gt;) &lt;*&gt; ignore(none) &lt;/&gt;/co1;
+comment: </*>
+co1:	ignore(!<<*>>) <*> ignore(none) </>/co1;
 
 statement: [csym=0] oldtab(dtt) oldtab(pat)
-	( proc plst tlst &lt;)&gt; = (1){2 1 }
+	( proc plst tlst <)> = (1){2 1 }
 	| = (1){} noelem )
 stt1:	bundle	( frag = (1){ 2(nil) * 1(q1) }\stt1
-		| &lt;;&gt;	( ifelem = { 1(xbit) }
-			| ={ 1(nil) * &lt;1 succ&gt; }
+		| <;>	( ifelem = { 1(xbit) }
+			| ={ 1(nil) * <1 succ> }
 		)	);
 
-proc:	smark ignore(none) &lt;proc(&gt;;
+proc:	smark ignore(none) <proc(>;
 
 plst:	list(pident)/null remote((octal(npa)))
-	= { &lt;params;&gt; 1 * };
+	= { <params;> 1 * };
 
 pident:	ident newtab(pat,npa);
 
-tlst:	&lt;;&gt;/null [i=0] list((name [i++])) remote((octal(i)))
-	= { &lt;push;&gt; 1 * 2 * };
+tlst:	<;>/null [i=0] list((name [i++])) remote((octal(i)))
+	= { <push;> 1 * 2 * };
 
 frag:	prule = (1){ 1(nil,q1) }
 	| labels noelem = (1){ 1 };
@@ -59,11 +59,11 @@ frag:	prule = (1){ 1(nil,q1) }
 /*in sequel q2 is where to go on fail,q1 is exit bit*/
 
 prule:	[sndt=ndt] disj
-	( &lt;|&gt; [ndt=sndt] fref
-		( ifeasy prule = (2){3(nil,nil)*&lt;salt;&gt;2*
-				1(q2,q1)*2&lt;:&gt;}
-		| prule fref = (2){4({*&lt;alt;&gt;1},q1)*&lt;goto;&gt;3*
-				1&lt;:&gt;2(q2,q1)*3&lt;:&gt;} )
+	( <|> [ndt=sndt] fref
+		( ifeasy prule = (2){3(nil,nil)*<salt;>2*
+				1(q2,q1)*2<:>}
+		| prule fref = (2){4({*<alt;>1},q1)*<goto;>3*
+				1<:>2(q2,q1)*3<:>} )
 		noelem
 	| () );
 
@@ -72,36 +72,36 @@ disj:	pelem pdot
 	| () );
 
 pelem:	pprim = (2){1(q1)$2} iseasy
-	| &lt;(&gt;	push(1,sndt)
-		( prule &lt;)&gt;
-		| &lt;)&gt; = (2){} noelem );
+	| <(>	push(1,sndt)
+		( prule <)>
+		| <)> = (2){} noelem );
 
 pprim:	( special
-	| rname	( &lt;:&gt; fail
+	| rname	( <:> fail
 		| (spdot|()) ignore(none)
-			( &lt;(&gt; ignore(blanks) list(parg) &lt;)&gt;
+			( <(> ignore(blanks) list(parg) <)>
 				= (1){$1 2 * 1}
 			| = (1){$1 1}  )))
-	( (&lt;/&gt; = {&lt;alt;&gt;} | &lt;\&gt;={&lt;salt;&gt;})
+	( (</> = {<alt;>} | <\>={<salt;>})
 		rname = (1){3(nil)*$1 2 1}
 	| () );
 
-pdot:	&lt;.&gt;/done ignore(none) ident\alias
+pdot:	<.>/done ignore(none) ident\alias
 	([dtt?] | table(dtt) [ndt=0]) [ndt++];
-spdot:	&lt;.&gt; ignore(none) not(( any(letter) ))
+spdot:	<.> ignore(none) not(( any(letter) ))
 alias:	newtab(dtt,ndt);
 
 parg:	rname | remote(specparg);
 
 specparg: number
 	| charcl
-	| &lt;&lt;&gt; longlit
-	| &lt;*&gt; = { &lt;\n\0&gt; }
-	| &lt;(&gt; ( &lt;)&gt; = {&lt;1 succ&gt;}
+	| <<> longlit
+	| <*> = { <\n\0> }
+	| <(> ( <)> = {<1 succ>}
 		| push(3,dtt,ndt,sndt) [dtt=0]
-			prule &lt;)&gt; oldtab(dtt)
+			prule <)> oldtab(dtt)
 			( ifelem = {1(nil,xbit) }
-			| = {1(nil,nil)*&lt;1 succ&gt;} 
+			| = {1(nil,nil)*<1 succ>} 
 		)	);
 
 iseasy:	[easy = 1];
@@ -110,58 +110,58 @@ noelem:	[easy = 2];
 ifelem:	[easy!=2?];
 ifeasy:	[easy==1?];
 
-special: &lt;=&gt; (rname | remote(trule))
-		= (1){ $1 &lt;trans;1 &gt; 1 }
-	| &lt;&lt;&gt; literal = (1){ $1 &lt;.px&gt; 1 }
-	| &lt;*&gt; = (1){ $1 &lt;.pn&gt; }
-	| &lt;[&gt; expr
-		( &lt;?&gt; = {&lt;.t&gt;}
-		| = {&lt;.p&gt;} )
-		&lt;]&gt; = (1){ 2 * $1 1 };
+special: <=> (rname | remote(trule))
+		= (1){ $1 <trans;1 > 1 }
+	| <<> literal = (1){ $1 <.px> 1 }
+	| <*> = (1){ $1 <.pn> }
+	| <[> expr
+		( <?> = {<.t>}
+		| = {<.p>} )
+		<]> = (1){ 2 * $1 1 };
 
 rname:	( name tabval(pat,npa)/done
-	| &lt;$&gt; number )
-	= { &lt;[-&gt; 1 &lt;\&lt;1]&gt; };
+	| <$> number )
+	= { <[-> 1 <\<1]> };
 
 trule:	oldtab(ptt)
 	( tbody
-	| &lt;(&gt; (number|tra) &lt;)&gt; tbody = {&lt;gpar;&gt; 2 * 1 } );
+	| <(> (number|tra) <)> tbody = {<gpar;> 2 * 1 } );
 tra:	list(tident) octal(npt);
 
 tident:	ident newtab(ptt,npt);
 
-tbody: &lt;{&gt;	( &lt;}&gt; = { &lt;1 generate&gt; }
+tbody: <{>	( <}> = { <1 generate> }
 		| trb);
-trb:	telem	( &lt;}&gt; = {  xbit 1 }
+trb:	telem	( <}> = {  xbit 1 }
 		| trb = { 2 * 1 } );
 
-telem:	&lt;&lt;&gt; literal = { &lt;.tx&gt; 1 }
-	| &lt;*&gt; = {&lt;.tn&gt;}
-	| &lt;$&gt; number = { &lt;.tq;&gt; 1 }
+telem:	<<> literal = { <.tx> 1 }
+	| <*> = {<.tn>}
+	| <$> number = { <.tq;> 1 }
 	| number tdot = tpt
 	| name te1\done te2\done;
 
 te1:	tabval(dtt,ndt) tdot = tpt;
-te2:	tabval(ptt,npt) = {&lt;.tq;&gt;1};
+te2:	tabval(ptt,npt) = {<.tq;>1};
 
-tdot:	(&lt;.&gt; number | ={&lt;0&gt;})
-	( &lt;(&gt; list(targ) &lt;)&gt; | null)
-	= { 2 &lt;;&gt; 1 };
+tdot:	(<.> number | ={<0>})
+	( <(> list(targ) <)> | null)
+	= { 2 <;> 1 };
 
 targ:	name|remote(tbody);
 
-tpt:	{ &lt;.tp;.byte &gt; 2 &lt;,&gt; 1 };
+tpt:	{ <.tp;.byte > 2 <,> 1 };
 
 literal: ( shortlit
-	| remote(longlit) = { &lt;;&gt; 1} );
+	| remote(longlit) = { <;> 1} );
 
-shortlit: ignore(none) smark any(litch) &lt;&gt;&gt; scopy = { &lt;s;&#39;&gt; 1 };
+shortlit: ignore(none) smark any(litch) <>> scopy = { <s;'> 1 };
 
-longlit: ignore(none) (&lt;&gt;&gt; = { &lt;\&gt; &lt;&gt;&gt; } | null) litb &lt;&gt;&gt;
-	= { &lt;&lt;&gt; 2 1 &lt;\0&gt; &lt;&gt;;.even&gt; };
+longlit: ignore(none) (<>> = { <\> <>> } | null) litb <>>
+	= { <<> 2 1 <\0> <>;.even> };
 
-litb:	smark string(litch) scopy &lt;\&gt;/done
-	litb = { 2 &lt;\\&gt; 1 };
+litb:	smark string(litch) scopy <\>/done
+	litb = { 2 <\\> 1 };
 
 expr:	assignment | rv ;
 
@@ -171,81 +171,81 @@ rv:	prime
 rv1:	bundle	( infix prime = { 3 * 1 * 2 }\rv1
 		| rva = { 2 * 1 }
 		| () );
-rva:	&lt;?&gt; rv &lt;:&gt; rv fref fref 
-	= { &lt;.t;alt;&gt; 2 * 4 * &lt;salt;&gt; 1 * 2 &lt;:&gt; 3 * 1 &lt;:&gt; };
+rva:	<?> rv <:> rv fref fref 
+	= { <.t;alt;> 2 * 4 * <salt;> 1 * 2 <:> 3 * 1 <:> };
 
 prime:
 	lv suffix/done = { 2 * 1 }
 	| prefix lv = { 1 * 2 }
-	| &lt;(&gt; expr &lt;)&gt; 
+	| <(> expr <)> 
 	| unary prime = { 1 * 2 }
-	| remote(number) = { &lt;.l;&gt; 1 };
+	| remote(number) = { <.l;> 1 };
 
-lv:	( rname = { &lt;.l;&gt; 1 }
-	| &lt;(&gt; lv &lt;)&gt;
-	| &lt;*&gt; prime = { 1 * &lt;.rv&gt; } )
-lv1:	&lt;[&gt;/done bundle expr &lt;]&gt; = { 2 * 1 * &lt;.f&gt; }\lv1;
+lv:	( rname = { <.l;> 1 }
+	| <(> lv <)>
+	| <*> prime = { 1 * <.rv> } )
+lv1:	<[>/done bundle expr <]> = { 2 * 1 * <.f> }\lv1;
 
-assign:	&lt;=&gt; ignore(none) ( infix = { 1 * &lt;.u&gt; }
-			| = { &lt;.st&gt; } );
+assign:	<=> ignore(none) ( infix = { 1 * <.u> }
+			| = { <.st> } );
 
 infix:	smark ignore(none)
-	( &lt;+&gt; not((&lt;+&gt; not((&lt;+&gt;)) )) = {&lt;.a&gt;}
-	| &lt;-&gt; = {&lt;.s&gt;}
-	| &lt;*&gt; = {&lt;.m&gt;}
-	| &lt;/&gt; = {&lt;.q&gt;}
-	| &lt;%&gt; = {&lt;.r&gt;}
-	| &lt;|&gt; = {&lt;.o&gt;}
-	| &lt;^&gt; = {&lt;.x&gt;}
-	| &lt;&amp;&gt; = {&lt;.n&gt;}
-	| &lt;==&gt; = {&lt;.eq&gt;}
-	| &lt;!=&gt; = {&lt;.ne&gt;}
-	| &lt;&lt;=&gt; = {&lt;.le&gt;}
-	| &lt;&gt;=&gt; = {&lt;.ge&gt;}
-	| &lt;&lt;&lt;&gt; = {&lt;.sl&gt;}
-	| &lt;&lt;&gt; = {&lt;.lt&gt;}
-	| &lt;&gt;&gt;	(  &lt;&gt;&gt; = {&lt;.sr&gt;}
-		| = {&lt;.gt&gt;} )
+	( <+> not((<+> not((<+>)) )) = {<.a>}
+	| <-> = {<.s>}
+	| <*> = {<.m>}
+	| </> = {<.q>}
+	| <%> = {<.r>}
+	| <|> = {<.o>}
+	| <^> = {<.x>}
+	| <&> = {<.n>}
+	| <==> = {<.eq>}
+	| <!=> = {<.ne>}
+	| <<=> = {<.le>}
+	| <>=> = {<.ge>}
+	| <<<> = {<.sl>}
+	| <<> = {<.lt>}
+	| <>>	(  <>> = {<.sr>}
+		| = {<.gt>} )
 	);
 
 prefix:	smark ignore(none)
-	( &lt;&amp;&gt; = {&lt;.lv&gt;}
-	| &lt;++&gt; = {&lt;.ib&gt;}
-	| &lt;--&gt; = {&lt;.db&gt;}
+	( <&> = {<.lv>}
+	| <++> = {<.ib>}
+	| <--> = {<.db>}
 	);
 
 suffix:	smark ignore(none)
-	( &lt;++&gt; = {&lt;.ia&gt;}
-	| &lt;--&gt; = {&lt;.da&gt;}
+	( <++> = {<.ia>}
+	| <--> = {<.da>}
 	);
 
-unary:	( &lt;!&gt; = {&lt;.nt&gt;}
-	| &lt;-&gt; = {&lt;.ng&gt;}
-	| &lt;~&gt; = {&lt;.cm&gt;}
+unary:	( <!> = {<.nt>}
+	| <-> = {<.ng>}
+	| <~> = {<.cm>}
 	);
 
 charcl:
-	( &lt;!&gt; ccla cclb | ccla )
+	( <!> ccla cclb | ccla )
 	octal(classmask);
-ccla:	(&lt;&lt;&lt;&gt;) [classmask = 1&lt;&lt;nclass++] [classmask?]/cherr
-ccl1:	cclc &lt;&lt;&lt;&gt;\ccl1;
+ccla:	(<<<>) [classmask = 1<<nclass++] [classmask?]/cherr
+ccl1:	cclc <<<>\ccl1;
 cclc:	ignore(none)
 
-ccl3:	&lt;&gt;&gt;\ccl4 ccle\ccl3;
-ccl4:	(&lt;&gt;&gt; | cclx fail) (not((&lt;&gt;&gt;)) | ccle);
-ccle:	char(n) [*(2*n+&amp;classes) =| classmask];
+ccl3:	<>>\ccl4 ccle\ccl3;
+ccl4:	(<>> | cclx fail) (not((<>>)) | ccle);
+ccle:	char(n) [*(2*n+&classes) =| classmask];
 cclb:	zeron
-ccl5:	[*(&amp;classes+n) =^ classmask] testn\ccl5;
+ccl5:	[*(&classes+n) =^ classmask] testn\ccl5;
 cclx:	[nclass--] zeron
-ccl6:	[*(&amp;classes+n) =&amp; ~classmask] testn\ccl6;
-cherr:	diag(( ={&lt;too many char classes&gt;} ));
+ccl6:	[*(&classes+n) =& ~classmask] testn\ccl6;
+cherr:	diag(( ={<too many char classes>} ));
 
 zeron:	[n=0];
-testn:	[(n=+2)&lt;400?];
+testn:	[(n=+2)<400?];
 
 putcharcl: zeron [classes=0] 
-	parse(( = { * &lt;.globl classtab&gt; * &lt;classtab:&gt; * } ))
-ptc1:	[w = *(&amp;classes+n)] parse((octal(w) = {1*}))
+	parse(( = { * <.globl classtab> * <classtab:> * } ))
+ptc1:	[w = *(&classes+n)] parse((octal(w) = {1*}))
 	bundle testn\ptc1;
 
 classmask: 0;
@@ -263,18 +263,18 @@ cl8:	0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
 done:	;
 
 create:	[csym++]
-getcsym: octal(csym) = {&lt;.&gt; 1};
+getcsym: octal(csym) = {<.> 1};
 
 fref:	[fsym++]
-getfref: octal(fsym) = { &lt;..&gt; 1 };
+getfref: octal(fsym) = { <..> 1 };
 
 not:	params(1) $1/done fail;
 
 list:	params(1) $1
-list1:	bundle &lt;,&gt;/done $1 = { 2 * 1 }\list1;
+list1:	bundle <,>/done $1 = { 2 * 1 }\list1;
 
 remote:	params(1) create parse(rem1,$1);
-rem1:	params(1) getcsym $1 = { 2 &lt;=.&gt; * 1 * };
+rem1:	params(1) getcsym $1 = { 2 <=.> * 1 * };
 
 number: smark ignore(none) any(digit) string(digit) scopy;
 
@@ -291,23 +291,23 @@ tabval:	params(2) [$2?] find($2,i) [i=$1-$2[i]] octal(i);
 
 null:	= nil;
 
-xbit:	{&lt;1 &gt;};
+xbit:	{<1 >};
 
 q1:	{ $1 };
 q2:	{ $2 };
 
 nil:	{};
 
-blanks:	&lt;&lt; 	
-	&gt;&gt;;
-digit:	&lt;&lt;0123456789&gt;&gt;;
-letter:	&lt;&lt;abcdefghijklmnopqrstuvwxyz&gt;&gt;
-	&lt;&lt;ABCDEFGHIJKLMNOPQRSTUVWXYZ&gt;&gt;;
-alpha:	&lt;&lt;0123456789&gt;&gt;
-	&lt;&lt;abcdefghijklmnopqrstuvwxyz&gt;&gt;
-	&lt;&lt;ABCDEFGHIJKLMNOPQRSTUVWXYZ&gt;&gt;;
-litch:	!&lt;&lt;\&gt;&gt;&gt;;
-none:	&lt;&lt;&gt;&gt;;
+blanks:	<< 	
+	>>;
+digit:	<<0123456789>>;
+letter:	<<abcdefghijklmnopqrstuvwxyz>>
+	<<ABCDEFGHIJKLMNOPQRSTUVWXYZ>>;
+alpha:	<<0123456789>>
+	<<abcdefghijklmnopqrstuvwxyz>>
+	<<ABCDEFGHIJKLMNOPQRSTUVWXYZ>>;
+litch:	!<<\>>>;
+none:	<<>>;
 
 csym:	0;
 fsym:	0;

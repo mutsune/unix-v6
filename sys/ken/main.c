@@ -1,11 +1,11 @@
 #
-#include &quot;../param.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../proc.h&quot;
-#include &quot;../text.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../seg.h&quot;
+#include "../param.h"
+#include "../user.h"
+#include "../systm.h"
+#include "../proc.h"
+#include "../text.h"
+#include "../inode.h"
+#include "../seg.h"
 
 #define	CLOCK1	0177546
 #define	CLOCK2	0172540
@@ -22,7 +22,7 @@ int	icode[]
 	0000777,	/* br . */
 	0000014,	/* initp: init; 0 */
 	0000000,
-	0062457,	/* init: &lt;/etc/init\0&gt; */
+	0062457,	/* init: </etc/init\0> */
 	0061564,
 	0064457,
 	0064556,
@@ -57,10 +57,10 @@ main()
 
 	updlock = 0;
 	i = *ka6 + USIZE;
-	UISD-&gt;r[0] = 077406;
+	UISD->r[0] = 077406;
 	for(;;) {
-		UISA-&gt;r[0] = i;
-		if(fuibyte(0) &lt; 0)
+		UISA->r[0] = i;
+		if(fuibyte(0) < 0)
 			break;
 		clearseg(i);
 		maxmem++;
@@ -68,11 +68,11 @@ main()
 		i++;
 	}
 	if(cputype == 70)
-	for(i=0; i&lt;62; i=+2) {
-		UBMAP-&gt;r[i] = i&lt;&lt;12;
-		UBMAP-&gt;r[i+1] = 0;
+	for(i=0; i<62; i=+2) {
+		UBMAP->r[i] = i<<12;
+		UBMAP->r[i+1] = 0;
 	}
-	printf(&quot;mem = %l\n&quot;, maxmem*5/16);
+	printf("mem = %l\n", maxmem*5/16);
 	maxmem = min(maxmem, MAXMEM);
 	mfree(swapmap, nswap, swplo);
 
@@ -80,13 +80,13 @@ main()
 	 * determine clock
 	 */
 
-	UISA-&gt;r[7] = ka6[1]; /* io segment */
-	UISD-&gt;r[7] = 077406;
+	UISA->r[7] = ka6[1]; /* io segment */
+	UISD->r[7] = 077406;
 	lks = CLOCK1;
 	if(fuiword(lks) == -1) {
 		lks = CLOCK2;
 		if(fuiword(lks) == -1)
-			panic(&quot;no clock&quot;);
+			panic("no clock");
 	}
 
 	/*
@@ -97,10 +97,10 @@ main()
 	proc[0].p_size = USIZE;
 	proc[0].p_stat = SRUN;
 	proc[0].p_flag =| SLOAD|SSYS;
-	u.u_procp = &amp;proc[0];
+	u.u_procp = &proc[0];
 
 	/*
-	 * set up &#39;known&#39; i-nodes
+	 * set up 'known' i-nodes
 	 */
 
 	*lks = 0115;
@@ -108,9 +108,9 @@ main()
 	binit();
 	iinit();
 	rootdir = iget(rootdev, ROOTINO);
-	rootdir-&gt;i_flag =&amp; ~ILOCK;
+	rootdir->i_flag =& ~ILOCK;
 	u.u_cdir = iget(rootdev, ROOTINO);
-	u.u_cdir-&gt;i_flag =&amp; ~ILOCK;
+	u.u_cdir->i_flag =& ~ILOCK;
 
 	/*
 	 * make init process
@@ -141,26 +141,26 @@ sureg()
 {
 	register *up, *rp, a;
 
-	a = u.u_procp-&gt;p_addr;
-	up = &amp;u.u_uisa[16];
-	rp = &amp;UISA-&gt;r[16];
+	a = u.u_procp->p_addr;
+	up = &u.u_uisa[16];
+	rp = &UISA->r[16];
 	if(cputype == 40) {
 		up =- 8;
 		rp =- 8;
 	}
-	while(rp &gt; &amp;UISA-&gt;r[0])
+	while(rp > &UISA->r[0])
 		*--rp = *--up + a;
-	if((up=u.u_procp-&gt;p_textp) != NULL)
-		a =- up-&gt;x_caddr;
-	up = &amp;u.u_uisd[16];
-	rp = &amp;UISD-&gt;r[16];
+	if((up=u.u_procp->p_textp) != NULL)
+		a =- up->x_caddr;
+	up = &u.u_uisd[16];
+	rp = &UISD->r[16];
 	if(cputype == 40) {
 		up =- 8;
 		rp =- 8;
 	}
-	while(rp &gt; &amp;UISD-&gt;r[0]) {
+	while(rp > &UISD->r[0]) {
 		*--rp = *--up;
-		if((*rp &amp; WO) == 0)
+		if((*rp & WO) == 0)
 			rp[(UISA-UISD)/2] =- a;
 	}
 }
@@ -181,71 +181,71 @@ estabur(nt, nd, ns, sep)
 	if(sep) {
 		if(cputype == 40)
 			goto err;
-		if(nseg(nt) &gt; 8 || nseg(nd)+nseg(ns) &gt; 8)
+		if(nseg(nt) > 8 || nseg(nd)+nseg(ns) > 8)
 			goto err;
 	} else
-		if(nseg(nt)+nseg(nd)+nseg(ns) &gt; 8)
+		if(nseg(nt)+nseg(nd)+nseg(ns) > 8)
 			goto err;
-	if(nt+nd+ns+USIZE &gt; maxmem)
+	if(nt+nd+ns+USIZE > maxmem)
 		goto err;
 	a = 0;
-	ap = &amp;u.u_uisa[0];
-	dp = &amp;u.u_uisd[0];
-	while(nt &gt;= 128) {
-		*dp++ = (127&lt;&lt;8) | RO;
+	ap = &u.u_uisa[0];
+	dp = &u.u_uisd[0];
+	while(nt >= 128) {
+		*dp++ = (127<<8) | RO;
 		*ap++ = a;
 		a =+ 128;
 		nt =- 128;
 	}
 	if(nt) {
-		*dp++ = ((nt-1)&lt;&lt;8) | RO;
+		*dp++ = ((nt-1)<<8) | RO;
 		*ap++ = a;
 	}
 	if(sep)
-	while(ap &lt; &amp;u.u_uisa[8]) {
+	while(ap < &u.u_uisa[8]) {
 		*ap++ = 0;
 		*dp++ = 0;
 	}
 	a = USIZE;
-	while(nd &gt;= 128) {
-		*dp++ = (127&lt;&lt;8) | RW;
+	while(nd >= 128) {
+		*dp++ = (127<<8) | RW;
 		*ap++ = a;
 		a =+ 128;
 		nd =- 128;
 	}
 	if(nd) {
-		*dp++ = ((nd-1)&lt;&lt;8) | RW;
+		*dp++ = ((nd-1)<<8) | RW;
 		*ap++ = a;
 		a =+ nd;
 	}
-	while(ap &lt; &amp;u.u_uisa[8]) {
+	while(ap < &u.u_uisa[8]) {
 		*dp++ = 0;
 		*ap++ = 0;
 	}
 	if(sep)
-	while(ap &lt; &amp;u.u_uisa[16]) {
+	while(ap < &u.u_uisa[16]) {
 		*dp++ = 0;
 		*ap++ = 0;
 	}
 	a =+ ns;
-	while(ns &gt;= 128) {
+	while(ns >= 128) {
 		a =- 128;
 		ns =- 128;
-		*--dp = (127&lt;&lt;8) | RW;
+		*--dp = (127<<8) | RW;
 		*--ap = a;
 	}
 	if(ns) {
-		*--dp = ((128-ns)&lt;&lt;8) | RW | ED;
+		*--dp = ((128-ns)<<8) | RW | ED;
 		*--ap = a-128;
 	}
 	if(!sep) {
-		ap = &amp;u.u_uisa[0];
-		dp = &amp;u.u_uisa[8];
-		while(ap &lt; &amp;u.u_uisa[8])
+		ap = &u.u_uisa[0];
+		dp = &u.u_uisa[8];
+		while(ap < &u.u_uisa[8])
 			*dp++ = *ap++;
-		ap = &amp;u.u_uisd[0];
-		dp = &amp;u.u_uisd[8];
-		while(ap &lt; &amp;u.u_uisd[8])
+		ap = &u.u_uisd[0];
+		dp = &u.u_uisd[8];
+		while(ap < &u.u_uisd[8])
 			*dp++ = *ap++;
 	}
 	sureg();
@@ -262,5 +262,5 @@ err:
 nseg(n)
 {
 
-	return((n+127)&gt;&gt;7);
+	return((n+127)>>7);
 }

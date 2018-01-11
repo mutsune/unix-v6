@@ -2,10 +2,10 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../seg.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
+#include "../param.h"
+#include "../seg.h"
+#include "../buf.h"
+#include "../conf.h"
 
 /*
  * Address and structure of the
@@ -43,17 +43,17 @@ char fmt[];
 	register char *s;
 	register *adx, c;
 
-	adx = &amp;x1;
+	adx = &x1;
 loop:
-	while((c = *fmt++) != &#39;%&#39;) {
-		if(c == &#39;\0&#39;)
+	while((c = *fmt++) != '%') {
+		if(c == '\0')
 			return;
 		putchar(c);
 	}
 	c = *fmt++;
-	if(c == &#39;d&#39; || c == &#39;l&#39; || c == &#39;o&#39;)
-		printn(*adx, c==&#39;o&#39;? 8: 10);
-	if(c == &#39;s&#39;) {
+	if(c == 'd' || c == 'l' || c == 'o')
+		printn(*adx, c=='o'? 8: 10);
+	if(c == 's') {
 		s = *adx;
 		while(c = *s++)
 			putchar(c);
@@ -71,7 +71,7 @@ printn(n, b)
 
 	if(a = ldiv(n, b))
 		printn(a, b);
-	putchar(lrem(n, b) + &#39;0&#39;);
+	putchar(lrem(n, b) + '0');
 }
 
 /*
@@ -86,28 +86,28 @@ putchar(c)
 	register rc, s;
 
 	rc = c;
-	if(SW-&gt;integ == 0)
+	if(SW->integ == 0)
 		return;
-	while((KL-&gt;xsr&amp;0200) == 0)
+	while((KL->xsr&0200) == 0)
 		;
 	if(rc == 0)
 		return;
-	s = KL-&gt;xsr;
-	KL-&gt;xsr = 0;
-	KL-&gt;xbr = rc;
-	if(rc == &#39;\n&#39;) {
-		putchar(&#39;\r&#39;);
+	s = KL->xsr;
+	KL->xsr = 0;
+	KL->xbr = rc;
+	if(rc == '\n') {
+		putchar('\r');
 		putchar(0177);
 		putchar(0177);
 	}
 	putchar(0);
-	KL-&gt;xsr = s;
+	KL->xsr = s;
 }
 
 /*
  * Panic is called on unresolvable
  * fatal errors.
- * It syncs, prints &quot;panic: mesg&quot; and
+ * It syncs, prints "panic: mesg" and
  * then loops.
  */
 panic(s)
@@ -115,21 +115,21 @@ char *s;
 {
 	panicstr = s;
 	update();
-	printf(&quot;panic: %s\n&quot;, s);
+	printf("panic: %s\n", s);
 	for(;;)
 		idle();
 }
 
 /*
  * prdev prints a warning message of the
- * form &quot;mesg on dev x/y&quot;.
+ * form "mesg on dev x/y".
  * x and y are the major and minor parts of
  * the device argument.
  */
 prdev(str, dev)
 {
 
-	printf(&quot;%s on dev %l/%l\n&quot;, str, dev.d_major, dev.d_minor);
+	printf("%s on dev %l/%l\n", str, dev.d_major, dev.d_minor);
 }
 
 /*
@@ -145,6 +145,6 @@ int *bp;
 	register *rbp;
 
 	rbp = bp;
-	prdev(&quot;err&quot;, rbp-&gt;b_dev);
-	printf(&quot;bn%l er%o %o\n&quot;, rbp-&gt;b_blkno, o1, o2);
+	prdev("err", rbp->b_dev);
+	printf("bn%l er%o %o\n", rbp->b_blkno, o1, o2);
 }

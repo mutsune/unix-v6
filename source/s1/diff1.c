@@ -26,7 +26,7 @@
 *
 *	The cleverness lies in routine stone______. This marches
 *	through the lines of file0, developing a vector klist_____
-*	of &quot;k-candidates&quot;. At step i a k-candidate is a matched
+*	of "k-candidates". At step i a k-candidate is a matched
 *	pair of lines x,y (x in file0 y in file1) such that
 *	there is a common subsequence of lenght k
 *	between the first i lines of file0 and the first y 
@@ -48,7 +48,7 @@
 *	With J in hand, the matches there recorded are
 *	check_____ed against reality to assure that no spurious
 *	matches have crept in due to hashing. If they have,
-*	they are broken, and &quot;jackpot &quot; is recorded--a harmless
+*	they are broken, and "jackpot " is recorded--a harmless
 *	matter except that a true match for a spuriously
 *	mated line may now be unnecessarily reported as a change.
 *
@@ -91,11 +91,11 @@ alloc(n)
 {
 	register char *p;
 	p = area;
-	n = (n+1) &amp; ~1;
+	n = (n+1) & ~1;
 	area =+ n;
-	while(area &gt; top) {
+	while(area > top) {
 		if(sbrk(1024) == -1) {
-			mesg(&quot;Out of space\n&quot;);
+			mesg("Out of space\n");
 			exit(1);
 		}
 		top =+ 1024;
@@ -118,23 +118,23 @@ struct line *a;
 	struct line *ai;
 	register struct line *aim;
 	int k;
-	for(j=1;j&lt;=n;j=* 2)
+	for(j=1;j<=n;j=* 2)
 		m = 2*j - 1;
 	for(m=/2;m!=0;m=/2) {
 		k = n-m;
-		for(j=1;j&lt;=k;j++) {
-			for(ai = &amp;a[j]; ai &gt; a; ai =- m) {
-				aim = &amp;ai[m];
-				if(aim-&gt;value &gt; ai[0].value ||
-				   aim-&gt;value == ai[0].value &amp;&amp;
-				   aim-&gt;serial &gt; ai[0].serial)
+		for(j=1;j<=k;j++) {
+			for(ai = &a[j]; ai > a; ai =- m) {
+				aim = &ai[m];
+				if(aim->value > ai[0].value ||
+				   aim->value == ai[0].value &&
+				   aim->serial > ai[0].serial)
 					break;
 				w.value = ai[0].value;
-				ai[0].value = aim-&gt;value;
-				aim-&gt;value = w.value;
+				ai[0].value = aim->value;
+				aim->value = w.value;
 				w.serial = ai[0].serial;
-				ai[0].serial = aim-&gt;serial;
-				aim-&gt;serial = w.serial;
+				ai[0].serial = aim->serial;
+				aim->serial = w.serial;
 			}
 		}
 	}
@@ -147,9 +147,9 @@ int *b;
 	int *a;
 	int i;
 	a = alloc((l+1)*sizeof(a[0]));
-	for(i=1;i&lt;=l;i++)
+	for(i=1;i<=l;i++)
 		a[f[i].serial] = f[i].value;
-	for(i=1;i&lt;=l;i++)
+	for(i=1;i<=l;i++)
 		b[i] = a[i];
 	area = a;
 }
@@ -171,17 +171,17 @@ input(arg)
 	register int h, i;
 	register struct line *p;
 	if(fopen(arg,buf1) == -1) {
-		mesg(&quot;Cannot open &quot;);
+		mesg("Cannot open ");
 		mesg(arg);
-		mesg(&quot;\n&quot;);
+		mesg("\n");
 		exit(1);
 	}
 	for(i=0; h=readhash(buf1);) {
 		p = alloc(sizeof(line));
-		p-&gt;serial = ++i;
-		p-&gt;value = h;
+		p->serial = ++i;
+		p->value = h;
 	}
-	close(buf1-&gt;fdes);
+	close(buf1->fdes);
 }
 
 equiv(a,n,b,m,c)
@@ -190,19 +190,19 @@ int *c;
 {
 	register int i, j;
 	i = j = 1;
-	while(i&lt;=n &amp;&amp; j&lt;=m) {
-		if(a[i].value &lt;b[j].value)
+	while(i<=n && j<=m) {
+		if(a[i].value <b[j].value)
 			a[i++].value = 0;
 		else if(a[i].value == b[j].value)
 			a[i++].value = j;
 		else
 			j++;
 	}
-	while(i &lt;= n)
+	while(i <= n)
 		a[i++].value = 0;
 	b[m+1].value = 0;
 	j = 0;
-	while(++j &lt;= m) {
+	while(++j <= m) {
 		c[j] = -b[j].serial;
 		while(b[j+1].value == b[j].value) {
 			j++;
@@ -217,12 +217,12 @@ char **argv;
 {
 	int k;
 
-	if(argc&gt;1 &amp;&amp; *argv[1]==&#39;-&#39;) {
+	if(argc>1 && *argv[1]=='-') {
 		argc--;
 		argv++;
 	}
 	if(argc!=3) {
-		mesg(&quot;Arg count\n&quot;);
+		mesg("Arg count\n");
 		exit(1);
 	}
 
@@ -237,18 +237,18 @@ char **argv;
 	class = file[0];
 	unsort(file[0], len[0], class);
 
-	klist = &amp;class[len[0]+2];
-	area = &amp;member[len[1]+2];
+	klist = &class[len[0]+2];
+	area = &member[len[1]+2];
 	k = stone(class, len[0], member, klist);
 	J = class;
 	unravel(klist[k]);
 
 	ixold = klist;
 	ixnew = file[1];
-	area = &amp;ixnew[len[1]+2];
+	area = &ixnew[len[1]+2];
 	buf2 = alloc(sizeof(*buf2));
 	if(check(argv))
-		mesg(&quot;Jackpot\n&quot;);
+		mesg("Jackpot\n");
 	output(argv);
 }
 
@@ -262,25 +262,25 @@ struct cand **c;
 	int skip;
 	k = 0;
 	c[0] = 0;
-	for(i=1; i&lt;=n; i++) {
+	for(i=1; i<=n; i++) {
 		j = a[i];
 		if(j==0)
 			continue;
 		skip = 0;
 		do {
 			y = b[j];
-			if(y&lt;0) y = -y;
+			if(y<0) y = -y;
 			if(skip)
 				continue;
 			l = search(c, k, y);
-			if(l &gt; k) {
+			if(l > k) {
 				c[k+1] = newcand(i,y,c[k]);
 				skip = 1;
 				k++;
 			}
-			else if(c[l]-&gt;y &gt; y &amp;&amp; c[l]-&gt;x &lt; i)
+			else if(c[l]->y > y && c[l]->x < i)
 				c[l] = newcand(i,y,c[l-1]);
-		} while(b[++j] &gt; 0);
+		} while(b[++j] > 0);
 	}
 	return(k);
 }
@@ -291,9 +291,9 @@ struct cand *pred;
 {
 	struct cand *p;
 	p = alloc(sizeof(cand));
-	p-&gt;x = x;
-	p-&gt;y = y;
-	p-&gt;pred = pred;
+	p->x = x;
+	p->y = y;
+	p->pred = pred;
 	return(p);
 }
 
@@ -304,11 +304,11 @@ struct cand **c;
 	int t;
 	i = 0;
 	j = k+1;
-	while((l=(i+j)/2) &gt; i) {
-		t = c[l]-&gt;y;
-		if(t &gt; y)
+	while((l=(i+j)/2) > i) {
+		t = c[l]->y;
+		if(t > y)
 			j = l;
-		else if(t &lt; y)
+		else if(t < y)
 			i = l;
 		else
 			return(l);
@@ -320,17 +320,17 @@ unravel(p)
 struct cand *p;
 {
 	int i;
-	for(i=0; i&lt;=len[0]; i++)
+	for(i=0; i<=len[0]; i++)
 		J[i] = 0;
 	while(p) {
-		J[p-&gt;x] = p-&gt;y;
-		p = p-&gt;pred;
+		J[p->x] = p->y;
+		p = p->pred;
 	}
 }
 
 /* check does double duty:
 1.  ferret out any fortuitous correspondences due
-to counfounding by hashing (which result in &quot;jackpot&quot;)
+to counfounding by hashing (which result in "jackpot")
 2.  collect random access indexes to the two files */
 
 check(argv)
@@ -346,30 +346,30 @@ char **argv;
 	ctold = ctnew = 0;
 	ixold[0] = ixnew[0] = 0;
 	jackpot = 0;
-	for(i=1;i&lt;=len[0];i++) {
+	for(i=1;i<=len[0];i++) {
 		if(J[i]==0) {
-			while(getc(buf1)!=&#39;\n&#39;) ctold++;
+			while(getc(buf1)!='\n') ctold++;
 			ixold[i] = ++ctold;
 			continue;
 		}
-		while(j&lt;J[i]) {
-			while(getc(buf2)!=&#39;\n&#39;) ctnew++;
+		while(j<J[i]) {
+			while(getc(buf2)!='\n') ctnew++;
 			ixnew[j] = ++ctnew;
 			j++;
 		}
 		while((c=getc(buf1))==(d=getc(buf2))) {
-			if(c==&#39;\n&#39;) break;
+			if(c=='\n') break;
 			ctold++;
 			ctnew++;
 		}
-		while(c!=&#39;\n&#39;) {
+		while(c!='\n') {
 			jackpot++;
 			J[i] = 0;
 			c = getc(buf1);
 			ctold++;
 		}
 		ixold[i] = ++ctold;
-		while(d!=&#39;\n&#39;) {
+		while(d!='\n') {
 			jackpot++;
 			J[i] = 0;
 			d = getc(buf2);
@@ -378,12 +378,12 @@ char **argv;
 		ixnew[j] = ++ctnew;
 		j++;
 	}
-	for(;j&lt;=len[1];j++) {
-		while(getc(buf2)!=&#39;\n&#39;) ctnew++;
+	for(;j<=len[1];j++) {
+		while(getc(buf2)!='\n') ctnew++;
 		ixnew[j] = ++ctnew;
 	}
-	close(buf1-&gt;fdes);
-	close(buf2-&gt;fdes);
+	close(buf1->fdes);
+	close(buf2->fdes);
 	return(jackpot);
 }
 
@@ -394,26 +394,26 @@ char **argv;
 	int m;
 	int i0,i1,j0,j1;
 	extern fout;
-	dir = **argv==&#39;-&#39;;
+	dir = **argv=='-';
 	fout = dup(1);
-	buf1-&gt;fdes = open(argv[1],0);
-	buf2-&gt;fdes = open(argv[2],0);
+	buf1->fdes = open(argv[1],0);
+	buf2->fdes = open(argv[2],0);
 	m = len[0];
 	J[0] = 0;
 	J[m+1] = len[1]+1;
-	if(dir==0) for(i0=1;i0&lt;=m;i0=i1+1) {
-		while(i0&lt;=m&amp;&amp;J[i0]==J[i0-1]+1) i0++;
+	if(dir==0) for(i0=1;i0<=m;i0=i1+1) {
+		while(i0<=m&&J[i0]==J[i0-1]+1) i0++;
 		j0 = J[i0-1]+1;
 		i1 = i0-1;
-		while(i1&lt;m&amp;&amp;J[i1+1]==0) i1++;
+		while(i1<m&&J[i1+1]==0) i1++;
 		j1 = J[i1+1]-1;
 		J[i1] = j1;
 		change(i0,i1,j0,j1,dir);
-	} else for(i0=m;i0&gt;=1;i0=i1-1) {
-		while(i0&gt;=1&amp;&amp;J[i0]==J[i0+1]-1&amp;&amp;J[i0]!=0) i0--;
+	} else for(i0=m;i0>=1;i0=i1-1) {
+		while(i0>=1&&J[i0]==J[i0+1]-1&&J[i0]!=0) i0--;
 		j0 = J[i0+1]-1;
 		i1 = i0+1;
-		while(i1&gt;1&amp;&amp;J[i1-1]==0) i1--;
+		while(i1>1&&J[i1-1]==0) i1--;
 		j1 = J[i1-1]+1;
 		J[i1] = j1;
 		change(i1,i0,j1,j0,dir);
@@ -425,24 +425,24 @@ char **argv;
 
 change(a,b,c,d,dir)
 {
-	if(a&gt;b&amp;&amp;c&gt;d) return;
+	if(a>b&&c>d) return;
 	range(a,b);
-	putchar(a&gt;b?&#39;a&#39;:c&gt;d?&#39;d&#39;:&#39;c&#39;);
+	putchar(a>b?'a':c>d?'d':'c');
 	if(dir==0) range(c,d);
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 	if(dir==0) {
-		fetch(ixold,a,b,buf1,&quot;* &quot;);
-		if(a&lt;=b&amp;&amp;c&lt;=d) printf(&quot;---\n&quot;);
+		fetch(ixold,a,b,buf1,"* ");
+		if(a<=b&&c<=d) printf("---\n");
 	}
-	fetch(ixnew,c,d,buf2,dir==0?&quot;. &quot;:&quot;&quot;);
-	if(dir!=0&amp;&amp;c&lt;=d) printf(&quot;.\n&quot;);
+	fetch(ixnew,c,d,buf2,dir==0?". ":"");
+	if(dir!=0&&c<=d) printf(".\n");
 }
 
 range(a,b)
 {
-	if(a&gt;b) printf(&quot;%d&quot;,b);
-	if(a&lt;=b) printf(&quot;%d&quot;,a);
-	if(a&lt;b) printf(&quot;,%d&quot;,b);
+	if(a>b) printf("%d",b);
+	if(a<=b) printf("%d",a);
+	if(a<b) printf(",%d",b);
 }
 
 fetch(f,a,b,lb,pref)
@@ -452,12 +452,12 @@ char *pref;
 {
 	int i, j;
 	int nc;
-	for(i=a;i&lt;=b;i++) {
-		seek(lb-&gt;fdes,f[i-1],0);
-		nc = read(lb-&gt;fdes,lb-&gt;data,f[i]-f[i-1]);
+	for(i=a;i<=b;i++) {
+		seek(lb->fdes,f[i-1],0);
+		nc = read(lb->fdes,lb->data,f[i]-f[i-1]);
 		printf(pref);
-		for(j=0;j&lt;nc;j++)
-			putchar(lb-&gt;data[j]);
+		for(j=0;j<nc;j++)
+			putchar(lb->data[j]);
 	}
 }
 

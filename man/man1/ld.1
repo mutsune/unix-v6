@@ -47,12 +47,12 @@ is important.
 .s3
 .it Ld
 understands several flag arguments which are written
-preceded by a `\*-&#39;.
+preceded by a `\*-'.
 Except for \fB\*-l\fR,
 they should appear before the file names.
 .s3
 .lp +4 4
-\fB\*-s\fR	`squash&#39; the output, that is, remove the symbol table
+\fB\*-s\fR	`squash' the output, that is, remove the symbol table
 and relocation bits to save space (but impair the
 usefulness of the debugger).
 This information can also be removed by
@@ -69,11 +69,11 @@ to force the loading of the first routine.
 \fB\*-l\fR	This
 option is an abbreviation for a library name.
 \fB\*-l\fR
-alone stands for `/lib/liba.a&#39;, which
+alone stands for `/lib/liba.a', which
 is the standard system library for assembly language
 programs.
 \fB\*-l\fIx\fR
-stands for `/lib/lib\fIx\fR.a&#39; where \fIx\fR is any character.
+stands for `/lib/lib\fIx\fR.a' where \fIx\fR is any character.
 A library is searched when its name is encountered,
 so the placement of a \fB\*-l\fR
 is significant.
@@ -86,7 +86,7 @@ This option saves some space in the output file.
 .s3
 .lp +4 4
 \fB\*-X\fR	Save local symbols
-except for those whose names begin with `L&#39;.
+except for those whose names begin with `L'.
 This option is used by
 .it cc
 to discard internally generated labels while
@@ -99,7 +99,7 @@ so that it can be the subject of another
 run.
 This flag also prevents final definitions from being
 given to common symbols,
-and suppresses the `undefined symbol&#39; diagnostics.
+and suppresses the `undefined symbol' diagnostics.
 .s3
 .lp +4 4
 \fB\*-d\fR	force definition of common storage
@@ -129,6 +129,6 @@ is that here the data starts at location 0.
 /lib/lib?.a   libraries
 .br
 a.out   output file
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 as (I), ar (I)
 .sh BUGS

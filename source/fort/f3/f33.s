@@ -65,12 +65,12 @@ dobeg:
 	clrb	r3
 	swab	r3
 	jsr	r5,code
-		&lt;	gas%d\n	goto; 2f\n\0&gt;; .even
+		<	gas%d\n	goto; 2f\n\0>; .even
 		r3
 	mov	dotabp,r2
 	mov	dotab-4(r2),r0
 	jsr	r5,code
-		&lt;t%d:\n\0&gt;; .even
+		<t%d:\n\0>; .even
 		r0
 	mov	(sp)+,r3
 	mov	(sp)+,r2
@@ -91,18 +91,18 @@ dobeg:
 	jsr	r5,convrt
 	mov	(sp)+,r0
 	jsr	r5,code
-		&lt;	do2\0&gt;; .even
+		<	do2\0>; .even
 	br	2f
 1:
 	jsr	r5,code
-		&lt;	do1\0&gt;; .even
+		<	do1\0>; .even
 2:
 	mov	(sp)+,r3
 	clrb	r3
 	swab	r3
 	mov	(sp)+,r2
 	jsr	r5,code
-		&lt;%d; o%d\n2:\n\0&gt;; .even
+		<%d; o%d\n2:\n\0>; .even
 		r3
 		r2
 	rts	r5
@@ -135,7 +135,7 @@ gen:
 	mov	dotab-4(r2),r0
 	sub	$4,dotabp
 	jsr	r5,code
-		&lt;	goto; t%d\no%d:\n\0&gt;; .even
+		<	goto; t%d\no%d:\n\0>; .even
 		r0
 		r0
 	mov	(sp)+,r0

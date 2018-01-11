@@ -2,14 +2,14 @@
 
 char	*dargv[]
 {
-	&quot;/dev/rrk2&quot;,
-	&quot;/dev/rrp0&quot;,
+	"/dev/rrk2",
+	"/dev/rrp0",
 	0
 };
 
 #define NINODE	16*16
-#include &quot;/usr/sys/ino.h&quot;
-#include &quot;/usr/sys/filsys.h&quot;
+#include "/usr/sys/ino.h"
+#include "/usr/sys/filsys.h"
 
 struct	filsys	sblock;
 struct	inode	inode[NINODE];
@@ -53,18 +53,18 @@ char **argv;
 	}
 	while (--argc) {
 		argv++;
-		if (**argv==&#39;-&#39;) switch ((*argv)[1]) {
-		case &#39;s&#39;:
+		if (**argv=='-') switch ((*argv)[1]) {
+		case 's':
 			sflg++;
 			continue;
 
-		case &#39;a&#39;:
+		case 'a':
 			aflg++;
 			continue;
 
-		case &#39;i&#39;:
+		case 'i':
 			lp = ilist;
-			while (lp &lt; &amp;ilist[NI-1] &amp;&amp; (n = number(argv[1]))) {
+			while (lp < &ilist[NI-1] && (n = number(argv[1]))) {
 				*lp++ = n;
 				argv++;
 				argc--;
@@ -73,7 +73,7 @@ char **argv;
 			continue;
 
 		default:
-			printf2(&quot;Bad flag\n&quot;);
+			printf2("Bad flag\n");
 		}
 		check(*argv);
 	}
@@ -86,25 +86,25 @@ char *file;
 	register i, j, pno;
 
 	fi = open(file, 0);
-	if (fi &lt; 0) {
-		printf2(&quot;cannot open %s\n&quot;, file);
+	if (fi < 0) {
+		printf2("cannot open %s\n", file);
 		return;
 	}
-	printf2(&quot;%s:\n&quot;, file);
+	printf2("%s:\n", file);
 	sync();
-	bread(1, &amp;sblock, 512);
+	bread(1, &sblock, 512);
 	nfiles = sblock.s_isize*16;
-	for (i=0; i&lt;NDIRS; i++)
+	for (i=0; i<NDIRS; i++)
 		htab[i].hino = 0;
 	fout = nffil;
 	flush();
-	for (pno=0; pno&lt;3; pno++) {
+	for (pno=0; pno<3; pno++) {
 		ino = 0;
-		for (i=0; ino&lt;nfiles; i =+ NINODE/16) {
+		for (i=0; ino<nfiles; i =+ NINODE/16) {
 			bread(i+2, inode, sizeof inode);
-			for (j=0; j&lt;NINODE &amp;&amp; ino&lt;nfiles; j++) {
+			for (j=0; j<NINODE && ino<nfiles; j++) {
 				ino++;
-				(*pass[pno])(&amp;inode[j]);
+				(*pass[pno])(&inode[j]);
 			}
 		}
 	}
@@ -114,7 +114,7 @@ char *file;
 
 pass1(ip)
 {
-	if ((ip-&gt;i_mode&amp;IALLOC)==0 || (ip-&gt;i_mode&amp;IFMT)!=IFDIR)
+	if ((ip->i_mode&IALLOC)==0 || (ip->i_mode&IFMT)!=IFDIR)
 		return;
 	lookup(ino, 1);
 }
@@ -127,20 +127,20 @@ struct inode *ip;
 	register struct dir *dp;
 	int i;
 
-	if ((ip-&gt;i_mode&amp;IALLOC)==0 || (ip-&gt;i_mode&amp;IFMT)!=IFDIR)
+	if ((ip->i_mode&IALLOC)==0 || (ip->i_mode&IFMT)!=IFDIR)
 		return;
 	doff = 0;
 	while (dp = dread(ip, doff)) {
 		doff =+ 16;
-		if (dp-&gt;ino==0)
+		if (dp->ino==0)
 			continue;
-		if ((hp = lookup(dp-&gt;ino, 0)) == 0)
+		if ((hp = lookup(dp->ino, 0)) == 0)
 			continue;
 		if (dotname(dp))
 			continue;
-		hp-&gt;hpino = ino;
-		for (i=0; i&lt;14; i++)
-			hp-&gt;hname[i] = dp-&gt;name[i];
+		hp->hpino = ino;
+		for (i=0; i<14; i++)
+			hp->hname[i] = dp->name[i];
 	}
 }
 
@@ -151,23 +151,23 @@ struct inode *ip;
 	register struct dir *dp;
 	register int *ilp;
 
-	if ((ip-&gt;i_mode&amp;IALLOC)==0 || (ip-&gt;i_mode&amp;IFMT)!=IFDIR)
+	if ((ip->i_mode&IALLOC)==0 || (ip->i_mode&IFMT)!=IFDIR)
 		return;
 	doff = 0;
 	while (dp = dread(ip, doff)) {
 		doff =+ 16;
-		if (dp-&gt;ino==0)
+		if (dp->ino==0)
 			continue;
-		if (aflg==0 &amp;&amp; dotname(dp))
+		if (aflg==0 && dotname(dp))
 			continue;
-		for (ilp=ilist; *ilp &gt;= 0; ilp++)
-			if (*ilp == dp-&gt;ino)
+		for (ilp=ilist; *ilp >= 0; ilp++)
+			if (*ilp == dp->ino)
 				break;
-		if (ilp &gt; ilist &amp;&amp; *ilp!=dp-&gt;ino)
+		if (ilp > ilist && *ilp!=dp->ino)
 			continue;
-		printf(&quot;%d	&quot;, dp-&gt;ino);
+		printf("%d	", dp->ino);
 		pname(ino, 0);
-		printf(&quot;/%.14s\n&quot;, dp-&gt;name);
+		printf("/%.14s\n", dp->name);
 	}
 }
 
@@ -176,8 +176,8 @@ dotname(adp)
 	register struct dir *dp;
 
 	dp = adp;
-	if (dp-&gt;name[0]==&#39;.&#39;)
-		if (dp-&gt;name[1]==0 || dp-&gt;name[1]==&#39;.&#39; &amp;&amp; dp-&gt;name[2]==0)
+	if (dp->name[0]=='.')
+		if (dp->name[1]==0 || dp->name[1]=='.' && dp->name[2]==0)
 			return(1);
 	return(0);
 }
@@ -189,35 +189,35 @@ pname(i, lev)
 	if (i==1)
 		return;
 	if ((hp = lookup(i, 0)) == 0) {
-		printf(&quot;???&quot;);
+		printf("???");
 		return;
 	}
-	if (lev &gt; 10) {
-		printf(&quot;...&quot;);
+	if (lev > 10) {
+		printf("...");
 		return;
 	}
-	pname(hp-&gt;hpino, ++lev);
-	printf(&quot;/%.14s&quot;, hp-&gt;hname);
+	pname(hp->hpino, ++lev);
+	printf("/%.14s", hp->hname);
 }
 
 lookup(i, ef)
 {
 	register struct htab *hp;
 
-	for (hp = &amp;htab[i%NDIRS]; hp-&gt;hino;) {
-		if (hp-&gt;hino==i)
+	for (hp = &htab[i%NDIRS]; hp->hino;) {
+		if (hp->hino==i)
 			return(hp);
-		if (++hp &gt;= &amp;htab[NDIRS])
+		if (++hp >= &htab[NDIRS])
 			hp = htab;
 	}
 	if (ef==0)
 		return(0);
-	if (++nhent &gt;= NDIRS) {
-		printf2(&quot;Out of core-- increase NDIRS\n&quot;);
+	if (++nhent >= NDIRS) {
+		printf2("Out of core-- increase NDIRS\n");
 		flush();
 		exit(1);
 	}
-	hp-&gt;hino = i;
+	hp->hino = i;
 	return(hp);
 }
 
@@ -230,27 +230,27 @@ dread(aip, aoff)
 
 	off = aoff;
 	ip = aip;
-	if ((off&amp;0777)==0) {
+	if ((off&0777)==0) {
 		if (off==0177000) {
-			printf2(&quot;Monstrous directory %l\n&quot;, ino);
+			printf2("Monstrous directory %l\n", ino);
 			return(0);
 		}
-		if ((ip-&gt;i_mode&amp;ILARG)==0) {
-			if (off&gt;=010000 || (b = ip-&gt;i_addr[off&gt;&gt;9])==0)
+		if ((ip->i_mode&ILARG)==0) {
+			if (off>=010000 || (b = ip->i_addr[off>>9])==0)
 				return(0);
 			bread(b, buf, 512);
 		} else {
 			if (off==0) {
-				if (ip-&gt;i_addr[0]==0)
+				if (ip->i_addr[0]==0)
 					return(0);
-				bread(ip-&gt;i_addr[0], ibuf, 512);
+				bread(ip->i_addr[0], ibuf, 512);
 			}
-			if ((b = ibuf[(off&gt;&gt;9)&amp;0177])==0)
+			if ((b = ibuf[(off>>9)&0177])==0)
 				return(0);
 			bread(b, buf, 512);
 		}
 	}
-	return(&amp;buf[off&amp;0777]);
+	return(&buf[off&0777]);
 }
 
 bread(bno, buf, cnt)
@@ -258,7 +258,7 @@ bread(bno, buf, cnt)
 
 	seek(fi, bno, 3);
 	if (read(fi, buf, cnt) != cnt) {
-		printf2(&quot;read error %d\n&quot;, bno);
+		printf2("read error %d\n", bno);
 		exit();
 	}
 }
@@ -268,7 +268,7 @@ bwrite(bno, buf)
 
 	seek(fi, bno, 3);
 	if (write(fi, buf, 512) != 512) {
-		printf2(&quot;write error %d\n&quot;, bno);
+		printf2("write error %d\n", bno);
 		exit();
 	}
 }
@@ -281,8 +281,8 @@ char *as;
 
 	s = as;
 	n = 0;
-	while ((c = *s++) &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39;) {
-		n = n*10+c-&#39;0&#39;;
+	while ((c = *s++) >= '0' && c <= '9') {
+		n = n*10+c-'0';
 	}
 	return(n);
 }

@@ -1,4 +1,4 @@
-.h0 &quot;A. Hardware&quot;
+.h0 "A. Hardware"
 .in0
 .sp
 U\s8NIX\s10 runs on 
@@ -37,7 +37,7 @@ on configuration.
 .sp
 An 11/40 is not advisable for heavy floating point
 work, as U\s8NIX\s10 on this hardware uses interpreted 11/45 floating point.
-.h0 &quot;B. Software&quot;
+.h0 "B. Software"
 .sp
 All the programs available as U\s8NIX\s10
 commands are listed.
@@ -55,9 +55,9 @@ of other programs.
 .sp
 Commercially distributed U\s8NIX\s10
 normally excludes software listed
-in Section 5, ``Typesetting.&#39;&#39;
+in Section 5, ``Typesetting.''
 Source code is included except as noted.
-.h0 &quot;\n+a Basic Software&quot;
+.h0 "\n+a Basic Software"
 .nr b 0
 .sp
 This package
@@ -67,7 +67,7 @@ compiler for the programming language C\(emenough
 software to
 write and run new applications
 and to maintain or modify U\s8NIX\s10 itself.
-.h0 &quot;\na.\n+b Operating System&quot;
+.h0 "\na.\n+b Operating System"
 .sh UNIX
 The basic resident code
 on which everything else depends.
@@ -81,7 +81,7 @@ Automatically supported reentrant code.
 .op
 Separate instruction and data spaces on 11/45 and 11/70.
 .op
-``Group&#39;&#39; access permissions allow cooperative projects,
+``Group'' access permissions allow cooperative projects,
 with overlapping memberships.
 .op
 Timer-interrupt sampling and interprocess monitoring
@@ -90,7 +90,7 @@ for debugging and measurement.
 Printed manuals for U\s8NIX\s10 and all its software,
 except where other manuals exist.
 .op
-U\s8NIX\s10 Programmer&#39;s Manual.
+U\s8NIX\s10 Programmer's Manual.
 .op
 The U\s8NIX\s10 Time-Sharing System, reprint setting forth
 design principles.
@@ -104,7 +104,7 @@ On the Security of U\s8NIX\s10.
 All I/O is logically synchronous.
 Normally, invisible buffering makes all physical
 record structure transparent and exploits the
-hardware&#39;s ability to do overlapped I/O.
+hardware's ability to do overlapped I/O.
 Unbuffered physical record
 I/O is available for unusual applications.
 Drivers for these devices are

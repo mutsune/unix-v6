@@ -30,7 +30,7 @@ setio:
 	dvd	$10.,r0
 	swab	r1
 	bis	r1,r0
-	add	$&quot;00,r0
+	add	$"00,r0
 	mov	r0,filnam+4
 	mov	(sp)+,r1
 	jsr	r5,getbuf
@@ -192,11 +192,11 @@ fgetc:
 	mov	(sp)+,r1
 	tst	binflg
 	bne	1f
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 4:
 	mov	pc,nlflg
-	mov	$&#39; ,r0
+	mov	$' ,r0
 1:
 	rts	r5
 
@@ -205,9 +205,9 @@ gnum:
 	clr	r1
 1:
 	jsr	r5,fmtchr
-	cmp	r0,$&#39;  /
+	cmp	r0,$'  /
 	beq	1b
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	1f
 	mpy	$10.,r1
@@ -246,10 +246,10 @@ getitm:
 	tst	(r5)+
 	rts	r5
 
-/ just a fake, there&#39;s no carriage control
+/ just a fake, there's no carriage control
 
 fputcc:
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	1f
 	inc	nspace
 	rts	r5
@@ -258,7 +258,7 @@ fputcc:
 1:
 	dec	nspace
 	blt	1f
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	r5,fputc
 	br	1b
 1:
@@ -274,7 +274,7 @@ eorec:
 	bitb	$1,utable(r0)
 	bne	1f
 	clr	nspace
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	r5,fputc
 eorec1:
 	clr	r0

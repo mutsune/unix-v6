@@ -5,7 +5,7 @@
  *
  */
 
-#include &quot;c0h.c&quot;
+#include "c0h.c"
 
 /*
  * Called from tree, this routine takes the top 1, 2, or 3
@@ -22,16 +22,16 @@ build(op) {
 	int d, dope, leftc, cvn, pcvn;
 
 	/*
-	 * a[i] =&gt; *(a+i)
+	 * a[i] => *(a+i)
 	 */
 	if (op==LBRACK) {
 		build(PLUS);
 		op = STAR;
 	}
 	dope = opdope[op];
-	if ((dope&amp;BINARY)!=0) {
+	if ((dope&BINARY)!=0) {
 		p2 = chkfun(disarray(*--cp));
-		t2 = p2-&gt;type;
+		t2 = p2->type;
 	}
 	p1 = *--cp;
 	/*
@@ -41,10 +41,10 @@ build(op) {
 	 */
 	if (op==SIZEOF) {
 		t1 = length(p1);
-		p1-&gt;op = CON;
-		p1-&gt;type = INT;
-		p1-&gt;dimp = 0;
-		p1-&gt;value = t1;
+		p1->op = CON;
+		p1->type = INT;
+		p1->dimp = 0;
+		p1->value = t1;
 		*cp++ = p1;
 		return;
 	}
@@ -53,7 +53,7 @@ build(op) {
 		if (op!=CALL)
 			p1 = chkfun(p1);
 	}
-	t1 = p1-&gt;type;
+	t1 = p1->type;
 	pcvn = 0;
 	t = INT;
 	switch (op) {
@@ -65,8 +65,8 @@ build(op) {
 
 	/* no-conversion operators */
 	case QUEST:
-		if (p2-&gt;op!=COLON)
-			error(&quot;Illegal conditional&quot;);
+		if (p2->op!=COLON)
+			error("Illegal conditional");
 		t = t2;
 
 	case COMMA:
@@ -76,42 +76,42 @@ build(op) {
 		return;
 
 	case CALL:
-		if ((t1&amp;XTYPE) != FUNC)
-			error(&quot;Call of non-function&quot;);
-		*cp++ = block(2,CALL,decref(t1),p1-&gt;dimp,p1,p2);
+		if ((t1&XTYPE) != FUNC)
+			error("Call of non-function");
+		*cp++ = block(2,CALL,decref(t1),p1->dimp,p1,p2);
 		return;
 
 	case STAR:
-		if (p1-&gt;op==AMPER ) {
-			*cp++ = p1-&gt;tr1;
+		if (p1->op==AMPER ) {
+			*cp++ = p1->tr1;
 			return;
 		}
-		if ((t1&amp;XTYPE) == FUNC)
-			error(&quot;Illegal indirection&quot;);
-		*cp++ = block(1,STAR,decref(t1),p1-&gt;dimp,p1);
+		if ((t1&XTYPE) == FUNC)
+			error("Illegal indirection");
+		*cp++ = block(1,STAR,decref(t1),p1->dimp,p1);
 		return;
 
 	case AMPER:
-		if (p1-&gt;op==STAR) {
-			p1-&gt;tr1-&gt;dimp = p1-&gt;dimp;
-			p1-&gt;tr1-&gt;type = incref(t1);
-			*cp++ = p1-&gt;tr1;
+		if (p1->op==STAR) {
+			p1->tr1->dimp = p1->dimp;
+			p1->tr1->type = incref(t1);
+			*cp++ = p1->tr1;
 			return;
 		}
-		if (p1-&gt;op==NAME) {
-			*cp++ = block(1,op,incref(t1),p1-&gt;dimp,p1);
+		if (p1->op==NAME) {
+			*cp++ = block(1,op,incref(t1),p1->dimp,p1);
 			return;
 		}
-		error(&quot;Illegal lvalue&quot;);
+		error("Illegal lvalue");
 		break;
 
 	/*
-	 * a-&gt;b goes to (*a).b
+	 * a->b goes to (*a).b
 	 */
 	case ARROW:
 		*cp++ = p1;
 		chkw(p1, -1);
-		p1-&gt;type = PTR+STRUCT;
+		p1->type = PTR+STRUCT;
 		build(STAR);
 		p1 = *--cp;
 
@@ -123,64 +123,64 @@ build(op) {
 	 * given a special type to prevent conversion.
 	 */
 	case DOT:
-		if (p2-&gt;op!=NAME || (p2-&gt;class!=MOS &amp;&amp; p2-&gt;class!=FMOS))
-			error(&quot;Illegal structure ref&quot;);
+		if (p2->op!=NAME || (p2->class!=MOS && p2->class!=FMOS))
+			error("Illegal structure ref");
 		*cp++ = p1;
 		t = t2;
-		if ((t&amp;XTYPE) == ARRAY) {
+		if ((t&XTYPE) == ARRAY) {
 			t = decref(t);
-			p2-&gt;ssp++;
+			p2->ssp++;
 		}
-		setype(p1, t, p2-&gt;dimp);
+		setype(p1, t, p2->dimp);
 		build(AMPER);
-		*cp++ = block(1,CON,NOTYPE,0,p2-&gt;nloc);
+		*cp++ = block(1,CON,NOTYPE,0,p2->nloc);
 		build(PLUS);
-		if ((t2&amp;XTYPE) != ARRAY)
+		if ((t2&XTYPE) != ARRAY)
 			build(STAR);
-		if (p2-&gt;class == FMOS)
-			*cp++ = block(2, FSEL, t, 0, *--cp, p2-&gt;dimp);
+		if (p2->class == FMOS)
+			*cp++ = block(2, FSEL, t, 0, *--cp, p2->dimp);
 		return;
 	}
-	if ((dope&amp;LVALUE)!=0)
+	if ((dope&LVALUE)!=0)
 		chklval(p1);
-	if ((dope&amp;LWORD)!=0)
+	if ((dope&LWORD)!=0)
 		chkw(p1, LONG);
-	if ((dope&amp;RWORD)!=0)
+	if ((dope&RWORD)!=0)
 		chkw(p2, LONG);
-	if ((dope&amp;BINARY)==0) {
+	if ((dope&BINARY)==0) {
 		if (op==ITOF)
 			t1 = DOUBLE;
 		else if (op==FTOI)
 			t1 = INT;
 		if (!fold(op, p1, 0))
-			*cp++ = block(1,op,t1,p1-&gt;dimp,p1);
+			*cp++ = block(1,op,t1,p1->dimp,p1);
 		return;
 	}
 	cvn = 0;
 	if (t1==STRUCT || t2==STRUCT) {
-		error(&quot;Unimplemented structure operation&quot;);
+		error("Unimplemented structure operation");
 		t1 = t2 = INT;
 	}
 	if (t2==NOTYPE) {
 		t = t1;
-		p2-&gt;type = INT;	/* no int cv for struct */
+		p2->type = INT;	/* no int cv for struct */
 		t2 = INT;
 	} else
 		cvn = cvtab[lintyp(t1)][lintyp(t2)];
-	leftc = (cvn&gt;&gt;4)&amp;017;
-	cvn =&amp; 017;
+	leftc = (cvn>>4)&017;
+	cvn =& 017;
 	t = leftc? t2:t1;
-	if (dope&amp;ASSGOP) {
+	if (dope&ASSGOP) {
 		t = t1;
-		if (op==ASSIGN &amp;&amp; (cvn==ITP||cvn==PTI))
+		if (op==ASSIGN && (cvn==ITP||cvn==PTI))
 			cvn = leftc = 0;
 		if (leftc)
 			cvn = leftc;
 		leftc = 0;
-	} else if (op==COLON &amp;&amp; t1&gt;=PTR &amp;&amp; t1==t2)
+	} else if (op==COLON && t1>=PTR && t1==t2)
 		cvn = 0;
-	else if (dope&amp;RELAT) {
-		if (op&gt;=LESSEQ &amp;&amp; (t1&gt;=PTR || t2&gt;=PTR))
+	else if (dope&RELAT) {
+		if (op>=LESSEQ && (t1>=PTR || t2>=PTR))
 			op =+ LESSEQP-LESSEQ;
 		if (cvn==PTI)
 			cvn = 0;
@@ -198,26 +198,26 @@ build(op) {
 	if (cvn) {
 		t1 = plength(p1);
 		t2 = plength(p2);
-		if (cvn==XX || (cvn==PTI&amp;&amp;t1!=t2))
-			error(&quot;Illegal conversion&quot;);
+		if (cvn==XX || (cvn==PTI&&t1!=t2))
+			error("Illegal conversion");
 		else if (leftc)
 			p1 = convert(p1, t, cvn, t2);
 		else
 			p2 = convert(p2, t, cvn, t1);
 	}
-	if (dope&amp;RELAT)
+	if (dope&RELAT)
 		t = INT;
 	if (fold(op, p1, p2)==0)
-		*cp++ = block(2,op,t,(p1-&gt;dimp==0? p2:p1)-&gt;dimp,p1,p2);
-	if (pcvn &amp;&amp; t1!=(PTR+CHAR)) {
+		*cp++ = block(2,op,t,(p1->dimp==0? p2:p1)->dimp,p1,p2);
+	if (pcvn && t1!=(PTR+CHAR)) {
 		p1 = *--cp;
-		*cp++ = convert(p1, 0, PTI, plength(p1-&gt;tr1));
+		*cp++ = convert(p1, 0, PTI, plength(p1->tr1));
 	}
 }
 
 /*
  * Generate the appropirate conversion operator.
- * For pointer &lt;=&gt; integer this is a multiplication
+ * For pointer <=> integer this is a multiplication
  * or division, otherwise a special operator.
  */
 convert(p, t, cvn, len)
@@ -272,22 +272,22 @@ struct tnode *ap;
 	p = ap;
 	t = at;
 	dimptr = adimptr;
-	p-&gt;type = t;
+	p->type = t;
 	if (dimptr != -1)
-		p-&gt;dimp = dimptr;
-	switch(p-&gt;op) {
+		p->dimp = dimptr;
+	switch(p->op) {
 
 	case AMPER:
-		setype(p-&gt;tr1, decref(t), dimptr);
+		setype(p->tr1, decref(t), dimptr);
 		return;
 
 	case STAR:
-		setype(p-&gt;tr1, incref(t), dimptr);
+		setype(p->tr1, incref(t), dimptr);
 		return;
 
 	case PLUS:
 	case MINUS:
-		setype(p-&gt;tr1, t, dimptr);
+		setype(p->tr1, t, dimptr);
 	}
 }
 
@@ -302,8 +302,8 @@ struct tnode *ap;
 	register int t;
 
 	p = ap;
-	if (((t = p-&gt;type)&amp;XTYPE)==FUNC)
-		return(block(1,AMPER,incref(t),p-&gt;dimp,p));
+	if (((t = p->type)&XTYPE)==FUNC)
+		return(block(1,AMPER,incref(t),p->dimp,p));
 	return(p);
 }
 
@@ -318,10 +318,10 @@ struct tnode *ap;
 	register struct tnode *p;
 
 	p = ap;
-	/* check array &amp; not MOS */
-	if (((t = p-&gt;type)&amp;XTYPE)!=ARRAY || p-&gt;op==NAME&amp;&amp;p-&gt;class==MOS)
+	/* check array & not MOS */
+	if (((t = p->type)&XTYPE)!=ARRAY || p->op==NAME&&p->class==MOS)
 		return(p);
-	p-&gt;ssp++;
+	p->ssp++;
 	*cp++ = p;
 	setype(p, decref(t), -1);
 	build(AMPER);
@@ -330,22 +330,22 @@ struct tnode *ap;
 
 /*
  * make sure that p is a ptr to a node
- * with type int or char or &#39;okt.&#39;
- * okt might be nonexistent or &#39;long&#39;
- * (e.g. for &lt;&lt;).
+ * with type int or char or 'okt.'
+ * okt might be nonexistent or 'long'
+ * (e.g. for <<).
  */
 chkw(p, okt)
 struct tnode *p;
 {
 	register int t;
 
-	if ((t=p-&gt;type)&gt;CHAR &amp;&amp; t&lt;PTR &amp;&amp; t!=okt)
-		error(&quot;Integer operand required&quot;);
+	if ((t=p->type)>CHAR && t<PTR && t!=okt)
+		error("Integer operand required");
 	return;
 }
 
 /*
- *&#39;linearize&#39; a type for looking up in the
+ *'linearize' a type for looking up in the
  * conversion table
  */
 lintyp(t)
@@ -374,9 +374,9 @@ lintyp(t)
 error(s, p1, p2, p3, p4, p5, p6)
 {
 	nerror++;
-	printf(&quot;%d: &quot;, line);
+	printf("%d: ", line);
 	printf(s, p1, p2, p3, p4, p5, p6);
-	printf(&quot;\n&quot;);
+	printf("\n");
 }
 
 /*
@@ -393,7 +393,7 @@ int *p1, *p2, *p3;
 	n = an+3;
 	p = gblock(n);
 	oldp = p;
-	ap = &amp;op;
+	ap = &op;
 	do {
 		*p++ = *ap++;
 	} while (--n);
@@ -409,8 +409,8 @@ gblock(n)
 	register int *p;
 
 	p = space;
-	if ((space =+ n) &gt;= &amp;osspace[OSSIZ]) {
-		error(&quot;Expression overflow&quot;);
+	if ((space =+ n) >= &osspace[OSSIZ]) {
+		error("Expression overflow");
 		exit(1);
 	}
 	return(p);
@@ -425,12 +425,12 @@ struct tnode *ap;
 	register struct tnode *p;
 
 	p = ap;
-	if (p-&gt;op!=NAME &amp;&amp; p-&gt;op!=STAR)
-		error(&quot;Lvalue required&quot;);
+	if (p->op!=NAME && p->op!=STAR)
+		error("Lvalue required");
 }
 
 /*
- * reduce some forms of `constant op constant&#39;
+ * reduce some forms of `constant op constant'
  * to a constant.  More of this is done in the next pass
  * but this is used to allow constant expressions
  * to be used in switches and array bounds.
@@ -442,10 +442,10 @@ struct tnode *ap1, *ap2;
 	register int v1, v2;
 
 	p1 = ap1;
-	if (p1-&gt;op!=CON || (ap2!=0 &amp;&amp; ap2-&gt;op!=CON))
+	if (p1->op!=CON || (ap2!=0 && ap2->op!=CON))
 		return(0);
-	v1 = p1-&gt;value;
-	v2 = ap2-&gt;value;
+	v1 = p1->value;
+	v2 = ap2->value;
 	switch (op) {
 
 	case PLUS:
@@ -469,7 +469,7 @@ struct tnode *ap1, *ap2;
 		break;
 
 	case AND:
-		v1 =&amp; v2;
+		v1 =& v2;
 		break;
 
 	case OR:
@@ -489,17 +489,17 @@ struct tnode *ap1, *ap2;
 		break;
 
 	case LSHIFT:
-		v1 =&lt;&lt; v2;
+		v1 =<< v2;
 		break;
 
 	case RSHIFT:
-		v1 =&gt;&gt; v2;
+		v1 =>> v2;
 		break;
 
 	default:
 		return(0);
 	}
-	p1-&gt;value = v1;
+	p1->value = v1;
 	*cp++ = p1;
 	return(1);
 }
@@ -514,8 +514,8 @@ conexp()
 
 	initflg++;
 	if (t = tree())
-		if (t-&gt;op != CON)
-			error(&quot;Constant required&quot;);
+		if (t->op != CON)
+			error("Constant required");
 	initflg--;
-	return(t-&gt;value);
+	return(t->value);
 }

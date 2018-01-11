@@ -19,7 +19,7 @@ In many ways,
 is
 the state of the art
 in computer operating systems.
-From the user&#39;s point of view, it is easy
+From the user's point of view, it is easy
 to learn and use,
 and presents few of the usual impediments
 to getting the job done.
@@ -38,14 +38,14 @@ This paper is not an attempt to re-write
 the
 .ul 2
 .UC UNIX
-Programmer&#39;s Manual;
+Programmer's Manual;
 often the discussion of something
 is simply
-``read section x in the manual.&#39;&#39;
+``read section x in the manual.''
 (This implies that you will need a copy of the
 .ul 2
 .UC UNIX
-Programmer&#39;s Manual.)
+Programmer's Manual.)
 Rather it suggests in what order
 to read the manual,
 and it collects together
@@ -53,7 +53,7 @@ things that are stated only indirectly
 in the manual.
 .PP
 There are five sections:
-.IP &quot;  1.&quot;
+.IP "  1."
 Getting Started:
 How to log in to a
 .UC UNIX,
@@ -67,14 +67,14 @@ you log into
 and what terminal you use,
 so this section must necessarily be supplemented
 by local information.
-.IP &quot;  2.&quot;
+.IP "  2."
 Day-to-day Use:
 Things you need every day to use
 .UC UNIX
 effectively:
 generally useful commands;
 the file system.
-.IP &quot;  3.&quot;
+.IP "  3."
 Document Preparation:
 Preparing manuscripts is one of the most common uses
 for
@@ -83,7 +83,7 @@ This section contains advice,
 but not
 extensive instructions on any
 of the formatting programs.
-.IP &quot;  4.&quot;
+.IP "  4."
 Writing Programs:
 .UC UNIX
 is an excellent vehicle for developing programs.
@@ -92,7 +92,7 @@ but again is not a tutorial in any of the programming languages
 that
 .UC UNIX
 provides.
-.IP &quot;  5.&quot;
+.IP "  5."
 A
 .UC UNIX
 Reading List.

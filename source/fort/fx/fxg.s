@@ -16,7 +16,7 @@ funimpl:
 	mov	$symbuf,r2
 	jsr	r5,lookup; funtab
 		br 2f
-	cmpb	(r2),$&#39;\n
+	cmpb	(r2),$'\n
 	bne	2f
 	asr	r0
 	movb	funtabt(r0),r0
@@ -43,72 +43,72 @@ typtab:
 	dcplxcon
 
 funtab:
-	&lt;tanh\0&gt;
-	&lt;sqrt\0&gt;
-	&lt;sngl\0&gt;
-	&lt;sin\0&gt;
-	&lt;sign\0&gt;
-	&lt;real\0&gt;
-	&lt;mod\0&gt;
-	&lt;min1\0&gt;
-	&lt;min0\0&gt;
-	&lt;max1\0&gt;
-	&lt;max0\0&gt;
-	&lt;isign\0&gt;
-	&lt;int\0&gt;
-	&lt;ifix\0&gt;
-	&lt;idint\0&gt;
-	&lt;idim\0&gt;
-	&lt;iabs\0&gt;
-	&lt;float\0&gt;
-	&lt;exp\0&gt;
-	&lt;dsqrt\0&gt;
-	&lt;dsin\0&gt;
-	&lt;dsign\0&gt;
-	&lt;dreal\0&gt;
-	&lt;dmod\0&gt;
-	&lt;dmin1\0&gt;
-	&lt;dmax1\0&gt;
-	&lt;dlog10\0&gt;
-	&lt;dlog\0&gt;
-	&lt;dimag\0&gt;
-	&lt;dim\0&gt;
-	&lt;dexp\0&gt;
-	&lt;dcsqrt\0&gt;
-	&lt;dcsin\0&gt;
-	&lt;dcos\0&gt;
-	&lt;dconjg\0&gt;
-	&lt;dcmplx\0&gt;
-	&lt;dclog\0&gt;
-	&lt;dcexp\0&gt;
-	&lt;dccos\0&gt;
-	&lt;dcabs\0&gt;
-	&lt;dble\0&gt;
-	&lt;datan2\0&gt;
-	&lt;datan\0&gt;
-	&lt;dabs\0&gt;
-	&lt;csqrt\0&gt;
-	&lt;csin\0&gt;
-	&lt;cos\0&gt;
-	&lt;conjg\0&gt;
-	&lt;cmplx\0&gt;
-	&lt;clog\0&gt;
-	&lt;cexp\0&gt;
-	&lt;ccos\0&gt;
-	&lt;cabs\0&gt;
-	&lt;atan2\0&gt;
-	&lt;atan\0&gt;
-	&lt;amod\0&gt;
-	&lt;amin1\0&gt;
-	&lt;amin0\0&gt;
-	&lt;amax1\0&gt;
-	&lt;amax0\0&gt;
-	&lt;alog10\0&gt;
-	&lt;alog\0&gt;
-	&lt;aint\0&gt;
-	&lt;aimag\0&gt;
-	&lt;abs\0&gt;
-	&lt;\0&gt;
+	<tanh\0>
+	<sqrt\0>
+	<sngl\0>
+	<sin\0>
+	<sign\0>
+	<real\0>
+	<mod\0>
+	<min1\0>
+	<min0\0>
+	<max1\0>
+	<max0\0>
+	<isign\0>
+	<int\0>
+	<ifix\0>
+	<idint\0>
+	<idim\0>
+	<iabs\0>
+	<float\0>
+	<exp\0>
+	<dsqrt\0>
+	<dsin\0>
+	<dsign\0>
+	<dreal\0>
+	<dmod\0>
+	<dmin1\0>
+	<dmax1\0>
+	<dlog10\0>
+	<dlog\0>
+	<dimag\0>
+	<dim\0>
+	<dexp\0>
+	<dcsqrt\0>
+	<dcsin\0>
+	<dcos\0>
+	<dconjg\0>
+	<dcmplx\0>
+	<dclog\0>
+	<dcexp\0>
+	<dccos\0>
+	<dcabs\0>
+	<dble\0>
+	<datan2\0>
+	<datan\0>
+	<dabs\0>
+	<csqrt\0>
+	<csin\0>
+	<cos\0>
+	<conjg\0>
+	<cmplx\0>
+	<clog\0>
+	<cexp\0>
+	<ccos\0>
+	<cabs\0>
+	<atan2\0>
+	<atan\0>
+	<amod\0>
+	<amin1\0>
+	<amin0\0>
+	<amax1\0>
+	<amax0\0>
+	<alog10\0>
+	<alog\0>
+	<aint\0>
+	<aimag\0>
+	<abs\0>
+	<\0>
 
 / function type xy
 /	x = arg types
@@ -119,68 +119,68 @@ funtab:
 / 6 = complex
 / 8 = doublecomplex
 funtabt:
-	.byte	2\&lt;4+2		/ tanh
-	.byte	2\&lt;4+2		/ sqrt
-	.byte	4\&lt;4+2		/ sngl
-	.byte	2\&lt;4+2		/ sin
-	.byte	2\&lt;4+2		/ sign
-	.byte	6\&lt;4+2		/ real
-	.byte	0\&lt;4+0		/ mod
-	.byte	2\&lt;4+0		/ min1
-	.byte	0\&lt;4+0		/ min0
-	.byte	2\&lt;4+0		/ max1
-	.byte	0\&lt;4+0		/ max0
-	.byte	0\&lt;4+0		/ isign
-	.byte	2\&lt;4+0		/ int
-	.byte	2\&lt;4+0		/ ifix
-	.byte	4\&lt;4+0		/ idint
-	.byte	0\&lt;4+0		/ idim
-	.byte	0\&lt;4+0		/ iabs
-	.byte	0\&lt;4+2		/ float
-	.byte	2\&lt;4+2		/ exp
-	.byte	4\&lt;4+4		/ dsqrt
-	.byte	4\&lt;4+4		/ dsin
-	.byte	4\&lt;4+4		/ dsign
-	.byte	8\&lt;4+4		/ dreal
-	.byte	4\&lt;4+4		/ dmod
-	.byte	4\&lt;4+4		/ dmin1
-	.byte	4\&lt;4+4		/ dmax1
-	.byte	4\&lt;4+4		/ dlog10
-	.byte	4\&lt;4+4		/ dlog
-	.byte	8\&lt;4+4		/ dimag
-	.byte	2\&lt;4+2		/ dim
-	.byte	4\&lt;4+4		/ dexp
-	.byte	8\&lt;4+8		/ dcsqrt
-	.byte	8\&lt;4+8		/ dcsin
-	.byte	4\&lt;4+4		/ dcos
-	.byte	8\&lt;4+8		/ dconjg
-	.byte	4\&lt;4+8		/ dcmplx
-	.byte	8\&lt;4+8		/ dclog
-	.byte	8\&lt;4+8		/ dcexp
-	.byte	8\&lt;4+8		/ dccos
-	.byte	8\&lt;4+4		/ dcabs
-	.byte	2\&lt;4+4		/ dble
-	.byte	4\&lt;4+4		/ datan2
-	.byte	4\&lt;4+4		/ datan
-	.byte	4\&lt;4+4		/ dabs
-	.byte	6\&lt;4+6		/ csqrt
-	.byte	6\&lt;4+6		/ csin
-	.byte	2\&lt;4+2		/ cos
-	.byte	6\&lt;4+6		/ conjg
-	.byte	2\&lt;4+6		/ cmplx
-	.byte	6\&lt;4+6		/ clog
-	.byte	6\&lt;4+6		/ cexp
-	.byte	6\&lt;4+6		/ ccos
-	.byte	6\&lt;4+2		/ cabs
-	.byte	2\&lt;4+2		/ atan2
-	.byte	2\&lt;4+2		/ atan
-	.byte	2\&lt;4+2		/ amod
-	.byte	2\&lt;4+2		/ amin1
-	.byte	0\&lt;4+2		/ amin0
-	.byte	2\&lt;4+2		/ amax1
-	.byte	0\&lt;4+2		/ amax0
-	.byte	2\&lt;4+2		/ alog10
-	.byte	2\&lt;4+2		/ alog
-	.byte	2\&lt;4+2		/ aint
-	.byte	6\&lt;4+2		/ aimag
-	.byte	2\&lt;4+2		/ abs
+	.byte	2\<4+2		/ tanh
+	.byte	2\<4+2		/ sqrt
+	.byte	4\<4+2		/ sngl
+	.byte	2\<4+2		/ sin
+	.byte	2\<4+2		/ sign
+	.byte	6\<4+2		/ real
+	.byte	0\<4+0		/ mod
+	.byte	2\<4+0		/ min1
+	.byte	0\<4+0		/ min0
+	.byte	2\<4+0		/ max1
+	.byte	0\<4+0		/ max0
+	.byte	0\<4+0		/ isign
+	.byte	2\<4+0		/ int
+	.byte	2\<4+0		/ ifix
+	.byte	4\<4+0		/ idint
+	.byte	0\<4+0		/ idim
+	.byte	0\<4+0		/ iabs
+	.byte	0\<4+2		/ float
+	.byte	2\<4+2		/ exp
+	.byte	4\<4+4		/ dsqrt
+	.byte	4\<4+4		/ dsin
+	.byte	4\<4+4		/ dsign
+	.byte	8\<4+4		/ dreal
+	.byte	4\<4+4		/ dmod
+	.byte	4\<4+4		/ dmin1
+	.byte	4\<4+4		/ dmax1
+	.byte	4\<4+4		/ dlog10
+	.byte	4\<4+4		/ dlog
+	.byte	8\<4+4		/ dimag
+	.byte	2\<4+2		/ dim
+	.byte	4\<4+4		/ dexp
+	.byte	8\<4+8		/ dcsqrt
+	.byte	8\<4+8		/ dcsin
+	.byte	4\<4+4		/ dcos
+	.byte	8\<4+8		/ dconjg
+	.byte	4\<4+8		/ dcmplx
+	.byte	8\<4+8		/ dclog
+	.byte	8\<4+8		/ dcexp
+	.byte	8\<4+8		/ dccos
+	.byte	8\<4+4		/ dcabs
+	.byte	2\<4+4		/ dble
+	.byte	4\<4+4		/ datan2
+	.byte	4\<4+4		/ datan
+	.byte	4\<4+4		/ dabs
+	.byte	6\<4+6		/ csqrt
+	.byte	6\<4+6		/ csin
+	.byte	2\<4+2		/ cos
+	.byte	6\<4+6		/ conjg
+	.byte	2\<4+6		/ cmplx
+	.byte	6\<4+6		/ clog
+	.byte	6\<4+6		/ cexp
+	.byte	6\<4+6		/ ccos
+	.byte	6\<4+2		/ cabs
+	.byte	2\<4+2		/ atan2
+	.byte	2\<4+2		/ atan
+	.byte	2\<4+2		/ amod
+	.byte	2\<4+2		/ amin1
+	.byte	0\<4+2		/ amin0
+	.byte	2\<4+2		/ amax1
+	.byte	0\<4+2		/ amax0
+	.byte	2\<4+2		/ alog10
+	.byte	2\<4+2		/ alog
+	.byte	2\<4+2		/ aint
+	.byte	6\<4+2		/ aimag
+	.byte	2\<4+2		/ abs

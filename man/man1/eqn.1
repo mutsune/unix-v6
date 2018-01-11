@@ -21,9 +21,9 @@ Usage is almost always
 If no files are specified, 
 .it eqn
 reads from the standard input.
-A line beginning with ``.EQ&#39;&#39; marks the start of an equation;
+A line beginning with ``.EQ'' marks the start of an equation;
 the end of an equation
-is marked by a line beginning with ``.EN&#39;&#39;.
+is marked by a line beginning with ``.EN''.
 Neither of these lines is altered or defined by
 .it eqn,
 so you can define them yourself to get
@@ -33,8 +33,8 @@ untouched.
 .s3
 Spaces, tabs, newlines, braces, double quotes,
 tilde and circumflex are the only delimiters.
-Braces ``{}&#39;&#39; are used for grouping.
-Use tildes ``~&#39;&#39; to get extra spaces in an equation.
+Braces ``{}'' are used for grouping.
+Use tildes ``~'' to get extra spaces in an equation.
 .s3
 .vs 13p
 Subscripts and superscripts are produced with the keywords
@@ -42,21 +42,21 @@ Subscripts and superscripts are produced with the keywords
 and
 .bd sup.
 Thus
-.it &quot;x sub i&quot; 
+.it "x sub i" 
 makes
 $x sub i$, 
-.it &quot;a sub i sup 2&quot;
+.it "a sub i sup 2"
 produces
 $a sub i sup 2$,
 and
-.it &quot;e sup {x sup 2 + y sup 2}&quot;
+.it "e sup {x sup 2 + y sup 2}"
 gives
 $e sup {x sup 2 + y sup 2}$.
 Fractions are made with
 .bd over.
-.it &quot;a over b&quot;
+.it "a over b"
 is $a over b$ and
-.it &quot;1 over sqrt {ax sup 2 +bx+c}&quot;
+.it "1 over sqrt {ax sup 2 +bx+c}"
 is
 $1 over sqrt {ax sup 2 +bx+c}$ .
 .bd sqrt
@@ -68,14 +68,14 @@ and
 .bd to
 introduce lower and upper
 limits on arbitrary things:
-$lim from {n-&gt; inf} sum from 0 to n x sub i$
+$lim from {n-> inf} sum from 0 to n x sub i$
 is made with
-.it &quot;lim from {n-&gt; inf} sum from 0 to n x sub i.&quot;
+.it "lim from {n-> inf} sum from 0 to n x sub i."
 Left and right brackets, braces, etc., of the right height are made with
 .bd left
 and
 .bd right:
-.it &quot;left [ x sup 2 + y sup 2 over alpha right ] ~=~1&quot;
+.it "left [ x sup 2 + y sup 2 over alpha right ] ~=~1"
 produces
 $left [ x sup 2 + y sup 2 over alpha right ] ~=~1$.
 The
@@ -83,10 +83,10 @@ The
 clause is optional.
 .s3
 Vertical piles of things are made with 
-.bd &quot;pile, lpile, cpile,&quot;
+.bd "pile, lpile, cpile,"
 and
 .bd rpile:
-.it &quot;pile {a above b above c}&quot;
+.it "pile {a above b above c}"
 produces
 $pile {a above b above c}$.
 There can be an arbitrary number of elements in a pile.
@@ -106,11 +106,11 @@ Diacritical marks are made with
 .bd dotdot,
 .bd hat,
 .bd bar:
-.it &quot;x dot = f(t) bar&quot;
+.it "x dot = f(t) bar"
 is
 $x dot = f(t) bar$.
 Default sizes and fonts can be changed with
-.bd &quot;size n&quot;
+.bd "size n"
 and various of
 .bd roman,
 .bd italic,
@@ -131,13 +131,13 @@ Keywords like
 ( inf )
 .EN
 and shorthands like
-&gt;=
+>=
 .EQ
-(&gt;=)
+(>=)
 .EN
-\*-&gt;
+\*->
 .EQ
-(-&gt;),
+(->),
 .EN
 !=
 .EQ
@@ -145,18 +145,18 @@ and shorthands like
 .EN
 are recognized.
 Spell out Greek letters in the desired case, as in
-.it &quot;alpha, GAMMA.&quot;
+.it "alpha, GAMMA."
 Mathematical words like sin, cos, log are made Roman automatically.
 Troff (I)
 four-character escapes like \\(bs (\(bs)
 can be used anywhere.
-Strings enclosed in double quotes &quot;...&quot;
+Strings enclosed in double quotes "..."
 are passed through untouched.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 A System for Typesetting Mathematics
 (Computer Science Technical Report #17, Bell Laboratories, 1974.)
 .br
-TROFF Users&#39; Manual (internal memorandum)
+TROFF Users' Manual (internal memorandum)
 .br
 TROFF Made Trivial (internal memorandum)
 .br
@@ -164,6 +164,6 @@ troff (I), neqn (I)
 .sh BUGS
 Undoubtedly.
 Watch out for small or large point sizes \*-
-it&#39;s tuned too well for size 10.
+it's tuned too well for size 10.
 Be cautious if inserting horizontal or vertical motions,
 and of backslashes in general.

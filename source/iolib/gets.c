@@ -4,10 +4,10 @@ char *s;
 char *p;
 extern int cin;
 if (nargs () == 2)
-	IEHzap(&quot;gets  &quot;);
+	IEHzap("gets  ");
 p=s;
-while ((*s = cgetc(cin)) != &#39;\n&#39; &amp;&amp; *s != &#39;\0&#39;) s++;
-if (*p == &#39;\0&#39;) return (0);
-*s = &#39;\0&#39;;
+while ((*s = cgetc(cin)) != '\n' && *s != '\0') s++;
+if (*p == '\0') return (0);
+*s = '\0';
 return (p);
 }

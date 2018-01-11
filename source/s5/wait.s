@@ -2,7 +2,7 @@
 
 / pid = wait();
 /   or,
-/ pid = wait(&amp;status);
+/ pid = wait(&status);
 /
 / pid == -1 if error
 / status indicates fate of process, if given

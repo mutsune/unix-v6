@@ -34,19 +34,19 @@ ibuf: /init code in ibuf+obuf
 1:
 	tst	(sp)+
 	mov	(sp),r4
-	cmpb	(r4)+,$&#39;+
+	cmpb	(r4)+,$'+
 	bne	2f
 	jsr	r5,pnum; pfrom
 	br	3f
 2:
-	cmpb	-1(r4),$&#39;-
+	cmpb	-1(r4),$'-
 	bne	2f
-	cmpb	(r4),$&#39;s
+	cmpb	(r4),$'s
 	bne	0f
 	inc	stop
 	br	3f
 0:
-	cmpb	(r4),$&#39;h
+	cmpb	(r4),$'h
 	bne	0f
 	clr	slow
 	br	3f
@@ -77,7 +77,7 @@ makebf:
 	bec	1f
 2:
 	incb	bfn+8
-	cmpb	bfn+8,$&#39;z
+	cmpb	bfn+8,$'z
 	blos	makebf
 	jmp	place
 1:
@@ -100,7 +100,7 @@ string:
 	sys	write; 0:..; 1:..
 	rts	r5
 
-emes1: &lt;Too many files.\n\0&gt;
+emes1: <Too many files.\n\0>
 xxx:
 .even
 obuf=ibuf+512.
@@ -167,21 +167,21 @@ gettchar:
 	rts	pc
 2:
 	dec	ulc
-	mov	$&#39;_,r0
+	mov	$'_,r0
 	rts	pc
 3:
 	jsr	pc,getchar
-	cmp	r0,$&#39;0
+	cmp	r0,$'0
 	blt	1f
-	cmp	r0,$&#39;9
+	cmp	r0,$'9
 	ble	2f
-	cmp	r0,$&#39;A
+	cmp	r0,$'A
 	blt	1f
-	cmp	r0,$&#39;Z
+	cmp	r0,$'Z
 	ble	2f
-	cmp	r0,$&#39;a
+	cmp	r0,$'a
 	blt	1f
-	cmp	r0,$&#39;z
+	cmp	r0,$'z
 	ble	2f
 1:
 	tst	ulc
@@ -204,11 +204,11 @@ getchar:
 1:
 	tst	nlflg
 	beq	1f
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	rts	pc
 1:
 	jsr	pc,get1
-	cmp	r0,$&#39;\\
+	cmp	r0,$'\\
 	bne	2f
 	jsr	pc,get1
 	jsr	r5,switch; esctab
@@ -219,7 +219,7 @@ getchar:
 	jsr	pc,get1
 	jsr	r5,switch; pfxtab
 3:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	3f
 	inc	nlflg
 	clr	column
@@ -231,26 +231,26 @@ getchar:
 	rts	pc
 
 esctab:
-   .byte &#39;d, 032  /hlf (down)
-   .byte &#39;u, 035  /hlr (up)
-   .byte &#39;r, 036  /flr (reverse)
-   .byte &#39;x, 016  /SO (extra chars)
-   .byte &#39;y, 017  /SI (normal characters)
-   .byte &#39;l, 0177 /delete
-   .byte &#39;t, 011  /hor tab
-   .byte &#39;a, 0100 /at sign
-   .byte &#39;n, 043  /number sign
-   .byte &#39;\\, 134 /backslash
+   .byte 'd, 032  /hlf (down)
+   .byte 'u, 035  /hlr (up)
+   .byte 'r, 036  /flr (reverse)
+   .byte 'x, 016  /SO (extra chars)
+   .byte 'y, 017  /SI (normal characters)
+   .byte 'l, 0177 /delete
+   .byte 't, 011  /hor tab
+   .byte 'a, 0100 /at sign
+   .byte 'n, 043  /number sign
+   .byte '\\, 134 /backslash
    .byte 0, 0
 
 pfxtab:
-   .byte &#39;7, 036  /flr
-   .byte &#39;8, 035  /hlr
-   .byte &#39;9, 032  /hlf
-   .byte &#39;4, 030  /brs
-   .byte &#39;3, 031  /rrs
-   .byte &#39;1, 026  /set hor tabs
-   .byte &#39;2, 027  /clr hor tabs
+   .byte '7, 036  /flr
+   .byte '8, 035  /hlr
+   .byte '9, 032  /hlf
+   .byte '4, 030  /brs
+   .byte '3, 031  /rrs
+   .byte '1, 026  /set hor tabs
+   .byte '2, 027  /clr hor tabs
    .byte 0,0
 pfxtab1:
 
@@ -373,13 +373,13 @@ putchar:
 	bic	$!177,r0
 	beq	2f
 	movb	trtab(r0),r0
-	cmp	r0,$&#39; 
+	cmp	r0,$' 
 	bne	1f
 	inc	nsp
 2:
 	rts	pc
 1:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	clr	nsp
 	clr	ocol
@@ -409,7 +409,7 @@ putchar:
 	br	1b
 4:
 	mov	r0,-(sp)
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,pchar1
 	mov	(sp)+,r0
 	dec	nsp
@@ -460,13 +460,13 @@ dsp:
 
 
 unpfx:
-   .byte 032, &#39;9
-   .byte 035, &#39;8
-   .byte 036, &#39;7
-   .byte 031, &#39;3
-   .byte 030, &#39;4
-   .byte 026, &#39;1
-   .byte 027, &#39;2
+   .byte 032, '9
+   .byte 035, '8
+   .byte 036, '7
+   .byte 031, '3
+   .byte 030, '4
+   .byte 026, '1
+   .byte 027, '2
    .byte 0,0
 
 flush:
@@ -510,57 +510,57 @@ control:
 	rts	pc
 
 contab:
-   &lt;ad&gt;; casead
-   &lt;bp&gt;; casebp
-   &lt;br&gt;; casebr
-   &lt;cc&gt;; casecc
-   &lt;ce&gt;; casece
-   &lt;ds&gt;; caseds
-   &lt;fi&gt;; casefi
-   &lt;in&gt;; casein
-   &lt;ix&gt;; caseix
-   &lt;li&gt;; caseli
-   &lt;ll&gt;; casell
-   &lt;ls&gt;; casels
-   &lt;na&gt;; casena
-   &lt;ne&gt;; casene
-   &lt;nf&gt;; casenf
-   &lt;pa&gt;; casepa
-   &lt;bl&gt;; casebl
-   &lt;pl&gt;; casepl
-   &lt;sk&gt;; casesk
-   &lt;sp&gt;; casesp
-   &lt;ss&gt;; casess
-   &lt;ta&gt;; caseta
-   &lt;ti&gt;; caseti
-   &lt;tr&gt;; casetr
-   &lt;ul&gt;; caseul
-   &lt;un&gt;; caseun
-   &lt;he&gt;; casehe
-   &lt;hx&gt;; casehx
-   &lt;fo&gt;; casefo
-   &lt;eh&gt;; caseeh
-   &lt;oh&gt;; caseoh
-   &lt;ef&gt;; caseef
-   &lt;of&gt;; caseof
-   &lt;m1&gt;; casem1
-   &lt;m2&gt;; casem2
-   &lt;m3&gt;; casem3
-   &lt;m4&gt;; casem4
-   &lt;hc&gt;; casehc
-   &lt;hy&gt;; casehy
-   &lt;n1&gt;; casen1
-   &lt;n2&gt;; casen2
-   &lt;nn&gt;; casenn
-   &lt;ni&gt;; caseni
-   &lt;jo&gt;; casejo
-   &lt;ar&gt;; casear
-   &lt;ro&gt;; casero
-   &lt;nx&gt;; casenx
-   &lt;po&gt;; casepo
-   &lt;de&gt;; casede
-   &lt;ig&gt;; caseig
-   &lt;tc&gt;; casetc
-   &lt;mk&gt;; casemk
+   <ad>; casead
+   <bp>; casebp
+   <br>; casebr
+   <cc>; casecc
+   <ce>; casece
+   <ds>; caseds
+   <fi>; casefi
+   <in>; casein
+   <ix>; caseix
+   <li>; caseli
+   <ll>; casell
+   <ls>; casels
+   <na>; casena
+   <ne>; casene
+   <nf>; casenf
+   <pa>; casepa
+   <bl>; casebl
+   <pl>; casepl
+   <sk>; casesk
+   <sp>; casesp
+   <ss>; casess
+   <ta>; caseta
+   <ti>; caseti
+   <tr>; casetr
+   <ul>; caseul
+   <un>; caseun
+   <he>; casehe
+   <hx>; casehx
+   <fo>; casefo
+   <eh>; caseeh
+   <oh>; caseoh
+   <ef>; caseef
+   <of>; caseof
+   <m1>; casem1
+   <m2>; casem2
+   <m3>; casem3
+   <m4>; casem4
+   <hc>; casehc
+   <hy>; casehy
+   <n1>; casen1
+   <n2>; casen2
+   <nn>; casenn
+   <ni>; caseni
+   <jo>; casejo
+   <ar>; casear
+   <ro>; casero
+   <nx>; casenx
+   <po>; casepo
+   <de>; casede
+   <ig>; caseig
+   <tc>; casetc
+   <mk>; casemk
 bnames: .=.+100.
     -1; -1

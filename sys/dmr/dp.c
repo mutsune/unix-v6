@@ -12,10 +12,10 @@
  * on waiting to receive; half-duplex transmission.
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../buf.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../user.h"
+#include "../buf.h"
 
 /* control info */
 struct {
@@ -69,7 +69,7 @@ dpopen(dev, flag)
 {
 	int dptimeout();
 
-	if (dp11.dp_proc!=0 &amp;&amp; dp11.dp_proc!=u.u_procp) {
+	if (dp11.dp_proc!=0 && dp11.dp_proc!=u.u_procp) {
 		u.u_error = ENXIO;
 		return;
 	}
@@ -77,19 +77,19 @@ dpopen(dev, flag)
 	dp11.dp_state = READ;
 	if (dp11.dp_buf==0) {
 		dp11.dp_buf = getblk(NODEV);
-		dp11.dp_bufp = dp11.dp_buf-&gt;b_addr;
+		dp11.dp_bufp = dp11.dp_buf->b_addr;
 		dp11.dp_timer = HZ;
 		timeout(dptimeout, 0, HZ);
 	}
-	DPADDR-&gt;dpsyn0 = SYN;
-	DPADDR-&gt;dprcsr = HDUPLX|IENABLE;
-	DPADDR-&gt;dptcsr = IENABLE|SIENABL|DTRDY;
+	DPADDR->dpsyn0 = SYN;
+	DPADDR->dprcsr = HDUPLX|IENABLE;
+	DPADDR->dptcsr = IENABLE|SIENABL|DTRDY;
 }
 
 dpclose()
 {
-	DPADDR-&gt;dprcsr = 0;
-	DPADDR-&gt;dptcsr = 0;
+	DPADDR->dprcsr = 0;
+	DPADDR->dptcsr = 0;
 	dp11.dp_timer = 0;
 	dp11.dp_proc = 0;
 	if (dp11.dp_buf != 0) {
@@ -100,7 +100,7 @@ dpclose()
 
 /*
  * Read waits until:
- *  there is loss of &quot;data set ready&quot;, or
+ *  there is loss of "data set ready", or
  *  a timeout occurs, or
  *  a full record has been received.
  * The former two result in an error.
@@ -109,19 +109,19 @@ dpread()
 {
 	register char *bp, **epp;
 
-	bp = dp11.dp_buf-&gt;b_addr;
-	epp = &amp;dp11.dp_bufp;
+	bp = dp11.dp_buf->b_addr;
+	epp = &dp11.dp_bufp;
 	for(;;) {
 		if(dpwait())
 			return;
-		if (*epp &gt; bp)
+		if (*epp > bp)
 			break;
 		spl6();
-		if (dp11.dp_timer &lt;= 1) {
+		if (dp11.dp_timer <= 1) {
 			spl0();
 			return;
 		}
-		sleep(&amp;dp11, DPPRI);
+		sleep(&dp11, DPPRI);
 		spl0();
 	}
 	iomove(dp11.dp_buf, 0, min(u.u_count, *epp-bp), B_READ);
@@ -139,9 +139,9 @@ dpwrite()
 	if (u.u_count==0 || dpwait())
 		return;
 	dp11.dp_state = WRITE;
-	bp = dp11.dp_buf-&gt;b_addr;
+	bp = dp11.dp_buf->b_addr;
 	dp11.dp_bufp = bp;
-	if (u.u_count&gt;512)
+	if (u.u_count>512)
 		u.u_count = 512;
 	dp11.dp_nxmit = u.u_count;
 	iomove(dp11.dp_buf, 0, u.u_count, B_WRITE);
@@ -149,23 +149,23 @@ dpwrite()
 }
 
 /*
- * If &quot;data set ready&quot; is down return an error; otherwise
+ * If "data set ready" is down return an error; otherwise
  * wait until the dataset is in read state with no carrier,
  * which means a record has just been received.
  */
 dpwait()
 {
 	for(;;) {
-		if ((DPADDR-&gt;dptcsr&amp;DSRDY)==0 || dp11.dp_buf==0) {
+		if ((DPADDR->dptcsr&DSRDY)==0 || dp11.dp_buf==0) {
 			u.u_error = EIO;
 			return(1);
 		}
 		spl6();
-		if (dp11.dp_state==READ &amp;&amp; (DPADDR-&gt;dptcsr&amp;CARRIER)==0) {
+		if (dp11.dp_state==READ && (DPADDR->dptcsr&CARRIER)==0) {
 			spl0();
 			return(0);
 		}
-		sleep(&amp;dp11, DPPRI);
+		sleep(&dp11, DPPRI);
 		spl0();
 	}
 }
@@ -180,11 +180,11 @@ dpstart()
 	extern char partab[];
 
 	dp11.dp_timer = 10;
-	if (--dp11.dp_nxmit &gt;= 0) {
-		c = (*dp11.dp_bufp++) &amp; 0177;
-		DPADDR-&gt;dptbuf = c | ~partab[c]&amp;0200;
+	if (--dp11.dp_nxmit >= 0) {
+		c = (*dp11.dp_bufp++) & 0177;
+		DPADDR->dptbuf = c | ~partab[c]&0200;
 	} else {
-		dp11.dp_bufp = dp11.dp_buf-&gt;b_addr;
+		dp11.dp_bufp = dp11.dp_buf->b_addr;
 		dp11.dp_state = READ;
 	}
 }
@@ -192,7 +192,7 @@ dpstart()
 /*
  * Count down the DP timer (once per second)
  * If it runs out, it presumably means the other station
- * won&#39;t speak.
+ * won't speak.
  */
 dptimeout()
 {
@@ -213,11 +213,11 @@ dprint()
 {
 	register int c;
 
-	c = DPADDR-&gt;dprbuf &amp; 0177;
+	c = DPADDR->dprbuf & 0177;
 	if (dp11.dp_state==READ) {
-		if ((DPADDR-&gt;dprcsr&amp;ODDPAR) == 0)
+		if ((DPADDR->dprcsr&ODDPAR) == 0)
 			c =| 0200;
-		if (dp11.dp_bufp &lt; dp11.dp_buf-&gt;b_addr+512)
+		if (dp11.dp_bufp < dp11.dp_buf->b_addr+512)
 			*dp11.dp_bufp++ = c;
 	}
 }
@@ -232,11 +232,11 @@ dpxint()
 {
 	register int dpstat;
 
-	dpstat = DPADDR-&gt;dptcsr;
-	DPADDR-&gt;dptcsr =&amp; ~(CTRANS|RORUN|RING|DONE);
-	if (dpstat &amp; (CTRANS|RORUN))
+	dpstat = DPADDR->dptcsr;
+	DPADDR->dptcsr =& ~(CTRANS|RORUN|RING|DONE);
+	if (dpstat & (CTRANS|RORUN))
 		dpturnaround();
-	else if (dpstat&amp;DONE &amp;&amp; dp11.dp_state==WRITE)
+	else if (dpstat&DONE && dp11.dp_state==WRITE)
 		dpstart();
 }
 
@@ -245,11 +245,11 @@ dpxint()
  */
 dpturnaround()
 {
-	DPADDR-&gt;dprcsr =&amp; ~RCVACT;
+	DPADDR->dprcsr =& ~RCVACT;
 	if (dp11.dp_state==WRITE) {
 		dp11.dp_timer = 10;
 		dp11.dp_state = READ;
-		dp11.dp_bufp = dp11.dp_buf-&gt;b_addr;
+		dp11.dp_bufp = dp11.dp_buf->b_addr;
 	}
-	wakeup(&amp;dp11);
+	wakeup(&dp11);
 }

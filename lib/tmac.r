@@ -1,27 +1,27 @@
 .de HD
-.if t .tl &#39;\(rn&#39;&#39;&#39;
-.if t &#39;sp  \\n(m1-1
-.if n &#39;sp \\n(m1
+.if t .tl '\(rn'''
+.if t 'sp  \\n(m1-1
+.if n 'sp \\n(m1
 .ps 10
 .ft R
 .if e .1e
 .if o .1o
 .ps
 .ft
-&#39;sp \\n(m2
+'sp \\n(m2
 .if \\n(:n .nm 1 1 2
 .ns
 ..
 .wh 0 HD
 .de FT
-&#39;sp \\n(m3
+'sp \\n(m3
 .ps 10
 .ft R
 .if e .2e
 .if o .2o
 .ps
 .ft
-&#39;bp
+'bp
 ..
 .wh -7 FT (1inch)
 .de m1
@@ -78,8 +78,8 @@
 .tl \\$1 \\$2 \\$3 \\$4 \\$5 \\$6 \\$7 \\$8 \\$9
 \\..
 ..
-.he &#39;&#39;&#39;&#39;
-.fo &#39;&#39;&#39;&#39;
+.he ''''
+.fo ''''
 .de bl
 .rs
 .sp \\$1

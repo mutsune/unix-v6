@@ -23,7 +23,7 @@ scopy:
 	cmp	r2,$ktat
 	blt	1b
 	jsr	r0,errcom
-	&lt;translation overflow\0&gt;;.even
+	<translation overflow\0>;.even
 1:
 	clrb	ktab(r2)
 	bic	$1,r2

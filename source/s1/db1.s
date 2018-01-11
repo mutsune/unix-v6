@@ -108,7 +108,7 @@ loop:
 	tst	error
 	bne	errexit
 	mov	$1,count
-	cmpb	r0,$&#39;,
+	cmpb	r0,$',
 	bne	2f
 	movb	(r4)+,r0
 	mov	addres,-(sp)
@@ -127,11 +127,11 @@ loop:
 errexit:
 	sys	signal; 2; errexit
 	mov	savsp,sp
-	jsr	r5,mesg; &lt;?\n\0&gt;; .even
+	jsr	r5,mesg; <?\n\0>; .even
 	br	loop
 
 fnfnd:
-	jsr	r5,mesg; &lt;File not found.\n\0&gt;; .even
+	jsr	r5,mesg; <File not found.\n\0>; .even
 ex:
 	sys	exit
 
@@ -142,7 +142,7 @@ readlin:
 	sys	read; ch; 1
 	tst	r0
 	beq	ex
-	cmpb	ch,$&#39;\n
+	cmpb	ch,$'\n
 	beq	1f
 	movb	ch,(r4)+
 	br	1b
@@ -164,26 +164,26 @@ switch:
 	rts	r5
 
 readexp:
-	mov	$&#39;+,lastop
+	mov	$'+,lastop
 	clr	addres
 	clr	starmod
 	clr	taddr
 	clr	adrflg
 nextxp:
 	movb	(r4)+,r0
-	cmp	r0,$&#39;0
+	cmp	r0,$'0
 	blt	1f
-	cmp	r0,$&#39;9
+	cmp	r0,$'9
 	ble	numin
-	cmp	r0,$&#39;a
+	cmp	r0,$'a
 	blt	1f
-	cmp	r0,$&#39;z
+	cmp	r0,$'z
 	bgt	1f
 	jmp	letin
 1:
-	cmp	r0,$&#39;a-40
+	cmp	r0,$'a-40
 	blt	1f
-	cmp	r0,$&#39;z-40
+	cmp	r0,$'z-40
 	ble	letin
 1:
 	jsr	r5,switch; expsw
@@ -196,13 +196,13 @@ nextxp:
 	rts	pc
 
 expsw:
-	&#39;+;	opex
-	&#39;-;	opex
-	&#39; ;	nextxp
-	&#39;.;	letin
-	&#39;_;	letin
-	&#39;^;	circumf
-	&#39;*;	star
+	'+;	opex
+	'-;	opex
+	' ;	nextxp
+	'.;	letin
+	'_;	letin
+	'^;	circumf
+	'*;	star
 	-1;	0
 
 star:
@@ -220,14 +220,14 @@ operand:
 	bne	1f
 	mov	r0,taddr
 1:
-	cmp	lastop,$&#39;+
+	cmp	lastop,$'+
 	beq	1f
 	sub	taddr,addres
 	br	2f
 1:
 	add	taddr,addres
 2:
-	mov	$&#39;+,lastop
+	mov	$'+,lastop
 	br	nextxp
 
 circumf:
@@ -242,7 +242,7 @@ numin:
 	clr	r1
 	clr	r3
 1:
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	asl	r1
 	asl	r1
 	asl	r1
@@ -250,12 +250,12 @@ numin:
 	bis	r0,r1
 	add	r0,r3
 	movb	(r4)+,r0
-	cmp	r0,$&#39;0
+	cmp	r0,$'0
 	blo	1f
-	cmp	r0,$&#39;9
+	cmp	r0,$'9
 	blos	1b
 1:
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	bne	1f
 	mov	r3,r1
 	inc	r4
@@ -278,21 +278,21 @@ letin1:
 	br	2f
 1:
 	tstb	(r4)+
-	cmpb	(r4),$&#39;.
+	cmpb	(r4),$'.
 	beq	2f
-	cmpb	(r4),$&#39;0
+	cmpb	(r4),$'0
 	blo	3f
-	cmpb	(r4),$&#39;9
+	cmpb	(r4),$'9
 	blos	2f
-	cmpb	(r4),$&#39;A
+	cmpb	(r4),$'A
 	blo	3f
-	cmpb	(r4),$&#39;Z
+	cmpb	(r4),$'Z
 	blos	2f
-	cmpb	(r4),$&#39;_
+	cmpb	(r4),$'_
 	beq	2f
-	cmpb	(r4),$&#39;a
+	cmpb	(r4),$'a
 	blo	3f
-	cmpb	(r4),$&#39;z
+	cmpb	(r4),$'z
 	bhi	3f
 2:
 	dec	(sp)
@@ -304,7 +304,7 @@ letin1:
 	jsr	pc,lookupn
 	tst	error
 	bne	1f
-	cmpb	(r4),$&#39;;
+	cmpb	(r4),$';
 	beq	2f
 1:
 	jmp	operand
@@ -324,20 +324,20 @@ command:
 	rts	pc
 
 comsw:
-	&#39;/;	slash
-	&#39;\\;	bslash
-	&#39;?;	quest
-	&#39;\0;	newln
-	&#39;^;	circumf
-	&#39;=;	equal
-	&#39;:;	colon
-	&#39;!;	excla
-	&#39;&#39;;	squote
-	&#39;&quot;;	dquote
-	&#39;$;	dolr
-	&#39;&amp;;	amper
-	&#39;%;	ex
-	&#39;`;	grave
+	'/;	slash
+	'\\;	bslash
+	'?;	quest
+	'\0;	newln
+	'^;	circumf
+	'=;	equal
+	':;	colon
+	'!;	excla
+	'';	squote
+	'";	dquote
+	'$;	dolr
+	'&;	amper
+	'%;	ex
+	'`;	grave
 	-1;	0
 
 dolr:
@@ -368,22 +368,22 @@ dolr:
 	rts	pc
 
 traptab:
-	1f; .data; 1:&lt;?0\0&gt;; .text
-	1f; .data; 1:&lt;Hangup\0&gt;; .text
-	1f; .data; 1:&lt;Interrupt\0&gt;; .text
-	1f; .data; 1:&lt;Quit\0&gt;; .text
-	1f; .data; 1:&lt;Illegal instruction\0&gt;; .text
-	1f; .data; 1:&lt;Trace/BPT\0&gt;; .text
-	1f; .data; 1:&lt;IOT\0&gt;; .text
-	1f; .data; 1:&lt;EMT\0&gt;; .text
-	1f; .data; 1:&lt;FP exception\0&gt;; .text
-	1f; .data; 1:&lt;Killed\0&gt;; .text
-	1f; .data; 1:&lt;Bus error\0&gt;; .text
-	1f; .data; 1:&lt;Segmentation violation\0&gt;; .text
-	1f; .data; 1:&lt;Bad system call\0&gt;; .text
-	1f; .data; 1:&lt;?15\0&gt;; .text
-	1f; .data; 1:&lt;?16\0&gt;; .text
-	1f; .data; 1:&lt;?17\0&gt;; .text
+	1f; .data; 1:<?0\0>; .text
+	1f; .data; 1:<Hangup\0>; .text
+	1f; .data; 1:<Interrupt\0>; .text
+	1f; .data; 1:<Quit\0>; .text
+	1f; .data; 1:<Illegal instruction\0>; .text
+	1f; .data; 1:<Trace/BPT\0>; .text
+	1f; .data; 1:<IOT\0>; .text
+	1f; .data; 1:<EMT\0>; .text
+	1f; .data; 1:<FP exception\0>; .text
+	1f; .data; 1:<Killed\0>; .text
+	1f; .data; 1:<Bus error\0>; .text
+	1f; .data; 1:<Segmentation violation\0>; .text
+	1f; .data; 1:<Bad system call\0>; .text
+	1f; .data; 1:<?15\0>; .text
+	1f; .data; 1:<?16\0>; .text
+	1f; .data; 1:<?17\0>; .text
 
 locps:	regbuf+1776
 locpc:	regbuf+1774
@@ -403,25 +403,25 @@ locfr2:	regbuf+46
 locfr3:	regbuf+56
 
 doltab:
-	1f; prgreg; locsp; .data; 1:&lt;sp	\0&gt;; .text
-	1f; proct; locps; .data; 1:&lt;ps	\0&gt;; .text
-	1f; prgreg; locpc; .data; 1:&lt;pc	\0&gt;; .text
-	1f; prgreg; locr0; .data; 1:&lt;r0	\0&gt;; .text
-	1f; prgreg; locr1; .data; 1:&lt;r1	\0&gt;; .text
-	1f; prgreg; locr2; .data; 1:&lt;r2	\0&gt;; .text
-	1f; prgreg; locr3; .data; 1:&lt;r3	\0&gt;; .text
-	1f; prgreg; locr4; .data; 1:&lt;r4	\0&gt;; .text
-	1f; prgreg; locr5; .data; 1:&lt;r5	\0&gt;; .text
+	1f; prgreg; locsp; .data; 1:<sp	\0>; .text
+	1f; proct; locps; .data; 1:<ps	\0>; .text
+	1f; prgreg; locpc; .data; 1:<pc	\0>; .text
+	1f; prgreg; locr0; .data; 1:<r0	\0>; .text
+	1f; prgreg; locr1; .data; 1:<r1	\0>; .text
+	1f; prgreg; locr2; .data; 1:<r2	\0>; .text
+	1f; prgreg; locr3; .data; 1:<r3	\0>; .text
+	1f; prgreg; locr4; .data; 1:<r4	\0>; .text
+	1f; prgreg; locr5; .data; 1:<r5	\0>; .text
 	0
 	.if	fpp
-	1f; prfreg; locfr0; .data; 1:&lt;fr0	\0&gt;; .text
-	1f; prfreg; locfr1; .data; 1:&lt;fr1	\0&gt;; .text
-	1f; prfreg; locfr2; .data; 1:&lt;fr2	\0&gt;; .text
-	1f; prfreg; locfr3; .data; 1:&lt;fr3	\0&gt;; .text
-	1f; prfreg; locfr4; .data; 1:&lt;fr4	\0&gt;; .text
-	1f; prfreg; locfr5; .data; 1:&lt;fr5	\0&gt;; .text
+	1f; prfreg; locfr0; .data; 1:<fr0	\0>; .text
+	1f; prfreg; locfr1; .data; 1:<fr1	\0>; .text
+	1f; prfreg; locfr2; .data; 1:<fr2	\0>; .text
+	1f; prfreg; locfr3; .data; 1:<fr3	\0>; .text
+	1f; prfreg; locfr4; .data; 1:<fr4	\0>; .text
+	1f; prfreg; locfr5; .data; 1:<fr5	\0>; .text
 	0
-	1f; proct; locfpsr; .data; 1:&lt;fpsr	\0&gt;; .text
+	1f; proct; locfpsr; .data; 1:<fpsr	\0>; .text
 	.endif
 .data
 .even
@@ -449,7 +449,7 @@ prgreg:
 	jsr	pc,lookupv
 	tst	r2
 	beq	1f
-	jsr	r5,mesg; &lt;	\0&gt;; .even
+	jsr	r5,mesg; <	\0>; .even
 	mov	(r4),r0
 	jsr	pc,pname
 1:
@@ -517,7 +517,7 @@ quest:
 
 decp:
 	jsr	pc,printd
-	jsr	r5,mesg; &lt;.\n\0&gt;; .even
+	jsr	r5,mesg; <.\n\0>; .even
 	rts	pc
 
 octp:
@@ -576,7 +576,7 @@ ascp:
 
 ascp1:
 	bic	$!377,r0
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	2f
 	cmp	r0,$011
 	beq	2f
@@ -589,18 +589,18 @@ ascp1:
 	rts	pc
 1:
 	mov	r0,r1
-	jsr	r5,mesg; &lt;\\\0&gt;
+	jsr	r5,mesg; <\\\0>
 	clr	r0
 	alsc	$10.,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putc
 	clr	r0
 	alsc	$3,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putc
 	clr	r0
 	alsc	$3,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putc
 	rts	pc
 
@@ -661,7 +661,7 @@ printf:
 	beq	2f
 	bge	1f
 	negf	r0
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	pc,putc
 1:
 	cmpf	r3,r0
@@ -680,19 +680,19 @@ printf:
 2:
 	modf	r2,r0
 	movfi	r1,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putc
-	mov	$&#39;.,r0
+	mov	$'.,r0
 	jsr	pc,putc
 	mov	$8.,r3
 1:
 	modf	r3,r0
 	movfi	r1,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putc
 	dec	r3
 	bgt	1b
-	mov	$&#39;E,r0
+	mov	$'E,r0
 	jsr	pc,putc
 	mov	r4,r0
 	mov	(sp)+,r3
@@ -705,7 +705,7 @@ printd:
 	mov	r0,r1
 	bpl	1f
 	neg	r1
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	pc,putc
 1:
 	jsr	pc,1f
@@ -720,7 +720,7 @@ printd:
 	jsr	pc,1b
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putc
 	rts	pc
 

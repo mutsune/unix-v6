@@ -6,22 +6,22 @@ UNIX
 writes out a core image of a terminated
 process when any of various errors occur.
 See
-.it &quot;signal (II)&quot;
+.it "signal (II)"
 for the list of reasons;
 the most common are memory violations, illegal
 instructions, bus errors, and user-generated
 quit signals.
-The core image is called ``core&#39;&#39; and is written in the process&#39;s
+The core image is called ``core'' and is written in the process's
 working directory (provided it can be; normal
 access controls apply).
 .s3
 The first 1024 bytes of the core image
-are a copy of the system&#39;s per-user
+are a copy of the system's per-user
 data for the process, including the registers
 as they were at the time of the fault.
 The
 remainder represents the actual contents of
-the user&#39;s core area when the core image
+the user's core area when the core image
 was written.
 If the text segment
 is write-protected and shared,
@@ -76,9 +76,9 @@ ps	1776
 .s3
 .i0
 In general the debuggers
-.it &quot;db (I)&quot;
+.it "db (I)"
 and
-.it &quot;cdb (I)&quot;
+.it "cdb (I)"
 are sufficient to deal with core images.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 cdb (I), db (I), signal (II)

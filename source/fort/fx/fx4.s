@@ -45,7 +45,7 @@ getsym:
 	cmp	r0,$4
 	bhis	2f
 	asr	r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,symbuf
 	movb	$12,symbuf+1
 	clrb	symbuf+2
@@ -67,7 +67,7 @@ getsym:
 	jsr	r5,srconst
 		br 3f
 	mov	r3,r2
-	cmpb	(r1)+,$&#39;,
+	cmpb	(r1)+,$',
 	bne	3f
 	jsr	r5,srconst
 		br 3f
@@ -75,13 +75,13 @@ getsym:
 	bhis	4f
 	mov	r2,r3
 4:
-	cmpb	(r1)+,$&#39;)
+	cmpb	(r1)+,$')
 	bne	3f
 	mov	(sp)+,r1
 	mov	$symbuf,r2
 4:
 	movb	(r1)+,(r2)
-	cmpb	(r2)+,$&#39;)
+	cmpb	(r2)+,$')
 	bne	4b
 	clrb	-(r2)
 	mov	$2,r0
@@ -129,7 +129,7 @@ let:
 num:
 	mov	$intcon,r3	/ integer*4
 	jsr	r5,numst
-	cmpb	(r1),$&#39;.
+	cmpb	(r1),$'.
 	bne	2f
 	mov	r2,-(sp)
 	mov	r1,r2
@@ -142,12 +142,12 @@ num:
 	movb	(r1)+,(r2)+
 	br	1f
 2:
-	cmpb	(r1),$&#39;h		/ hollerith const?
+	cmpb	(r1),$'h		/ hollerith const?
 	bne	2f
 	mov	lstchr,r0
 	cmpb	chrtab(r0),$2		/ letter?
 	beq	2f			/ not h, then
-	cmp	r0,$&#39;*
+	cmp	r0,$'*
 	beq	2f			/ e.g. real*4 h...
 	clrb	(r2)
 	jsr	r5,geti
@@ -168,7 +168,7 @@ num:
 6:
 	bit	(sp),2(sp)
 	beq	6f
-	movb	$&#39; ,(r2)+
+	movb	$' ,(r2)+
 	inc	(sp)
 	br	6b
 6:
@@ -215,23 +215,23 @@ numst:
 	br	numst
 
 expon:
-	cmpb	(r1)+,$&#39;e
+	cmpb	(r1)+,$'e
 	beq	1f
-	cmpb	-1(r1),$&#39;d
+	cmpb	-1(r1),$'d
 	beq	1f
 2:
 	dec	r1
 	rts	r5
 1:
-	cmpb	(r1),$&#39;+
+	cmpb	(r1),$'+
 	beq	1f
-	cmpb	(r1),$&#39;-
+	cmpb	(r1),$'-
 	beq	1f
 	jsr	r5,isnum
 		br 2b
 1:
 	mov	$realcon,r3	/ real*4
-	cmpb	-(r1),$&#39;e
+	cmpb	-(r1),$'e
 	beq	1f
 	mov	$dblcon,r3	/ real*8
 1:
@@ -300,14 +300,14 @@ lookid:
 	sys	exit
 
 ovfl:
-	&lt;Symbol table overflow\n&gt;
+	<Symbol table overflow\n>
 eovfl:
 .even
 
 srconst:
-	cmpb	(r1)+,$&#39;+
+	cmpb	(r1)+,$'+
 	beq	1f
-	cmpb	-(r1),$&#39;-
+	cmpb	-(r1),$'-
 	bne	1f
 	inc	r1
 1:
@@ -340,25 +340,25 @@ chrtab:
 	.byte	2,2,2,0,0,0,0,0
 
 bastab:
-	&lt;.false.\0&gt;
-	&lt;.true.\0&gt;
-	&lt;**\0&gt;
-	&lt;/\0&gt;
-	&lt;*\0&gt;
-	&lt;-\0&gt;
-	&lt;+\0&gt;
-	&lt;.lt.\0&gt;
-	&lt;.le.\0&gt;
-	&lt;.eq.\0&gt;
-	&lt;.ne.\0&gt;
-	&lt;.gt.\0&gt;
-	&lt;.ge.\0&gt;
-	&lt;.not.\0&gt;
-	&lt;.and.\0&gt;
-	&lt;.or.\0&gt;
-	&lt;(\0&gt;
-	&lt;)\0&gt;
-	&lt;,\0&gt;
-	&lt;=\0&gt;
-	&lt;\0&gt;
+	<.false.\0>
+	<.true.\0>
+	<**\0>
+	</\0>
+	<*\0>
+	<-\0>
+	<+\0>
+	<.lt.\0>
+	<.le.\0>
+	<.eq.\0>
+	<.ne.\0>
+	<.gt.\0>
+	<.ge.\0>
+	<.not.\0>
+	<.and.\0>
+	<.or.\0>
+	<(\0>
+	<)\0>
+	<,\0>
+	<=\0>
+	<\0>
 

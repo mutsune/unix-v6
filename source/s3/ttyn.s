@@ -13,7 +13,7 @@ _ttyn:
 ttyn:
 	clr	r0
 1:
-	mov	$&#39;x,name
+	mov	$'x,name
 	tst	-(sp)
 	sys	fstat; buf
 	bes	er1
@@ -30,13 +30,13 @@ ttyn:
 	mov	$buf,r0
 	cmp	(r0)+,(sp)
 	bne	1b
-	cmp	(r0)+,$&quot;tt
+	cmp	(r0)+,$"tt
 	bne	1b
-	cmpb	(r0)+,$&#39;y
+	cmpb	(r0)+,$'y
 	bne	1b
 	tstb	(r0)+
 	beq	1b
-	cmpb	(r0),$&#39;\0
+	cmpb	(r0),$'\0
 	bne	1b
 	movb	-(r0),name
 
@@ -50,7 +50,7 @@ er1:
 	rts	pc
 
 .data
-dev:	&lt;/dev\0&gt;
+dev:	</dev\0>
 .even
 .bss
 buf:	.=.+40.

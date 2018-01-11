@@ -25,7 +25,7 @@ rerr:
 1:
 	mov	$temp,r2
 	jsr	r5,1f
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 	sub	$mesg,r2
 	mov	r2,0f
 	mov	$2,r0
@@ -40,11 +40,11 @@ rerr:
 	jsr	r5,1b
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,(r2)+
 	rts	r5
 
 mesg:
-	&lt;Runtime error &gt;
+	<Runtime error >
 temp:	.=.+16.
 

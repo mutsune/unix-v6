@@ -5,9 +5,9 @@ auto char *p,c;
 auto int f;
 extern int cout;
 if (nargs() != 1)
-   IEHzap(&quot;puts  &quot;);
+   IEHzap("puts  ");
 p = str;
-while( (c = *p++)!= &#39;\0&#39;) cputc(c,cout);
-cputc(&#39;\n&#39;,cout);
+while( (c = *p++)!= '\0') cputc(c,cout);
+cputc('\n',cout);
 return(str);
 }

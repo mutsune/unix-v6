@@ -43,7 +43,7 @@ dump:
 	mov	KDSA6,(r0)+
 
 / dump all of core (ie to first mt error)
-/ onto mag tape. (9 track or 7 track &#39;binary&#39;)
+/ onto mag tape. (9 track or 7 track 'binary')
 
 	mov	$MTC,r0
 	mov	$60004,(r0)+

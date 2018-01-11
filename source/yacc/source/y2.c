@@ -1,4 +1,4 @@
-# include &quot;dextern&quot;
+# include "dextern"
 # define IDENTIFIER 257
 # define MARK 258
 # define TERM 259
@@ -16,42 +16,42 @@ setup(argc,argv) int argc; char *argv[];
 
 	foutput = -2;
 	i = 1;
-	while( argc &gt;= 2  &amp;&amp; argv[1][0] == &#39;-&#39; ) {
+	while( argc >= 2  && argv[1][0] == '-' ) {
 		while( *++(argv[1]) ){
 			switch( *argv[1] ){
-			case &#39;v&#39;:
-			case &#39;V&#39;:
-				foutput = copen(&quot;y.output&quot;, &#39;w&#39; );
-				if( foutput &lt; 0 ) error( &quot;cannot open y.output&quot;);
+			case 'v':
+			case 'V':
+				foutput = copen("y.output", 'w' );
+				if( foutput < 0 ) error( "cannot open y.output");
 				continue;
-			case &#39;o&#39;:
-			case &#39;O&#39;:
+			case 'o':
+			case 'O':
 				oflag = 1;
 				continue;
-			case &#39;r&#39;:
-			case &#39;R&#39;:
+			case 'r':
+			case 'R':
 				oflag = 1;
 				rflag = 1;
 				continue;
-			default:  error( &quot;illegal option: %c&quot;, *argv[1]);
+			default:  error( "illegal option: %c", *argv[1]);
 				}
 			}
 		argv++;
 		argc--;
 		}
 
-	ftable = copen( oflag ? &quot;yacc.tmp&quot; : &quot;y.tab.c&quot; , &#39;w&#39; );
-	if( ftable&lt;0 ) error( &quot;cannot open table file&quot; );
-	if( argc &gt; 1 ) cin = copen( argv[1], &#39;r&#39; );
-	if( cin &lt; 0 ) error( &quot;cannot open input&quot; );
+	ftable = copen( oflag ? "yacc.tmp" : "y.tab.c" , 'w' );
+	if( ftable<0 ) error( "cannot open table file" );
+	if( argc > 1 ) cin = copen( argv[1], 'r' );
+	if( cin < 0 ) error( "cannot open input" );
 	settab();
-	printf(&quot;#\n&quot;);
-	ctokn = &quot;$end&quot;;
+	printf("#\n");
+	ctokn = "$end";
 	defin(0);  /* eof */
 	extval = 0400;  /* beginning of assigned values */
-	ctokn = &quot;error&quot;;
+	ctokn = "error";
 	defin(0);
-	ctokn = &quot;$accept&quot;;
+	ctokn = "$accept";
 	defin(1);
 	mem=mem0;
 	cnamp = cnames;
@@ -63,29 +63,29 @@ setup(argc,argv) int argc; char *argv[];
 			case IDENTIFIER:	j = chfind(0);
 					trmlev[j] = lev;
 					continue;
-			case &#39;,&#39;:
-			case &#39;;&#39;:		continue;
+			case ',':
+			case ';':		continue;
 			case TERM:		lev=0; continue;
-			case LEFT:		lev=(++i&lt;&lt;3)|01; continue;
-			case BINARY:	lev=(++i&lt;&lt;3)|02; continue;
-			case RIGHT:	lev=(++i&lt;&lt;3)|03; continue;
+			case LEFT:		lev=(++i<<3)|01; continue;
+			case BINARY:	lev=(++i<<3)|02; continue;
+			case RIGHT:	lev=(++i<<3)|03; continue;
 			case MARK:
 					defout();
 					if( rflag ){ /* RATFOR */
-						printf( &quot;define yyerrok yyerrf = 0\n&quot; );
-						printf( &quot;define yyclearin yychar = -1\n&quot; );
-						printf( &quot;subroutine yyactr(yyprdn)\n&quot;);
-						printf( &quot;common/yycomn/yylval,yyval,yypv,yyvalv(150)\n&quot; );
-						printf( &quot;common/yylcom/yychar,yyerrf,yydebu\n&quot; );
-						printf( &quot;integer yychar, yyerrf, yydebu\n&quot; );
-						printf( &quot;integer yyprdn,yyval,yylval,yypv,yyvalv\n&quot; );
+						printf( "define yyerrok yyerrf = 0\n" );
+						printf( "define yyclearin yychar = -1\n" );
+						printf( "subroutine yyactr(yyprdn)\n");
+						printf( "common/yycomn/yylval,yyval,yypv,yyvalv(150)\n" );
+						printf( "common/yylcom/yychar,yyerrf,yydebu\n" );
+						printf( "integer yychar, yyerrf, yydebu\n" );
+						printf( "integer yyprdn,yyval,yylval,yypv,yyvalv\n" );
 						}
 					else {
-						printf( &quot;#define yyclearin yychar = -1\n&quot; );
-						printf( &quot;#define yyerrok yyerrflag = 0\n&quot; );
-						printf( &quot;extern int yychar, yyerrflag;\n&quot; );
-						printf(&quot;\nint yyval 0;\nint *yypv;\nint yylval 0;&quot;);
-						printf(&quot;\nyyactr(__np__){\n&quot;);
+						printf( "#define yyclearin yychar = -1\n" );
+						printf( "#define yyerrok yyerrflag = 0\n" );
+						printf( "extern int yychar, yyerrflag;\n" );
+						printf("\nint yyval 0;\nint *yypv;\nint yylval 0;");
+						printf("\nyyactr(__np__){\n");
 						}
 					break;
 			case LCURLY:	defout();
@@ -93,10 +93,10 @@ setup(argc,argv) int argc; char *argv[];
 					continue;
 			case NUMBER:
 				trmset[j].value = numbval;
-				if( j &lt; ndefout &amp;&amp; j&gt;2 ) 
-					error(&quot;please define type # of %s earlier&quot;, trmset[j].name );
+				if( j < ndefout && j>2 ) 
+					error("please define type # of %s earlier", trmset[j].name );
 				continue;
-			default:	error(&quot;bad precedence syntax, input %d&quot;, t );
+			default:	error("bad precedence syntax, input %d", t );
 			}
 		break;
 		}
@@ -114,37 +114,37 @@ setup(argc,argv) int argc; char *argv[];
 	for(;;) switch( t=gettok() ) {
 	case C_IDENTIFIER:		if( mem == prdptr[1] ) {  /* first time */
 						if( rflag ){
-							printf( &quot;goto 1000\n&quot; );
+							printf( "goto 1000\n" );
 							}
-						else printf(&quot;\nswitch(__np__){\n&quot;);
+						else printf("\nswitch(__np__){\n");
 						}
-				if( i != 0 ) error( &quot;previous rule not terminated&quot; );
+				if( i != 0 ) error( "previous rule not terminated" );
 				*mem = chfind(1);
-				if( *mem &lt; NTBASE )error( &quot;token illegal on lhs of grammar rule&quot; );
+				if( *mem < NTBASE )error( "token illegal on lhs of grammar rule" );
 				i=1;
 				++mem;
 				continue;
 	case IDENTIFIER:
 			*mem=chfind(1);
-			if(*mem &lt; NTBASE)levprd[nprod]=trmlev[*mem];
+			if(*mem < NTBASE)levprd[nprod]=trmlev[*mem];
 			mem++;
-			if(i==0) error(&quot;missing :&quot;);
+			if(i==0) error("missing :");
 			continue;
-	case &#39;=&#39;:		levprd[nprod] =| 04;
-				if( i==0 ) error(&quot;semicolon preceeds action&quot;);
-			printf( rflag?&quot;\n%d &quot;:&quot;\ncase %d:&quot;, nprod );
+	case '=':		levprd[nprod] =| 04;
+				if( i==0 ) error("semicolon preceeds action");
+			printf( rflag?"\n%d ":"\ncase %d:", nprod );
 			cpyact();
-			printf( rflag ? &quot; return&quot; : &quot; break;&quot; );
-	case &#39;|&#39;:
-	case &#39;;&#39;:		if(i){
+			printf( rflag ? " return" : " break;" );
+	case '|':
+	case ';':		if(i){
 				*mem++ = -nprod;
 				prdptr[++nprod] = mem;
 				levprd[nprod]=0;
 				i=0;}
-			if (t==&#39;|&#39;){i=1;*mem++ = *prdptr[nprod-1];}
+			if (t=='|'){i=1;*mem++ = *prdptr[nprod-1];}
 			continue;
 	case 0:		/* End Of File */
-	case MARK:	if( i != 0 ) error( &quot;rule not terminated before %%%% or EOF&quot; );
+	case MARK:	if( i != 0 ) error( "rule not terminated before %%%% or EOF" );
 			settab();
 			finact();
 			/* copy the programs which follow the rules */
@@ -153,17 +153,17 @@ setup(argc,argv) int argc; char *argv[];
 				}
 			return;
 	case PREC:	
-		if( i==0 ) error( &quot;%%prec must appear inside rule&quot; );
-		if( gettok()!=IDENTIFIER)error(&quot;illegal %%prec syntax&quot; );
+		if( i==0 ) error( "%%prec must appear inside rule" );
+		if( gettok()!=IDENTIFIER)error("illegal %%prec syntax" );
 		j=chfind(2);
-		if(j&gt;=NTBASE)error(&quot;nonterminal %s illegal after %%prec&quot;, nontrst[j-NTBASE].name);
+		if(j>=NTBASE)error("nonterminal %s illegal after %%prec", nontrst[j-NTBASE].name);
 		levprd[nprod]=trmlev[j];
 		continue;
 	case LCURLY:	
-		if( i!=0 ) error( &quot;%%{ appears within a rule&quot; );
+		if( i!=0 ) error( "%%{ appears within a rule" );
 		cpycode();
 		continue;
-	default: error( &quot;syntax error, input %d&quot;, t  );
+	default: error( "syntax error, input %d", t  );
 	}
 }
 
@@ -173,17 +173,17 @@ finact(){
 
 	if( rflag ){
 
-		printf( &quot;\n1000 goto(&quot; );
-		for( i=1; i&lt;nprod; ++i ){
-			printf( &quot;%d,&quot;, (levprd[i]&amp;04)==0?999:i );
+		printf( "\n1000 goto(" );
+		for( i=1; i<nprod; ++i ){
+			printf( "%d,", (levprd[i]&04)==0?999:i );
 			}
-		printf( &quot;999),yyprdn\n&quot; );
-		printf( &quot;999 return\nend\n&quot; );
-		printf( &quot;define YYERRCODE %d\n&quot;, trmset[2].value );
+		printf( "999),yyprdn\n" );
+		printf( "999 return\nend\n" );
+		printf( "define YYERRCODE %d\n", trmset[2].value );
 		}
 	else {
-		printf( &quot;\n}\n}\n&quot; );
-		printf( &quot;int yyerrval %d;\n&quot;, trmset[2].value );
+		printf( "\n}\n}\n" );
+		printf( "int yyerrval %d;\n", trmset[2].value );
 		}
 	}
 defin(t) {
@@ -194,34 +194,34 @@ defin(t) {
 
 
         if (t) {
-          if( ++nnonter &gt;= ntlim ) error(&quot;too many nonterminals, limit %d&quot;,ntlim);
+          if( ++nnonter >= ntlim ) error("too many nonterminals, limit %d",ntlim);
 	  nontrst[nnonter].name = ctokn;
 	  return( NTBASE + nnonter );
           }
         else {
-          if( ++nterms &gt;= tlim ) error(&quot;too many terminals, limit %d&quot;,tlim );
+          if( ++nterms >= tlim ) error("too many terminals, limit %d",tlim );
           trmset[nterms].name = ctokn;
-	if( ctokn[0]==&#39; &#39; &amp;&amp; ctokn[2]==&#39;\0&#39; ) /* single character literal */
+	if( ctokn[0]==' ' && ctokn[2]=='\0' ) /* single character literal */
 		trmset[nterms].value = ctokn[1];
-	else if ( ctokn[0]==&#39; &#39; &amp;&amp; ctokn[1]==&#39;\\&#39; ) { /* escape sequence */
-		if( ctokn[3] == &#39;\0&#39; ){ /* single character escape sequence */
+	else if ( ctokn[0]==' ' && ctokn[1]=='\\' ) { /* escape sequence */
+		if( ctokn[3] == '\0' ){ /* single character escape sequence */
 			switch ( ctokn[2] ){
 				 /* character which is escaped */
-			case &#39;n&#39;: trmset[nterms].value = &#39;\n&#39;; break;
-			case &#39;r&#39;: trmset[nterms].value = &#39;\r&#39;; break;
-			case &#39;b&#39;: trmset[nterms].value = &#39;\b&#39;; break;
-			case &#39;t&#39;: trmset[nterms].value = &#39;\t&#39;; break;
-			case &#39;\&#39;&#39;: trmset[nterms].value = &#39;\&#39;&#39;; break;
-			case &#39;&quot;&#39;: trmset[nterms].value = &#39;&quot;&#39;; break;
-			case &#39;\\&#39;: trmset[nterms].value = &#39;\\&#39;; break;
-			default: error( &quot;invalid escape&quot; );
+			case 'n': trmset[nterms].value = '\n'; break;
+			case 'r': trmset[nterms].value = '\r'; break;
+			case 'b': trmset[nterms].value = '\b'; break;
+			case 't': trmset[nterms].value = '\t'; break;
+			case '\'': trmset[nterms].value = '\''; break;
+			case '"': trmset[nterms].value = '"'; break;
+			case '\\': trmset[nterms].value = '\\'; break;
+			default: error( "invalid escape" );
 				}
 			}
-		else if( ctokn[2] &lt;= &#39;7&#39; &amp;&amp; ctokn[2]&gt;=&#39;0&#39; ){ /* \nnn sequence */
-			if( ctokn[3]&lt;&#39;0&#39; || ctokn[3] &gt; &#39;7&#39; || ctokn[4]&lt;&#39;0&#39; ||
-				ctokn[4]&gt;&#39;7&#39; || ctokn[5] != &#39;\0&#39; ) error(&quot;illegal \\nnn construction&quot; );
-			trmset[nterms].value = 64*(ctokn[2]-&#39;0&#39;)+8*(ctokn[3]-&#39;0&#39;)+ctokn[4]-&#39;0&#39;;
-			if( trmset[nterms].value == 0 ) error( &quot;&#39;\\000&#39; is illegal&quot; );
+		else if( ctokn[2] <= '7' && ctokn[2]>='0' ){ /* \nnn sequence */
+			if( ctokn[3]<'0' || ctokn[3] > '7' || ctokn[4]<'0' ||
+				ctokn[4]>'7' || ctokn[5] != '\0' ) error("illegal \\nnn construction" );
+			trmset[nterms].value = 64*(ctokn[2]-'0')+8*(ctokn[3]-'0')+ctokn[4]-'0';
+			if( trmset[nterms].value == 0 ) error( "'\\000' is illegal" );
 			}
 		}
 	else {
@@ -238,23 +238,23 @@ defout(){ /* write out the defines (at the end of the declaration section) */
 	_REGISTER int i, c;
 	_REGISTER char *cp;
 
-	for( i=ndefout; i&lt;=nterms; ++i ){
+	for( i=ndefout; i<=nterms; ++i ){
 
 		cp = trmset[i].name;
-		if( *cp == &#39; &#39; ) ++cp;  /* literals */
+		if( *cp == ' ' ) ++cp;  /* literals */
 
-		for( ; (c= *cp)!=&#39;\0&#39;; ++cp ){
+		for( ; (c= *cp)!='\0'; ++cp ){
 
-			if( c&gt;=&#39;a&#39; &amp;&amp; c&lt;=&#39;z&#39; ||
-			    c&gt;=&#39;A&#39; &amp;&amp; c&lt;=&#39;Z&#39; ||
-			    c&gt;=&#39;0&#39; &amp;&amp; c&lt;=&#39;9&#39; ||
-			    c==&#39;_&#39; )  ; /* VOID */
+			if( c>='a' && c<='z' ||
+			    c>='A' && c<='Z' ||
+			    c>='0' && c<='9' ||
+			    c=='_' )  ; /* VOID */
 			else goto nodef;
 			}
 
 		/* define it */
 
-		printf( &quot;%c define %s %d\n&quot;, rflag?&#39; &#39;:&#39;#&#39;, trmset[i].name, trmset[i].value );
+		printf( "%c define %s %d\n", rflag?' ':'#', trmset[i].name, trmset[i].value );
 
 	nodef:	;
 		}
@@ -265,85 +265,85 @@ defout(){ /* write out the defines (at the end of the declaration section) */
 
 chstash( c ){
   /* put character away into cnames */
-  if( cnamp &gt;= &amp;cnames[cnamsz] ) error(&quot;too many characters in id&#39;s and literals&quot; );
+  if( cnamp >= &cnames[cnamsz] ) error("too many characters in id's and literals" );
   else *cnamp++ = c;
   }
 
 int gettok() {
 	int j, base;
-	static int peekline; /* number of &#39;\n&#39; seen in lookahead */
+	static int peekline; /* number of '\n' seen in lookahead */
 	auto int c, match, reserve;
 
 begin:
 	reserve = 0;
-        if( peekc&gt;=0 ) {
+        if( peekc>=0 ) {
 		c = peekc;
 		lineno =+ peekline;
 		peekc = -1;
 		peekline = 0;
 		}
         else c = getchar();
-        while( c==&#39; &#39; || c==&#39;\n&#39; || c==&#39;\t&#39; ){
-          if( c == &#39;\n&#39; ) ++lineno;
+        while( c==' ' || c=='\n' || c=='\t' ){
+          if( c == '\n' ) ++lineno;
           c=getchar();
           }
-	if (c==&#39;/&#39;)
-		{if (getchar()!=&#39;*&#39;)error(&quot;illegal /&quot;);
+	if (c=='/')
+		{if (getchar()!='*')error("illegal /");
 		c=getchar();
 		while(c) {
-			if( c == &#39;\n&#39; ) ++lineno;
-			if (c==&#39;*&#39;)
-				{if((c=getchar())==&#39;/&#39;)break;}
+			if( c == '\n' ) ++lineno;
+			if (c=='*')
+				{if((c=getchar())=='/')break;}
 			else c=getchar();}
 		if (!c) return(0);
 		goto begin;}
 	j=0;
 	switch(c){
-	case &#39;&quot;&#39;:	
-	case &#39;\&#39;&#39;:	match = c;
+	case '"':	
+	case '\'':	match = c;
 			ctokn = cnamp;
-			chstash( &#39; &#39; );
+			chstash( ' ' );
 			while(1){
 				c = getchar();
-				if( c == &#39;\n&#39; || c == &#39;\0&#39; )
-					error(&quot;illegal or missing &#39; or \&quot;&quot;);
-				if( c == &#39;\\&#39; ){
+				if( c == '\n' || c == '\0' )
+					error("illegal or missing ' or \"");
+				if( c == '\\' ){
 					c = getchar();
-					chstash( &#39;\\&#39; );
+					chstash( '\\' );
 					}
 				else if( c == match ) break;
 				chstash( c );
 				}
 			break;
-	case &#39;%&#39;:
-	case &#39;\\&#39;:	switch(c=getchar())
-		{case &#39;0&#39;:	return(TERM);
-		case &#39;&lt;&#39;:	return(LEFT);
-		case &#39;2&#39;:	return(BINARY);
-		case &#39;&gt;&#39;:	return(RIGHT);
-		case &#39;%&#39;:
-		case &#39;\\&#39;:	return(MARK);
-		case &#39;=&#39;:	return(PREC);
-		case &#39;{&#39;:	return(LCURLY);
+	case '%':
+	case '\\':	switch(c=getchar())
+		{case '0':	return(TERM);
+		case '<':	return(LEFT);
+		case '2':	return(BINARY);
+		case '>':	return(RIGHT);
+		case '%':
+		case '\\':	return(MARK);
+		case '=':	return(PREC);
+		case '{':	return(LCURLY);
 		default:	reserve = 1;
 		}
-	default:	if( c &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39; ){ /* number */
-				numbval = c-&#39;0&#39; ;
-				base = (c==&#39;0&#39;) ? 8 : 10 ;
-				for( c=getchar(); c&gt;=&#39;0&#39; &amp;&amp; c&lt;=&#39;9&#39;; c=getchar() ){
-					numbval = numbval*base + c - &#39;0&#39;;
+	default:	if( c >= '0' && c <= '9' ){ /* number */
+				numbval = c-'0' ;
+				base = (c=='0') ? 8 : 10 ;
+				for( c=getchar(); c>='0' && c<='9'; c=getchar() ){
+					numbval = numbval*base + c - '0';
 					}
 				peekc = c;
 				return(NUMBER);
 				}
-			else if( (c&gt;=&#39;a&#39;&amp;&amp;c&lt;=&#39;z&#39;)||(c&gt;=&#39;A&#39;&amp;&amp;c&lt;=&#39;Z&#39;)||c==&#39;_&#39;||c==&#39;.&#39;||c==&#39;$&#39;){
+			else if( (c>='a'&&c<='z')||(c>='A'&&c<='Z')||c=='_'||c=='.'||c=='$'){
 				ctokn = cnamp;
-				while(	(c&gt;=&#39;a&#39;&amp;&amp;c&lt;=&#39;z&#39;) ||
-					(c&gt;=&#39;A&#39;&amp;&amp;c&lt;=&#39;Z&#39;) ||
-					(c&gt;=&#39;0&#39;&amp;&amp;c&lt;=&#39;9&#39;) ||
-					c==&#39;_&#39; || c==&#39;.&#39; || c==&#39;$&#39; ) {
+				while(	(c>='a'&&c<='z') ||
+					(c>='A'&&c<='Z') ||
+					(c>='0'&&c<='9') ||
+					c=='_' || c=='.' || c=='$' ) {
 					chstash( c );
-					if( peekc&gt;=0 ) { c = peekc; peekc = -1; }
+					if( peekc>=0 ) { c = peekc; peekc = -1; }
 					else c = getchar();
 					}
 				}
@@ -351,35 +351,35 @@ begin:
 
 			peekc=c;
 			}
-	chstash( &#39;\0&#39; );
+	chstash( '\0' );
 
 	if( reserve ){ /* find a reserved word */
-		if( compare(&quot;term&quot;)) return( TERM );
-		if( compare(&quot;TERM&quot;)) return( TERM );
-		if( compare(&quot;token&quot;)) return( TERM );
-		if( compare(&quot;TOKEN&quot;)) return( TERM );
-		if( compare(&quot;left&quot;)) return( LEFT );
-		if( compare(&quot;LEFT&quot;)) return( LEFT );
-		if( compare(&quot;nonassoc&quot;)) return( BINARY );
-		if( compare(&quot;NONASSOC&quot;)) return( BINARY );
-		if( compare(&quot;binary&quot;)) return( BINARY );
-		if( compare(&quot;BINARY&quot;)) return( BINARY );
-		if( compare(&quot;right&quot;)) return( RIGHT );
-		if( compare(&quot;RIGHT&quot;)) return( RIGHT );
-		if( compare(&quot;prec&quot;)) return( PREC );
-		if( compare(&quot;PREC&quot;)) return( PREC );
-		error(&quot;invalid escape, or illegal reserved word: %s&quot;, ctokn );
+		if( compare("term")) return( TERM );
+		if( compare("TERM")) return( TERM );
+		if( compare("token")) return( TERM );
+		if( compare("TOKEN")) return( TERM );
+		if( compare("left")) return( LEFT );
+		if( compare("LEFT")) return( LEFT );
+		if( compare("nonassoc")) return( BINARY );
+		if( compare("NONASSOC")) return( BINARY );
+		if( compare("binary")) return( BINARY );
+		if( compare("BINARY")) return( BINARY );
+		if( compare("right")) return( RIGHT );
+		if( compare("RIGHT")) return( RIGHT );
+		if( compare("prec")) return( PREC );
+		if( compare("PREC")) return( PREC );
+		error("invalid escape, or illegal reserved word: %s", ctokn );
 		}
 
 	/* look ahead to distinguish IDENTIFIER from C_IDENTIFIER */
 
   look:
-	while( peekc==&#39; &#39; || peekc==&#39;\t&#39; || peekc == &#39;\n&#39; ) {
-		if( peekc == &#39;\n&#39; ) ++peekline;
+	while( peekc==' ' || peekc=='\t' || peekc == '\n' ) {
+		if( peekc == '\n' ) ++peekline;
 		peekc = getchar();
 		}
 
-	if( peekc != &#39;:&#39; ) return( IDENTIFIER );
+	if( peekc != ':' ) return( IDENTIFIER );
 	peekc = -1;
 	lineno =+ peekline;
 	peekline = 0;
@@ -389,20 +389,20 @@ chfind(t)
 
 {	int i,j;
 
-	if (ctokn[0]==&#39; &#39;)t=0;
-	for(i=1;i&lt;=nterms;i++)
+	if (ctokn[0]==' ')t=0;
+	for(i=1;i<=nterms;i++)
 		if(compare(trmset[i].name)){
 			cnamp = ctokn;
 			return( i );
 			}
-	for(i=1;i&lt;=nnonter;i++)
+	for(i=1;i<=nnonter;i++)
 		if(compare(nontrst[i].name)) {
 			cnamp = ctokn;
 			return( i+NTBASE );
 			}
 	/* cannot find name */
-	if( t&gt;1 &amp;&amp; ctokn[0] != &#39; &#39; )
-		error( &quot;%s should have been defined earlier&quot;, ctokn );
+	if( t>1 && ctokn[0] != ' ' )
+		error( "%s should have been defined earlier", ctokn );
 	return( defin( t ) );
 	}
 
@@ -410,22 +410,22 @@ cpycode(){ /* copies code between \{ and \} */
 
 	int c;
 	c = getchar();
-	if( c == &#39;\n&#39; ) {
+	if( c == '\n' ) {
 		c = getchar();
 		lineno++;
 		}
 	while( c ){
-		if( c==&#39;\\&#39; )
-			if( (c=getchar()) == &#39;}&#39; ) return;
-			else putchar(&#39;\\&#39;);
-		if( c==&#39;%&#39; )
-			if( (c=getchar()) == &#39;}&#39; ) return;
-			else putchar(&#39;%&#39;);
+		if( c=='\\' )
+			if( (c=getchar()) == '}' ) return;
+			else putchar('\\');
+		if( c=='%' )
+			if( (c=getchar()) == '}' ) return;
+			else putchar('%');
 		putchar( c );
-		if( c == &#39;\n&#39; ) ++lineno;
+		if( c == '\n' ) ++lineno;
 		c = getchar();
 		}
-	error(&quot;eof before %%}&quot;);
+	error("eof before %%}");
 	}
 
 cpyact(){ /* copy C action to the next ; or closing } */
@@ -438,43 +438,43 @@ loop:
 swt:
 	switch( c ){
 
-case &#39;;&#39;:
+case ';':
 		if( brac == 0 ){
 			putchar( c );
 			return;
 			}
 		goto lcopy;
 
-case &#39;{&#39;:
+case '{':
 		brac++;
 		goto lcopy;
 
-case &#39;$&#39;:
+case '$':
 		s = 1;
 		c = getchar();
-		if( c == &#39;$&#39; ){
-			printf(&quot;yyval&quot;);
+		if( c == '$' ){
+			printf("yyval");
 			goto loop;
 			}
-		if( c == &#39;-&#39; ){
+		if( c == '-' ){
 			s = -s;
 			c = getchar();
 			}
-		if( c&gt;=&#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39; ){
+		if( c>='0' && c <= '9' ){
 			j=0;
-			while( c&gt;=&#39;0&#39; &amp;&amp; c&lt;= &#39;9&#39; ){
-				j= j*10+c-&#39;0&#39;;
+			while( c>='0' && c<= '9' ){
+				j= j*10+c-'0';
 				c = getchar();
 				}
-			if( rflag ) printf( &quot;yyvalv(yypv%c%d)&quot;, s==1?&#39;+&#39;:&#39;-&#39;, j );
-			else printf(&quot;yypv[%d]&quot;, s*j );
+			if( rflag ) printf( "yyvalv(yypv%c%d)", s==1?'+':'-', j );
+			else printf("yypv[%d]", s*j );
 			goto swt;
 			}
-		putchar( &#39;$&#39; );
-		if( s&lt;0 ) putchar(&#39;-&#39;);
+		putchar( '$' );
+		if( s<0 ) putchar('-');
 		goto swt;
 
-case &#39;}&#39;:
+case '}':
 		brac--;
 		if( brac == 0 ){
 			putchar( c );
@@ -482,47 +482,47 @@ case &#39;}&#39;:
 			}
 		goto lcopy;
 
-case &#39;/&#39;:	/* look for comments */
+case '/':	/* look for comments */
 		putchar( c );
 		c = getchar();
-		if( c != &#39;*&#39; ) goto swt;
+		if( c != '*' ) goto swt;
 
 		/* it really is a comment */
 
 		putchar( c );
 		while( c=getchar() ){
-			if( c==&#39;*&#39; ){
+			if( c=='*' ){
 				putchar( c );
-				if( (c=getchar()) == &#39;/&#39; ) goto lcopy;
+				if( (c=getchar()) == '/' ) goto lcopy;
 				}
 			putchar( c );
 			}
-		error( &quot;EOF inside comment&quot; );
+		error( "EOF inside comment" );
 
-case &#39;\&#39;&#39;:	/* character constant */
-		match = &#39;\&#39;&#39;;
+case '\'':	/* character constant */
+		match = '\'';
 		goto string;
 
-case &#39;&quot;&#39;:	/* character string */
-		match = &#39;&quot;&#39;;
+case '"':	/* character string */
+		match = '"';
 
 	string:
 
 		putchar( c );
 		while( c=getchar() ){
 
-			if( c==&#39;\\&#39; ){
+			if( c=='\\' ){
 				putchar( c );
 				c=getchar();
 				}
 			else if( c==match ) goto lcopy;
 			putchar( c );
 			}
-		error( &quot;EOF in string or character constant&quot; );
+		error( "EOF in string or character constant" );
 
-case &#39;\0&#39;:
-		error(&quot;action does not terminate&quot;);
-case &#39;\n&#39;:	++lineno;
+case '\0':
+		error("action does not terminate");
+case '\n':	++lineno;
 		goto lcopy;
 
 		}

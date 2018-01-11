@@ -19,23 +19,23 @@ hx:	1
 pl:	66.
 ad:	1
 fi:	1
-cc:	&#39;.
+cc:	'.
 ohc:	200
 hyf:	1
 hypedf:	0
 obufp:	obuf
 thresh:	240
-tabc:	&#39; 
+tabc:	' 
 tabtab:
 	.byte 8.,16.,24.,32.,40.,48.,56.,64.,72.,0
 suffil:
-	&lt;/usr/lib/suftab\0&gt;
+	</usr/lib/suftab\0>
 ones:
-	&lt;ixcm&gt;
+	<ixcm>
 fives:
-	&lt;vld&gt;
-ttyx:	&lt;/dev/tty0\0&gt;
-bfn:	&lt;/tmp/rtma\0&gt;
+	<vld>
+ttyx:	</dev/tty0\0>
+bfn:	</tmp/rtma\0>
 	.even
 ofile:	-1
 nextb:	4

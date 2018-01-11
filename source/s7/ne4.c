@@ -1,16 +1,16 @@
-# include &quot;ne.h&quot;
+# include "ne.h"
 # define	SIGPIPE	13	/* nroff has stopped reading */
 
 int	ESC	033;
-int	HREV	&#39;8&#39;;
-int	HFWD	&#39;9&#39;;
+int	HREV	'8';
+int	HFWD	'9';
 int	SI	017;
 int	SO	016;
 int	ESCOUT	033;
-int	HFWDOUT	&#39;9&#39;;
-int	HREVOUT	&#39;8&#39;;
-int	BKSPOUT	&#39;\b&#39;;
-int	FWDOUT	&#39;~&#39;;
+int	HFWDOUT	'9';
+int	HREVOUT	'8';
+int	BKSPOUT	'\b';
+int	FWDOUT	'~';
 
 char	in[400];	/* input buffer */
 int	exit();
@@ -19,44 +19,44 @@ main(argc,argv) int argc; char *argv[];{
 	int i, type;
 	flush();
 	first = 0;
-	lefteq = righteq = &#39;\0&#39;;
-	signal(SIGPIPE, &amp;exit);
+	lefteq = righteq = '\0';
+	signal(SIGPIPE, &exit);
 	setfile(argc,argv);
-	while( (type=getline(in)) != &#39;\0&#39; ){
+	while( (type=getline(in)) != '\0' ){
 		eqline = linect;
-		if( in[0]==&#39;.&#39; &amp;&amp; in[1]==&#39;E&#39; &amp;&amp; in[2]==&#39;Q&#39; ){
-			for( i=11; i&lt;100; used[i++]=0 );
-			printf(&quot;.tr ~\n&quot;);
-			printf(&quot;%s&quot;,in);
+		if( in[0]=='.' && in[1]=='E' && in[2]=='Q' ){
+			for( i=11; i<100; used[i++]=0 );
+			printf(".tr ~\n");
+			printf("%s",in);
 			init();
 			yyparse();
-			if( eqnreg&gt;0 )
-				printf(&quot;.ne %d\n.rs\n&#39;sp %d\n\\*(%d\n&#39;sp %d\n&quot;,
+			if( eqnreg>0 )
+				printf(".ne %d\n.rs\n'sp %d\n\\*(%d\n'sp %d\n",
 					(eqnht+1)/2, (eqnht-eqnbase-2)/2,eqnreg,eqnbase/2);
-			printf(&quot;.EN&quot;);
-			if( lastchar == &#39;\0&#39; ){
-				putchar(&#39;\n&#39;);
+			printf(".EN");
+			if( lastchar == '\0' ){
+				putchar('\n');
 				break;
 			}
-			if( putchar(lastchar) != &#39;\n&#39; )
-				while( putchar(getc()) != &#39;\n&#39; );
+			if( putchar(lastchar) != '\n' )
+				while( putchar(getc()) != '\n' );
 			flush();
 		} else if( type != lefteq )
-			printf(&quot;%s&quot;,in);
+			printf("%s",in);
 		else
 			inline();
 	}
-	putchar(&#39;\0&#39;);
+	putchar('\0');
 	flush();
 	exit();
 }
 
 getline(s) char *s; {
 	char c;
-	while((*s++=c=getc())!=&#39;\n&#39; &amp;&amp; c!=&#39;\0&#39; &amp;&amp; c!=lefteq );
+	while((*s++=c=getc())!='\n' && c!='\0' && c!=lefteq );
 	if( c==lefteq )
 		s--;
-	*s++ = &#39;\0&#39;;
+	*s++ = '\0';
 	return(c);
 }
 
@@ -64,48 +64,48 @@ inline() {
 	int i,j,ds[20],t;
 	i =  -1;
 	do{
-		if( i&gt;=17 ){
-			while((j=getline(in))!=&#39;\n&#39; &amp;&amp; j!=&#39;\0&#39;);
-			error(!FATAL,&quot;missing right delim (?) at %.20s&quot;,in);
+		if( i>=17 ){
+			while((j=getline(in))!='\n' && j!='\0');
+			error(!FATAL,"missing right delim (?) at %.20s",in);
 			break;
 		}
 		ds[++i] = oalloc();
-		printf(&quot;.ds %d \&quot;%s\n&quot;, ds[i], in);
+		printf(".ds %d \"%s\n", ds[i], in);
 		init();
 		yyparse();
-		if( eqnreg &gt; 0 )
+		if( eqnreg > 0 )
 			ds[++i] = eqnreg;
 	} while( (t=getline(in)) == lefteq );
 	ds[++i] = oalloc();
-	printf(&quot;.ds %d \&quot;%s&quot;, ds[i], in);
-	for( j=0; j&lt;=i; j++){
-		printf(&quot;\\*(%d&quot;, ds[j]);
+	printf(".ds %d \"%s", ds[i], in);
+	for( j=0; j<=i; j++){
+		printf("\\*(%d", ds[j]);
 		ofree(ds[j]);
 	}
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 	flush();
 }
 
 putout(p1) int p1; {
-	if(dbg)printf(&quot;.\tanswer &lt;- S%d\n&quot;,p1);
+	if(dbg)printf(".\tanswer <- S%d\n",p1);
 	eqnht = eht[p1];
 	eqnbase = ebase[p1];
 	eqnreg = p1;
 }
 
 abs(v) int v; {
-	return( v&gt;0 ? v : -v );
+	return( v>0 ? v : -v );
 }
 
 max(i,j) int i,j; {
-	return( i&gt;j ? i : j );
+	return( i>j ? i : j );
 }
 
 oalloc(){
 	int i;
-	for( i=11; i&lt;100; i++)
+	for( i=11; i<100; i++)
 		if( used[i]++ == 0 ) return(i);
-	error( FATAL, &quot;no strings left&quot;, i);
+	error( FATAL, "no strings left", i);
 }
 
 ofree(n) int n; {
@@ -115,27 +115,27 @@ ofree(n) int n; {
 setfile(argc, argv) int argc; char *argv[]; {
 	svargc = --argc;
 	svargv = argv;
-	while( svargc &gt; 0 &amp;&amp; svargv[1][0] == &#39;-&#39;){
+	while( svargc > 0 && svargv[1][0] == '-'){
 		switch( svargv[1][1] ){
 
-		case &#39;d&#39;: lefteq=svargv[1][2]; righteq=svargv[1][3]; break;
-		case &#39;s&#39;: break;
-		case &#39;f&#39;: break;
+		case 'd': lefteq=svargv[1][2]; righteq=svargv[1][3]; break;
+		case 's': break;
+		case 'f': break;
 		default:
 			dbg = 1;
-			ESCOUT = &#39;E&#39;;
-			HFWDOUT = &#39;F&#39;;
-			HREVOUT = &#39;R&#39;;
-			BKSPOUT = &#39;B&#39;;
-			FWDOUT = &#39;S&#39;;
+			ESCOUT = 'E';
+			HFWDOUT = 'F';
+			HREVOUT = 'R';
+			BKSPOUT = 'B';
+			FWDOUT = 'S';
 		}
 		svargc--;
 		svargv++;
 	}
 	if( svargc == 0 )
 		fin = dup(0);
-	else if( (fin = open(svargv[1], 0)) &lt; 0)
-		error( FATAL,&quot;can&#39;t open file %s&quot;, argv[1]);
+	else if( (fin = open(svargv[1], 0)) < 0)
+		error( FATAL,"can't open file %s", argv[1]);
 	ptr = 0;
 	fout = dup(1);
 	ifile = 1;
@@ -145,7 +145,7 @@ setfile(argc, argv) int argc; char *argv[]; {
 yyerror(){;}
 
 int	gsize	10;
-int	gfont	&#39;I&#39;;
+int	gfont	'I';
 
 init(){
 	ct = 0;
@@ -154,62 +154,62 @@ init(){
 
 error(fatal, s1, s2) int fatal; char *s1, *s2; {
 	int sfout;
-	printf(&quot;NEQN ERROR HERE&quot;);
+	printf("NEQN ERROR HERE");
 	flush(fout);
 	sfout = fout;
 	fout = 2;
-	if( fatal&gt;0 )
-		printf(&quot;fatal error: &quot;);
+	if( fatal>0 )
+		printf("fatal error: ");
 	printf(s1,s2);
-	printf(&quot; file %s, between lines %d and %d\n&quot;,
+	printf(" file %s, between lines %d and %d\n",
 		 svargv[ifile], eqline, linect);
 	flush(2);
 	fout = sfout;
-	if( fatal &gt; 0 )
+	if( fatal > 0 )
 		exit(1);
 }
 
 down(n) int n; {
 	int c;
-	if( n&lt;= 0 )
+	if( n<= 0 )
 		c = HREVOUT;
 	else
 		c = HFWDOUT;
 	n = abs(n);
-	while( n-- &gt; 0 ){
+	while( n-- > 0 ){
 		putchar(ESCOUT); putchar(c);
 	}
 }
 
 up(n) int n; {
 	int c;
-	if( n&lt;= 0 )
+	if( n<= 0 )
 		c = HFWDOUT;
 	else
 		c = HREVOUT;
 	n = abs(n);
-	while( n-- &gt; 0 ){
+	while( n-- > 0 ){
 		putchar(ESCOUT); putchar(HREVOUT);
 	}
 }
 
 fwd(n) int n; {
 	int c,i;
-	c = n&lt;0 ? BKSPOUT : FWDOUT;
+	c = n<0 ? BKSPOUT : FWDOUT;
 	n = abs(n);
-	while( n-- &gt; 0 )
+	while( n-- > 0 )
 		putchar(c);
 }
 
 back(n) int n; {
 	int c,i;
-	c = n&gt;0 ? BKSPOUT : FWDOUT;
+	c = n>0 ? BKSPOUT : FWDOUT;
 	n = abs(n);
-	while( n-- &gt; 0 )
+	while( n-- > 0 )
 		putchar(c);
 }
 
 line(n) int n; {
-	while( n-- &gt; 0 )
-		putchar(&#39;_&#39;);
+	while( n-- > 0 )
+		putchar('_');
 }

@@ -48,7 +48,7 @@ dloop:
 	mov	(sp)+,r5
 	rts	r5
 1:
-	cmp	r0,$&#39;d
+	cmp	r0,$'d
 	bne	dloop
 	mov	$line+4,r1
 / loop per specification-set
@@ -111,12 +111,12 @@ dloop:
 	add	r0,nxtaloc
 4:
 	clr	(r4)			/ offset slot
-	cmpb	(r1),$&#39;(		/ test subscript
+	cmpb	(r1),$'(		/ test subscript
 	bne	3f
 	inc	r1
 	jsr	r5,consub
 	bic	$70,holquo
-	bis	$10,holquo	/ array -&gt; scalar
+	bis	$10,holquo	/ array -> scalar
 	mov	r0,(r4)
 3:
 	movb	symtab+1(r3),r0	/ width of item
@@ -146,7 +146,7 @@ dloop:
 	cmp	r0,$2			/ constant
 	bne	8f
 3:
-	cmpb	(r1)+,$&#39;*
+	cmpb	(r1)+,$'*
 	bne	3f
 	cmp	r3,$intcon
 	bne	8f
@@ -170,7 +170,7 @@ dloop:
 	jsr	r5,evalcon
 	clr	negflg
 	mov	(sp)+,r1
-	mov	(sp)+,r2		/ note r1 &lt;=&gt; r2
+	mov	(sp)+,r2		/ note r1 <=> r2
 4:
 	cmpb	efno+1,holquo+1		/ compare sizes
 	blt	9f			/ constant too small
@@ -189,22 +189,22 @@ dloop:
 	cmpb	efno,$5			/ test hollerith
 	bne	9f
 3:
-	cmpb	(r1),$&#39;/
+	cmpb	(r1),$'/
 	beq	3f
-	cmpb	(r1)+,$&#39;,
+	cmpb	(r1)+,$',
 	bne	8f
 	tst	repfact
 	bne	4f
-	cmpb	(r2)+,$&#39;,
+	cmpb	(r2)+,$',
 	bne	8f
 4:
 	jmp	2b
 3:
-	cmpb	(r2)+,$&#39;/
+	cmpb	(r2)+,$'/
 	bne	8f
 	tstb	(r2)
 	beq	1f
-	cmpb	(r2),$&#39;,
+	cmpb	(r2),$',
 	bne	3f
 	inc	r2
 3:
@@ -235,7 +235,7 @@ dodata:
 	bne	2f			/ is data
 	mov	nxtaloc,r0
 	jsr	r5,code
-		&lt;.=.+%d.\n.text\n\0&gt;; .even
+		<.=.+%d.\n.text\n\0>; .even
 		r0
 	rts	r5
 2:
@@ -244,7 +244,7 @@ dodata:
 	neg	r1
 	blt	9b
 	jsr	r5,code
-		&lt;.=.+%d.\n.text\n\0&gt;; .even
+		<.=.+%d.\n.text\n\0>; .even
 		r1
 1:
 	rts	r5
@@ -257,7 +257,7 @@ onedata:
 	bmi	9f
 	beq	3f
 	jsr	r5,code
-		&lt;.=.+%d.\n\0&gt;; .even
+		<.=.+%d.\n\0>; .even
 		r0
 	add	r0,r1
 3:
@@ -269,7 +269,7 @@ onedata:
 3:
 	mov	(r2)+,r0
 	jsr	r5,code
-		&lt;%o\n\0&gt;; .even
+		<%o\n\0>; .even
 		r0
 	dec	(sp)
 	bne	3b

@@ -7,7 +7,7 @@ expres:
 	clr	xsymbol
 expres1:
 	mov	r5,-(sp)
-	mov	$&#39;+,-(sp)
+	mov	$'+,-(sp)
 	clr	r2
 	mov	$1,r3
 	br	1f
@@ -23,7 +23,7 @@ advanc:
 	bne	1f
 	tstb	passno
 	beq	1f
-	jsr	r5,error; &#39;u
+	jsr	r5,error; 'u
 1:
 	cmp	r0,$40
 	bne	1f
@@ -55,24 +55,24 @@ advanc:
 	jmp	*(r1)
 
 esw1:
-	&#39;+;	binop
-	&#39;-;	binop
-	&#39;*;	binop
-	&#39;/;	binop
-	&#39;&amp;;	binop
+	'+;	binop
+	'-;	binop
+	'*;	binop
+	'/;	binop
+	'&;	binop
 	037;	binop
 	035;	binop
 	036;	binop
-	&#39;%;	binop
-	&#39;[;	brack
-	&#39;^;	binop
+	'%;	binop
+	'[;	brack
+	'^;	binop
 	1;	exnum
 	2;	exnum1
-	&#39;!;	binop
+	'!;	binop
 	200;	0
 
 binop:
-	cmpb	(sp),$&#39;+
+	cmpb	(sp),$'+
 	beq	1f
 	jsr	pc,errore
 1:
@@ -95,9 +95,9 @@ brack:
 	mov	r3,-(sp)
 	jsr	pc,readop
 	jsr	pc,expres1
-	cmp	r4,$&#39;]
+	cmp	r4,$']
 	beq	1f
-	jsr	r5,error; &#39;]
+	jsr	r5,error; ']
 1:
 	mov	r3,r0
 	mov	r2,r1
@@ -116,17 +116,17 @@ oprand:
 	jmp	*(r5)
 
 exsw2:
-	&#39;+; exadd
-	&#39;-; exsub
-	&#39;*; exmul
-	&#39;/; exdiv
+	'+; exadd
+	'-; exsub
+	'*; exmul
+	'/; exdiv
 	037; exor
-	&#39;&amp;; exand
+	'&; exand
 	035;exlsh
 	036;exrsh
-	&#39;%; exmod
-	&#39;^; excmbin
-	&#39;!; exnot
+	'%; exmod
+	'^; excmbin
+	'!; exnot
 	200;  0
 
 excmbin:
@@ -197,7 +197,7 @@ exnot:
 	br	eoprnd
 
 eoprnd:
-	mov	$&#39;+,(sp)
+	mov	$'+,(sp)
 	jmp	advanc
 
 combin:
@@ -242,7 +242,7 @@ combin1:
 	bpl	1f
 	cmp	r3,$-1
 	beq	2f
-	jsr	r5,error; &#39;r
+	jsr	r5,error; 'r
 2:
 	mov	maxtyp,r3
 1:

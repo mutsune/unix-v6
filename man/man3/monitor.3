@@ -9,7 +9,7 @@ int lowpc( ), highpc( ), buffer[ ], bufsize;
 .ft R
 .sh DESCRIPTION
 .it Monitor
-is an interface to the system&#39;s profile entry (II).
+is an interface to the system's profile entry (II).
 .it Lowpc
 and
 .it highpc
@@ -20,7 +20,7 @@ array of
 .it bufsize
 integers.
 .it Monitor
-arranges for the system to sample the user&#39;s
+arranges for the system to sample the user's
 program counter periodically
 and record the execution histogram in
 the buffer.
@@ -44,7 +44,7 @@ it is sufficient to use
 .br
 	...
 .br
-	monitor(2, &amp;etext, buf, bufsize);
+	monitor(2, &etext, buf, bufsize);
 .s3
 .it Etext
 is a loader-defined symbol which lies just above all the
@@ -69,5 +69,5 @@ is simpler if one is satisfied with
 its default profile range and resolution.
 .sh FILES
 mon.out
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 prof (I), profil (II), cc (I)

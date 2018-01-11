@@ -3,7 +3,7 @@ SETTING UP UNIX \- Sixth Edition
 .PP
 Enclosed are:
 .IP 1.
-`UNIX Programmer&#39;s Manual,&#39; Sixth Edition.
+`UNIX Programmer's Manual,' Sixth Edition.
 .IP 2.
 Documents with the following titles:
 .DS
@@ -16,7 +16,7 @@ A Tutorial Introduction to the ED Text Editor
 UNIX for Beginners
 RATFOR \- A Preprocessor for a Rational Fortran
 YACC \- Yet Another Compiler-Compiler
-NROFF Users&#39; Manual
+NROFF Users' Manual
 The UNIX I/O System
 A Manual for the Tmg Compiler-writing Language
 On the Security of UNIX
@@ -45,7 +45,7 @@ source for the operating system itself;
 the second contains all remaining source programs;
 the third contains manuals intended to be
 printed using the formatting programs roff or nroff.
-The `binary&#39; disk is enough to run the system,
+The `binary' disk is enough to run the system,
 but you will almost certainly want to modify some source
 programs.
 .SH
@@ -82,13 +82,13 @@ it reads block 0, not block 1.)
 .IP 4.
 Halt and restart the CPU at 0.
 The tape should rewind.
-The console should type `=&#39;.
+The console should type `='.
 .IP 5.
 Copy the magtape to disk by the following.
 This assumes TU10 and RK05; see 6 below for other
 devices.
-The machine&#39;s printouts are shown in italic
-(the `=&#39; signs should be considered italic).
+The machine's printouts are shown in italic
+(the `=' signs should be considered italic).
 Terminate each line you type by carriage return or line-feed.
 .DS
 = tmrk
@@ -128,29 +128,29 @@ program copies tape to disk with the given offsets and counts.
 Its first use copies a bootstrap program
 to disk block 0;
 the second use copies the file system itself onto the disk.
-You may get back to `=&#39; level by starting
+You may get back to `=' level by starting
 at 137000.
 .IP 6.
 If you have TU16 tape
-say `htrk&#39; instead of `tmrk&#39; in the above example.
-If you have an RP03 disk, say `tmrp&#39; or `htrp&#39;,
+say `htrk' instead of `tmrk' in the above example.
+If you have an RP03 disk, say `tmrp' or `htrp',
 and use a 99 instead of 100 tape offset.
-If you have an RP04 disk, use `tmhp&#39; or `hthp&#39; instead or
-`tmrk&#39;, and use a 98 instead of 100 tape offset.
+If you have an RP04 disk, use `tmhp' or `hthp' instead or
+`tmrk', and use a 98 instead of 100 tape offset.
 The different offsets load bootstrap programs
 appropriate to the disk they will live on.
 .IP 7.
-This procedure generates the `binary&#39; disk; the `source&#39; disk
+This procedure generates the `binary' disk; the `source' disk
 may be generated on another RK pack by using a tape offset of 4101 instead of
 101.
-The `document&#39; disk is at offset 8101 instead of 101.
+The `document' disk is at offset 8101 instead of 101.
 Unless you have only a single RK drive,
 it is probably wise to wait on generating these disks.
 Better tools are available using UNIX itself.
 .SH
 Booting UNIX
 .PP
-Once the UNIX `binary&#39; disk is obtained, the system is booted
+Once the UNIX `binary' disk is obtained, the system is booted
 by keying in and executing one of the following programs at 100000.
 These programs correspond to the DEC bulk ROMs
 for disks, since they read in and execute block 0 at location 0.
@@ -169,9 +169,9 @@ for disks, since they read in and execute block 0 at location 0.
 			005007
 .DE
 Now follow the indicated dialog,
-where `@&#39; and `#&#39; are prompts:
+where `@' and `#' are prompts:
 .DS
-@ rkunix		(or `rpunix&#39; or `hpunix&#39;)
+@ rkunix		(or `rpunix' or `hpunix')
 .I
 mem = xxx
 login:  \fRroot
@@ -190,13 +190,13 @@ Most of the UNIX software will run with
 but some things require much more.
 .PP
 UNIX is now running,
-and the `UNIX Programmer&#39;s manual&#39; applies;
+and the `UNIX Programmer's manual' applies;
 references below of the form X-Y mean the subsection named
 X in section Y of the manual.
-The `#&#39; is the prompt from the UNIX Shell,
+The `#' is the prompt from the UNIX Shell,
 and indicates you are logged in as the super-user.
 The only valid user names are
-`root&#39; and `bin&#39;.
+`root' and `bin'.
 The root is the super-user and bin
 is the owner of nearly every file in the file system.
 .PP
@@ -227,7 +227,7 @@ three configurations for rk, rp and hp.
 .PP
 Using the Shell file as a guide,
 compile (cc-I) and rename (mv-I) the
-configuration program `mkconf&#39;.
+configuration program `mkconf'.
 Run the configuration program and
 type into it a list of the controllers on
 your system.
@@ -254,7 +254,7 @@ dhdm	(DM11-BB)
 The devices marked with * should be preceded by
 a number specifying how many.
 (The console typewriter is automatically included;
-don&#39;t count it in the kl specification.)
+don't count it in the kl specification.)
 Mkconf will generate the two files l.s
 (trap vectors) and c.c (configuration table).
 Take a careful look at
@@ -317,7 +317,7 @@ with a full complement of 16 lines.
 If you have less,
 you may want to edit dh.c.
 .PP
-The DN11 driver will handle 3 DN&#39;s.
+The DN11 driver will handle 3 DN's.
 Edit dn.c.
 .PP
 The DP11 driver can only handle a single DP.
@@ -325,11 +325,11 @@ This cannot be easily changed.
 .PP
 The KL/DL driver is set up to run
 a single DL11-A, -B, or -C (the console)
-and no DL11-E&#39;s.
+and no DL11-E's.
 To change this, edit
 kl.c to have NKL11 reflect the total number of
-DL11-ABC&#39;s and
-NDL11 to reflect the number of DL11-E&#39;s.
+DL11-ABC's and
+NDL11 to reflect the number of DL11-E's.
 So far as the driver is concerned,
 the difference between the devices is
 their addresses.
@@ -402,7 +402,7 @@ hp	hp0	RP04 moving head disk
 .DE
 The major device number is selected by counting the
 line number (from zero)
-of the device&#39;s entry in the block configuration table.
+of the device's entry in the block configuration table.
 Thus the first entry in the table bdevsw would be
 major device zero.
 .PP
@@ -424,13 +424,13 @@ for teletype access should be named
 The files tty8 (console), mem, kmem, null are
 already correctly configured.
 .PP
-The disk and magtape drivers provide a `raw&#39; interface
+The disk and magtape drivers provide a `raw' interface
 to the device which provides direct transmission
-between the user&#39;s core and the device and allows
+between the user's core and the device and allows
 reading or writing large records.
 The raw device counts as a character device,
 and should have the name of the corresponding
-standard block special file with `r&#39; prepended.
+standard block special file with `r' prepended.
 Thus the raw magtape
 files would be called /dev/rmtX.
 .PP
@@ -492,16 +492,16 @@ Time Conversion
 If your machine is not in the Eastern time zone,
 you must edit (ed-I) the subroutine
 /usr/source/s4/ctime.c to reflect your local time.
-The variable `timezone&#39; should be changed
+The variable `timezone' should be changed
 to reflect the time difference between local time and GMT.
 For EST, this is 5*60*60; for PST it would be 8*60*60.
 This routine also contains the names of the
 standard and Daylight Savings time zone;
-so `EST&#39; and `EDT&#39; might be changed to `PST&#39; and `PDT&#39;
+so `EST' and `EDT' might be changed to `PST' and `PDT'
 respectively.
 Notice that these two names are in upper case
 and escapes may be needed (tty-IV).
-Finally, there is a `daylight&#39;
+Finally, there is a `daylight'
 flag;
 when it is 1 it causes the
 time to shift to Daylight Savings automatically
@@ -588,7 +588,7 @@ the best way to move a file system
 is to dump it (dump-VIII) to magtape,
 use mkfs-VIII to create the new file system,
 and restore the tape.
-If you don&#39;t have magtape,
+If you don't have magtape,
 dump accepts an argument telling where to put the dump;
 you might use another disk or DECtape.
 Sometimes a file system has to be increased in logical size
@@ -602,7 +602,7 @@ The size should not be increased very greatly
 by this technique, however,
 since although the allocatable space will increase
 the maximum number of files will not (that is, the i-list
-size can&#39;t be changed).
+size can't be changed).
 Read and understand the description given in file system-VI
 before playing around in this way.
 .PP
@@ -631,7 +631,7 @@ New Users
 .PP
 Install new users by editing the password file
 /etc/passwd (passwd-V).
-You&#39;ll have to make current directories for the new users
+You'll have to make current directories for the new users
 and change their owners to the
 newly installed name.
 Login as each user to make sure the password
@@ -731,7 +731,7 @@ documentation,
 again let us know.
 .PP
 Lastly,
-there is a UNIX users&#39; group forming.
+there is a UNIX users' group forming.
 To get on their mailing list,
 send your name(s) and address to:
 .DS

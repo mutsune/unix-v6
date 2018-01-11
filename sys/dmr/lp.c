@@ -6,9 +6,9 @@
  * LP-11 Line printer driver
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../user.h"
 
 #define	LPADDR	0177514
 
@@ -46,12 +46,12 @@ struct  {
 lpopen(dev, flag)
 {
 
-	if(lp11.flag &amp; OPEN || LPADDR-&gt;lpsr &lt; 0) {
+	if(lp11.flag & OPEN || LPADDR->lpsr < 0) {
 		u.u_error = EIO;
 		return;
 	}
 	lp11.flag =| (IND|EJECT|OPEN);
-	LPADDR-&gt;lpsr =| IENABLE;
+	LPADDR->lpsr =| IENABLE;
 	lpcanon(FORM);
 }
 
@@ -65,7 +65,7 @@ lpwrite()
 {
 	register int c;
 
-	while ((c=cpass())&gt;=0)
+	while ((c=cpass())>=0)
 		lpcanon(c);
 }
 
@@ -74,79 +74,79 @@ lpcanon(c)
 	register c1, c2;
 
 	c1 = c;
-	if(lp11.flag&amp;CAP) {
-		if(c1&gt;=&#39;a&#39; &amp;&amp; c1&lt;=&#39;z&#39;)
-			c1 =+ &#39;A&#39;-&#39;a&#39;; else
+	if(lp11.flag&CAP) {
+		if(c1>='a' && c1<='z')
+			c1 =+ 'A'-'a'; else
 		switch(c1) {
 
-		case &#39;{&#39;:
-			c2 = &#39;(&#39;;
+		case '{':
+			c2 = '(';
 			goto esc;
 
-		case &#39;}&#39;:
-			c2 = &#39;)&#39;;
+		case '}':
+			c2 = ')';
 			goto esc;
 
-		case &#39;`&#39;:
-			c2 = &#39;\&#39;&#39;;
+		case '`':
+			c2 = '\'';
 			goto esc;
 
-		case &#39;|&#39;:
-			c2 = &#39;!&#39;;
+		case '|':
+			c2 = '!';
 			goto esc;
 
-		case &#39;~&#39;:
-			c2 = &#39;^&#39;;
+		case '~':
+			c2 = '^';
 
 		esc:
 			lpcanon(c2);
 			lp11.ccc--;
-			c1 = &#39;-&#39;;
+			c1 = '-';
 		}
 	}
 
 	switch(c1) {
 
-	case &#39;\t&#39;:
-		lp11.ccc = (lp11.ccc+8) &amp; ~7;
+	case '\t':
+		lp11.ccc = (lp11.ccc+8) & ~7;
 		return;
 
 	case FORM:
-	case &#39;\n&#39;:
-		if((lp11.flag&amp;EJECT) == 0 ||
+	case '\n':
+		if((lp11.flag&EJECT) == 0 ||
 		   lp11.mcc!=0 || lp11.mlc!=0) {
 			lp11.mcc = 0;
 			lp11.mlc++;
-			if(lp11.mlc &gt;= EJLINE &amp;&amp; lp11.flag&amp;EJECT)
+			if(lp11.mlc >= EJLINE && lp11.flag&EJECT)
 				c1 = FORM;
 			lpoutput(c1);
 			if(c1 == FORM)
 				lp11.mlc = 0;
 		}
 
-	case &#39;\r&#39;:
+	case '\r':
 		lp11.ccc = 0;
-		if(lp11.flag&amp;IND)
+		if(lp11.flag&IND)
 			lp11.ccc = 8;
 		return;
 
 	case 010:
-		if(lp11.ccc &gt; 0)
+		if(lp11.ccc > 0)
 			lp11.ccc--;
 		return;
 
-	case &#39; &#39;:
+	case ' ':
 		lp11.ccc++;
 		return;
 
 	default:
-		if(lp11.ccc &lt; lp11.mcc) {
-			lpoutput(&#39;\r&#39;);
+		if(lp11.ccc < lp11.mcc) {
+			lpoutput('\r');
 			lp11.mcc = 0;
 		}
-		if(lp11.ccc &lt; MAXCOL) {
-			while(lp11.ccc &gt; lp11.mcc) {
-				lpoutput(&#39; &#39;);
+		if(lp11.ccc < MAXCOL) {
+			while(lp11.ccc > lp11.mcc) {
+				lpoutput(' ');
 				lp11.mcc++;
 			}
 			lpoutput(c1);
@@ -160,8 +160,8 @@ lpstart()
 {
 	register int c;
 
-	while (LPADDR-&gt;lpsr&amp;DONE &amp;&amp; (c = getc(&amp;lp11)) &gt;= 0)
-		LPADDR-&gt;lpbuf = c;
+	while (LPADDR->lpsr&DONE && (c = getc(&lp11)) >= 0)
+		LPADDR->lpbuf = c;
 }
 
 lpint()
@@ -170,14 +170,14 @@ lpint()
 
 	lpstart();
 	if (lp11.cc == LPLWAT || lp11.cc == 0)
-		wakeup(&amp;lp11);
+		wakeup(&lp11);
 }
 
 lpoutput(c)
 {
-	if (lp11.cc &gt;= LPHWAT)
-		sleep(&amp;lp11, LPPRI);
-	putc(c, &amp;lp11);
+	if (lp11.cc >= LPHWAT)
+		sleep(&lp11, LPPRI);
+	putc(c, &lp11);
 	spl4();
 	lpstart();
 	spl0();

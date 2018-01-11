@@ -1,7 +1,7 @@
 /
 /
 
-/ sign &amp; dsign fortran functions
+/ sign & dsign fortran functions
 
 .globl	sign.
 .globl	dsign.

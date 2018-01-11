@@ -1,5 +1,5 @@
 /*
-This routine is an exact implementation of Boris Hagelin&#39;s
+This routine is an exact implementation of Boris Hagelin's
 cryptographic machine.  See U. S. Patent #2,089,603.
 */
 
@@ -31,14 +31,14 @@ setup(list,n) int list[];
 	while(--n){
 		*lp = lp+2;
 		lp[1] = getbit();
-		if(xxx) putchar(lp[1]+&#39;0&#39;);
+		if(xxx) putchar(lp[1]+'0');
 		lp = lp + 2;
 		}
 	*lp = list;
 	lp[1] = getbit();
 	if(xxx){
-		putchar(lp[1]+&#39;0&#39;);
-		putchar(&#39;\n&#39;);
+		putchar(lp[1]+'0');
+		putchar('\n');
 		}
 	}
 
@@ -52,8 +52,8 @@ argument
 getbit(){
 	static i,j;
 	int b;
-	b = (key[j] &gt;&gt; i) &amp; 1;
-	if (i++ &gt; 5) {
+	b = (key[j] >> i) & 1;
+	if (i++ > 5) {
 		j++;
 		i = 0;
 		}
@@ -85,12 +85,12 @@ copy input key and pad with clever junk
 	jp = key;
 	*jp++ = 004;
 	*jp++ = 034;
-	if(ncooky &gt; 1){
+	if(ncooky > 1){
 		while (*jp++ = *cookyp[1]++);
 		jp--;
 		}
 	ip = key;
-	while (jp &lt; key+128) {
+	while (jp < key+128) {
 		*jp = jp[-1] ^ *ip++;
 		jp++;
 	}
@@ -115,23 +115,23 @@ set up the cage bars from the key area
 	i = 27;
 	while (i--){
 	cage[i] = cagetable[*jp++ % 28];
-	if(xxx &amp;&amp; (cage[i] != 0)){
-		putchar( cage[i]/8 + &#39;0&#39;);
-		putchar( cage[i]%8 + &#39;0&#39;);
-		putchar(&#39; &#39;);
+	if(xxx && (cage[i] != 0)){
+		putchar( cage[i]/8 + '0');
+		putchar( cage[i]%8 + '0');
+		putchar(' ');
 		}
 	}
-	if(xxx) putchar(&#39;\n&#39;);
+	if(xxx) putchar('\n');
 
 
 /*
 the internal settings are now complete
-it&#39;s time to turn the crank, running the cage
+it's time to turn the crank, running the cage
 bars against the wheel lugs.
 */
 
 
-while ((precious = getchar()) &gt;=0){
+while ((precious = getchar()) >=0){
 	temp = 040*wheel1[1] + 020*wheel2[1] + 010*wheel3[1]
 		+ 004*wheel4[1] + 002*wheel5[1] + 001*wheel6[1];
 	wheel1 = *wheel1;
@@ -144,7 +144,7 @@ while ((precious = getchar()) &gt;=0){
 	random = 0;
 	i = 27;
 	while (i--){
-		random = random + ((temp &amp; cage[i]) != 0);
+		random = random + ((temp & cage[i]) != 0);
 		}
 	random =% 26;
 
@@ -155,15 +155,15 @@ inverse.
 */
 
 
-	if ( precious==&#39;\n&#39; || precious==&#39; &#39;)
+	if ( precious=='\n' || precious==' ')
 		crypt = precious;
 	else{
-		crypt = (&#39;a&#39; + &#39;z&#39; - precious + random)%0400;
-		if (crypt &gt;= &#39;a&#39; &amp;&amp; crypt &lt;= &#39;z&#39; &amp;&amp; precious &gt; &#39;z&#39;)
+		crypt = ('a' + 'z' - precious + random)%0400;
+		if (crypt >= 'a' && crypt <= 'z' && precious > 'z')
 			crypt =+ 26;
-		if (crypt &gt; &#39;z&#39; &amp;&amp; precious &gt;= &#39;a&#39; &amp; precious &lt;= &#39;z&#39;)
+		if (crypt > 'z' && precious >= 'a' & precious <= 'z')
 			crypt =- 26;
-		if (crypt == &#39;\n&#39; || crypt == &#39; &#39;)
+		if (crypt == '\n' || crypt == ' ')
 			crypt = precious;
 		}
 	putchar(crypt);
@@ -182,26 +182,26 @@ getchar()
 
 	if(icnt == 0) {
 		icnt = read(0, ibuf, 512);
-		if(icnt &lt;= 0)
+		if(icnt <= 0)
 			return(-1);
 		ibufp = ibuf;
 	}
 	icnt --;
-	return(*ibufp++ &amp; 0377);
+	return(*ibufp++ & 0377);
 }
 
 putchar(c)
 {
 
 	obuf[ocnt++] = c;
-	if(ocnt &gt;= 512)
+	if(ocnt >= 512)
 		flush();
 }
 
 flush()
 {
 
-	if(ocnt &gt; 0)
+	if(ocnt > 0)
 		write(1, obuf, ocnt);
 	ocnt = 0;
 }

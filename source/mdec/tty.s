@@ -7,26 +7,26 @@ getc:
 	bge	getc
 	mov	tkb,r0
 	bic	$!177,r0
-	cmp	r0,$&#39;A
+	cmp	r0,$'A
 	blo	1f
-	cmp	r0,$&#39;Z
+	cmp	r0,$'Z
 	bhi	1f
-	add	$&#39;a-&#39;A,r0
+	add	$'a-'A,r0
 1:
-	cmp	r0,$&#39;\r
+	cmp	r0,$'\r
 	bne	putc
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 
 / put a character on the tty.
 / also performs delay.
 tps = 177564
 tpb = 177566
 putc:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
-	mov	$&#39;\r,r0
+	mov	$'\r,r0
 	jsr	pc,(r5)
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 1:
 	tstb	tps
 	bpl	1b
@@ -34,7 +34,7 @@ putc:
 	rts	pc
 
 / write a string to tty
-/ jsr pc, mesg; &lt;string\0&gt;; .even
+/ jsr pc, mesg; <string\0>; .even
 mesg:
 	movb	*(sp),r0
 	beq	1f

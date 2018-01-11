@@ -8,7 +8,7 @@ not involved in document preparation
 tend to use the system for
 program development, especially language work.
 There are few important
-``applications&#39;&#39; programs.
+``applications'' programs.
 .pg
 Overall, we have
 .pg
@@ -22,7 +22,7 @@ Overall, we have
 	66300	512-byte secondary storage blocks used
 .fi
 .pg
-There is a ``background&#39;&#39; process that
+There is a ``background'' process that
 runs at the lowest possible priority; it is used
 to soak up any idle \*sCPU\*n time.
 It has been used to produce a million-digit

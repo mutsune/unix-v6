@@ -6,8 +6,8 @@
 
 .data
 _instab:
-	80.; 1f; 2f; .text; 1:&lt;mov\0&gt;; 2:&lt;clr\0&gt;; .data
-	60.; 1f; 2f; .text; 1: &lt;cmp\0&gt;; 2: &lt;tst\0&gt;; .data
+	80.; 1f; 2f; .text; 1:<mov\0>; 2:<clr\0>; .data
+	60.; 1f; 2f; .text; 1: <cmp\0>; 2: <tst\0>; .data
 	106.; 1b; 2b
 	61.; 1b; 2b
 	62.; 1b; 2b
@@ -18,57 +18,57 @@ _instab:
 	67.; 1b; 2b
 	68.; 1b; 2b
 	69.; 1b; 2b
-	40.; 1f; 3f; .text; 1:&lt;add\0&gt;; .data
+	40.; 1f; 3f; .text; 1:<add\0>; .data
 	70.; 1b; 3f
-	41.; 2f; 4f; .text; 2:&lt;sub\0&gt;; .data
+	41.; 2f; 4f; .text; 2:<sub\0>; .data
 	71.; 2b; 4f
-	30.; 1b; 3f; .text; 3:&lt;inc\0&gt;; .data
-	31.; 2b; 4f; .text; 4:&lt;dec\0&gt;; .data
+	30.; 1b; 3f; .text; 3:<inc\0>; .data
+	31.; 2b; 4f; .text; 4:<dec\0>; .data
 	32.; 1b; 3b
 	33.; 2b; 4b
-	42.; 5f; 5f; .text; 5:&lt;mul&gt;; .data
+	42.; 5f; 5f; .text; 5:<mul>; .data
 	72.; 5b; 5b
-	43.; 6f; 6f; .text; 6:&lt;div\0&gt;; .data
+	43.; 6f; 6f; .text; 6:<div\0>; .data
 	73.; 6b; 6b
 	44.; 5b; 6b
 	74.; 5b; 6b
-	45.; 5f; 6f; .text; 	6:&lt;asr\0&gt;; .data
+	45.; 5f; 6f; .text; 	6:<asr\0>; .data
 	75.; 5f; 6b
-	46.; 5f; 6f; .text; 5:&lt;ash\0&gt;; 6:&lt;asl\0&gt;; .data
+	46.; 5f; 6f; .text; 5:<ash\0>; 6:<asl\0>; .data
 	76.; 5b; 6b
-	47.; 5f; 5f; .text; 5:&lt;bic\0&gt;; 6:&lt;bic $1,\0&gt;; .data
+	47.; 5f; 5f; .text; 5:<bic\0>; 6:<bic $1,\0>; .data
 	55.; 5b; 6b
 	85.; 5b; 6b
-	81.; 5f; 6f; .text; 5:&lt;bit\0&gt;; 6:&lt;bit $1,\0&gt;; .data
-	48.; 5f; 6f; .text; 5:&lt;bis\0&gt;; 6:&lt;bis $1,\0&gt;; .data
+	81.; 5f; 6f; .text; 5:<bit\0>; 6:<bit $1,\0>; .data
+	48.; 5f; 6f; .text; 5:<bis\0>; 6:<bis $1,\0>; .data
 	78.; 5b; 6b
-	49.; 5f; 5f; .text; 5:&lt;xor\0&gt;; .data
+	49.; 5f; 5f; .text; 5:<xor\0>; .data
 	79.; 5b; 5b
-	37.; 1f; 1f; .text; 1:&lt;neg\0&gt;; .data
-	38.; 1f; 1f; .text; 1:&lt;com\0&gt;; .data
+	37.; 1f; 1f; .text; 1:<neg\0>; .data
+	38.; 1f; 1f; .text; 1:<com\0>; .data
 
-	98.; 1f; 1f; .text; 1:&lt;*$\0&gt;; .data
+	98.; 1f; 1f; .text; 1:<*$\0>; .data
 	99.; 1b+2; 1b+2
-	91.; 1f; 1f; .text; 1: &lt;ashc\0&gt;; .data
+	91.; 1f; 1f; .text; 1: <ashc\0>; .data
 	92.; 1b; 1b
-	82.; 1f; 1f; .text; 1:&lt;lmul\0&gt;; .data
-	83.; 1f; 1f; .text; 1:&lt;ldiv\0&gt;; .data
-	84.; 1f; 1f; .text; 1:&lt;lrem\0&gt;; .data
-	86.; 1f; 1f; .text; 1:&lt;almul\0&gt;; .data
-	87.; 1f; 1f; .text; 1:&lt;aldiv\0&gt;; .data
-	88.; 1f; 1f; .text; 1:&lt;alrem\0&gt;; .data
+	82.; 1f; 1f; .text; 1:<lmul\0>; .data
+	83.; 1f; 1f; .text; 1:<ldiv\0>; .data
+	84.; 1f; 1f; .text; 1:<lrem\0>; .data
+	86.; 1f; 1f; .text; 1:<almul\0>; .data
+	87.; 1f; 1f; .text; 1:<aldiv\0>; .data
+	88.; 1f; 1f; .text; 1:<alrem\0>; .data
 	0
 
 .data
 _branchtab:
-	60.; 0f; 1f; .text; 0:&lt;jeq\0&gt;; 1:&lt;jne\0&gt;; .data
+	60.; 0f; 1f; .text; 0:<jeq\0>; 1:<jne\0>; .data
 	61.; 1b; 0b
-	62.; 2f; 5f; .text; 2:&lt;jle\0&gt;; 5:&lt;jgt\0&gt;; .data
-	63.; 3f; 4f; .text; 3:&lt;jlt\0&gt;; 4:&lt;jge\0&gt;; .data
+	62.; 2f; 5f; .text; 2:<jle\0>; 5:<jgt\0>; .data
+	63.; 3f; 4f; .text; 3:<jlt\0>; 4:<jge\0>; .data
 	64.; 4b; 3b
 	65.; 5b; 2b
-	66.; 6f; 9f; .text; 6:&lt;jlos\0&gt;; 9:&lt;jhi\0&gt;; .data
-	67.; 7f; 8f; .text; 7:&lt;jlo\0&gt;; 8:&lt;jhis\0&gt;; .data
+	66.; 6f; 9f; .text; 6:<jlos\0>; 9:<jhi\0>; .data
+	67.; 7f; 8f; .text; 7:<jlo\0>; 8:<jhis\0>; .data
 	68.; 8b; 7b
 	69.; 9b; 6b
 
@@ -79,7 +79,7 @@ _branchtab:
 	264.; 4b; 3b
 	265.; 5b; 2b
 	266.; 0b; 1b
-	267.; 7f; 8f; .text; 7:&lt;/nop\0&gt;; 8:&lt;jbr\0&gt;; .data
+	267.; 7f; 8f; .text; 7:</nop\0>; 8:<jbr\0>; .data
 	268.; 8b; 7b
 	269.; 1b; 0b
 	0

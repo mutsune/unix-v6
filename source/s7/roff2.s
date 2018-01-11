@@ -17,7 +17,7 @@ casebr:
 casecc:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	movb	r0,cc
 1:
@@ -80,7 +80,7 @@ casels:
 	jsr	pc,rbreak
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	mov	ls1,ls
 	rts	pc
@@ -132,7 +132,7 @@ casebl:
 1:
 	dec	(sp)
 	blt	1f
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,storeline
 	jsr	pc,rbreak
 	br	1b
@@ -167,13 +167,13 @@ casetr:
 	jsr	pc,skipcont
 1:
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	mov	r0,r1
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	2f
-	mov	$&#39; ,r0
+	mov	$' ,r0
 2:
 	movb	r0,trtab(r1)
 	br	1b
@@ -279,7 +279,7 @@ casem4:
 casehc:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	movb	$200,r0
 1:
@@ -289,9 +289,9 @@ casehc:
 casetc:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
-	mov	$&#39; ,r0
+	mov	$' ,r0
 1:
 	mov	r0,tabc
 	rts	pc

@@ -20,9 +20,9 @@ The first argument to
 .it cdb
 is an object
 program, preferably containing a symbol table;
-if not given ``a.out&#39;&#39; is used.
+if not given ``a.out'' is used.
 The second argument is the name of a core-image file;
-if it is not given, ``core&#39;&#39; is used.
+if it is not given, ``core'' is used.
 The core file need not be present.
 .s3
 Commands to
@@ -39,8 +39,8 @@ to the appropriate number of successive addresses.
 .s3
 Addresses are expressions composed of names,
 decimal numbers, and octal numbers
-(which begin with ``0&#39;&#39;) and separated by
-``+&#39;&#39; and ``\*-&#39;&#39;.
+(which begin with ``0'') and separated by
+``+'' and ``\*-''.
 Evaluation proceeds left-to-right.
 .s3
 Names of external variables are written just as they are in C.
@@ -54,17 +54,17 @@ underscore are inaccessible.
 Variables
 local to a function
 (automatic, static, and arguments)
-are accessible by writing the name of the function, a colon ``:&#39;&#39;,
+are accessible by writing the name of the function, a colon ``:'',
 and the name of the local variable
-(e.g. ``main:argc&#39;&#39;).
-There is no notion of the ``current&#39;&#39; function;
+(e.g. ``main:argc'').
+There is no notion of the ``current'' function;
 its name must always be written explicitly.
 .s3
-A number which begins with ``0&#39;&#39; is taken to be octal; otherwise
+A number which begins with ``0'' is taken to be octal; otherwise
 numbers are decimal, just as in C.
 There is no provision for input of floating numbers.
 .s3
-The construction ``name[expression]&#39;&#39;
+The construction ``name[expression]''
 assumes that
 .it name
 is a pointer to an integer
@@ -104,15 +104,15 @@ specifying a mode sets the mode until it is explicitly changed again:
 .lp +4 4
 \*a	print the addressed bytes as characters.
 Control and non-ASCII characters are escaped in octal.
-.c2 &#39;
+.c2 '
 .s3
 .lp +4 4
-&quot;	take the contents of the address as a pointer to a sequence
+"	take the contents of the address as a pointer to a sequence
 of characters, and print the characters up to a null byte.
 Control and non-ASCII characters are escaped as octal.
 .s3
 .lp +4 4
-&amp;	Try to interpret the contents
+&	Try to interpret the contents
 of the address as a pointer,
 and print symbolically where the pointer points.
 The typeout contains the name of an external symbol
@@ -132,14 +132,14 @@ The last call made is listed first;
 the actual arguments to each routine are
 given in octal.
 (If this is inappropriate, the arguments may be examined by
-name in the desired format using ``/&#39;&#39;.)
+name in the desired format using ``/''.)
 If
 .it m
-is ``r&#39;&#39;, the contents of the PDP-11 general registers are
+is ``r'', the contents of the PDP-11 general registers are
 listed.
 If
 .it m
-is ``f&#39;&#39;, the contents of the floating-point registers are listed.
+is ``f'', the contents of the floating-point registers are listed.
 In all cases, the reason why the program stopped or terminated
 is indicated.
 .s3
@@ -155,10 +155,10 @@ be given;
 a breakpoint is set there.
 Ordinarily, breakpoints will be set on the entry points of functions,
 but any location is possible as long as it is the first word of an instruction.
-(Labels don&#39;t appear in the symbol table yet.)
+(Labels don't appear in the symbol table yet.)
 Stopping at the actual first instruction of a function is undesirable
 because to make symbolic printouts work,
-the function&#39;s save sequence has to be completed;
+the function's save sequence has to be completed;
 therefore
 .it cdb
 automatically moves breakpoints at the start of functions
@@ -173,9 +173,9 @@ the breakpoint at that address is removed.
 .s3
 .lp +8 4
 \fBr\fR	Run the program being debugged.
-Following the ``%r&#39;&#39;, arguments may be given;
+Following the ``%r'', arguments may be given;
 they cannot specify I/O redirection
-(``&gt;&#39;&#39;, ``&lt;&#39;&#39;)
+(``>'', ``<'')
 or filters.
 No address is permissible, and the program is restarted from scratch,
 not continued.
@@ -195,7 +195,7 @@ It is possible but probably useless to continue after
 an error since there is no way to repair the cause of the error.
 .s3
 .i0
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 cc (I), db (I), C Reference Manual
 .sh BUGS
 Use caution in believing

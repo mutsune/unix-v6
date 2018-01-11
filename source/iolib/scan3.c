@@ -2,9 +2,9 @@ _Ierr (message, a, b, c, d, e)
 char message[];
 	{
 	extern int cgoof;
-	printf(&quot;ERROR &quot;);
+	printf("ERROR ");
 	printf(message, a, b, c, d, e);
-	cputc(&#39;\n&#39;);
+	cputc('\n');
 	cexit(cgoof);
 	}
 char _Iendm[128] {0};
@@ -16,11 +16,11 @@ int i, normal;
 char ch;
 /* normally all characters end string except those listed */
 normal = 1;
-if (**formatp == &#39;^&#39;)
+if (**formatp == '^')
 	{normal = 0; (*formatp)++;}
-for (i= 0; i &lt; 128; i++)
+for (i= 0; i < 128; i++)
 	_Iendm[i] = normal;
-while ((ch = *((*formatp)++)) != &#39;]&#39;)
+while ((ch = *((*formatp)++)) != ']')
 	_Iendm[ch] = !_Iendm[ch];
 
 }
@@ -30,8 +30,8 @@ _Inxch ()
 {
 	extern int _Isfil, (*_Igetc)();
         int ch;
-while ((ch = (*_Igetc)(_Isfil)) &gt; 0 &amp;&amp; _Ispce(ch));
-if  (ch &gt; 0)
+while ((ch = (*_Igetc)(_Isfil)) > 0 && _Ispce(ch));
+if  (ch > 0)
 	return (ch);
 return (-1);
 }
@@ -41,9 +41,9 @@ char c;
 {
 switch (c)
 	{
-	case &#39; &#39;:
-	case &#39;\n&#39;:
-	case &#39;\t&#39;: return(1);
+	case ' ':
+	case '\n':
+	case '\t': return(1);
 	}
 return(0);
 }
@@ -51,7 +51,7 @@ return(0);
 _Ispnd (ch)
 char ch;
 {
-return (_Iendm[ch] &gt; 0);
+return (_Iendm[ch] > 0);
 }
 
 char *_Iinpt;

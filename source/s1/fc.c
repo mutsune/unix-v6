@@ -33,43 +33,43 @@ char *argv[]; {
 	int nc, nl, i, j, c, nxo;
 	int dexit();
 
-	complr = &quot;/usr/fort/fc1&quot;;
+	complr = "/usr/fort/fc1";
 	i = nc = nl = nxo = 0;
-	while(++i &lt; argc) {
-		if(*argv[i] == &#39;-&#39;)
+	while(++i < argc) {
+		if(*argv[i] == '-')
 			switch (argv[i][1]) {
 				default:
 					goto passa;
-				case &#39;p&#39;:
+				case 'p':
 					pflag++;
-				case &#39;c&#39;:
+				case 'c':
 					cflag++;
 					break;
-				case &#39;2&#39;:
-					complr = &quot;/usr/fort/fc2&quot;;
+				case '2':
+					complr = "/usr/fort/fc2";
 					break;
 			}
 		else {
 		passa:
 			t = argv[i];
-			if(getsuf(t)==&#39;f&#39;) {
+			if(getsuf(t)=='f') {
 				clist[nc++] = t;
-				t = setsuf(copy(t), &#39;o&#39;);
+				t = setsuf(copy(t), 'o');
 			}
 			if (nodup(llist, t)) {
 				llist[nl++] = t;
-				if (getsuf(t)==&#39;o&#39;)
+				if (getsuf(t)=='o')
 					nxo++;
 			}
 		}
 	}
 	if(nc==0)
 		goto nocom;
-	if ((signal(2, 1) &amp; 01) == 0)
-		signal(2, &amp;dexit);
-	for (i=0; i&lt;nc; i++) {
-		if (nc&gt;1)
-			printf(&quot;%s:\n&quot;, clist[i]);
+	if ((signal(2, 1) & 01) == 0)
+		signal(2, &dexit);
+	for (i=0; i<nc; i++) {
+		if (nc>1)
+			printf("%s:\n", clist[i]);
 		tmp = 0;
 		av[0] = complr;
 		av[1] = expand(clist[i]);
@@ -87,41 +87,41 @@ char *argv[]; {
 			cflag++;
 			continue;
 		}
-		av[0] = &quot;as&quot;;
-		av[1] = &quot;-&quot;;
-		av[2] = &quot;f.tmp1&quot;;
+		av[0] = "as";
+		av[1] = "-";
+		av[2] = "f.tmp1";
 		av[3] = 0;
-		callsys(&quot;/bin/as&quot;, av);
-		t = setsuf(clist[i], &#39;o&#39;);
+		callsys("/bin/as", av);
+		t = setsuf(clist[i], 'o');
 		cunlink(t);
-		if(link(&quot;a.out&quot;, t) || cunlink(&quot;a.out&quot;)) {
-			printf(&quot;move failed: %s\n&quot;, t);
+		if(link("a.out", t) || cunlink("a.out")) {
+			printf("move failed: %s\n", t);
 			cflag++;
 		}
 	}
 nocom:
-	if (cflag==0 &amp;&amp; nl!=0) {
+	if (cflag==0 && nl!=0) {
 		i = 0;
-		av[0] = &quot;ld&quot;;
-		av[1] = &quot;-x&quot;;
-		av[2] = &quot;/lib/fr0.o&quot;;
+		av[0] = "ld";
+		av[1] = "-x";
+		av[2] = "/lib/fr0.o";
 		j = 3;
-		while(i&lt;nl)
+		while(i<nl)
 			av[j++] = llist[i++];
-		av[j++] = &quot;-lf&quot;;
-		av[j++] = &quot;/lib/filib.a&quot;;
-		av[j++] = &quot;-l&quot;;
+		av[j++] = "-lf";
+		av[j++] = "/lib/filib.a";
+		av[j++] = "-l";
 		av[j++] = 0;
-		callsys(&quot;/bin/ld&quot;, av);
-		if (nc==1 &amp;&amp; nxo==1)
-			cunlink(setsuf(clist[0], &#39;o&#39;));
+		callsys("/bin/ld", av);
+		if (nc==1 && nxo==1)
+			cunlink(setsuf(clist[0], 'o'));
 	}
 	dexit();
 }
 
 dexit()
 {
-	unlink(&quot;f.tmp1&quot;);
+	unlink("f.tmp1");
 	exit();
 }
 
@@ -136,9 +136,9 @@ char *file;
 	exfail = 0;
 	ibuf = ibuf1 = ib1;
 	ibuf2 = ib2;
-	if (fopen(file, ibuf1)&lt;0)
+	if (fopen(file, ibuf1)<0)
 		return(file);
-	if (getc(ibuf1) != &#39;#&#39;) {
+	if (getc(ibuf1) != '#') {
 		close(ibuf1[0]);
 		return(file);
 	}
@@ -146,30 +146,30 @@ char *file;
 	ibuf1[2]--;
 	obuf = ob;
 	symtab = stab;
-	for (c=0; c&lt;200; c++) {
-		stab[c].name[0] = &#39;\0&#39;;
+	for (c=0; c<200; c++) {
+		stab[c].name[0] = '\0';
 		stab[c].value = 0;
 	}
-	defloc = lookup(&quot;define&quot;, 1);
-	defloc-&gt;value = defloc-&gt;name;
-	incloc = lookup(&quot;include&quot;, 1);
-	incloc-&gt;value = incloc-&gt;name;
+	defloc = lookup("define", 1);
+	defloc->value = defloc->name;
+	incloc = lookup("include", 1);
+	incloc->value = incloc->name;
 	stringbuf = sbf;
 	line  = ln;
 	lineno = 0;
-	tmp = setsuf(copy(file), &#39;i&#39;);
-	if (fcreat(tmp, obuf) &lt; 0) {
-		printf(&quot;Can&#39;t creat %s\n&quot;, tmp);
+	tmp = setsuf(copy(file), 'i');
+	if (fcreat(tmp, obuf) < 0) {
+		printf("Can't creat %s\n", tmp);
 		dexit();
 	}
 	while(getline()) {
 /*
 		if (ibuf==ibuf2)
 			putc(001, obuf);	/*SOH: insert */
-		if (ln[0] != &#39;#&#39;)
-			for (lp=line; *lp!=&#39;\0&#39;; lp++)
+		if (ln[0] != '#')
+			for (lp=line; *lp!='\0'; lp++)
 				putc(*lp, obuf);
-		putc(&#39;\n&#39;, obuf);
+		putc('\n', obuf);
 	}
 	fflush(obuf);
 	close(obuf[0]);
@@ -186,20 +186,20 @@ getline()
 	if (ibuf==ibuf1)
 		lineno++;
 	lp = line;
-	*lp = &#39;\0&#39;;
+	*lp = '\0';
 	state = 0;
-	if ((c=getch()) == &#39;#&#39;)
+	if ((c=getch()) == '#')
 		state = 1;
-	while (c!=&#39;\n&#39; &amp;&amp; c!=&#39;\0&#39;) {
-		if (&#39;a&#39;&lt;=c &amp;&amp; c&lt;=&#39;z&#39; || &#39;A&#39;&lt;=c &amp;&amp; c&lt;=&#39;Z&#39; || c==&#39;_&#39;) {
+	while (c!='\n' && c!='\0') {
+		if ('a'<=c && c<='z' || 'A'<=c && c<='Z' || c=='_') {
 			namep = lp;
 			sch(c);
-			while (&#39;a&#39;&lt;=(c=getch()) &amp;&amp; c&lt;=&#39;z&#39;
-			      ||&#39;A&#39;&lt;=c &amp;&amp; c&lt;=&#39;Z&#39;
-			      ||&#39;0&#39;&lt;=c &amp;&amp; c&lt;=&#39;9&#39; 
-			      ||c==&#39;_&#39;)
+			while ('a'<=(c=getch()) && c<='z'
+			      ||'A'<=c && c<='Z'
+			      ||'0'<=c && c<='9' 
+			      ||c=='_')
 				sch(c);
-			sch(&#39;\0&#39;);
+			sch('\0');
 			lp--;
 			np = lookup(namep, state);
 			if (state==1) {
@@ -208,36 +208,36 @@ getline()
 				else if (np==incloc)
 					state = 3;
 				else {
-					error(&quot;Undefined control&quot;);
-					while (c!=&#39;\n&#39; &amp;&amp; c!=&#39;\0&#39;)
+					error("Undefined control");
+					while (c!='\n' && c!='\0')
 						c = getch();
 					return(c);
 				}
 			} else if (state==2) {
-				np-&gt;value = stringbuf;
-				while ((c=getch())!=&#39;\n&#39; &amp;&amp; c!=&#39;\0&#39;)
+				np->value = stringbuf;
+				while ((c=getch())!='\n' && c!='\0')
 					savch(c);
-				savch(&#39;\0&#39;);
+				savch('\0');
 				return(1);
 			}
 			continue;
-		} else if ((sc=c)==&#39;\&#39;&#39; || sc==&#39;&quot;&#39;) {
+		} else if ((sc=c)=='\'' || sc=='"') {
 			sch(sc);
 			filname = lp;
 			instring++;
-			while ((c=getch())!=sc &amp;&amp; c!=&#39;\n&#39; &amp;&amp; c!=&#39;\0&#39;) {
+			while ((c=getch())!=sc && c!='\n' && c!='\0') {
 				sch(c);
-				if (c==&#39;\\&#39;)
+				if (c=='\\')
 					sch(getch());
 			}
 			instring = 0;
 			if (state==3) {
-				*lp = &#39;\0&#39;;
-				while ((c=getch())!=&#39;\n&#39; &amp;&amp; c!=&#39;\0&#39;);
+				*lp = '\0';
+				while ((c=getch())!='\n' && c!='\0');
 				if (ibuf==ibuf2)
-					error(&quot;Nested &#39;include&#39;&quot;);
-				if (fopen(filname, ibuf2)&lt;0)
-					error(&quot;Missing file %s&quot;, filname);
+					error("Nested 'include'");
+				if (fopen(filname, ibuf2)<0)
+					error("Missing file %s", filname);
 				else
 					ibuf = ibuf2;
 				return(c);
@@ -246,17 +246,17 @@ getline()
 		sch(c);
 		c = getch();
 	}
-	sch(&#39;\0&#39;);
-	if (state&gt;1)
-		error(&quot;Control syntax&quot;);
+	sch('\0');
+	if (state>1)
+		error("Control syntax");
 	return(c);
 }
 
 error(s, x)
 {
-	printf(&quot;%d: &quot;, lineno);
+	printf("%d: ", lineno);
 	printf(s, x);
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 	exfail++;
 	cflag++;
 }
@@ -264,9 +264,9 @@ error(s, x)
 sch(c)
 {
 	if (lp==line+194)
-		error(&quot;Line overflow&quot;);
+		error("Line overflow");
 	*lp++ = c;
-	if (lp&gt;line+195)
+	if (lp>line+195)
 		lp = line+195;
 }
 
@@ -286,26 +286,26 @@ getch()
 		return(c);
 	}
 loop:
-	if ((c=getc1())==&#39;/&#39; &amp;&amp; !instring) {
-		if ((peekc=getc1())!=&#39;*&#39;)
-			return(&#39;/&#39;);
+	if ((c=getc1())=='/' && !instring) {
+		if ((peekc=getc1())!='*')
+			return('/');
 		peekc = 0;
 		for(;;) {
 			c = getc1();
 		cloop:
 			switch (c) {
 
-			case &#39;\0&#39;:
-				return(&#39;\0&#39;);
+			case '\0':
+				return('\0');
 
-			case &#39;*&#39;:
-				if ((c=getc1())==&#39;/&#39;)
+			case '*':
+				if ((c=getc1())=='/')
 					goto loop;
 				goto cloop;
 
-			case &#39;\n&#39;:
+			case '\n':
 				if (ibuf==ibuf1) {
-					putc(&#39;\n&#39;, obuf);
+					putc('\n', obuf);
 					lineno++;
 				}
 				continue;
@@ -319,13 +319,13 @@ getc1()
 {
 	int c;
 
-	if ((c = getc(ibuf)) &lt; 0 &amp;&amp; ibuf==ibuf2) {
+	if ((c = getc(ibuf)) < 0 && ibuf==ibuf2) {
 		close(ibuf2[0]);
 		ibuf = ibuf1;
-		putc(&#39;\n&#39;, obuf);
+		putc('\n', obuf);
 		c = getc1();
 	}
-	if (c&lt;0)
+	if (c<0)
 		return(0);
 	return(c);
 }
@@ -342,22 +342,22 @@ char *namep;
 	while (c = *np++)
 		i =+ c;
 	i =% symsiz;
-	sp = &amp;symtab[i];
-	while (sp-&gt;name[0]) {
+	sp = &symtab[i];
+	while (sp->name[0]) {
 		snp = sp;
 		np = namep;
 		while (*snp++ == *np)
-			if (*np++ == &#39;\0&#39; || np==namep+8) {
+			if (*np++ == '\0' || np==namep+8) {
 				if (!enterf)
 					subst(namep, sp);
 				return(sp);
 			}
-		if (sp++ &gt; &amp;symtab[symsiz])
+		if (sp++ > &symtab[symsiz])
 			sp = symtab;
 	}
 	if (enterf) {
-		for (i=0; i&lt;8; i++)
-			if (sp-&gt;name[i] = *namep)
+		for (i=0; i<8; i++)
+			if (sp->name[i] = *namep)
 				namep++;
 		while (*namep)
 			namep++;
@@ -372,12 +372,12 @@ struct symtab *sp;
 	char *vp;
 
 	lp = np;
-	if ((vp = sp-&gt;value) == 0)
+	if ((vp = sp->value) == 0)
 		return;
-	sch(&#39; &#39;);
+	sch(' ');
 	while (*vp)
 		sch(*vp++);
-	sch(&#39; &#39;);
+	sch(' ');
 }
 
 getsuf(s)
@@ -389,12 +389,12 @@ char s[];
 	c = 0;
 	os = s;
 	while(t = *s++)
-		if (t==&#39;/&#39;)
+		if (t=='/')
 			c = 0;
 		else
 			c++;
 	s =- 3;
-	if (c&lt;=14 &amp;&amp; c&gt;2 &amp;&amp; *s++==&#39;.&#39;)
+	if (c<=14 && c>2 && *s++=='.')
 		return(*s);
 	return(0);
 }
@@ -416,20 +416,20 @@ char f[], *v[]; {
 
 	if ((t=fork())==0) {
 		execv(f, v);
-		printf(&quot;Can&#39;t find %s\n&quot;, f);
+		printf("Can't find %s\n", f);
 		exit(1);
 	} else
 		if (t == -1) {
-			printf(&quot;Try again\n&quot;);
+			printf("Try again\n");
 			return(1);
 		}
-	while(t!=wait(&amp;status));
-	if ((t=(status&amp;0377)) != 0 &amp;&amp; t!=14) {
+	while(t!=wait(&status));
+	if ((t=(status&0377)) != 0 && t!=14) {
 		if (t!=2)		/* interrupt */
-			printf(&quot;Fatal error in %s\n&quot;, f);
+			printf("Fatal error in %s\n", f);
 		dexit();
 	}
-	return((status&gt;&gt;8) &amp; 0377);
+	return((status>>8) & 0377);
 }
 
 copy(s)
@@ -445,7 +445,7 @@ nodup(l, s)
 char **l, s[]; {
 	char *t, *os, c;
 
-	if (getsuf(s) != &#39;o&#39;)
+	if (getsuf(s) != 'o')
 		return(1);
 	os = s;
 	while(t = *l++) {
@@ -453,7 +453,7 @@ char **l, s[]; {
 		while(c = *s++)
 			if (c != *t++)
 				break;
-		if (*t++ == &#39;\0&#39;)
+		if (*t++ == '\0')
 			return(0);
 	}
 	return(1);

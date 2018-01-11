@@ -8,7 +8,7 @@ Stephen C. Johnson
 .AB
 Computer program input generally has some structure;
 in fact, every computer program which does input can be thought of as defining
-an ``input language&#39;&#39; which it accepts.
+an ``input language'' which it accepts.
 The input languages may be as complex as a programming language, or as simple as
 a sequence of numbers.
 Unfortunately, standard input facilities
@@ -23,7 +23,7 @@ each such structure is recognized.
 Yacc turns such a specification into a subroutine which may
 be invoked to handle the input process;
 frequently, it is convenient and appropriate to have most
-of the flow of control in the user\&#39;s application
+of the flow of control in the user\'s application
 handled by this subroutine.
 .PP
 The input subroutine produced by Yacc calls a user supplied routine to
@@ -34,13 +34,13 @@ The user supplied routine may also handle idiomatic features such as
 comment and continuation conventions, which typically defy easy specification.
 .PP
 Yacc is written in C[7], and runs under UNIX.
-The subroutine which is output may be in C or in Ratfor[4], at the user\&#39;s choice;
+The subroutine which is output may be in C or in Ratfor[4], at the user\'s choice;
 Ratfor permits translation of the output subroutine into portable Fortran[5].
 The class of specifications accepted is a very general one, called LALR(1)
 grammars with disambiguating rules.
 The theory behind Yacc has been described elsewhere[1,2,3].
 .PP
-Yacc was originally designed to help produce the ``front end&#39;&#39; of
+Yacc was originally designed to help produce the ``front end'' of
 compilers; in addition to this use, it has been successfully used in many application
 programs, including a phototypesetter language, a document retrieval system,
 a Fortran debugging system, and the Ratfor compiler.

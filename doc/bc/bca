@@ -282,7 +282,7 @@ to the named expression on the left.
 \fInamed-expression\fP =^ \fIexpression\fP
 .PP
 The result of the above expressions is equivalent
-to ``named expression = named expression OP expression&#39;&#39;,
+to ``named expression = named expression OP expression'',
 where OP is the operator after the = sign.
 .NH 1
 Relations
@@ -291,13 +291,13 @@ Unlike all other operators, the relational operators
 are only valid as the object of an \fBif\fP, \fBwhile\fP,
 or inside a \fBfor\fP statement.
 .NH 2
-\fIexpression\fP &lt; \fIexpression\fP
+\fIexpression\fP < \fIexpression\fP
 .NH 2
-\fIexpression\fP &gt; \fIexpression\fP
+\fIexpression\fP > \fIexpression\fP
 .NH 2
-\fIexpression\fP &lt;= \fIexpression\fP
+\fIexpression\fP <= \fIexpression\fP
 .NH 2
-\fIexpression\fP &gt;= \fIexpression\fP
+\fIexpression\fP >= \fIexpression\fP
 .NH 2
 \fIexpression\fP == \fIexpression\fP
 .NH 2
@@ -346,7 +346,7 @@ by surrounding them with { }.
 .NH 2
 Quoted string statements
 .PP
-&quot;any string&quot;
+"any string"
 .sp .5
 This statement prints the string inside the quotes.
 .NH 2

@@ -21,15 +21,15 @@ _atof:
 	mov	4(r5),r3
 1:
 	movb	(r3)+,r0
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	beq	1b
-	cmpb	r0,$&#39;-
+	cmpb	r0,$'-
 	bne	2f
 	inc	(sp)
 1:
 	movb	(r3)+,r0
 2:
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	2f
 	jsr	pc,digit
@@ -37,31 +37,31 @@ _atof:
 	inc	r2
 	br	1b
 2:
-	cmpb	r0,$&#39;.-&#39;0
+	cmpb	r0,$'.-'0
 	bne	2f
 1:
 	movb	(r3)+,r0
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	2f
 	jsr	pc,digit
 		dec r2
 	br	1b
 2:
-	cmpb	r0,$&#39;E-&#39;0
+	cmpb	r0,$'E-'0
 	beq	3f
-	cmpb	r0,$&#39;e-&#39;0
+	cmpb	r0,$'e-'0
 	bne	1f
 3:
 	clr	r4
 	clr	r1
-	cmpb	(r3),$&#39;-
+	cmpb	(r3),$'-
 	bne	3f
 	inc	r4
 	inc	r3
 3:
 	movb	(r3)+,r0
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	3f
 	mul	$10.,r1

@@ -14,32 +14,32 @@ main(argc,argv)
 	int	l;
 	char	lb1[LB],lb2[80];
 
-	ldr[0] = &quot;&quot;;
-	ldr[1] = &quot;\t&quot;;
-	ldr[2] = &quot;\t\t&quot;;
-	if(argc &gt; 1)  {
-		if(*argv[1] == &#39;-&#39; &amp;&amp; argv[1][1] != 0) {
+	ldr[0] = "";
+	ldr[1] = "\t";
+	ldr[2] = "\t\t";
+	if(argc > 1)  {
+		if(*argv[1] == '-' && argv[1][1] != 0) {
 			l = 1;
 			while(*++argv[1]) {
 				switch(*argv[1]) {
-				case&#39;1&#39;:
+				case'1':
 					if(!one) {
 						one = 1;
 						ldr[1][0] =
-						ldr[2][l--] = &#39;\0&#39;;
+						ldr[2][l--] = '\0';
 					}
 					break;
-				case &#39;2&#39;:
+				case '2':
 					if(!two) {
 						two = 1;
-						ldr[2][l--] = &#39;\0&#39;;
+						ldr[2][l--] = '\0';
 					}
 					break;
-				case &#39;3&#39;:
+				case '3':
 					three = 1;
 					break;
 				default:
-				printf(&quot;Illegal flag: %c\n&quot;,*argv[1]);
+				printf("Illegal flag: %c\n",*argv[1]);
 				exit();
 				}
 			}
@@ -48,8 +48,8 @@ main(argc,argv)
 		}
 	}
 
-	if(argc &lt; 3) {
-		printf(&quot;Argc = %d\n&quot;,argc);
+	if(argc < 3) {
+		printf("Argc = %d\n",argc);
 		exit();
 	}
 
@@ -58,11 +58,11 @@ main(argc,argv)
 	fout = dup(1);
 
 
-	if(rd(ib1,lb1) &lt; 0) {
-		if(rd(ib2,lb2) &lt; 0)	exit();
+	if(rd(ib1,lb1) < 0) {
+		if(rd(ib2,lb2) < 0)	exit();
 		copy(ib2,lb2,2);
 	}
-	if(rd(ib2,lb2) &lt; 0)	copy(ib1,lb1,1);
+	if(rd(ib2,lb2) < 0)	copy(ib1,lb1,1);
 
 	while(1) {
 
@@ -70,21 +70,21 @@ main(argc,argv)
 
 			case 0:
 				wr(lb1,3);
-				if(rd(ib1,lb1) &lt; 0) {
-					if(rd(ib2,lb2) &lt; 0)	fexit();
+				if(rd(ib1,lb1) < 0) {
+					if(rd(ib2,lb2) < 0)	fexit();
 					copy(ib2,lb2,2);
 				}
-				if(rd(ib2,lb2) &lt; 0)	copy(ib1,lb1,1);
+				if(rd(ib2,lb2) < 0)	copy(ib1,lb1,1);
 				continue;
 
 			case 1:
 				wr(lb1,1);
-				if(rd(ib1,lb1) &lt; 0)	copy(ib2,lb2,2);
+				if(rd(ib1,lb1) < 0)	copy(ib2,lb2,2);
 				continue;
 
 			case 2:
 				wr(lb2,2);
-				if(rd(ib2,lb2) &lt; 0)	copy(ib1,lb1,1);
+				if(rd(ib2,lb2) < 0)	copy(ib1,lb1,1);
 				continue;
 		}
 	}
@@ -96,9 +96,9 @@ rd(file,buf)
 
 	register int i;
 	i = 0;
-	while((*buf = getc(file)) &gt;=0) {
-		if(*buf == &#39;\n&#39; || i &gt; LB-2) {
-			*buf = &#39;\0&#39;;
+	while((*buf = getc(file)) >=0) {
+		if(*buf == '\n' || i > LB-2) {
+			*buf = '\0';
 			return(0);
 		}
 		i++;
@@ -124,14 +124,14 @@ wr(str,n)
 		case 3:
 			if(three)	return;
 	}
-	printf(&quot;%s%s\n&quot;,ldr[n-1],str);
+	printf("%s%s\n",ldr[n-1],str);
 }
 
 copy(ibuf,lbuf,n)
 {
 	do {
 		wr(lbuf,n);
-	} while(rd(ibuf,lbuf) &gt;= 0);
+	} while(rd(ibuf,lbuf) >= 0);
 
 	flush();
 	exit();
@@ -145,8 +145,8 @@ compare(a,b)
 	ra = --a;
 	rb = --b;
 	while(*++ra == *++rb)
-		if(*ra == &#39;\0&#39;)	return(0);
-	if(*ra &lt; *rb)	return(1);
+		if(*ra == '\0')	return(0);
+	if(*ra < *rb)	return(1);
 	return(2);
 }
 fexit()
@@ -159,10 +159,10 @@ openfil(s,b)
 char *s;
 int *b;
 {
-	if(s[0]==&#39;-&#39; &amp;&amp; s[1]==0)
+	if(s[0]=='-' && s[1]==0)
 		b[0] = 0;
 	else if(fopen(s, b) == -1) {
-		printf(&quot;Can&#39;t open %s\n&quot;, s);
+		printf("Can't open %s\n", s);
 		exit(1);
 	}
 }

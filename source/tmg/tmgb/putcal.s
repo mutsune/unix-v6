@@ -20,4 +20,4 @@ kput:
 	rts	pc
 1:
 	jsr	r0,errcom
-		&lt;translation overflow\0&gt;;.even
+		<translation overflow\0>;.even

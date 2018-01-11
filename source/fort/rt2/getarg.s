@@ -45,7 +45,7 @@ getarg.:
 2:
 	dec	r4
 1:
-	movb	$&#39; ,(r4)+
+	movb	$' ,(r4)+
 	dec	r2
 	bit	$3,r2
 	bne	1b

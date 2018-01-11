@@ -6,5 +6,5 @@
 pfloat:
 pscien:
 	add	$8,r4
-	movb	$&#39;?,(r3)+
+	movb	$'?,(r3)+
 	rts	pc

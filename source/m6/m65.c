@@ -1,6 +1,6 @@
 #
 
-#include &quot;m6.h&quot;
+#include "m6.h"
 
 define() {
 	remove(1);
@@ -10,13 +10,13 @@ define() {
 
 newdef(n) {
 	pushdef();
-	de = &amp;df[df-&gt;dtext = dend]; 
-	if((df-&gt;dswitch = n)&lt;0) trashflag++;
+	de = &df[df->dtext = dend]; 
+	if((df->dswitch = n)<0) trashflag++;
 }
 
 setdef(s1,s2) {
 	copydef(s1);
-	df-&gt;dtext = de -df;
+	df->dtext = de -df;
 	copydef(s2); 
 }
 
@@ -24,20 +24,20 @@ copydef(s)
 char *s; 
 {
 	while(*de++ = *s++)
-		if(de&gt;dmax) diag(&quot;Definition table overflow&quot;); 
+		if(de>dmax) diag("Definition table overflow"); 
 }
 
 char *
 arg(n) {
 	char *p;
-	p = &amp;gf-&gt;ga0;
-	while(--n&gt;=0 &amp;&amp; p-&gt;word!=0) p =+ p-&gt;word;
-	return(p-&gt;word!=0?p+2:p); 
+	p = &gf->ga0;
+	while(--n>=0 && p->word!=0) p =+ p->word;
+	return(p->word!=0?p+2:p); 
 }
 
 function(n) {
 	if(n==0) ;
-	else if(1&lt;=n &amp;&amp; n&lt;=13) binop(n);
+	else if(1<=n && n<=13) binop(n);
 	else {
 		switch(n) {
 		case 20: 
@@ -72,7 +72,7 @@ function(n) {
 			quote(); 
 			return;
 		case 33: 
-			result(finddef(1)-&gt;dswitch); 
+			result(finddef(1)->dswitch); 
 			return;
 		case 34: 
 			list(); 

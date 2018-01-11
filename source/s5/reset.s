@@ -1,7 +1,7 @@
 / C library -- reset, setexit
 
 /	reset()
-/ will generate a &quot;return&quot; from
+/ will generate a "return" from
 / the last call to
 /	setexit()
 / by restoring sp, r5

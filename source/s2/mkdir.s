@@ -20,13 +20,13 @@ loop:
 	beq	2f
 	movb	r4,(r1)+
 	movb	r4,(r2)+
-	cmpb	r4,$&#39;/
+	cmpb	r4,$'/
 	bne	1b
 	mov	r2,r3
 	br	1b
 2:
-	movb	$&#39;/,(r1)+
-	movb	$&#39;.,(r1)+
+	movb	$'/,(r1)+
+	movb	$'.,(r1)+
 	clrb	(r1)
 	mov	$dot,dir
 	tst	r3
@@ -58,7 +58,7 @@ loop:
 	mov	(r5),0f
 	sys	link; 0:..; buf1
 	bes	error
-	movb	$&#39;.,(r1)+
+	movb	$'.,(r1)+
 	clrb	(r1)
 	mov	dir,0f
 	sys	link; 0:..; buf1
@@ -80,8 +80,8 @@ error:
 	sys	write; ques; 3
 	br	loop
 
-dot:	&lt;.\0&gt;
-ques:	&lt; ?\n&gt;
+dot:	<.\0>
+ques:	< ?\n>
 	.even
 
 .bss

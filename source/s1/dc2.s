@@ -80,7 +80,7 @@ add3:	mov	r0,-(sp)
 	inc	r(r1)
 2:	mov	r(r1),w(r1)
 /
-/	strip leading 99&#39;s
+/	strip leading 99's
 /
 	jsr	pc,fsfile
 	jsr	pc,backspace
@@ -115,7 +115,7 @@ carry:	.=.+2
 /
 /	routine to change the sign of the centennial number
 /	pointed to by r1.
-/	negative numbers are stored in 100&#39;s complement form with
+/	negative numbers are stored in 100's complement form with
 /	-1 as the high order digit; the second digit is not 99.
 /
 /	mov	...,r1
@@ -438,7 +438,7 @@ sqrt:
 	tst	r0
 	bpl	2f
 /
-/	loop if new &lt; old
+/	loop if new < old
 	mov	2(sp),r1
 	jsr	pc,release
 	mov	r3,2(sp)

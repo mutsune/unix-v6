@@ -21,7 +21,7 @@ Function definitions have the form
 		type-specifier\*(op function-declarator function-body
 .ed
 A function declarator is similar to a declarator
-for a ``function returning ...&#39;&#39; except that
+for a ``function returning ...'' except that
 it lists the formal parameters of
 the function being defined.
 .dp 2
@@ -61,18 +61,18 @@ A simple example of a complete function definition is
 	int a, b, c;
 	{
 		int m;
-		m = ^(^a^&gt;^b^)? a^:^b^;
-		return^(^m^&gt;^c? m^:^c^)^;
+		m = ^(^a^>^b^)? a^:^b^;
+		return^(^m^>^c? m^:^c^)^;
 	}
 .sp .7
 .eG
 .fi
-Here ``int&#39;&#39; is the type-specifier;
-``max(a,@b,@c)&#39;&#39; is the function-declarator;
-``int@a,@b,@c;&#39;&#39; is the type-decl-list for
+Here ``int'' is the type-specifier;
+``max(a,@b,@c)'' is the function-declarator;
+``int@a,@b,@c;'' is the type-decl-list for
 the formal
 parameters;
-``{@.^.^.@}&#39;&#39; is the function-statement.
+``{@.^.^.@}'' is the function-statement.
 .pg
 C converts all
 \fGfloat\fR actual parameters
@@ -82,8 +82,8 @@ Also, since a reference to an array in any context
 (in particular as an actual parameter)
 is taken to mean
 a pointer to the first element of the array,
-declarations of formal parameters declared ``array of ...&#39;&#39;
-are adjusted to read ``pointer to ...&#39;&#39;.
+declarations of formal parameters declared ``array of ...''
+are adjusted to read ``pointer to ...''.
 Finally, because neither structures
 nor functions can be passed
 to a function, it is useless to declare
@@ -162,15 +162,15 @@ a comma-separated list of compile-time expressions.
 The length of the array is taken to be the
 maximum of the number of expressions in the list
 and the square-bracketed constant in the
-array&#39;s declarator.
+array's declarator.
 This constant may be missing,
 in which case 1 is used.
 The expressions initialize successive members of the array
 starting at the origin (subscript 0)
 of the array.
 The acceptable expressions for an array of type
-``array of ...&#39;&#39; are the same as
-those for type ``...&#39;&#39;.
+``array of ...'' are the same as
+those for type ``...''.
 As a special case, a single
 string may be given as the initializer
 for an array of \fGchar\fRs; in this case,
@@ -207,7 +207,7 @@ Therefore, there are two kinds of scope to consider:
 first, what may be called the \fIlexical scope\fR
 of an identifier, which is essentially the
 region of a program during which it may
-be used without drawing ``undefined identifier&#39;&#39;
+be used without drawing ``undefined identifier''
 diagnostics;
 and second, the scope
 associated with external identifiers,
@@ -322,7 +322,7 @@ of the identifier with the given string of tokens
 The replacement token-string has comments removed from
 it, and it is surrounded with blanks.
 No rescanning of the replacement string is attempted.
-This facility is most valuable for definition of ``manifest constants&#39;&#39;,
+This facility is most valuable for definition of ``manifest constants'',
 as in
 .sp .7
 .nf
@@ -355,7 +355,7 @@ this technique when a large C program
 consists of several files, a compiler control line of
 the form
 .dp 1
-	\fG# include &quot;\fIfilename^\fG&quot;
+	\fG# include "\fIfilename^\fG"
 .ed
 results in the replacement of that
 line by the entire contents of the file
@@ -381,19 +381,19 @@ be \fGauto\fR.
 An exception to the latter rule is made for
 functions, since \fGauto\fR functions are mean$ing$less
 (C being incapable of compiling code into the stack).
-If the type of an identifier is ``function returning ...&#39;&#39;,
+If the type of an identifier is ``function returning ...'',
 it is implicitly declared to be \fGextern\fR.
 .pg
 In an expression, an identifier
 followed by \fG(\fR and not currently declared
 is contextually
-declared to be ``function returning \fGint\fR&#39;&#39;.
+declared to be ``function returning \fGint\fR''.
 .pg
 Undefined identifiers not followed by \fG(\fR
 are assumed to be labels which
 will be defined later in the function.
 (Since a label is not an lvalue, this accounts
-for the ``Lvalue required&#39;&#39; error
+for the ``Lvalue required'' error
 message
 sometimes noticed when
 an undeclared identifier is used.)
@@ -417,7 +417,7 @@ which can be performed on objects of certain types.
 There are only two things that can be done with
 a structure:
 pick out one of its members (by means of the
-\fG^.^\fR or \fG\(mi&gt;\fR operators); or take its address (by unary \fG&amp;\fR).
+\fG^.^\fR or \fG\(mi>\fR operators); or take its address (by unary \fG&\fR).
 Other operations, such as assigning from or to
 it or passing it as a parameter, draw an
 error message.
@@ -471,8 +471,8 @@ lvalues.
 By definition, the subscript operator
 \fG[^]\fR is interpreted
 in such a way that
-``E1[E2]&#39;&#39; is identical to
-``\**(^(^E1)^+^(E2^)^)&#39;&#39;.
+``E1[E2]'' is identical to
+``\**(^(^E1)^+^(E2^)^)''.
 Because of the conversion rules
 which apply to \fG+\fR, if E1 is an array and E2 an integer,
 then E1[E2] refers to the E2-th member of E1.
@@ -509,8 +509,8 @@ For example, consider
 Here \fIx\fR is a 3\(mu5 array of integers.
 When \fIx\fR appears in an expression, it is converted
 to a pointer to (the first of three) 5-membered arrays of integers.
-In the expression ``x[^i^]&#39;&#39;,
-which is equivalent to ``\**(x+i)&#39;&#39;,
+In the expression ``x[^i^]'',
+which is equivalent to ``\**(x+i)'',
 \fIx\fR is first converted to a pointer as described;
 then \fIi\fR is converted to the type of \fIx\fR,
 which involves multiplying \fIi\fR by the
@@ -533,9 +533,9 @@ but plays no other part in subscript calculations.
 Labels do not
 have a type of their own; they are
 treated
-as having type ``array of \fGint\fR&#39;&#39;.
+as having type ``array of \fGint\fR''.
 Label variables should be declared ``pointer
-to \fGint\fR&#39;&#39;;
+to \fGint\fR'';
 before execution of a \fGgoto\fR referring to the
 variable,
 a label (or an expression
@@ -565,7 +565,7 @@ expressions, possibly
 connected by the binary operators
 .tr ^^
 .dp
-	+   \(mi   \**   /   %   &amp;   \(or   ^   &lt;&lt;   &gt;&gt;
+	+   \(mi   \**   /   %   &   \(or   ^   <<   >>
 .ed
 or by the unary operators
 .dp
@@ -577,11 +577,11 @@ but not for function calls.
 .pg
 A bit more latitude is permitted for initializers;
 besides constant expressions as discussed above,
-one can also apply the unary \fG&amp;\fR
+one can also apply the unary \fG&\fR
 operator to external scalars,
 and to external arrays subscripted
 with a constant expression.
-The unary \fG&amp;\fR can also
+The unary \fG&\fR can also
 be applied implicitly
 by appearance of unsubscripted external arrays.
 The rule here is that initializers must

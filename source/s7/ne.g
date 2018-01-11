@@ -20,11 +20,11 @@ int	fromflg	0;
 %%
 
 stuff	: eqn 	={ putout($1); }
-	| error	={ error(!FATAL, &quot;syntax error in equation %d&quot;, first);  }
+	| error	={ error(!FATAL, "syntax error in equation %d", first);  }
 	|	={ eqnreg = 0; }
 	;
 
-eqn	: box	={ if(dbg)printf(&quot;.\teqn: S%d\n&quot;,$1); }
+eqn	: box	={ if(dbg)printf(".\teqn: S%d\n",$1); }
 	| eqn box	={ eqnbox($1,$2); }
 	| eqn MARK	={ mark($1); }
 	| MARK	={ mark(0); }
@@ -38,10 +38,10 @@ collist	: column
 	| collist column
 	;
 
-column	: lcol MQ list MQ1	={ column(&#39;L&#39;,$1,$3); }
-	| ccol MQ list MQ1	={ column(&#39;C&#39;,$1,$3); }
-	| rcol MQ list MQ1	={ column(&#39;R&#39;,$1,$3); }
-	| col MQ list MQ1	={ column(&#39;-&#39;,$1,$3); }
+column	: lcol MQ list MQ1	={ column('L',$1,$3); }
+	| ccol MQ list MQ1	={ column('C',$1,$3); }
+	| rcol MQ list MQ1	={ column('R',$1,$3); }
+	| col MQ list MQ1	={ column('-',$1,$3); }
 	;
 
 lcol	: LCOL	={ $$ = ct++; } ;
@@ -62,15 +62,15 @@ box	: box OVER box	={ boverb($1,$3); }
 		={ font($1,$2); }
 	| SQRT box	={ sqrt($2); }
 	| lpile MQ list MQ1	%prec LPILE
-		={ lpile(&#39;L&#39;, $1, ct); ct=$1; }
+		={ lpile('L', $1, ct); ct=$1; }
 	| cpile MQ list MQ1	%prec CPILE
-		={ lpile(&#39;C&#39;, $1, ct); ct=$1; }
+		={ lpile('C', $1, ct); ct=$1; }
 	| rpile MQ list MQ1	%prec RPILE
-		={ lpile(&#39;R&#39;, $1, ct); ct=$1; }
+		={ lpile('R', $1, ct); ct=$1; }
 	| pile MQ list MQ1	%prec PILE
-		={ lpile(&#39;-&#39;, $1, ct); ct=$1; }
+		={ lpile('-', $1, ct); ct=$1; }
 	| box sub box sbox	%prec SUB
-		={ if(dbg)printf(&quot;.\t sub box %d %d %d\n&quot;,$1,$3,$4);
+		={ if(dbg)printf(".\t sub box %d %d %d\n",$1,$3,$4);
 			if($4 == 0)bshiftb($1,$2,$3);
 			else shift2($1,$3,$4);
 		}
@@ -98,12 +98,12 @@ up	: UP text	={ $$ = numb($1); } ;
 back	: BACK text	={ $$ = numb($1); } ;
 down	: DOWN text	={ $$ = numb($1); } ;
 
-diacrit	: HAT	={ $$ = &#39;H&#39;; }
-	| BAR	={ $$ = &#39;B&#39;; }
-	| UNDER	={ $$ = &#39;N&#39;; }	/* under bar */
-	| DOT	={ $$ = &#39;D&#39;; }
-	| TILDE	={ $$ = &#39;T&#39;; }
-	| DOTDOT	={ $$ = &#39;U&#39;; } /* umlaut = double dot */
+diacrit	: HAT	={ $$ = 'H'; }
+	| BAR	={ $$ = 'B'; }
+	| UNDER	={ $$ = 'N'; }	/* under bar */
+	| DOT	={ $$ = 'D'; }
+	| TILDE	={ $$ = 'T'; }
+	| DOTDOT	={ $$ = 'U'; } /* umlaut = double dot */
 	;
 
 from	: FROM
@@ -111,12 +111,12 @@ from	: FROM
 to	: TO
 	;
 
-left	: LEFT text	={ $$ = $2-&gt;c1; }
-	| LEFT MQ	={ $$ = &#39;{&#39;; }
+left	: LEFT text	={ $$ = $2->c1; }
+	| LEFT MQ	={ $$ = '{'; }
 	;
 
-right	: RIGHT text	={ $$ = $2-&gt;c1; }
-	| RIGHT MQ1	={ $$ = &#39;}&#39;; }
+right	: RIGHT text	={ $$ = $2->c1; }
+	| RIGHT MQ1	={ $$ = '}'; }
 	|		={ $$ = 0; }
 	;
 
@@ -143,22 +143,22 @@ sub	: SUB	={ shift(1); } ;
 super	: SUPER	={ shift(-1); } ;
 
 pbox	: MQ eqn MQ1	={ $$ = $2; }
-	| QTEXT	={ text(&#39;q&#39;,$1); }
-	| CONTIG	={ text(&#39;c&#39;,$1); }
-	| SPACE	={ text(&#39;~&#39;, $1); }
-	| THIN	={ text(&#39;^&#39;, $1); }
-	| TAB	={ text(&#39;\t&#39;, $1); }
-	| SUM	={	text(&#39;c&#39;, &quot;SIGMA&quot;); }
-	| PROD	={	text(&#39;c&#39;, &quot;PI&quot;); }
-	| INT	={	text(&#39;c&#39;, &quot;^&quot;); }
-	| UNION	={	text(&#39;c&#39; ,&quot;U&quot;); }
-	| INTER	={	text(&#39;c&#39;, &quot;A&quot;); }
+	| QTEXT	={ text('q',$1); }
+	| CONTIG	={ text('c',$1); }
+	| SPACE	={ text('~', $1); }
+	| THIN	={ text('^', $1); }
+	| TAB	={ text('\t', $1); }
+	| SUM	={	text('c', "SIGMA"); }
+	| PROD	={	text('c', "PI"); }
+	| INT	={	text('c', "^"); }
+	| UNION	={	text('c' ,"U"); }
+	| INTER	={	text('c', "A"); }
 	;
 
 text	: CONTIG
 	| QTEXT
-	| SPACE	={ $$ = &amp; &quot;\\|\\|&quot;; }
-	| THIN	={ $$ = &amp; &quot;\\|&quot;; }
+	| SPACE	={ $$ = & "\\|\\|"; }
+	| THIN	={ $$ = & "\\|"; }
 	;
 
 %%

@@ -23,17 +23,17 @@ loop:
 	bic	$!60000,stbuf+4
 	cmp	$40000,stbuf+4
 	bne	error
-	cmpb	-1(r2),$&#39;.
+	cmpb	-1(r2),$'.
 	bne	1f
 	cmp	r2,$name+1
 	beq	error
-	cmpb	-2(r2),$&#39;/
+	cmpb	-2(r2),$'/
 	beq	error
-	cmpb	-2(r2),$&#39;.
+	cmpb	-2(r2),$'.
 	bne	1f
 	cmp	r2,$name+2
 	beq	error
-	cmpb	-3(r2),$&#39;/
+	cmpb	-3(r2),$'/
 	beq	error
 1:
 	sys	open; name; 0
@@ -47,11 +47,11 @@ loop:
 	beq	1f
 	tst	stbuf
 	beq	1b
-	cmpb	stbuf+2,$&#39;.
+	cmpb	stbuf+2,$'.
 	bne	error1
 	tstb	stbuf+3
 	beq	1b
-	cmpb	stbuf+3,$&#39;.
+	cmpb	stbuf+3,$'.
 	bne	error1
 	tstb	stbuf+4
 	beq	1b
@@ -67,9 +67,9 @@ error1:
 1:
 	mov	r1,r0
 	sys	close
-	movb	$&#39;/,(r2)+
-	movb	$&#39;.,(r2)+
-	movb	$&#39;.,(r2)+
+	movb	$'/,(r2)+
+	movb	$'.,(r2)+
+	movb	$'.,(r2)+
 	clrb	(r2)
 	sys	unlink; name
 	clrb	-(r2)
@@ -93,10 +93,10 @@ done:
 	sys	exit
 
 mes1:
-	&lt; -- directory not empty\n&gt;
+	< -- directory not empty\n>
 emes1:
 mes2:
-	&lt; ?\n&gt;
+	< ?\n>
 emes2:
 	.even
 

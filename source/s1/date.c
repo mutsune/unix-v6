@@ -22,13 +22,13 @@ int argc, **argv;
 	int wf, tfailed;
 
 	tfailed = 0;
-	if(argc &gt; 1) {
+	if(argc > 1) {
 		cbp = argv[1];
 		if(gtime()) {
-			write(1, &quot;bad conversion\n&quot;, 15);
+			write(1, "bad conversion\n", 15);
 			exit();
 		}
-		if (*cbp != &#39;s&#39;) {
+		if (*cbp != 's') {
 	/* convert to Greenwich time, on assumption of Standard time. */
 			dpadd(timbuf, timezone);
 	/* Now fix up to local daylight time. */
@@ -36,13 +36,13 @@ int argc, **argv;
 				dpadd(timbuf, -1*60*60);
 		}
 		time(wtmp[0].wtime);
-		wtmp[0].tty =  &#39;|&#39;;
-		if(stime(timbuf) &lt; 0) {
+		wtmp[0].tty =  '|';
+		if(stime(timbuf) < 0) {
 			tfailed++;
-			write(1, &quot;no permission\n&quot;, 14);
-		} else if ((wf = open(&quot;/usr/adm/wtmp&quot;, 1)) &gt;= 0) {
+			write(1, "no permission\n", 14);
+		} else if ((wf = open("/usr/adm/wtmp", 1)) >= 0) {
 			time(wtmp[1].wtime);
-			wtmp[1].tty = &#39;}&#39;;
+			wtmp[1].tty = '}';
 			seek(wf, 0, 2);
 			write(wf, wtmp, 32);
 		}
@@ -67,10 +67,10 @@ gtime()
 	int nt[2];
 
 	t = gpair();
-	if(t&lt;1 || t&gt;12)
+	if(t<1 || t>12)
 		goto bad;
 	d = gpair();
-	if(d&lt;1 || d&gt;31)
+	if(d<1 || d>31)
 		goto bad;
 	h = gpair();
 	if(h == 24) {
@@ -78,24 +78,24 @@ gtime()
 		d++;
 	}
 	m = gpair();
-	if(m&lt;0 || m&gt;59)
+	if(m<0 || m>59)
 		goto bad;
 	y = gpair();
-	if (y&lt;0) {
+	if (y<0) {
 		time(nt);
 		y = localtime(nt)[5];
 	}
-	if (*cbp == &#39;p&#39;)
+	if (*cbp == 'p')
 		h =+ 12;
-	if (h&lt;0 || h&gt;23)
+	if (h<0 || h>23)
 		goto bad;
 	timbuf[0] = 0;
 	timbuf[1] = 0;
 	y =+ 1900;
-	for(i=1970; i&lt;y; i++)
+	for(i=1970; i<y; i++)
 		gdadd(dysize(i));
 	/* Leap year */
-	if (dysize(y)==366 &amp;&amp; t &gt;= 3)
+	if (dysize(y)==366 && t >= 3)
 		gdadd(1);
 	while(--t)
 		gdadd(dmsize[t-1]);
@@ -114,7 +114,7 @@ gdadd(n)
 	register char *t;
 
 	t = timbuf[1]+n;
-	if(t &lt; timbuf[1])
+	if(t < timbuf[1])
 		timbuf[0]++;
 	timbuf[1] = t;
 }
@@ -138,12 +138,12 @@ gpair()
 	cp = cbp;
 	if(*cp == 0)
 		return(-1);
-	c = (*cp++ - &#39;0&#39;) * 10;
-	if (c&lt;0 || c&gt;100)
+	c = (*cp++ - '0') * 10;
+	if (c<0 || c>100)
 		return(-1);
 	if(*cp == 0)
 		return(-1);
-	if ((d = *cp++ - &#39;0&#39;) &lt; 0 || d &gt; 9)
+	if ((d = *cp++ - '0') < 0 || d > 9)
 		return(-1);
 	cbp = cp;
 	return (c+d);

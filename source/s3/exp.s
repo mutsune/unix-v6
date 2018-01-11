@@ -7,7 +7,7 @@ stexp = 175000^movfi
 /
 /	exp accepts its argument and returns its result
 /	in fr0.  The carry bit is set if the result overflows.
-/	The coefficients are #1067 from Hart &amp; Cheney.
+/	The coefficients are #1067 from Hart & Cheney.
 /
 /	movf	arg,fr0
 /	jsr	pc,exp
@@ -44,7 +44,7 @@ exp:
 	dec	(sp)
 	addf	$half,fr0
 3:
-	movf	fr0,fr1		/ -.5 &lt; x &lt; +.5
+	movf	fr0,fr1		/ -.5 < x < +.5
 	mulf	fr1,fr1		/arg**2
 /
 	movf	P2,fr2

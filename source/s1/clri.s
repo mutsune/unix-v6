@@ -13,7 +13,7 @@
 	movb	(r0)+,r1
 	beq	1f
 	mpy	$10.,r5
-	sub	$&#39;0,r1
+	sub	$'0,r1
 	cmp	r1,$10.
 	bhis	error
 	add	r1,r5
@@ -54,10 +54,10 @@ error:
 	sys	write; 1f; 2f-1f
 	sys	exit
 1:
-	&lt;error\n&gt;
+	<error\n>
 2:
 
-filsys:	&lt;/dev/junk\0&gt;
+filsys:	</dev/junk\0>
 .even
 	.bss
 buf:	.=.+512.

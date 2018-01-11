@@ -4,8 +4,8 @@
 The system calls to do I/O are designed to eliminate
 the differences between the various devices and styles of
 access.
-There is no distinction between ``random&#39;&#39;
-and ``sequential&#39;&#39; I/O, nor is any logical record size imposed
+There is no distinction between ``random''
+and ``sequential'' I/O, nor is any logical record size imposed
 by the system.
 The size of an ordinary file is determined
 by the highest byte written on it;
@@ -29,7 +29,7 @@ filep = open\|(\|name, flag\|)
 \fIName\fR indicates the name of the file.
 An arbitrary path name may be given.
 The \fIflag\fR argument indicates whether the file is to be read, written,
-or ``updated,&#39;&#39; that is read and written simultaneously.
+or ``updated,'' that is read and written simultaneously.
 .pg
 The returned value
 .ft I
@@ -79,7 +79,7 @@ when two users engage simultaneously in such inconvenient
 activities as writing on
 the same file,
 creating files in the same directory,
-or deleting each other&#39;s open files.
+or deleting each other's open files.
 .pg
 Except as indicated below, reading and writing
 are sequential.
@@ -225,33 +225,33 @@ its i-number is used as an index into
 a system table (the \fIi-list\|\fR) stored in a known
 part of the device on which
 the directory resides.
-The entry thereby found (the file&#39;s
+The entry thereby found (the file's
 \fIi-node\fR\|)
 contains
 the description of the file:
 .sp
 .tr |
 .in .5i
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 1.|its owner;
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 2.|its protection bits;
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 3.|the physical disk or tape addresses for the file contents;
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 4.|its size;
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 5.|time of last modification;
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 6.|the number of links to the file; that is, the number
 of times it appears in a directory;
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 7.|a bit indicating whether the
 file is a directory;
-.ti -\w&#39;1. &#39;u
+.ti -\w'1. 'u
 8.|a bit indicating whether the file is a special file;
-.ti -\w&#39;1. &#39;u
-9.|a bit indicating whether the file is ``large&#39;&#39; or ``small.&#39;&#39;
+.ti -\w'1. 'u
+9.|a bit indicating whether the file is ``large'' or ``small.''
 .sp
 .tr ||
 .in 0
@@ -312,7 +312,7 @@ for the data blocks of the file.
 If required,
 the eighth word is the address of a double-indirect block containing 256 more addresses
 of indirect blocks.
-Thus files may conceptually grow to (7+256)\v&#39;-.3&#39;.\v&#39;.3&#39;256\v&#39;-.3&#39;.\v&#39;.3&#39;512 bytes;
+Thus files may conceptually grow to (7+256)\v'-.3'.\v'.3'256\v'-.3'.\v'.3'512 bytes;
 actually they are restricted to
 16,777,216
 (\|2\u\*t24\*n\d\|) bytes.
@@ -321,7 +321,7 @@ can be accessed directly.
 A large file (size 9 to 32768 blocks)
 requires one additional access
 to read below logical block 1792
-(7\v&#39;-.3&#39;.\v&#39;.3&#39;256)
+(7\v'-.3'.\v'.3'256)
 and two additional references above 1792.
 .pg
 The foregoing discussion applies to ordinary files.
@@ -374,7 +374,7 @@ To the user, both reading and writing of files appear to
 be synchronous and unbuffered.
 That is, immediately after
 return from a \fIread\fR call the data are available, and conversely
-after a \fIwrite\fR the user&#39;s workspace may be reused.
+after a \fIwrite\fR the user's workspace may be reused.
 In fact the system maintains a rather complicated
 buffering mechanism which reduces greatly the number
 of I/O operations required to access a file.
@@ -389,7 +389,7 @@ The return from the \fIwrite\fR call may then take place,
 although the actual I/O may not be completed until a later time.
 Conversely, if a single byte is read, the system determines
 whether the secondary storage block in which the byte is located is already
-in one of the system&#39;s buffers; if so, the byte can be returned immediately.
+in one of the system's buffers; if so, the byte can be returned immediately.
 If not, the block is read into a buffer and the byte picked out.
 .pg
 The system recognizes when

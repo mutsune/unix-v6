@@ -28,14 +28,14 @@ mesg:
 	7f
 	8f
 
-1:	&lt;No error.\n\0&gt;
-2:	&lt;Floating op code error\n\0&gt;
-3:	&lt;Floating divide check\n\0&gt;
-4:	&lt;Integer conversion error\n\0&gt;
-5:	&lt;Floating overflow\n\0&gt;
-6:	&lt;Floating underflow\n\0&gt;
-7:	&lt;Floating undefined\n\0&gt;
-8:	&lt;Floating maintennace trap\n\0&gt;
+1:	<No error.\n\0>
+2:	<Floating op code error\n\0>
+3:	<Floating divide check\n\0>
+4:	<Integer conversion error\n\0>
+5:	<Floating overflow\n\0>
+6:	<Floating underflow\n\0>
+7:	<Floating undefined\n\0>
+8:	<Floating maintennace trap\n\0>
 
 	.even
 

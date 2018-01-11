@@ -1,6 +1,6 @@
 #
 
-#include &quot;m6.h&quot;
+#include "m6.h"
 
 main(argc,argv)
 char **argv; 
@@ -15,8 +15,8 @@ char **argv;
 	dmax =+ t-10;
 	t = p0; 
 	pmax =+ t-10;
-	revptr(d0,d0+2,&amp;df,&amp;de);
-	if(argc&gt;1) {
+	revptr(d0,d0+2,&df,&de);
+	if(argc>1) {
 		fin = open(argv[1],0);
 		control();
 		close(fin); 
@@ -27,7 +27,7 @@ char **argv;
 
 
 diag(m) {
-	printf(&quot;%s\n&quot;,m);
+	printf("%s\n",m);
 	iot(); 
 }	/* abort */
 

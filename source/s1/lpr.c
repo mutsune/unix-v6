@@ -3,10 +3,10 @@
  *		normally invoked through opr
  */
 
-char	tfname[]	&quot;/usr/lpd/tfaXXXXX&quot;;
-char	cfname[]	&quot;/usr/lpd/cfaXXXXX&quot;;
-char	lfname[]	&quot;/usr/lpd/lfaXXXXX&quot;;
-char	dfname[]	&quot;/usr/lpd/dfaXXXXX&quot;;
+char	tfname[]	"/usr/lpd/tfaXXXXX";
+char	cfname[]	"/usr/lpd/cfaXXXXX";
+char	lfname[]	"/usr/lpd/lfaXXXXX";
+char	dfname[]	"/usr/lpd/dfaXXXXX";
 int	nact;
 int	tff;
 int	mailflg;
@@ -23,26 +23,26 @@ char *argv[];
 	int out();
 
 	pidfn();
-	if((signal(1, 1) &amp; 01) == 0)
+	if((signal(1, 1) & 01) == 0)
 		signal(1, out);
-	if((signal(2, 1) &amp; 01) == 0)
+	if((signal(2, 1) & 01) == 0)
 		signal(2, out);
-	if((signal(3, 1) &amp; 01) == 0)
+	if((signal(3, 1) & 01) == 0)
 		signal(3, out);
 	flag = 0;
 	tff = nfile(tfname);
-	while (argc&gt;1 &amp;&amp; (arg = argv[1])[0]==&#39;-&#39;) {
+	while (argc>1 && (arg = argv[1])[0]=='-') {
 		switch (arg[1]) {
 
-		case &#39;c&#39;:
-			flag = &#39;+&#39;;
+		case 'c':
+			flag = '+';
 			break;
 
-		case &#39;r&#39;:
-			flag = &#39;-&#39;;
+		case 'r':
+			flag = '-';
 			break;
 
-		case &#39;m&#39;:
+		case 'm':
 			mailflg = 1;
 			break;
 		}
@@ -55,48 +55,48 @@ char *argv[];
 		copy(0);
 	while(--argc) {
 		arg = *++argv;
-		if(flag == &#39;+&#39;)
+		if(flag == '+')
 			goto cf;
-		if(*arg == &#39;/&#39; &amp;&amp; flag != &#39;-&#39;) {
-			card(&#39;F&#39;, arg);
+		if(*arg == '/' && flag != '-') {
+			card('F', arg);
 			nact++;
 			continue;
 		}
-		if(link(arg, lfname) &lt; 0)
+		if(link(arg, lfname) < 0)
 			goto cf;
-		card(&#39;F&#39;, lfname);
-		card(&#39;U&#39;, lfname);
+		card('F', lfname);
+		card('U', lfname);
 		lfname[inchar]++;
 		nact++;
 		goto df;
 
 	cf:
 		f = open(arg, 0);
-		if(f &lt; 0) {
-			printf(&quot;Cannot open %s\n&quot;, arg);
+		if(f < 0) {
+			printf("Cannot open %s\n", arg);
 			continue;
 		}
 		copy(f);
 		close(f);
 
 	df:
-		if(flag == &#39;-&#39;) {
+		if(flag == '-') {
 			f = unlink(arg);
-			if(f &lt; 0)
-				printf(&quot;Cannot remove %s\n&quot;, arg);
+			if(f < 0)
+				printf("Cannot remove %s\n", arg);
 		}
 	}
 
 	if(nact) {
 		tfname[inchar]--;
 		f = link(tfname, dfname);
-		if(f &lt; 0) {
-			printf(&quot;Cannot rename %s\n&quot;, dfname);
+		if(f < 0) {
+			printf("Cannot rename %s\n", dfname);
 			tfname[inchar]++;
 			out();
 		}
 		unlink(tfname);
-		execl(&quot;/etc/lpd&quot;, &quot;lpd&quot;, 0);
+		execl("/etc/lpd", "lpd", 0);
 		dfname[inchar]++;
 	}
 	out();
@@ -108,19 +108,19 @@ int f;
 	int ff, i, nr, nc;
 	static int buf[256];
 
-	card(&#39;F&#39;, cfname);
-	card(&#39;U&#39;, cfname);
+	card('F', cfname);
+	card('U', cfname);
 	ff = nfile(cfname);
 	nc = 0;
 	nr = 0;
-	while((i = read(f, buf, 512)) &gt; 0) {
+	while((i = read(f, buf, 512)) > 0) {
 		write(ff, buf, i);
 		nc =+ i;
-		if(nc &gt;= 512) {
+		if(nc >= 512) {
 			nc =- 512;
 			nr++;
-			if(nr &gt; maxrec) {
-				printf(&quot;Copy file is too large\n&quot;);
+			if(nr > maxrec) {
+				printf("Copy file is too large\n");
 				break;
 			}
 		}
@@ -141,11 +141,11 @@ char s[];
 	p2 = s;
 	col = 0;
 	*p1++ = c;
-	while((c = *p2++) != &#39;\0&#39;) {
+	while((c = *p2++) != '\0') {
 		*p1++ = c;
 		col++;
 	}
-	*p1++ = &#39;\n&#39;;
+	*p1++ = '\n';
 	write(tff, buf, col+2);
 }
 
@@ -157,27 +157,27 @@ ident()
 
 	b1p = b1;
 	if(getpw(getuid(), b1p)) {
-		b1p = &quot;pdp::::m0000,m000:&quot;;
+		b1p = "pdp::::m0000,m000:";
 	}
 	n = 0;
 	b2p = b2;
-	while(*b2p++ = &quot;$	ident	&quot;[n++]);
+	while(*b2p++ = "$	ident	"[n++]);
 	b2p--;
 	n = 5;
-	while(--n) while(*b1p++ != &#39;:&#39;);
-	while((*b2p++ = *b1p++) != &#39;:&#39;);
-	b2p[-1] = &#39;,&#39;;
+	while(--n) while(*b1p++ != ':');
+	while((*b2p++ = *b1p++) != ':');
+	b2p[-1] = ',';
 	b1p = b1;
 	pp = person;
-	while((c = *b1p++) != &#39;:&#39;) {
+	while((c = *b1p++) != ':') {
 		*b2p++ = c;
 		*pp++ = c;
 	}
 	*b2p++ = 0;
 	*pp++ = 0;
-	card(&#39;L&#39;, b2);
+	card('L', b2);
 	if (mailflg)
-		card(&#39;M&#39;, person);
+		card('M', person);
 }
 
 pidfn()
@@ -187,11 +187,11 @@ pidfn()
 
 	p = getpid();
 	i = 0;
-	while(tfname[i] != &#39;X&#39;)
+	while(tfname[i] != 'X')
 		i++;
 	i =+ 4;
-	for(j=0; j&lt;5; j++) {
-		c = (p%10) + &#39;0&#39;;
+	for(j=0; j<5; j++) {
+		c = (p%10) + '0';
 		p =/ 10;
 		tfname[i] = c;
 		cfname[i] = c;
@@ -208,8 +208,8 @@ char *name;
 	register f;
 
 	f = creat(name, 0666);
-	if(f &lt; 0) {
-		printf(&quot;Cannot create %s\n&quot;, name);
+	if(f < 0) {
+		printf("Cannot create %s\n", name);
 		out();
 	}
 	name[inchar]++;
@@ -224,19 +224,19 @@ out()
 	signal(1, 2);
 	signal(1, 3);
 	i = inchar;
-	while(tfname[i] != &#39;a&#39;) {
+	while(tfname[i] != 'a') {
 		tfname[i]--;
 		unlink(tfname);
 	}
-	while(cfname[i] != &#39;a&#39;) {
+	while(cfname[i] != 'a') {
 		cfname[i]--;
 		unlink(cfname);
 	}
-	while(lfname[i] != &#39;a&#39;) {
+	while(lfname[i] != 'a') {
 		lfname[i]--;
 		unlink(lfname);
 	}
-	while(dfname[i] != &#39;a&#39;) {
+	while(dfname[i] != 'a') {
 		dfname[i]--;
 		unlink(dfname);
 	}

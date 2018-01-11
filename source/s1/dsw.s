@@ -31,9 +31,9 @@
 	bne	2b
 	mov	$buf+2,r2
 	dec	r3
-	cmpb	-1(r3),$&#39;/
+	cmpb	-1(r3),$'/
 	beq	2f
-	movb	$&#39;/,(r3)+
+	movb	$'/,(r3)+
 2:
 	movb	(r2)+,(r3)+
 	bne	2b
@@ -45,7 +45,7 @@
 2:
 	tstb	(r2)+
 	bne	2b
-	movb	$&#39; ,-(r2)
+	movb	$' ,-(r2)
 	sub	$buf+1,r2
 	mov	r2,0f
 
@@ -54,22 +54,22 @@
 	sys	write; buf+2; 0:..
 	clr	r0
 	sys	read; ch; 1
-	cmpb	ch,$&#39;\n
+	cmpb	ch,$'\n
 	beq	1b
 	clr	r0
 	sys	read; ch1; 1
-	cmpb	ch1,$&#39;\n
+	cmpb	ch1,$'\n
 	beq	3f
 4:
 	clr	r0
 	sys	read; ch; 1
-	cmpb	ch,$&#39;\n
+	cmpb	ch,$'\n
 	beq	2b
 	br	4b
 3:
-	cmpb	ch,$&#39;x
+	cmpb	ch,$'x
 	beq	done
-	cmpb	ch,$&#39;y
+	cmpb	ch,$'y
 	bne	2b
 	sys	unlink; obuf
 	bes	error
@@ -83,8 +83,8 @@ error:
 	sys	write; mes; 2
 	sys	exit
 
-dot:	&lt;.\0&gt;
-mes:	&lt;?\n&gt;
+dot:	<.\0>
+mes:	<?\n>
 
 	.bss
 obuf:	.=.+100.

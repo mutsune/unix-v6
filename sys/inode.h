@@ -3,7 +3,7 @@
  * file activity in unix. There is a unique
  * inode allocated for each active file,
  * each current directory, each mounted-on
- * file, text file, and the root. An inode is &#39;named&#39;
+ * file, text file, and the root. An inode is 'named'
  * by its dev/inumber pair. (iget/iget.c)
  * Data, from mode on, is read in
  * from permanent inode on volume.

@@ -30,7 +30,7 @@ q).
 .ul
 a (append)
 Add lines to the buffer (at line dot, unless
-a different line is specified). Appending continues until ``\*.&#39;&#39;
+a different line is specified). Appending continues until ``\*.''
 is typed on a new line.
 Dot is set to the last line appended.
 .sp 4p
@@ -38,7 +38,7 @@ Dot is set to the last line appended.
 c (change)
 Change the specified lines to the new text which follows.
 .li
-The new lines are terminated by a ``\*.&#39;&#39;.
+The new lines are terminated by a ``\*.''.
 If no lines are specified,
 replace line dot.
 Dot is set to last line changed.
@@ -48,8 +48,8 @@ d (delete)
 Delete the lines specified.
 If none are specified, delete line dot.
 Dot is set to the first undeleted line,
-unless ``$&#39;&#39; is deleted,
-in which case dot is set to ``$&#39;&#39;.
+unless ``$'' is deleted,
+in which case dot is set to ``$''.
 .sp 4p
 .ul
 e (edit)
@@ -75,13 +75,13 @@ g (global)
 .ul
 g/---/commands
 will execute the commands on those lines that contain
-``---&#39;&#39;, which can be any context search expression.
+``---'', which can be any context search expression.
 .sp 4p
 .ul
 i (insert)
 Insert lines before specified line (or dot)
 .li
-until a ``\*.&#39;&#39; is typed on a new line.
+until a ``\*.'' is typed on a new line.
 Dot is set to last line inserted.
 .sp 4p
 .ul
@@ -98,8 +98,8 @@ Print specified lines.
 If none specified, print
 line dot.
 A single line number is equivalent to
-``line-number p&#39;&#39;.
-A single newline prints ``\*.+1&#39;&#39;,
+``line-number p''.
+A single newline prints ``\*.+1'',
 the next line.
 .sp 4p
 .ul
@@ -118,23 +118,23 @@ s (substitute)
 s/string1/string2/
 will
 substitute the characters of
-`string2&#39; for `string1&#39; in specified lines.
+`string2' for `string1' in specified lines.
 If no line is specified, make substitution in line dot.
 Dot is set to last line in which a
 substitution took place, which means that if no substitution took place, dot is not changed.
 .ul
 s
 changes only the first occurrence of string1 on a line;
-to change all of them, type a ``g&#39;&#39; after the final slash.
+to change all of them, type a ``g'' after the final slash.
 .sp 4p
 .ul
 v (exclude)
 .ul
 v/---/commands
-executes ``commands&#39;&#39; on those lines that
+executes ``commands'' on those lines that
 .ul
 do not
-contain ``---&#39;&#39;.
+contain ``---''.
 .sp 4p
 .ul
 w (write)
@@ -145,7 +145,7 @@ Dot is not changed.
 .li
 .= (dot value)
 Print value of dot.
-(``=&#39;&#39; by itself prints the value of ``$&#39;&#39;.)
+(``='' by itself prints the value of ``$''.)
 .sp 4p
 .ul
 ! (temporary escape)
@@ -160,12 +160,12 @@ this string of characters.
 Print it.
 Dot is set to line where string
 found.
-Search starts at ``\*.+1&#39;&#39;, wraps around from ``$&#39;&#39; to 1,
+Search starts at ``\*.+1'', wraps around from ``$'' to 1,
 and continues to dot, if necessary.
 .sp 4p
 .ul
 ?-----?
 Context search in reverse direction.
 Start search
-at ``\*.\(mi1&#39;&#39;, scan to 1, wrap around to ``$&#39;&#39;.
+at ``\*.\(mi1'', scan to 1, wrap around to ``$''.
 .in 0

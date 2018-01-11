@@ -64,7 +64,7 @@ casehw:
 1:
 	jsr	pc,getchar
 	bmi	1f
-	cmpb	r0,$&#39; /
+	cmpb	r0,$' /
 	beq	4f
 	cmpb	r0,$012
 	beq	1f
@@ -85,7 +85,7 @@ casehw:
 4:
 	jsr	pc,1b
 	br	casehw
-hmess: &lt;Exception word space full.\n\0&gt;
+hmess: <Exception word space full.\n\0>
 .even
 
 exword:
@@ -105,7 +105,7 @@ exword:
 	beq	4f
 1:
 	movb	(r2)+,r4
-	cmpb	r4,$&#39;-
+	cmpb	r4,$'-
 	beq	1b
 	movb	(r1)+,r3
 /	tstb	r3
@@ -120,7 +120,7 @@ exword:
 /	tstb	(r1)
 	tstb	-1(r0)
 	bne	2f
-	cmpb	r3,$&#39;s
+	cmpb	r3,$'s
 	beq	3f
 2:
 	tstb	r4
@@ -142,7 +142,7 @@ exword:
 	inc	exf
 1:
 	tstb	(r1)+
-	cmpb	(r2)+,$&#39;-
+	cmpb	(r2)+,$'-
 	bne	0f
 	bisb	$200,-1(r1)
 	tstb	(r2)+
@@ -180,39 +180,39 @@ punct:
 	clz
 2:
 	rts	pc
-3: &lt; .,()&quot;\&#39;`\0&gt;	/should be more
+3: < .,()"\'`\0>	/should be more
 .even
 maplow:
-	cmp	r2,$&#39;a
+	cmp	r2,$'a
 	bhis	1f
-	add	$&#39;a-&#39;A,r2
+	add	$'a-'A,r2
 1:
 	rts	pc
 
 vowel:
-	cmpb	r2,$&#39;a
+	cmpb	r2,$'a
 	beq	1f
-	cmpb	r2,$&#39;e
+	cmpb	r2,$'e
 	beq	1f
-	cmpb	r2,$&#39;i
+	cmpb	r2,$'i
 	beq	1f
-	cmpb	r2,$&#39;o
+	cmpb	r2,$'o
 	beq	1f
-	cmpb	r2,$&#39;u
+	cmpb	r2,$'u
 	beq	1f
-	cmpb	r2,$&#39;y
+	cmpb	r2,$'y
 	beq	1f
-	cmpb	r2,$&#39;A
+	cmpb	r2,$'A
 	beq	1f
-	cmpb	r2,$&#39;E
+	cmpb	r2,$'E
 	beq	1f
-	cmpb	r2,$&#39;I
+	cmpb	r2,$'I
 	beq	1f
-	cmpb	r2,$&#39;O
+	cmpb	r2,$'O
 	beq	1f
-	cmpb	r2,$&#39;U
+	cmpb	r2,$'U
 	beq	1f
-	cmpb	r2,$&#39;Y
+	cmpb	r2,$'Y
 1:
 	rts	pc
 
@@ -259,7 +259,7 @@ digram:
 	jsr	pc,alph2
 	beq	2f
 	movb	(r0),r2
-	mov	$&#39;a,r1
+	mov	$'a,r1
 	jsr	r5,dilook; bxh
 	br	4f
 2:
@@ -309,14 +309,14 @@ dilook:
 	bic	$!177,r2
 	bic	$!177,r1
 	jsr	pc,maplow
-	sub	$&#39;a,r2
-	cmp	r2,$&#39;z-&#39;a
+	sub	$'a,r2
+	cmp	r2,$'z-'a
 	bhi	3f
 	mov	r2,r4
 	mov	r1,r2
 	jsr	pc,maplow
-	sub	$&#39;a,r2
-	cmp	r2,$&#39;z-&#39;a
+	sub	$'a,r2
+	cmp	r2,$'z-'a
 	bhi	3f
 	mov	r3,-(sp)
 	mov	r2,r3
@@ -351,7 +351,7 @@ suffix:
 	jsr	pc,alph
 	bne	4f
 	jsr	pc,maplow
-	sub	$&#39;a,r2
+	sub	$'a,r2
 	asl	r2
 	mov	suftab(r2),-(sp)
 	bic	$!37777,(sp)

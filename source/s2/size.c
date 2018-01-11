@@ -10,27 +10,27 @@ char **argv;
 
 	ac = argc;
 	if (ac==1) {
-		*argv = &quot;a.out&quot;;
+		*argv = "a.out";
 		ac++;
 		--argv;
 	}
 	while(--ac) {
 		++argv;
-		if((f=open(*argv, 0))&lt;0) {
-			printf(&quot;%s not found\n&quot;, *argv);
+		if((f=open(*argv, 0))<0) {
+			printf("%s not found\n", *argv);
 			continue;
 		}
 		read(f, buf, 0020);
-		if(buf[0]!=0411 &amp;&amp; buf[0]!=0410 &amp;&amp; buf[0]!=0407) {
-			printf(&quot;Bad format: %s\n&quot;, *argv);
+		if(buf[0]!=0411 && buf[0]!=0410 && buf[0]!=0407) {
+			printf("Bad format: %s\n", *argv);
 			close(f);
 			continue;
 		}
-		if (argc&gt;2)
-			printf(&quot;%s: &quot;, *argv);
-		printf(&quot;%l+%l+%l=&quot;, buf[1],buf[2],buf[3]);
+		if (argc>2)
+			printf("%s: ", *argv);
+		printf("%l+%l+%l=", buf[1],buf[2],buf[3]);
 		sum = buf[1]+buf[2]+buf[3];
-		printf(&quot;%l (%o)\n&quot;, sum, sum);
+		printf("%l (%o)\n", sum, sum);
 		close(f);
 	}
 }

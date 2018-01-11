@@ -26,7 +26,7 @@ text:
 1:
 	jsr	pc,getchar
 	bmi	1f
-	cmpb	r0,$&#39; /
+	cmpb	r0,$' /
 	beq	3f
 	cmpb	r0,tabc
 	bne	1f
@@ -115,7 +115,7 @@ nofill:
 1:
 	jsr	pc,gettchar
 	bmi	0f
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	beq	1f
 	cmpb	r0,ohc
 	beq	1b
@@ -182,7 +182,7 @@ fill:
 1:
 	inc	r0
 	dec	nc
-	cmpb	(r2)+,$&#39; 
+	cmpb	(r2)+,$' 
 	beq	1b
 	dec	r2
 	bit	$1,totout
@@ -207,7 +207,7 @@ movword:
 	bne	2f
 1:
 	movb	(r4)+,r0
-	cmp	r0,$&#39; 
+	cmp	r0,$' 
 	bne	1f
 	dec	wch
 	jsr	pc,width
@@ -222,7 +222,7 @@ movword:
 	beq	2f
 	cmp	nel,$4
 	blt	1f
-	cmp	wch,$5 /don&#39;t do 4 char words
+	cmp	wch,$5 /don't do 4 char words
 	ble	1f
 2:
 	bit	$2,hyf
@@ -240,7 +240,7 @@ movword:
 	mov	wch,-(sp)
 1:
 	movb	(r4)+,r0
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	bne	2f
 	movb	(r4),r2
 	jsr	pc,alph2
@@ -296,9 +296,9 @@ movword:
 	tst	nel
 	ble	2f
 6:
-	cmpb	-1(r3),$&#39;-
+	cmpb	-1(r3),$'-
 	beq	3f
-	movb	$&#39;-,(r3)
+	movb	$'-,(r3)
 	dec	nel
 	inc	ne
 	br	3f
@@ -346,7 +346,7 @@ width:
 	mov	$-1,r1
 	br	3f
 1:
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bgt	2f
 	mov	$1,r1
 	br	3f
@@ -385,7 +385,7 @@ header:
 /headin:
 	clr	nls
 	jsr	pc,skipcont
-	mov	$&#39;&#39;,r2
+	mov	$'',r2
 	tst	op
 	beq	1f
 	jsr	pc,wbfl
@@ -399,13 +399,13 @@ header:
 	mov	r1,headp
 	jsr	pc,getchar
 	bmi	3f
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	beq	2f
 	mov	r0,r2
 1:
 	jsr	pc,getchar
 	bmi	3f
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	beq	2f
 0:
 	cmpb	r0,r2
@@ -486,14 +486,14 @@ headseg:
 	bmi	0f
 	cmpb	r0,$004
 	beq	1f
-	cmpb	r0,$&#39;%
+	cmpb	r0,$'%
 	beq	2f
 0:
 	jsr	pc,*(r5)
 	add	r1,(sp)
 	br	1b
 2:
-	mov	$&#39;%,r0
+	mov	$'%,r0
 	jsr	pc,findr
 	mov	[flist-vlist](r1),nform
 	mov	pn,r0
@@ -515,7 +515,7 @@ nlines:
 1:
 	dec	(sp)
 	blt	1f
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,*(r5)
 	br	1b
 1:
@@ -547,7 +547,7 @@ decml1:
 	mov	r1,2(sp)
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,*(r5)
 	add	(sp)+,r1
 	rts	pc
@@ -635,7 +635,7 @@ abc:
 	mov	r3,-(sp)
 	mov	r0,r3
 	bne	0f
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	pc,*(r5)
 	br	1f
 0:
@@ -656,10 +656,10 @@ abc1:
 1:
 	cmp	ro,$2
 	beq	1f
-	add	$&#39;a,(sp)
+	add	$'a,(sp)
 	br	2f
 1:
-	add	$&#39;A,(sp)
+	add	$'A,(sp)
 2:
 	mov	(sp)+,r0
 	jsr	pc,*(r5)
@@ -716,7 +716,7 @@ fnumb:
 /1:
 /	rts	pc
 /8:	011 /tab
-/9:	&lt;\n\0&gt;
+/9:	<\n\0>
 /	.even
 /numb:
 /	mov	r2,-(sp)
@@ -735,7 +735,7 @@ fnumb:
 /	beq	1f
 /	jsr	pc,numb1
 /1:
-/	add	$&#39;0,(sp)
+/	add	$'0,(sp)
 /	mov	(sp)+,char
 /	mov	r1,r0
 /	sys	write; char; 1
@@ -748,7 +748,7 @@ setstr:
 	jsr	pc,get1
 	bmi	3f
 	bic	$!177,r0
-	cmpb	r0,$&#39;\\
+	cmpb	r0,$'\\
 	bne	1f
 4:
 	jsr	pc,get1
@@ -767,12 +767,12 @@ setstr:
 	tst	2(sp)
 	bne	5f
 	bic	$!177,r0
-	cmpb	r0,$&#39;(
+	cmpb	r0,$'(
 	bne	1f
 	inc	2(sp)
 	jsr	pc,get1
 	bic	$!177,r0
-	cmpb	r0,$&#39;\\
+	cmpb	r0,$'\\
 	beq	4b
 5:
 	mov	r0,-(sp)
@@ -807,7 +807,7 @@ copys:
 	bne	2f
 	jsr	pc,getchar
 	bmi	0f
-	cmpb	r0,$&#39;&quot;
+	cmpb	r0,$'"
 	bne	0f
 1:
 	jsr	pc,getchar
@@ -874,7 +874,7 @@ setfield:
 2:
 	cmpb	r0,fc
 	beq	3f
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	0f
 	mov	$012,r4
 	clr	nlflg

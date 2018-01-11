@@ -10,40 +10,40 @@ sh $0 6 VI
 sh $0 7 VII
 sh $0 8 VIII
 : tx
-cat tocx? &gt;cattoc
+cat tocx? >cattoc
 ptx -t cattoc ptxx
 rm cattoc
 ed - tocx1
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc1
 e tocx2
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc2
 e tocx3
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc3
 e tocx4
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc4
 e tocx5
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc5
 e tocx6
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc6
 e tocx7
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc7
 e tocx8
-1,$s/([IV]*) /&quot; &quot;/
-1,$s/.*/.xx &quot;&amp;&quot;/
+1,$s/([IV]*) /" "/
+1,$s/.*/.xx "&"/
 w toc8
 q
 exit
@@ -72,11 +72,11 @@ exit
 sh $0 8 VIII
 exit
 : x
-echo usage: sh tocrc &quot;[12345678]&quot;
+echo usage: sh tocrc "[12345678]"
 exit
 : both
 chdir /usr/man/man$1
-ls &gt;xa
+ls >xa
 ed - xa
 v/\.[12345678]$/d
 g/intro.2/d
@@ -85,13 +85,13 @@ g/^/s//e /\
 /NAME/1p
 w
 q
-ed - &lt;xa &gt;xb
-echo &quot;1,$s/ *\\\*- */(&quot;$2&quot;) /&quot; &gt;xa
+ed - <xa >xb
+echo "1,$s/ *\\\*- */("$2") /" >xa
 if $1 != 2 goto 1f
-echo 0a &gt;&gt;xa
-echo &quot;intro(II) introduction to system calls&quot; &gt;&gt;xa
-echo . &gt;&gt;xa
+echo 0a >>xa
+echo "intro(II) introduction to system calls" >>xa
+echo . >>xa
 : 1f
-echo w /usr/man/man0/tocx$1 &gt;&gt;xa
-ed - xb &lt;xa
+echo w /usr/man/man0/tocx$1 >>xa
+ed - xb <xa
 rm xa xb

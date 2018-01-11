@@ -1,7 +1,7 @@
 .globl .lv,.rv
 .globl succ
 
-/ unary &amp;
+/ unary &
 
 .lv:
 	mov	2(sp),(sp)

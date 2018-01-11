@@ -12,7 +12,7 @@ int c, i, j, ll, cp, mustwr;
 	fin = dup(0);
 	fout = dup(1);
 
-for (ll=0; ll&lt;PL; ll++)
+for (ll=0; ll<PL; ll++)
 	page[ll] = 0;
 
 c = 1;
@@ -20,15 +20,15 @@ cp = ll = 0;
 line = lbuff;
 mustwr = PL;
 
-while (c&gt;0)
+while (c>0)
 	switch (c = getchar())
 		{
-		case &#39;\n&#39;:
+		case '\n':
 			store (ll%PL);
-			if (++ll &gt;= mustwr)
+			if (++ll >= mustwr)
 				if (page[ll%PL] != 0)
 					{
-					printf (&quot;%s\n&quot;,page[ll%PL]);
+					printf ("%s\n",page[ll%PL]);
 					mustwr++;
 					free (page[ll%PL]);
 					page[ll%PL]=0;
@@ -36,10 +36,10 @@ while (c&gt;0)
 			fetch (ll%PL);
 			cp = 0;
 			continue;
-		case &#39;\0&#39;: continue;
+		case '\0': continue;
 		case ESC:
 			c = getchar();
-			if (c == &#39;7&#39;)
+			if (c == '7')
 				{
 				store(ll%PL);
 				ll--;
@@ -47,25 +47,25 @@ while (c&gt;0)
 				}
 			else
 				{
-				outc (ESC, &amp;line);
-				outc (c, &amp;line );
+				outc (ESC, &line);
+				outc (c, &line );
 				}
 			continue;
-		case &#39;\r&#39;:
+		case '\r':
 			line = lbuff;
 			continue;
-		case &#39;\t&#39;:
-			outc (&#39; &#39;, &amp;line);
+		case '\t':
+			outc (' ', &line);
 			cp = line-lbuff;
 			while (cp++%8)
-				outc(&#39; &#39;, &amp;line);
+				outc(' ', &line);
 			continue;
 		default:
-			outc(c, &amp;line);
+			outc(c, &line);
 		}
-for (i=0; i&lt;PL; i++)
+for (i=0; i<PL; i++)
    if (page[(mustwr+i)%PL] != 0)
-	printf (&quot;%s\n&quot;,page[(mustwr+i) % PL]);
+	printf ("%s\n",page[(mustwr+i) % PL]);
 flush();
 }
 outc (c, lp)
@@ -73,19 +73,19 @@ outc (c, lp)
 {
 int j;
 j = 0;
-while (j &gt;0 || *(*lp) == &#39;\b&#39; || *(*lp) == ESC || **lp == SI || **lp == SO)
+while (j >0 || *(*lp) == '\b' || *(*lp) == ESC || **lp == SI || **lp == SO)
 	{
 	switch (*(*lp))
 		{
-		case &#39;\b&#39;:
+		case '\b':
 			j++;
 			(*lp)++;
 			break;
-		case &#39;\0&#39;:
-			*(*lp)++ = &#39; &#39;;
+		case '\0':
+			*(*lp)++ = ' ';
 			j--;
 			break;
-		case ESC: /* &#39;escape&#39; */
+		case ESC: /* 'escape' */
 			(*lp) =+ 2;
 			break;
 		case SI:
@@ -98,7 +98,7 @@ while (j &gt;0 || *(*lp) == &#39;\b&#39; || *(*lp) == ESC || **lp == SI || **lp 
 			break;
 		}
 	}
-if (c != &#39; &#39; || *(*lp) == &#39;\0&#39;)
+if (c != ' ' || *(*lp) == '\0')
 	*(*lp) = c;
 (*lp)++;
 }
@@ -112,8 +112,8 @@ copy (page[ll],lbuff);
 fetch(ll)
 {
 int i;
-for (i=0; i &lt; LINELN; i++)
- lbuff[i] = &#39;\0&#39;;
+for (i=0; i < LINELN; i++)
+ lbuff[i] = '\0';
 copy (line=lbuff, page[ll]);
 }
 copy (s,t)

@@ -6,10 +6,10 @@
  * TM tape driver
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../buf.h"
+#include "../conf.h"
+#include "../user.h"
 
 struct {
 	int tmer;
@@ -77,9 +77,9 @@ tcommand(unit, com)
 {
 	extern lbolt;
 
-	while (tmtab.d_active || (TMADDR-&gt;tmcs &amp; CRDY)==0)
-		sleep(&amp;lbolt, 1);
-	TMADDR-&gt;tmcs = DENS|com|GO | (unit&lt;&lt;8);
+	while (tmtab.d_active || (TMADDR->tmcs & CRDY)==0)
+		sleep(&lbolt, 1);
+	TMADDR->tmcs = DENS|com|GO | (unit<<8);
 }
 
 tmstrategy(abp)
@@ -89,27 +89,27 @@ struct buf *abp;
 	register char **p;
 
 	bp = abp;
-	p = &amp;t_nxrec[bp-&gt;b_dev.d_minor];
-	if (*p &lt;= bp-&gt;b_blkno) {
-		if (*p &lt; bp-&gt;b_blkno) {
-			bp-&gt;b_flags =| B_ERROR;
+	p = &t_nxrec[bp->b_dev.d_minor];
+	if (*p <= bp->b_blkno) {
+		if (*p < bp->b_blkno) {
+			bp->b_flags =| B_ERROR;
 			iodone(bp);
 			return;
 		}
-		if (bp-&gt;b_flags&amp;B_READ) {
+		if (bp->b_flags&B_READ) {
 			clrbuf(bp);
 			iodone(bp);
 			return;
 		}
 	}
-	if ((bp-&gt;b_flags&amp;B_READ)==0)
-		*p = bp-&gt;b_blkno + 1;
-	bp-&gt;av_forw = 0;
+	if ((bp->b_flags&B_READ)==0)
+		*p = bp->b_blkno + 1;
+	bp->av_forw = 0;
 	spl5();
 	if (tmtab.d_actf==0)
 		tmtab.d_actf = bp;
 	else
-		tmtab.d_actl-&gt;av_forw = bp;
+		tmtab.d_actl->av_forw = bp;
 	tmtab.d_actl = bp;
 	if (tmtab.d_active==0)
 		tmstart();
@@ -126,35 +126,35 @@ tmstart()
     loop:
 	if ((bp = tmtab.d_actf) == 0)
 		return;
-	unit = bp-&gt;b_dev.d_minor;
+	unit = bp->b_dev.d_minor;
 	blkno = t_blkno[unit];
-	if (t_openf[unit] &lt; 0 || (TMADDR-&gt;tmcs &amp; CRDY)==0) {
-		bp-&gt;b_flags =| B_ERROR;
-		tmtab.d_actf = bp-&gt;av_forw;
+	if (t_openf[unit] < 0 || (TMADDR->tmcs & CRDY)==0) {
+		bp->b_flags =| B_ERROR;
+		tmtab.d_actf = bp->av_forw;
 		iodone(bp);
 		goto loop;
 	}
-	com = (unit&lt;&lt;8) | ((bp-&gt;b_xmem &amp; 03) &lt;&lt; 4) | IENABLE|DENS;
-	if (blkno != bp-&gt;b_blkno) {
+	com = (unit<<8) | ((bp->b_xmem & 03) << 4) | IENABLE|DENS;
+	if (blkno != bp->b_blkno) {
 		tmtab.d_active = SSEEK;
-		if (blkno &lt; bp-&gt;b_blkno) {
+		if (blkno < bp->b_blkno) {
 			com =| SFORW|GO;
-			TMADDR-&gt;tmbc = blkno - bp-&gt;b_blkno;
+			TMADDR->tmbc = blkno - bp->b_blkno;
 		} else {
-			if (bp-&gt;b_blkno == 0)
+			if (bp->b_blkno == 0)
 				com =| REW|GO;
 			else {
 				com =| SREV|GO;
-				TMADDR-&gt;tmbc = bp-&gt;b_blkno - blkno;
+				TMADDR->tmbc = bp->b_blkno - blkno;
 			}
 		}
-		TMADDR-&gt;tmcs = com;
+		TMADDR->tmcs = com;
 		return;
 	}
 	tmtab.d_active = SIO;
-	TMADDR-&gt;tmbc = bp-&gt;b_wcount &lt;&lt; 1;
-	TMADDR-&gt;tmba = bp-&gt;b_addr;		/* core address */
-	TMADDR-&gt;tmcs = com | ((bp-&gt;b_flags&amp;B_READ)? RCOM|GO:
+	TMADDR->tmbc = bp->b_wcount << 1;
+	TMADDR->tmba = bp->b_addr;		/* core address */
+	TMADDR->tmcs = com | ((bp->b_flags&B_READ)? RCOM|GO:
 	    ((tmtab.d_errcnt)? WIRG|GO: WCOM|GO));
 }
 
@@ -165,48 +165,48 @@ tmintr()
 
 	if ((bp = tmtab.d_actf)==0)
 		return;
-	unit = bp-&gt;b_dev.d_minor;
-	if (TMADDR-&gt;tmcs &lt; 0) {		/* error bit */
+	unit = bp->b_dev.d_minor;
+	if (TMADDR->tmcs < 0) {		/* error bit */
 /*
-		deverror(bp, TMADDR-&gt;tmer);
+		deverror(bp, TMADDR->tmer);
  */
-		while(TMADDR-&gt;tmrd &amp; GAPSD) ; /* wait for gap shutdown */
-		if ((TMADDR-&gt;tmer&amp;(HARD|EOF))==0 &amp;&amp; tmtab.d_active==SIO) {
-			if (++tmtab.d_errcnt &lt; 10) {
+		while(TMADDR->tmrd & GAPSD) ; /* wait for gap shutdown */
+		if ((TMADDR->tmer&(HARD|EOF))==0 && tmtab.d_active==SIO) {
+			if (++tmtab.d_errcnt < 10) {
 				t_blkno[unit]++;
 				tmtab.d_active = 0;
 				tmstart();
 				return;
 			}
 		} else
-			if(bp != &amp;rtmbuf &amp;&amp; (TMADDR-&gt;tmer&amp;EOF)==0)
+			if(bp != &rtmbuf && (TMADDR->tmer&EOF)==0)
 				t_openf[unit] = -1;
-		bp-&gt;b_flags =| B_ERROR;
+		bp->b_flags =| B_ERROR;
 		tmtab.d_active = SIO;
 	}
 	if (tmtab.d_active == SIO) {
 		tmtab.d_errcnt = 0;
 		t_blkno[unit]++;
-		tmtab.d_actf = bp-&gt;av_forw;
+		tmtab.d_actf = bp->av_forw;
 		tmtab.d_active = 0;
 		iodone(bp);
-		bp-&gt;b_resid = TMADDR-&gt;tmbc;
+		bp->b_resid = TMADDR->tmbc;
 	} else
-		t_blkno[unit] = bp-&gt;b_blkno;
+		t_blkno[unit] = bp->b_blkno;
 	tmstart();
 }
 
 tmread(dev)
 {
 	tmphys(dev);
-	physio(tmstrategy, &amp;rtmbuf, dev, B_READ);
+	physio(tmstrategy, &rtmbuf, dev, B_READ);
 	u.u_count = -rtmbuf.b_resid;
 }
 
 tmwrite(dev)
 {
 	tmphys(dev);
-	physio(tmstrategy, &amp;rtmbuf, dev, B_WRITE);
+	physio(tmstrategy, &rtmbuf, dev, B_WRITE);
 	u.u_count = 0;
 }
 

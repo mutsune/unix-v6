@@ -58,13 +58,13 @@ entry:
 
 main:
 	jsr	r5,code
-		&lt;main:\n\0&gt;; .even
+		<main:\n\0>; .even
 	rts	r5
 
 subr:
 funct:
 	jsr	r5,code
-		&lt;%n.:	%n_\n\0&gt;; .even
+		<%n.:	%n_\n\0>; .even
 		8
 		8
 	clr	r3
@@ -92,23 +92,23 @@ funct:
 	clrb	r0
 	swab	r0
 	jsr	r5,code
-		&lt;	rval%dp; %n_\n\0&gt;; .even
+		<	rval%dp; %n_\n\0>; .even
 		r0
 		r3
 	mov	symtab(r3),r3
-	bic	$![377\&lt;8+7],r3
-	cmp	r3,$2\&lt;8+1		/ is it i*2
+	bic	$![377\<8+7],r3
+	cmp	r3,$2\<8+1		/ is it i*2
 	beq	4f
 	bic	$!7,r3
 	movb	typ(r3),r3
 	jsr	r5,code
-		&lt;	%c%di2\n\0&gt;; .even
+		<	%c%di2\n\0>; .even
 		r3
 		r0
 4:
 	mov	2(sp),r0
 	jsr	r5,code
-		&lt;	stst; d%d+%d.\n\0&gt;; .even
+		<	stst; d%d+%d.\n\0>; .even
 		r0
 		r2
 	mov	(sp)+,r0

@@ -104,7 +104,7 @@ and executes it as a string of dc commands.
 \fB[ ... ]\fR	puts the bracketed ascii string onto the top of the stack.
 .s3
 .lp +6 6
-\fI&lt;x  &gt;x  =x\fR
+\fI<x  >x  =x\fR
 .br
 The
 top two elements of the stack are popped and compared.
@@ -154,12 +154,12 @@ An example which prints the first ten values of n! is
 .nf
 .s3
 .in +3
-.bd &quot;[la1+dsa*pla10&gt;y]sy&quot;
-.bd &quot;0sa1&quot;
+.bd "[la1+dsa*pla10>y]sy"
+.bd "0sa1"
 .bd lyx
 .i0
 .fi
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 bc (I),
 which is a preprocessor for
 .it dc
@@ -171,11 +171,11 @@ structures for programs.
 .br
 (x) ? for not enough elements on the stack to do what was asked by command x.
 .br
-`Out of space&#39; when the free list is exhausted (too many digits).
+`Out of space' when the free list is exhausted (too many digits).
 .br
-`Out of headers&#39; for too many numbers being kept around.
+`Out of headers' for too many numbers being kept around.
 .br
-`Out of pushdown&#39; for too many items on the stack.
+`Out of pushdown' for too many items on the stack.
 .br
-`Nesting Depth&#39; for too many levels of nested execution.
+`Nesting Depth' for too many levels of nested execution.
 .sh BUGS

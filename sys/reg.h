@@ -1,5 +1,5 @@
 /*
- * Location of the users&#39; stored
+ * Location of the users' stored
  * registers relative to R0.
  * Usage is u.u_ar0[XX].
  */

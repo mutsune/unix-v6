@@ -4,7 +4,7 @@
  *
  */
 
-#include &quot;c0h.c&quot;
+#include "c0h.c"
 
 /*
  * Process a single external definition
@@ -21,7 +21,7 @@ extdef()
 	type = INT;
 	sclass = EXTERN;
 	xdflg = FNDEL;
-	if ((elsize = getkeywords(&amp;sclass, &amp;type)) == -1 &amp;&amp; peeksym!=NAME)
+	if ((elsize = getkeywords(&sclass, &type)) == -1 && peeksym!=NAME)
 		goto syntax;
 	if (type==STRUCT)
 		blkhed();
@@ -31,13 +31,13 @@ extdef()
 		if ((ds=defsym)==0)
 			return;
 		funcsym = ds;
-		ds-&gt;hflag =| FNDEL;
-		outcode(&quot;BS&quot;, SYMDEF, ds-&gt;name);
+		ds->hflag =| FNDEL;
+		outcode("BS", SYMDEF, ds->name);
 		xdflg = 0;
-		if ((ds-&gt;type&amp;XTYPE)==FUNC) {
+		if ((ds->type&XTYPE)==FUNC) {
 			if ((peeksym=symbol())==LBRACE || peeksym==KEYW) {
-				funcblk.type = decref(ds-&gt;type);
-				cfunc(ds-&gt;name);
+				funcblk.type = decref(ds->type);
+				cfunc(ds->name);
 				return;
 			}
 		} else 
@@ -47,11 +47,11 @@ extdef()
 		return;
 syntax:
 	if (o==RBRACE) {
-		error(&quot;Too many }&#39;s&quot;);
+		error("Too many }'s");
 		peeksym = 0;
 		return;
 	}
-	error(&quot;External definition syntax&quot;);
+	error("External definition syntax");
 	errflush(o);
 	statement(0);
 }
@@ -65,14 +65,14 @@ char *cs;
 	register savdimp;
 
 	savdimp = dimp;
-	outcode(&quot;BBS&quot;, PROG, RLABEL, cs);
+	outcode("BBS", PROG, RLABEL, cs);
 	declist(ARG);
 	regvar = 5;
 	retlab = isn++;
 	if ((peeksym = symbol()) != LBRACE)
-		error(&quot;Compound statement required&quot;);
+		error("Compound statement required");
 	statement(1);
-	outcode(&quot;BNB&quot;, LABEL, retlab, RETRN);
+	outcode("BNB", LABEL, retlab, RETRN);
 	dimp = savdimp;
 }
 
@@ -86,13 +86,13 @@ struct hshtab *ds;
 	int o, width, realwidth;
 
 	nel = 1;
-	basetype = ds-&gt;type;
+	basetype = ds->type;
 	/*
-	 * If it&#39;s an array, find the number of elements.
-	 * &quot;basetype&quot; is the type of thing it&#39;s an array of.
+	 * If it's an array, find the number of elements.
+	 * "basetype" is the type of thing it's an array of.
 	 */
-	while ((basetype&amp;XTYPE)==ARRAY) {
-		if ((nel = dimtab[ds-&gt;ssp&amp;0377])==0)
+	while ((basetype&XTYPE)==ARRAY) {
+		if ((nel = dimtab[ds->ssp&0377])==0)
 			nel = 1;
 		basetype = decref(basetype);
 	}
@@ -106,11 +106,11 @@ struct hshtab *ds;
 		width = 2;
 	}
 	if ((peeksym=symbol())==COMMA || peeksym==SEMI) {
-		outcode(&quot;BSN&quot;,CSPACE,ds-&gt;name,(nel*width+ALIGN)&amp;~ALIGN);
+		outcode("BSN",CSPACE,ds->name,(nel*width+ALIGN)&~ALIGN);
 		return;
 	}
 	ninit = 0;
-	outcode(&quot;BBS&quot;, DATA, NLABEL, ds-&gt;name);
+	outcode("BBS", DATA, NLABEL, ds->name);
 	if ((o=symbol())==LBRACE) {
 		do
 			ninit = cinit1(ds, basetype, width, ninit, nel);
@@ -128,7 +128,7 @@ struct hshtab *ds;
 	 */
 	if (basetype==STRUCT) {
 		if (o = 2*ninit % realwidth)
-			outcode(&quot;BN&quot;, SSPACE, realwidth-o);
+			outcode("BN", SSPACE, realwidth-o);
 		ninit = (2*ninit+realwidth-2) / realwidth;
 		nel =/ realwidth/2;
 	}
@@ -136,27 +136,27 @@ struct hshtab *ds;
 	 * If there are too few initializers, allocate
 	 * more storage.
 	 * If there are too many initializers, extend
-	 * the declared size for benefit of &quot;sizeof&quot;
+	 * the declared size for benefit of "sizeof"
 	 */
-	if (ninit&lt;nel)
-		outcode(&quot;BN&quot;, SSPACE, (nel-ninit)*realwidth);
-	else if (ninit&gt;nel) {
-		if ((ds-&gt;type&amp;XTYPE)==ARRAY)
-			dimtab[ds-&gt;ssp&amp;0377] = ninit;
+	if (ninit<nel)
+		outcode("BN", SSPACE, (nel-ninit)*realwidth);
+	else if (ninit>nel) {
+		if ((ds->type&XTYPE)==ARRAY)
+			dimtab[ds->ssp&0377] = ninit;
 		nel = ninit;
 	}
 	/*
-	 * If it&#39;s not an array, only one initializer is allowed.
+	 * If it's not an array, only one initializer is allowed.
 	 */
-	if (ninit&gt;1 &amp;&amp; (ds-&gt;type&amp;XTYPE)!=ARRAY)
-		error(&quot;Too many initializers&quot;);
-	if (((nel&amp;width)&amp;ALIGN))
-		outcode(&quot;B&quot;, EVEN);
+	if (ninit>1 && (ds->type&XTYPE)!=ARRAY)
+		error("Too many initializers");
+	if (((nel&width)&ALIGN))
+		outcode("B", EVEN);
 }
 
 /*
  * Process a single expression in a sequence of initializers
- * for an external. Mainly, it&#39;s for checking
+ * for an external. Mainly, it's for checking
  * type compatibility.
  */
 cinit1(ds, type, awidth, aninit, nel)
@@ -168,14 +168,14 @@ struct hshtab *ds;
 
 	width = awidth;
 	ninit = aninit;
-	if ((peeksym=symbol())==STRING &amp;&amp; type==CHAR) {
+	if ((peeksym=symbol())==STRING && type==CHAR) {
 		peeksym = -1;
 		if (ninit)
 			bxdec();
 		putstr(0);
-		if (nel&gt;nchstr) {
+		if (nel>nchstr) {
 			strflg++;
-			outcode(&quot;BN&quot;, SSPACE, nel-nchstr);
+			outcode("BN", SSPACE, nel-nchstr);
 			strflg = 0;
 			nchstr = nel;
 		}
@@ -189,17 +189,17 @@ struct hshtab *ds;
 	switch(width) {
 
 	case 1:
-		if (s-&gt;op != CON)
+		if (s->op != CON)
 			goto bad;
-		outcode(&quot;B1N0&quot;, BDATA, s-&gt;value);
+		outcode("B1N0", BDATA, s->value);
 		break;
 
 	case 2:
-		if (s-&gt;op==CON) {
-			outcode(&quot;B1N0&quot;, WDATA, s-&gt;value);
+		if (s->op==CON) {
+			outcode("B1N0", WDATA, s->value);
 			break;
 		}
-		if (s-&gt;op==FCON || s-&gt;op==SFCON) {
+		if (s->op==FCON || s->op==SFCON) {
 			if (type==STRUCT) {
 				ninit =+ 3;
 				goto prflt;
@@ -211,14 +211,14 @@ struct hshtab *ds;
 
 	case 4:
 		sf = fcval;
-		outcode(&quot;B1N1N0&quot;, WDATA, sf);
+		outcode("B1N1N0", WDATA, sf);
 		goto flt;
 
 	case 8:
 	prflt:
-		outcode(&quot;B1N1N1N1N0&quot;, WDATA, fcval);
+		outcode("B1N1N1N1N0", WDATA, fcval);
 	flt:
-		if (s-&gt;op==FCON || s-&gt;op==SFCON)
+		if (s->op==FCON || s->op==SFCON)
 			break;
 
 	default:
@@ -231,7 +231,7 @@ struct hshtab *ds;
 
 bxdec()
 {
-	error(&quot;Inconsistent external initialization&quot;);
+	error("Inconsistent external initialization");
 }
 
 /*
@@ -247,15 +247,15 @@ stmt:
 	switch(o=symbol()) {
 
 	case EOF:
-		error(&quot;Unexpected EOF&quot;);
+		error("Unexpected EOF");
 	case SEMI:
 		return;
 
 	case LBRACE:
 		if (d) {
 			if (proflg)
-				outcode(&quot;BN&quot;, PROFIL, isn++);
-			outcode(&quot;BN&quot;, SAVE, blkhed());
+				outcode("BN", PROFIL, isn++);
+			outcode("BN", SAVE, blkhed());
 		}
 		while (!eof) {
 			if ((o=symbol())==RBRACE)
@@ -263,7 +263,7 @@ stmt:
 			peeksym = o;
 			statement(0);
 		}
-		error(&quot;Missing &#39;}&#39;&quot;);
+		error("Missing '}'");
 		return;
 
 	case KEYW:
@@ -293,7 +293,7 @@ stmt:
 				goto hardif;
 
 			case RETURN:
-				if (nextchar()==&#39;;&#39;) {
+				if (nextchar()==';') {
 					o2 = retlab;
 					goto simpif;
 				}
@@ -315,7 +315,7 @@ stmt:
 			hardif:
 				if ((o=symbol())!=SEMI)
 					goto syntax;
-				if ((o1=symbol())==KEYW &amp;&amp; cval==ELSE) 
+				if ((o1=symbol())==KEYW && cval==ELSE) 
 					goto stmt;
 				peeksym = o1;
 				return;
@@ -323,7 +323,7 @@ stmt:
 			peeksym = o1;
 			cbranch(np, o1=isn++, 0);
 			statement(0);
-			if ((o=symbol())==KEYW &amp;&amp; cval==ELSE) {
+			if ((o=symbol())==KEYW && cval==ELSE) {
 				o2 = isn++;
 				branch(o2);
 				label(o1);
@@ -366,7 +366,7 @@ stmt:
 			statement(0);
 			label(contlab);
 			contlab = o1;
-			if ((o=symbol())==KEYW &amp;&amp; cval==WHILE) {
+			if ((o=symbol())==KEYW && cval==WHILE) {
 				cbranch(tree(), o3, 1);
 				label(brklab);
 				brklab = o2;
@@ -379,14 +379,14 @@ stmt:
 			if ((o=symbol())!=COLON)
 				goto syntax;
 			if (swp==0) {
-				error(&quot;Case not in switch&quot;);
+				error("Case not in switch");
 				goto stmt;
 			}
-			if(swp&gt;=swtab+swsiz) {
-				error(&quot;Switch table overflow&quot;);
+			if(swp>=swtab+swsiz) {
+				error("Switch table overflow");
 			} else {
-				swp-&gt;swlab = isn;
-				(swp++)-&gt;swval = o1;
+				swp->swlab = isn;
+				(swp++)->swval = o1;
 				label(isn++);
 			}
 			goto stmt;
@@ -403,7 +403,7 @@ stmt:
 
 		case DEFAULT:
 			if (swp==0)
-				error(&quot;Default not in switch&quot;);
+				error("Default not in switch");
 			if ((o=symbol())!=COLON)
 				goto syntax;
 			label(deflab = isn++);
@@ -422,22 +422,22 @@ stmt:
 			return;
 		}
 
-		error(&quot;Unknown keyword&quot;);
+		error("Unknown keyword");
 		goto syntax;
 
 	case NAME:
-		if (nextchar()==&#39;:&#39;) {
+		if (nextchar()==':') {
 			peekc = 0;
 			o1 = csym;
-			if (o1-&gt;hclass&gt;0) {
-				error(&quot;Redefinition&quot;);
+			if (o1->hclass>0) {
+				error("Redefinition");
 				goto stmt;
 			}
-			o1-&gt;hclass = STATIC;
-			o1-&gt;htype = ARRAY;
-			if (o1-&gt;hoffset==0)
-				o1-&gt;hoffset = isn++;
-			label(o1-&gt;hoffset);
+			o1->hclass = STATIC;
+			o1->htype = ARRAY;
+			if (o1->hoffset==0)
+				o1->hoffset = isn++;
+			label(o1->hoffset);
 			goto stmt;
 		}
 	}
@@ -448,7 +448,7 @@ semi:
 	if ((o=symbol())==SEMI)
 		return;
 syntax:
-	error(&quot;Statement syntax&quot;);
+	error("Statement syntax");
 	errflush(o);
 }
 
@@ -503,7 +503,7 @@ forstmt()
 
 /*
  * A parenthesized expression,
- * as after &quot;if&quot;.
+ * as after "if".
  */
 pexpr()
 {
@@ -516,7 +516,7 @@ pexpr()
 		goto syntax;
 	return(t);
 syntax:
-	error(&quot;Statement syntax&quot;);
+	error("Statement syntax");
 	errflush(o);
 	return(0);
 }
@@ -541,10 +541,10 @@ pswitch()
 	label(swlab);
 	if (deflab==0)
 		deflab = brklab;
-	outcode(&quot;BNN&quot;, SWIT, deflab, line);
-	for (; cswp &lt; swp; cswp++)
-		outcode(&quot;NN&quot;, cswp-&gt;swlab, cswp-&gt;swval);
-	outcode(&quot;0&quot;);
+	outcode("BNN", SWIT, deflab, line);
+	for (; cswp < swp; cswp++)
+		outcode("NN", cswp->swlab, cswp->swval);
+	outcode("0");
 	label(brklab);
 	deflab = dl;
 	swp = sswp;
@@ -571,36 +571,36 @@ blkhed()
 	declist(0);
 	pl = 4;
 	while(paraml) {
-		parame-&gt;hoffset = 0;
+		parame->hoffset = 0;
 		cs = paraml;
-		paraml = paraml-&gt;hoffset;
-		if (cs-&gt;htype==FLOAT)
-			cs-&gt;htype = DOUBLE;
-		cs-&gt;hoffset = pl;
-		cs-&gt;hclass = AUTO;
-		if ((cs-&gt;htype&amp;XTYPE) == ARRAY) {
-			cs-&gt;htype =- (ARRAY-PTR);	/* set ptr */
-			cs-&gt;ssp++;		/* pop dims */
+		paraml = paraml->hoffset;
+		if (cs->htype==FLOAT)
+			cs->htype = DOUBLE;
+		cs->hoffset = pl;
+		cs->hclass = AUTO;
+		if ((cs->htype&XTYPE) == ARRAY) {
+			cs->htype =- (ARRAY-PTR);	/* set ptr */
+			cs->ssp++;		/* pop dims */
 		}
 		pl =+ rlength(cs);
 	}
-	for (cs=hshtab; cs&lt;hshtab+hshsiz; cs++) {
-		if (cs-&gt;name[0] == &#39;\0&#39;)
+	for (cs=hshtab; cs<hshtab+hshsiz; cs++) {
+		if (cs->name[0] == '\0')
 			continue;
 		/* check tagged structure */
-		if (cs-&gt;hclass&gt;KEYWC &amp;&amp; (cs-&gt;htype&amp;TYPE)==RSTRUCT) {
-			cs-&gt;lenp = dimtab[cs-&gt;lenp&amp;0377]-&gt;lenp;
-			cs-&gt;htype = cs-&gt;htype&amp;~TYPE | STRUCT;
+		if (cs->hclass>KEYWC && (cs->htype&TYPE)==RSTRUCT) {
+			cs->lenp = dimtab[cs->lenp&0377]->lenp;
+			cs->htype = cs->htype&~TYPE | STRUCT;
 		}
-		if (cs-&gt;hclass == STRTAG &amp;&amp; dimtab[cs-&gt;lenp&amp;0377]==0)
-			error(&quot;Undefined structure: %.8s&quot;, cs-&gt;name);
-		if (cs-&gt;hclass == ARG)
-			error(&quot;Not an argument: %.8s&quot;, cs-&gt;name);
+		if (cs->hclass == STRTAG && dimtab[cs->lenp&0377]==0)
+			error("Undefined structure: %.8s", cs->name);
+		if (cs->hclass == ARG)
+			error("Not an argument: %.8s", cs->name);
 		if (stflg)
 			prste(cs);
 	}
 	space = treespace;
-	outcode(&quot;BN&quot;, SETREG, regvar);
+	outcode("BN", SETREG, regvar);
 	return(autolen);
 }
 
@@ -612,16 +612,16 @@ blkhed()
 blkend() {
 	register struct hshtab *cs;
 
-	for (cs=hshtab; cs&lt;hshtab+hshsiz; cs++) {
-		if (cs-&gt;name[0]) {
-			if (cs-&gt;hclass==0 &amp;&amp; (cs-&gt;hflag&amp;FNUND)==0) {
-				error(&quot;%.8s undefined&quot;, cs-&gt;name);
-				cs-&gt;hflag =| FNUND;
+	for (cs=hshtab; cs<hshtab+hshsiz; cs++) {
+		if (cs->name[0]) {
+			if (cs->hclass==0 && (cs->hflag&FNUND)==0) {
+				error("%.8s undefined", cs->name);
+				cs->hflag =| FNUND;
 			}
-			if((cs-&gt;hflag&amp;FNDEL)==0) {
-				cs-&gt;name[0] = &#39;\0&#39;;
+			if((cs->hflag&FNDEL)==0) {
+				cs->name[0] = '\0';
 				hshused--;
-				cs-&gt;hflag =&amp; ~(FNUND|FFIELD);
+				cs->hflag =& ~(FNUND|FFIELD);
 			}
 		}
 	}
@@ -638,7 +638,7 @@ prste(acs)
 	register nkind;
 
 	cs = acs;
-	switch (cs-&gt;hclass) {
+	switch (cs->hclass) {
 	case REG:
 		nkind = RNAME;
 		break;
@@ -655,7 +655,7 @@ prste(acs)
 		return;
 
 	}
-	outcode(&quot;BSN&quot;, nkind, cs-&gt;name, cs-&gt;hoffset);
+	outcode("BSN", nkind, cs->name, cs->hoffset);
 }
 
 /*
@@ -667,7 +667,7 @@ errflush(ao)
 	register o;
 
 	o = ao;
-	while(o&gt;RBRACE)	/* ; { } */
+	while(o>RBRACE)	/* ; { } */
 		o = symbol();
 	peeksym  = o;
 }

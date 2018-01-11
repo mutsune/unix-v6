@@ -1,4 +1,4 @@
-#include &quot;ne.h&quot;
+#include "ne.h"
 
 int	markpos;
 
@@ -7,28 +7,28 @@ mark(n) int n; {
 		markpos = ewid[n];
 	else {
 		yyval = oalloc();
-		printf(&quot;.ds %d \&quot;\n&quot;, yyval);
+		printf(".ds %d \"\n", yyval);
 		ebase[yyval] = ewid[yyval] = markpos = 0;
 		eht[yyval] = 2;
 	}
-	if(dbg)printf(&quot;.\tmark %d as %d\n&quot;, n, markpos);
+	if(dbg)printf(".\tmark %d as %d\n", n, markpos);
 }
 
 lineup(n) int n; {
 	if( n ) {
-		printf(&quot;.ds %d \&quot;&quot;, n);
+		printf(".ds %d \"", n);
 		fwd(markpos-ewid[n]);
-		printf(&quot;\\*(%d\n&quot;, n);
+		printf("\\*(%d\n", n);
 		ewid[n] = markpos;
 	}
 	else {
 		yyval = oalloc();
-		printf(&quot;.ds %d \&quot;&quot;, yyval);
+		printf(".ds %d \"", yyval);
 		fwd(markpos);
-		printf(&quot;\n&quot;);
+		printf("\n");
 		ebase[yyval] = 0;
 		eht[yyval] = 2;
 		ewid[yyval] = markpos;
 	}
-	if(dbg)printf(&quot;.\tlineup %d at %d\n&quot;, n, markpos);
+	if(dbg)printf(".\tlineup %d at %d\n", n, markpos);
 }

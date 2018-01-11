@@ -21,18 +21,18 @@ as implemented on the \s8PDP\s10-11.
 However, hints are given occasionally in the text of
 implementation-dependent features.
 .pg
-The \s8UNIX\s10 Programmer&#39;s Manual [4]
+The \s8UNIX\s10 Programmer's Manual [4]
 describes the library routines available to C programs under \s8UNIX\s10,
 and also the procedures for compiling programs under that
 system.
-``The \s8GCOS\s10 C Library&#39;&#39; by Lesk and Barres [5]
+``The \s8GCOS\s10 C Library'' by Lesk and Barres [5]
 describes routines available under that system
 as well as compilation procedures.
 Many of these routines, particularly the ones having to do with I/O,
 are also provided under \s8UNIX\s10.
-Finally, ``Programming in C\(mi A Tutorial,&#39;&#39;
+Finally, ``Programming in C\(mi A Tutorial,''
 by B. W. Kernighan [6],
-is as useful as promised by its title and the author&#39;s
+is as useful as promised by its title and the author's
 previous introductions to allegedly impenetrable subjects.
 .ul
 2.  Lexical conventions
@@ -63,7 +63,7 @@ with the characters^^ \fG\**/\fR.
 .et
 An identifier is a sequence of letters and digits;
 the first character must be alphabetic.
-The underscore ``\(ru&#39;&#39; counts as alphabetic.
+The underscore ``\(ru'' counts as alphabetic.
 Upper and lower case letters
 are considered different.
 No more than the first eight characters
@@ -116,10 +116,10 @@ The digits \fG8\fR and \fG9\fR have octal value 10 and 11 respectively.
 2.3.2  Character constants
 .et
 A character constant is 1 or 2 characters enclosed in single quotes
-``\fG^\(aa^\fR&#39;&#39;.
+``\fG^\(aa^\fR''.
 Within a character constant a single quote must be preceded by
-a back-slash ``\\&#39;&#39;.
-Certain non-graphic characters, and ``\\&#39;&#39; itself,
+a back-slash ``\\''.
+Certain non-graphic characters, and ``\\'' itself,
 may be escaped according to the following table:
 .sp .7
 .ta .5i 1.25i
@@ -132,11 +132,11 @@ may be escaped according to the following table:
 	\\	\\\\
 .fi
 .sp .7
-The escape ``\\\fIddd\fR&#39;&#39;
+The escape ``\\\fIddd\fR''
 consists of the backslash followed by 1, 2, or 3 octal digits
 which are taken to specify the value of the
 desired character.
-A special case of this construction is ``\\0&#39;&#39; (not followed
+A special case of this construction is ``\\0'' (not followed
 by a digit) which indicates a null character.
 .pg
 Character constants behave exactly like integers
@@ -169,7 +169,7 @@ Every floating constant is taken to be double-precision.
 2.4  Strings
 .et
 A string is a sequence of characters surrounded by
-double quotes ``^\fG&quot;\fR^&#39;&#39;.
+double quotes ``^\fG"\fR^''.
 A string has the type
 array-of-characters (see below)
 and refers to an area of storage initialized with
@@ -179,8 +179,8 @@ a null byte (^\\0^)
 at the end of each string so that programs
 which scan the string can
 find its end.
-In a string, the character ``^\fG&quot;\fR^&#39;&#39; must be preceded by
-a ``\\&#39;&#39;^;
+In a string, the character ``^\fG"\fR^'' must be preceded by
+a ``\\''^;
 in addition, the same escapes as described for character
 constants may be used.
 .ul
@@ -193,13 +193,13 @@ and literal words and characters
 in \fGgothic.\fR
 Alternatives are listed on separate lines.
 An optional terminal or non-terminal symbol is
-indicated by the subscript ``opt,&#39;&#39; so that
+indicated by the subscript ``opt,'' so that
 .dp
 	{ expression\*(op }
 .ed
 would indicate an optional expression in braces.
 .ul
-4.  What&#39;s in a Name?
+4.  What's in a Name?
 .et
 C bases the interpretation of an
 identifier upon two attributes of the identifier: its
@@ -214,7 +214,7 @@ The storage class determines the location and lifetime
 of the storage associated with an identifier;
 the type determines
 the meaning of the values
-found in the identifier&#39;s storage.
+found in the identifier's storage.
 .pg
 There are four declarable storage classes:
 automatic,
@@ -241,9 +241,9 @@ the \s8ASCII\s10 set;
 they occupy the right-most seven bits
 of an 8-bit byte.
 It is also possible to interpret \fGchar\fRs
-as signed, 2&#39;s complement 8-bit numbers.
+as signed, 2's complement 8-bit numbers.
 .sp .4
-Integers (\fGint\fR) are represented in 16-bit 2&#39;s complement notation.
+Integers (\fGint\fR) are represented in 16-bit 2's complement notation.
 .sp .4
 Single precision floating point (\fGfloat\fR) quantities
 have magnitude in the range approximately
@@ -297,8 +297,8 @@ There are operators which yield lvalues:
 for example,
 if E is an expression of pointer type, then \**E is an lvalue
 expression referring to the object to which E points.
-The name ``lvalue&#39;&#39; comes from the assignment expression
-``E1@=@E2&#39;&#39; in which the left operand E1 must be
+The name ``lvalue'' comes from the assignment expression
+``E1@=@E2'' in which the left operand E1 must be
 an lvalue expression.
 The discussion of each operator
 below indicates whether it expects lvalue operands and whether it
@@ -319,7 +319,7 @@ In all cases the
 \fGchar\fR is converted to an \fGint\fR
 by propagating its sign through the
 upper 8 bits of the resultant integer.
-This is consistent with the two&#39;s complement representation
+This is consistent with the two's complement representation
 used for both characters and integers.
 (However,
 the sign-propagation feature

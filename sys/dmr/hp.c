@@ -11,10 +11,10 @@
  * are dismounted.
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../buf.h"
+#include "../conf.h"
+#include "../user.h"
 
 struct {
 	int	hpcs1;	/* Control and Status register 1 */
@@ -99,10 +99,10 @@ hpopen()
 
 	if(!hp_openf){
 		hp_openf++;
-		HPADDR-&gt;hpcs2 = CLR;
-		HPADDR-&gt;hpcs1 = RCLR|GO;
-		HPADDR-&gt;hpcs1 = PRESET|GO;
-		HPADDR-&gt;hpof = FMT22;
+		HPADDR->hpcs2 = CLR;
+		HPADDR->hpcs1 = RCLR|GO;
+		HPADDR->hpcs1 = PRESET|GO;
+		HPADDR->hpof = FMT22;
 	}
 }
 
@@ -113,33 +113,33 @@ struct buf *abp;
 	register char *p1, *p2;
 
 	bp = abp;
-	p1 = &amp;hp_sizes[bp-&gt;b_dev.d_minor&amp;07];
-	if (bp-&gt;b_dev.d_minor &gt;= (NHP&lt;&lt;3) ||
-	    bp-&gt;b_blkno &gt;= p1-&gt;nblocks) {
-		bp-&gt;b_flags =| B_ERROR;
+	p1 = &hp_sizes[bp->b_dev.d_minor&07];
+	if (bp->b_dev.d_minor >= (NHP<<3) ||
+	    bp->b_blkno >= p1->nblocks) {
+		bp->b_flags =| B_ERROR;
 		iodone(bp);
 		return;
 	}
-	bp-&gt;av_forw = 0;
-	bp-&gt;cylin = p1-&gt;cyloff;
-	p1 = bp-&gt;b_blkno;
+	bp->av_forw = 0;
+	bp->cylin = p1->cyloff;
+	p1 = bp->b_blkno;
 	p2 = lrem(p1, 22);
 	p1 = ldiv(p1, 22);
-	bp-&gt;trksec = (p1%19)&lt;&lt;8 | p2;
-	bp-&gt;cylin =+ p1/19;
+	bp->trksec = (p1%19)<<8 | p2;
+	bp->cylin =+ p1/19;
 	spl5();
 	if ((p1 = hptab.d_actf)==0)
 		hptab.d_actf = bp;
 	else {
-		for (; p2 = p1-&gt;av_forw; p1 = p2) {
-			if (p1-&gt;cylin &lt;= bp-&gt;cylin
-			 &amp;&amp; bp-&gt;cylin &lt;  p2-&gt;cylin
-			 || p1-&gt;cylin &gt;= bp-&gt;cylin
-			 &amp;&amp; bp-&gt;cylin &gt;  p2-&gt;cylin) 
+		for (; p2 = p1->av_forw; p1 = p2) {
+			if (p1->cylin <= bp->cylin
+			 && bp->cylin <  p2->cylin
+			 || p1->cylin >= bp->cylin
+			 && bp->cylin >  p2->cylin) 
 				break;
 		}
-		bp-&gt;av_forw = p2;
-		p1-&gt;av_forw = bp;
+		bp->av_forw = p2;
+		p1->av_forw = bp;
 	}
 	if (hptab.d_active==0)
 		hpstart();
@@ -153,9 +153,9 @@ hpstart()
 	if ((bp = hptab.d_actf) == 0)
 		return;
 	hptab.d_active++;
-	HPADDR-&gt;hpcs2 = bp-&gt;b_dev.d_minor &gt;&gt; 3;
-	HPADDR-&gt;hpca = bp-&gt;cylin;
-	rhstart(bp, &amp;HPADDR-&gt;hpda, bp-&gt;trksec, &amp;HPADDR-&gt;hpbae);
+	HPADDR->hpcs2 = bp->b_dev.d_minor >> 3;
+	HPADDR->hpca = bp->cylin;
+	rhstart(bp, &HPADDR->hpda, bp->trksec, &HPADDR->hpbae);
 }
 
 hpintr()
@@ -167,24 +167,24 @@ hpintr()
 		return;
 	bp = hptab.d_actf;
 	hptab.d_active = 0;
-	if (HPADDR-&gt;hpcs1 &amp; ERR) {		/* error bit */
-		deverror(bp, HPADDR-&gt;hpcs2, 0);
-		if(HPADDR-&gt;hper1 &amp; (DU|DTE|OPI)) {
-			HPADDR-&gt;hpcs2 = CLR;
-			HPADDR-&gt;hpcs1 = RECAL|GO;
+	if (HPADDR->hpcs1 & ERR) {		/* error bit */
+		deverror(bp, HPADDR->hpcs2, 0);
+		if(HPADDR->hper1 & (DU|DTE|OPI)) {
+			HPADDR->hpcs2 = CLR;
+			HPADDR->hpcs1 = RECAL|GO;
 			ctr = 0;
-			while ((HPADDR-&gt;hpds&amp;PIP) &amp;&amp; --ctr);
+			while ((HPADDR->hpds&PIP) && --ctr);
 		}
-		HPADDR-&gt;hpcs1 = RCLR|GO;
-		if (++hptab.d_errcnt &lt;= 10) {
+		HPADDR->hpcs1 = RCLR|GO;
+		if (++hptab.d_errcnt <= 10) {
 			hpstart();
 			return;
 		}
-		bp-&gt;b_flags =| B_ERROR;
+		bp->b_flags =| B_ERROR;
 	}
 	hptab.d_errcnt = 0;
-	hptab.d_actf = bp-&gt;av_forw;
-	bp-&gt;b_resid = HPADDR-&gt;hpwc;
+	hptab.d_actf = bp->av_forw;
+	bp->b_resid = HPADDR->hpwc;
 	iodone(bp);
 	hpstart();
 }
@@ -193,14 +193,14 @@ hpread(dev)
 {
 
 	if(hpphys(dev))
-	physio(hpstrategy, &amp;hpbuf, dev, B_READ);
+	physio(hpstrategy, &hpbuf, dev, B_READ);
 }
 
 hpwrite(dev)
 {
 
 	if(hpphys(dev))
-	physio(hpstrategy, &amp;hpbuf, dev, B_WRITE);
+	physio(hpstrategy, &hpbuf, dev, B_WRITE);
 }
 
 hpphys(dev)
@@ -209,7 +209,7 @@ hpphys(dev)
 
 	c = lshift(u.u_offset, -9);
 	c =+ ldiv(u.u_count+511, 512);
-	if(c &gt; hp_sizes[dev.d_minor &amp; 07].nblocks) {
+	if(c > hp_sizes[dev.d_minor & 07].nblocks) {
 		u.u_error = ENXIO;
 		return(0);
 	}

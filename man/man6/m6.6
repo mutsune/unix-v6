@@ -31,7 +31,7 @@ sends the name of the macro designated by \fIarg1\fP to the current
 destination without recognition of any warning characters;
 \fIarg1\fP is 1 for the most recently defined macro, 2 for the next most recent,
 and so on.
-The name is taken to be empty when \fIarg1\fP doesn&#39;t make sense.
+The name is taken to be empty when \fIarg1\fP doesn't make sense.
 .s3
 .it #warn,arg1,arg2:
 replaces the old warning character \fIarg1\fP by the new warning character \fIarg2\fP.
@@ -48,21 +48,21 @@ with macro \fIarg1\fP.
 is not implemented.
 .s3
 .it #trace,arg1:
-with \fIarg1\fP = `1&#39;
+with \fIarg1\fP = `1'
 causes a reconstruction of each later call to be placed
 on the standard output with a call level number;
 other values of \fIarg1\fP turn tracing off.
 .i0
 .s3
-The built-in `warn&#39; may be used to replace inconvenient warning characters.
-The example below replaces `#&#39; `:&#39; `&lt;&#39; `&gt;&#39; by `[&#39; `]&#39; `{&#39; `}&#39;.
+The built-in `warn' may be used to replace inconvenient warning characters.
+The example below replaces `#' `:' `<' `>' by `[' `]' `{' `}'.
 .s3
 .lp +10 0
 .nf
-#warn,&lt;#&gt;,[:
-[warn,&lt;:&gt;,]:
-[warn,[substr,&lt;&lt;&gt;&gt;,1,1\fB;\fP,{]
-[warn,[substr,{{&gt;&gt;,2,1\fB;\fP,}]
+#warn,<#>,[:
+[warn,<:>,]:
+[warn,[substr,<<>>,1,1\fB;\fP,{]
+[warn,[substr,{{>>,2,1\fB;\fP,}]
 [now,{calls look like this}]
 .fi
 .i0
@@ -99,11 +99,11 @@ The serial numbers are:
 35 trace.
 Serial number 0
 specifies no built-in action.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 A. D. Hall, M6 Reference Manual.
 Computer Science Technical Report #2, Bell Laboratories, 1969.
 .sh DIAGNOSTICS
-Various table overflows and ``impossible&#39;&#39; conditions
+Various table overflows and ``impossible'' conditions
 result in comment and dump.
 There are no diagnostics for poorly formed input.
 .sh AUTHOR

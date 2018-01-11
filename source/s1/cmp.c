@@ -11,29 +11,29 @@ char **argv;
 	register c1, c2;
 	char *arg;
 
-	if(argc &lt; 3)
+	if(argc < 3)
 		goto narg;
 	arg = argv[1];
-	if(arg[0] == &#39;-&#39; &amp;&amp; arg[1] == &#39;s&#39;) {
+	if(arg[0] == '-' && arg[1] == 's') {
 		lflg--;
 		argv++;
 		argc--;
 	}
 	arg = argv[1];
-	if(arg[0] == &#39;-&#39; &amp;&amp; arg[1] == &#39;l&#39;) {
+	if(arg[0] == '-' && arg[1] == 'l') {
 		lflg++;
 		argv++;
 		argc--;
 	}
-	if(argc &lt; 3)
+	if(argc < 3)
 		goto narg;
 	arg = argv[1];
-	if( arg[0]==&#39;-&#39; &amp;&amp; arg[1]==0 )
+	if( arg[0]=='-' && arg[1]==0 )
 		ibuf1[0] = dup(0);
-	else if(fopen(arg, ibuf1) &lt; 0)
+	else if(fopen(arg, ibuf1) < 0)
 		goto barg;
 	arg = argv[2];
-	if(fopen(arg, ibuf2) &lt; 0)
+	if(fopen(arg, ibuf2) < 0)
 		goto barg;
 
 loop:
@@ -42,7 +42,7 @@ loop:
 	c1 = getc(ibuf1);
 	c2 = getc(ibuf2);
 	if(c1 == c2) {
-		if (c1 == &#39;\n&#39;)
+		if (c1 == '\n')
 			if (++line[1]==0)
 				line[0]++;
 		if(c1 == -1) {
@@ -61,30 +61,30 @@ loop:
 	if(c2 == -1)
 		goto earg;
 	if(lflg == 1) {
-		printf(&quot;%s %s differ: char %s, line &quot;, argv[1], arg,
+		printf("%s %s differ: char %s, line ", argv[1], arg,
 			locv(chr[0], chr[1]));
-		printf(&quot;%s\n&quot;, locv(line[0], line[1]));
+		printf("%s\n", locv(line[0], line[1]));
 		exit(1);
 	}
 	eflg = 1;
-	printf(&quot;%5s %3o %3o\n&quot;, locv(chr[0], chr[1]), c1, c2);
+	printf("%5s %3o %3o\n", locv(chr[0], chr[1]), c1, c2);
 	goto loop;
 
 narg:
-	printf(&quot;arg count\n&quot;);
+	printf("arg count\n");
 	exit(2);
 
 barg:
-	printf(&quot;cannot open %s\n&quot;, arg);
+	printf("cannot open %s\n", arg);
 	exit(2);
 
 earg:
-	printf(&quot;EOF on %s\n&quot;, arg);
+	printf("EOF on %s\n", arg);
 	exit(1);
 }
 
 putchar(c)
 {
 
-	write(1, &amp;c, 1);
+	write(1, &c, 1);
 }

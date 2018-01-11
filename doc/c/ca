@@ -1,14 +1,14 @@
 .pn 26
 .fp 3 G
-&#39;tr ^\|
-&#39;hc $
-&#39;tr @
-&#39;ll 6.5i
-&#39;ps 10
+'tr ^\|
+'hc $
+'tr @
+'ll 6.5i
+'ps 10
 .ds op \s6\d\fIopt\fP\u\s10
-.ds * \fR\v&#39;.2&#39;*\fP\v&#39;-.2&#39;
-.ds ~ \v&#39;.5&#39;\s14~\s10\v&#39;-.5&#39;
-&#39;vs 11p
+.ds * \fR\v'.2'*\fP\v'-.2'
+.ds ~ \v'.5'\s14~\s10\v'-.5'
+'vs 11p
 .de pg
 .sp .4
 .ti 1
@@ -39,18 +39,18 @@
 .ne 4
 ..
 .de fo
-&#39;bp
+'bp
 ..
 .de he
 .po 0
-.tl &#39;-&#39;&#39;&#39;
+.tl '-'''
 .po
-&#39;sp 0.5i
+'sp 0.5i
 .ft I
-.if o .tl &#39;&#39;&#39;C  Reference  Manual - %&#39;
-.if e .tl &#39;C  Reference  Manual - %&#39;&#39;&#39;
+.if o .tl '''C  Reference  Manual - %'
+.if e .tl 'C  Reference  Manual - %'''
 .ft
-&#39;sp 0.4i
+'sp 0.4i
 ..
 .de bG
 .br
@@ -86,35 +86,35 @@ REFERENCES
 .in 2
 .ti 0
 1.	Johnson, S. C., and Kernighan, B. W.
-``The Programming Language B.&#39;&#39; Comp. Sci. Tech. Rep. #8., Bell Laboratories,
+``The Programming Language B.'' Comp. Sci. Tech. Rep. #8., Bell Laboratories,
 1972.
 .sp .6
 .ti 0
 2.	Ritchie, D. M., and Thompson, K. L.
-``The \s8UNIX\s10 Time-sharing System.&#39;&#39;
+``The \s8UNIX\s10 Time-sharing System.''
 C. ACM \fG7, \fR17, July, 1974, pp. 365-375.
 .sp .6
 .ti 0
 3.	Peterson, T. G., and Lesk, M. E.
-``A User&#39;s Guide to the C Language on the IBM 370.&#39;&#39;
+``A User's Guide to the C Language on the IBM 370.''
 Internal Memorandum, Bell Laboratories, 1974.
 .sp .6
 .ti 0
 4.	Thompson, K. L., and Ritchie, D. M.
 .ft I
-\s8UNIX\s10 Programmer&#39;s Manual.
+\s8UNIX\s10 Programmer's Manual.
 .ft R
 Bell Laboratories, 1973.
 .sp .7
 .ti 0
 5.	Lesk, M. E., and Barres, B. A.
-``The \s8GCOS\s10 C Library.&#39;&#39;
+``The \s8GCOS\s10 C Library.''
 Internal memorandum, Bell Laboratories,
 1974.
 .sp .7
 .to 0
 .ti 0
-6.	Kernighan, B. W.  ``Programming in C\(mi A Tutorial.&#39;&#39;
+6.	Kernighan, B. W.  ``Programming in C\(mi A Tutorial.''
 Unpublished internal memorandum,
 Bell Laboratories, 1974.
 .in 0
@@ -133,7 +133,7 @@ Syntax Summary
 	expression:
 		primary
 		\**\fI expression
-		\fG&amp;\fI expression
+		\fG&\fI expression
 		\fG\(mi\fI expression
 		\fG!\fI expression
 		\*~ expression
@@ -156,14 +156,14 @@ Syntax Summary
 		\fIprimary \fG( \fIexpression-list\*(op \fG)\fI
 		primary \fG[\fI expression \fG]\fI
 		lvalue \fG. \fIidentifier
-		primary \fG\(em&gt; \fIidentifier
+		primary \fG\(em> \fIidentifier
 .ed
 .dp 2
 	lvalue:
 		identifier
 		primary \fG[ \fIexpression \fG]\fI
 		lvalue \fG. \fIidentifier
-		primary \fG\(em&gt;\fI identifier
+		primary \fG\(em>\fI identifier
 		\** \fI expression
 		\fG(  \fIlvalue  \fG)\fR
 .ed
@@ -172,14 +172,14 @@ Syntax Summary
 The primary-expression operators
 .dp
 .ft G
-	(^)  [^]  .  \(em&gt;
+	(^)  [^]  .  \(em>
 .sp .5
 .ed
 have highest priority and group left-to-right.
 The unary operators
 .dp
 .ft G
-	\*  &amp;  \(mi  !  \*~  \fR++  \(mi\(mi  \fGsizeof
+	\*  &  \(mi  !  \*~  \fR++  \(mi\(mi  \fGsizeof
 .ed
 .sp .5
 have priority below the primary operators
@@ -195,15 +195,15 @@ as indicated:
 .ft G
 		\**    /    %
 		+    \(mi
-		&gt;&gt;    &lt;&lt;
-		&lt;    &gt;    &lt;=    &gt;=
+		>>    <<
+		<    >    <=    >=
 		==    !=
-		&amp;
+		&
 .tr ^^
 		^
 .tr ^\|
 		\(or
-		&amp;&amp;
+		&&
 		\(or\(or
 		?  :
 .tr ^^
@@ -216,7 +216,7 @@ priority, and all group right-to-left.
 .ft I
 	asgnop:
 .ft G
-		=  =+  =\(mi  =\**  =/  =%  =&gt;&gt;  =&lt;&lt;  =&amp;  =^  =\(or
+		=  =+  =\(mi  =\**  =/  =%  =>>  =<<  =&  =^  =\(or
 .ed
 .tr ^\|
 .sp .4
@@ -384,7 +384,7 @@ The comma operator has the lowest priority, and groups left-to-right.
 	\fG# define \fIidentifier token-string
 .ed
 .dp 1
-	\fG# include &quot;\fIfilename^\fG&quot;
+	\fG# include "\fIfilename^\fG"
 .ed
 .in 0
 .bp
@@ -424,15 +424,15 @@ A. Bugs or differences from C language specifications
 .ft R
 .sp
 .ti0
-hg	A.1)	\*sGCOS\*n does not do type conversions in ``?:&#39;&#39;.
+hg	A.1)	\*sGCOS\*n does not do type conversions in ``?:''.
 .ti0
 hg	A.2)	\*sGCOS\*n has a bug in \fGint\fR and \fGreal\fR comparisons; the numbers
 are compared by subtraction, and the difference must not overflow.
 .ti 0
-g	A.3)	When \fIx\fR is a \fGfloat\fR, the construction ``test ? \(mix : x&#39;&#39;
+g	A.3)	When \fIx\fR is a \fGfloat\fR, the construction ``test ? \(mix : x''
 is illegal on \*sGCOS\*n.
 .ti0
-hg	A.4)	``p1\(mi&gt;p2 =+ 2&#39;&#39; causes a compiler error, where p1 and p2 are pointers.
+hg	A.4)	``p1\(mi>p2 =+ 2'' causes a compiler error, where p1 and p2 are pointers.
 .ti0
 u	A.5)	On \*sUNIX\*n, the expression in a \fGreturn\fR statement is \fInot\fR
 converted to the type of the function, as promised.
@@ -470,15 +470,15 @@ g	B.7)	\*sGCOS\*n preprocessor supports #rename, #escape;
 \*sUNIX\*n has only #define, #include.
 .ti0
 u	B.8)	Preprocessor is not invoked on \*sUNIX\*n unless first
-character of file is ``#&#39;&#39;.
+character of file is ``#''.
 .ti0
-u	B.9)	The external definition ``static int .^.^.&#39;&#39;
+u	B.9)	The external definition ``static int .^.^.''
 is legal on \*sGCOS\*n, but gets a diagnostic on \*sUNIX\*n.
 (On \*sGCOS\*n it means an identifier global to the
 routines in the file but invisible to routines
 compiled separately.)
 .ti 0
-g	B.10)	A compound statement on \*sGCOS\*n must contain one ``;&#39;&#39;
+g	B.10)	A compound statement on \*sGCOS\*n must contain one ``;''
 but on \*sUNIX\*n may be empty.
 .ti 0
 g	B.11)	On \*sGCOS\*n case distinctions in identifiers and keywords are
@@ -499,7 +499,7 @@ Similarly,
 around initializers and in particular they must be present
 for array initialization.
 .ti0
-g	C.2)	``int extern&#39;&#39; illegal on \*sGCOS\*n; must have ``extern int&#39;&#39;
+g	C.2)	``int extern'' illegal on \*sGCOS\*n; must have ``extern int''
 (storage class before type).
 .ti0
 g	C.3)	Externals on \*sGCOS\*n must have a type (not defaulted
@@ -508,20 +508,20 @@ to \fGint\fR).
 u	C.4)	\*sGCOS\*n allows initialization of internal \fGstatic\fR
 (same syntax as for external definitions).
 .ti0
-g	C.5)	integer\(mi&gt;... is not allowed on \*sGCOS\*n.
+g	C.5)	integer\(mi>... is not allowed on \*sGCOS\*n.
 .ti0
-g	C.6)	Some operators on pointers are illegal on \*sGCOS\*n (&lt;, &gt;).
+g	C.6)	Some operators on pointers are illegal on \*sGCOS\*n (<, >).
 .ti0
 g	C.7)	\fGregister\fR storage class means something on \*sUNIX\*n,
 but is not accepted on \*sGCOS\*n.
 .ti0
-g	C.8)	Scope holes: ``int x; f^(^^)^{int x;}&#39;&#39; is illegal on
+g	C.8)	Scope holes: ``int x; f^(^^)^{int x;}'' is illegal on
 \*sUNIX\*n but defines two variables on \*sGCOS\*n.
 .ti0
 g	C.9)	When function names are used as arguments on \*sUNIX\*n,
-either ``fname&#39;&#39; or ``&amp;fname&#39;&#39; may be used to get a pointer to the function;
-on \*sGCOS\*n ``&amp;fname&#39;&#39; generates a doubly-indirect pointer.
-(Note that both are wrong since the ``&amp;&#39;&#39;
+either ``fname'' or ``&fname'' may be used to get a pointer to the function;
+on \*sGCOS\*n ``&fname'' generates a doubly-indirect pointer.
+(Note that both are wrong since the ``&''
 is supposed to be supplied for free.)
 .sp
 .ne 5
@@ -549,10 +549,10 @@ E. Semantic Differences
 .ft R
 .sp
 .ti0
-hg	E.1)	``int i, *p; p=i; i=p;&#39;&#39; does nothing on \*sUNIX\*n,
+hg	E.1)	``int i, *p; p=i; i=p;'' does nothing on \*sUNIX\*n,
 does something on \*sGCOS\*n (destroys right half of i) .
 .ti0
-d	E.2)	``&gt;&gt;&#39;&#39; means arithmetic shift on \*sUNIX\*n, logical on \*sGCOS\*n.
+d	E.2)	``>>'' means arithmetic shift on \*sUNIX\*n, logical on \*sGCOS\*n.
 .ti0
 d	E.3)	When a \fGchar\fR is converted to integer, the result is always
 positive on \*sGCOS\*n but can be negative on \*sUNIX\*n.

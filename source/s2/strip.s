@@ -14,11 +14,11 @@ loop:
 	mov	r4,0f
 	sys	open; 0:..; 0
 	bec	1f
-	jsr	r5,mesg; &lt;open error: \0&gt;; .even
+	jsr	r5,mesg; <open error: \0>; .even
 	br	loop
 1:
 	mov	r0,fi
-	mov	$&#39;a,r1
+	mov	$'a,r1
 1:
 	movb	r1,s.tmp+8
 	sys	stat; s.tmp; buf
@@ -27,9 +27,9 @@ loop:
 	bec	1f
 2:
 	inc	r1
-	cmp	r1,$&#39;z
+	cmp	r1,$'z
 	blos	1b
-	jsr	r5,mesg; &lt;can&#39;t create temp file for \0&gt;; .even
+	jsr	r5,mesg; <can't create temp file for \0>; .even
 	sys	exit
 1:
 	mov	r0,fo
@@ -43,7 +43,7 @@ loop:
 	beq	1f
 	cmp	buf,magic2
 	beq	1f
-	jsr	r5,mesg; &lt;improper format: \0&gt;; .even
+	jsr	r5,mesg; <improper format: \0>; .even
 	br	unloop
 1:
 	mov	buf+2,r2
@@ -68,7 +68,7 @@ loop:
 	sys	read; buf; 512.
 	mov	r0,r3
 	bne	1b
-	jsr	r5,mesg; &lt;unexpected EOF: \0&gt;; .even
+	jsr	r5,mesg; <unexpected EOF: \0>; .even
 1:
 	mov	fo,r0
 	sys	close
@@ -77,13 +77,13 @@ loop:
 	mov	r4,0f
 	sys	creat; 0:..; 0		/ same mode as before
 	bec	1f
-	jsr	r5,mesg; &lt;can&#39;t rewrite: \0&gt;; .even
+	jsr	r5,mesg; <can't rewrite: \0>; .even
 	jmp	unloop
 1:
 	mov	r0,fo
 	sys	open; s.tmp; 0
 	bec	1f
-	jsr	r5,mesg; &lt;can&#39;t read temp file for: \0&gt;; .even
+	jsr	r5,mesg; <can't read temp file for: \0>; .even
 	sys	exit
 1:
 	mov	r0,fi
@@ -124,9 +124,9 @@ mesg:
 	rts	r5
 
 s.tmp:
-	&lt;/tmp/stma\0&gt;
+	</tmp/stma\0>
 qnl:
-	&lt;\n&gt;
+	<\n>
 	.even
 magic:	407
 magic1:	410

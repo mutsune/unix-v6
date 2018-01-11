@@ -2,12 +2,12 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../proc.h&quot;
-#include &quot;../text.h&quot;
-#include &quot;../inode.h&quot;
+#include "../param.h"
+#include "../systm.h"
+#include "../user.h"
+#include "../proc.h"
+#include "../text.h"
+#include "../inode.h"
 
 /*
  * Swap out process p.
@@ -27,22 +27,22 @@ int *p;
 
 	rp = p;
 	if(os == 0)
-		os = rp-&gt;p_size;
-	a = malloc(swapmap, (rp-&gt;p_size+7)/8);
+		os = rp->p_size;
+	a = malloc(swapmap, (rp->p_size+7)/8);
 	if(a == NULL)
-		panic(&quot;out of swap space&quot;);
-	xccdec(rp-&gt;p_textp);
-	rp-&gt;p_flag =| SLOCK;
-	if(swap(a, rp-&gt;p_addr, os, 0))
-		panic(&quot;swap error&quot;);
+		panic("out of swap space");
+	xccdec(rp->p_textp);
+	rp->p_flag =| SLOCK;
+	if(swap(a, rp->p_addr, os, 0))
+		panic("swap error");
 	if(ff)
-		mfree(coremap, os, rp-&gt;p_addr);
-	rp-&gt;p_addr = a;
-	rp-&gt;p_flag =&amp; ~(SLOAD|SLOCK);
-	rp-&gt;p_time = 0;
+		mfree(coremap, os, rp->p_addr);
+	rp->p_addr = a;
+	rp->p_flag =& ~(SLOAD|SLOCK);
+	rp->p_time = 0;
 	if(runout) {
 		runout = 0;
-		wakeup(&amp;runout);
+		wakeup(&runout);
 	}
 }
 
@@ -54,15 +54,15 @@ xfree()
 {
 	register *xp, *ip;
 
-	if((xp=u.u_procp-&gt;p_textp) != NULL) {
-		u.u_procp-&gt;p_textp = NULL;
+	if((xp=u.u_procp->p_textp) != NULL) {
+		u.u_procp->p_textp = NULL;
 		xccdec(xp);
-		if(--xp-&gt;x_count == 0) {
-			ip = xp-&gt;x_iptr;
-			if((ip-&gt;i_mode&amp;ISVTX) == 0) {
-				xp-&gt;x_iptr = NULL;
-				mfree(swapmap, (xp-&gt;x_size+7)/8, xp-&gt;x_daddr);
-				ip-&gt;i_flag =&amp; ~ITEXT;
+		if(--xp->x_count == 0) {
+			ip = xp->x_iptr;
+			if((ip->i_mode&ISVTX) == 0) {
+				xp->x_iptr = NULL;
+				mfree(swapmap, (xp->x_size+7)/8, xp->x_daddr);
+				ip->i_flag =& ~ITEXT;
 				iput(ip);
 			}
 		}
@@ -80,7 +80,7 @@ xfree()
  * The full coroutine glory has to be invoked--
  * see slp.c-- because if the calling process
  * is misplaced in core the text image might not fit.
- * Quite possibly the code after &quot;out:&quot; could check to
+ * Quite possibly the code after "out:" could check to
  * see if the text does fit and simply swap it in.
  *
  * panic: out of swap space
@@ -94,25 +94,25 @@ int *ip;
 	if(u.u_arg[1] == 0)
 		return;
 	rp = NULL;
-	for(xp = &amp;text[0]; xp &lt; &amp;text[NTEXT]; xp++)
-		if(xp-&gt;x_iptr == NULL) {
+	for(xp = &text[0]; xp < &text[NTEXT]; xp++)
+		if(xp->x_iptr == NULL) {
 			if(rp == NULL)
 				rp = xp;
 		} else
-			if(xp-&gt;x_iptr == ip) {
-				xp-&gt;x_count++;
-				u.u_procp-&gt;p_textp = xp;
+			if(xp->x_iptr == ip) {
+				xp->x_count++;
+				u.u_procp->p_textp = xp;
 				goto out;
 			}
 	if((xp=rp) == NULL)
-		panic(&quot;out of text&quot;);
-	xp-&gt;x_count = 1;
-	xp-&gt;x_ccount = 0;
-	xp-&gt;x_iptr = ip;
-	ts = ((u.u_arg[1]+63)&gt;&gt;6) &amp; 01777;
-	xp-&gt;x_size = ts;
-	if((xp-&gt;x_daddr = malloc(swapmap, (ts+7)/8)) == NULL)
-		panic(&quot;out of swap space&quot;);
+		panic("out of text");
+	xp->x_count = 1;
+	xp->x_ccount = 0;
+	xp->x_iptr = ip;
+	ts = ((u.u_arg[1]+63)>>6) & 01777;
+	xp->x_size = ts;
+	if((xp->x_daddr = malloc(swapmap, (ts+7)/8)) == NULL)
+		panic("out of swap space");
 	expand(USIZE+ts);
 	estabur(0, ts, 0, 0);
 	u.u_count = u.u_arg[1];
@@ -120,25 +120,25 @@ int *ip;
 	u.u_base = 0;
 	readi(ip);
 	rp = u.u_procp;
-	rp-&gt;p_flag =| SLOCK;
-	swap(xp-&gt;x_daddr, rp-&gt;p_addr+USIZE, ts, 0);
-	rp-&gt;p_flag =&amp; ~SLOCK;
-	rp-&gt;p_textp = xp;
+	rp->p_flag =| SLOCK;
+	swap(xp->x_daddr, rp->p_addr+USIZE, ts, 0);
+	rp->p_flag =& ~SLOCK;
+	rp->p_textp = xp;
 	rp = ip;
-	rp-&gt;i_flag =| ITEXT;
-	rp-&gt;i_count++;
+	rp->i_flag =| ITEXT;
+	rp->i_count++;
 	expand(USIZE);
 
 out:
-	if(xp-&gt;x_ccount == 0) {
+	if(xp->x_ccount == 0) {
 		savu(u.u_rsav);
 		savu(u.u_ssav);
 		xswap(u.u_procp, 1, 0);
-		u.u_procp-&gt;p_flag =| SSWAP;
+		u.u_procp->p_flag =| SSWAP;
 		swtch();
 		/* no return */
 	}
-	xp-&gt;x_ccount++;
+	xp->x_ccount++;
 }
 
 /*
@@ -150,7 +150,7 @@ int *xp;
 {
 	register *rp;
 
-	if((rp=xp)!=NULL &amp;&amp; rp-&gt;x_ccount!=0)
-		if(--rp-&gt;x_ccount == 0)
-			mfree(coremap, rp-&gt;x_size, rp-&gt;x_caddr);
+	if((rp=xp)!=NULL && rp->x_ccount!=0)
+		if(--rp->x_ccount == 0)
+			mfree(coremap, rp->x_size, rp->x_caddr);
 }

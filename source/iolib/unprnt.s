@@ -20,7 +20,7 @@ loop:
 	movb	*formp,r0
 	beq	1f
 	inc	formp
-	cmp	r0,$&#39;%
+	cmp	r0,$'%
 	beq	2f
 3:
 	mov	r4,-(sp)
@@ -37,14 +37,14 @@ loop:
 2:
 	clr	rjust
 	clr	ndigix
-	cmpb	*formp,$&#39;-
+	cmpb	*formp,$'-
 	bne	2f
 	inc	formp
 	inc	rjust
 2:
 	jsr	r3,gnum; width
 	clr	ndfnd
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	bne	1f
 	jsr	r3,gnum; ndigix
 1:
@@ -57,20 +57,20 @@ loop:
 	bne	1b
 	jmp	(r2)
 swtab:
-	decimal;	&#39;d
-	octal;		&#39;o
-	float;		&#39;f
-	scien;		&#39;e
-	charac;		&#39;c
-	string;		&#39;s
-	logical;	&#39;l
+	decimal;	'd
+	octal;		'o
+	float;		'f
+	scien;		'e
+	charac;		'c
+	string;		's
+	logical;	'l
 	0;  0
 
 decimal:
 	mov	(r4)+,r1
 	bge	1f
 	neg	r1
-	movb	$&#39;-,(r3)+
+	movb	$'-,(r3)+
 	br	1f
 
 logical:
@@ -87,7 +87,7 @@ logical:
 	jsr	pc,1b
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,(r3)+
 	rts	pc
 
@@ -122,7 +122,7 @@ octal:
 1:
 	mov	(sp)+,r0
 	bic	$!7,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,(r3)+
 	rts	pc
 
@@ -146,7 +146,7 @@ prbuf:
 1:
 	mov	sp,r2
 	mov	r4,-(sp)
-	mov	$&#39; ,-(sp)
+	mov	$' ,-(sp)
 	mov	width,r1
 	sub	r3,r1
 	clrb	(r3)+
@@ -172,7 +172,7 @@ prbuf:
 	ble	1f
 	tst	rjust
 	beq	1f
-	mov	$&#39; ,(sp)
+	mov	$' ,(sp)
 2:
 	jsr	pc,*$_IEH3revp
 	dec	spaces
@@ -188,7 +188,7 @@ gnum:
 1:
 	movb	*formp,r0
 	inc	formp
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	1f
 	inc	ndfnd
@@ -196,7 +196,7 @@ gnum:
 	add	r0,r1
 	br	1b
 1:
-	add	$&#39;0,r0
+	add	$'0,r0
 	mov	r1,*(r3)+
 	rts	r3
 

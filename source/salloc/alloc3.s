@@ -87,7 +87,7 @@ www:	jsr	pc,collect
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	4
-1:	&lt;Out of space.\n&gt;
+1:	<Out of space.\n>
 2:	.even
 /
 /	split larger block into two smaller pieces and
@@ -107,7 +107,7 @@ yyy:
 	mov	l(r1),l(r3)
 	mov	r2,l(r1)		/L
 	mov	r2,a(r3)
-	clr	w(r3)			/W&#39;
+	clr	w(r3)			/W'
 	mov	r1,r2
 	sub	$hblk,r2
 	mov	r2,frlist-2(r0)
@@ -284,7 +284,7 @@ botch:
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	4
-1:	&lt;Error in allocator.\n&gt;
+1:	<Error in allocator.\n>
 2:	.even
 /
 /
@@ -355,10 +355,10 @@ err2:
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	4
-1:	&lt;cannot open output file\n&gt;
+1:	<cannot open output file\n>
 2:
 asmem:
-	&lt;alloc.d\0&gt;
+	<alloc.d\0>
 	.even
 /
 gargs:

@@ -31,7 +31,7 @@ sextr:
 	rts	r5
 
 sequi:
-	jsr	r5,ptemp; &#39;e; efno; line
+	jsr	r5,ptemp; 'e; efno; line
 	rts	r5
 
 

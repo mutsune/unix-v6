@@ -129,7 +129,7 @@ divide:
 	cfcc
 	blt	1f
 
-/ algorithm #1 |c| &gt; |d|
+/ algorithm #1 |c| > |d|
 
 	movf	d,e
 	divf	c,e		/ r = d/c
@@ -147,7 +147,7 @@ divide:
 	divf	c,f
 	br	sarg
 
-/ algorithm #2 |c| &lt; |d|
+/ algorithm #2 |c| < |d|
 
 1:
 	movf	c,e
@@ -179,7 +179,7 @@ cng8:
 	jmp	*(r4)+
 
 / setup the following registers
-/ (a,bi) +o (c,di) -&gt; (e+fi)
+/ (a,bi) +o (c,di) -> (e+fi)
 / a,b,c,d are input
 / e,f are output and also contain
 / c,d on input

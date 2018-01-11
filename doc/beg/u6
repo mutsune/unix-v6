@@ -4,13 +4,13 @@ Index
 .LP
 .sp 2
 .nf
-&amp; (asynchronous process)  8
+& (asynchronous process)  8
 ; (multiple processes)  8
 * (pattern match)  5
 [ ] (pattern match)  6
 ? (pattern match)  6
-&lt;&gt; (redirect I/O)  7
-&gt;&gt; (file append)  12
+<> (redirect I/O)  7
+>> (file append)  12
 backslash (\\)  2
 cat (concatenate files)  4
 cdb (C debugger)  12
@@ -63,7 +63,7 @@ quotes  6
 ratfor (decent Fortran)  13
 readahead  2
 reading list  13
-redirect I/O (&lt;&gt;)  7
+redirect I/O (<>)  7
 RETURN key  1
 rm (remove files)  5
 rmdir (remove directory)  7

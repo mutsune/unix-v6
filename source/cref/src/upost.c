@@ -7,15 +7,15 @@ main(argc, argv)
 {
 	auto	f,fct,file;
 
-	if(argc &lt; 2) {
-		printf(&quot;Usage: cpost [-d] file1 file2 ...\n&quot;);
+	if(argc < 2) {
+		printf("Usage: cpost [-d] file1 file2 ...\n");
 		exit();
 	}
 
-	if(*argv[1] == &#39;-&#39;) {
-		fct = argv[1][1] - &#39;0&#39;;
-		if((fct &lt; 1) || (fct &gt; 9)) {
-			printf(&quot;-d: 0 &lt; d &lt; 10\n&quot;);
+	if(*argv[1] == '-') {
+		fct = argv[1][1] - '0';
+		if((fct < 1) || (fct > 9)) {
+			printf("-d: 0 < d < 10\n");
 			exit();
 		}
 		argv++;
@@ -25,7 +25,7 @@ main(argc, argv)
 	}
 
 	f = 0;
-	while(++f &lt; argc) {
+	while(++f < argc) {
 		file = open(argv[f], 0);
 
 		edl(file, fct);
@@ -47,11 +47,11 @@ edl(file)
 	char	c;
 field:
 	t = -1;
-	while(((buf[++t] = get(file)) != &#39;\t&#39;) &amp;&amp; (buf[t] != -1))
-		if(buf[t] == &#39;\0&#39;)	goto done;
+	while(((buf[++t] = get(file)) != '\t') && (buf[t] != -1))
+		if(buf[t] == '\0')	goto done;
 
-	if((c = buf[t]) == -1)	c = &#39; &#39;;
-	buf[t] = &#39;\0&#39;;
+	if((c = buf[t]) == -1)	c = ' ';
+	buf[t] = '\0';
 	if(comp(buf,fld)) {
 		lno++;
 		goto junk;
@@ -67,16 +67,16 @@ field:
 	}
 
 fill:
-	while((line[++l] = get(file)) != &#39;\n&#39;) {
-		if(line[l] == -1)	line[l] = &#39; &#39;;
-		if(line[l] == &#39;\0&#39;)	goto done;
+	while((line[++l] = get(file)) != '\n') {
+		if(line[l] == -1)	line[l] = ' ';
+		if(line[l] == '\0')	goto done;
 	}
 
 	goto field;
 
 junk:
-	while((*line = get(file)) != &#39;\n&#39;)
-		if(*line == &#39;\0&#39;)	goto done;
+	while((*line = get(file)) != '\n')
+		if(*line == '\0')	goto done;
 
 	goto field;
 
@@ -97,15 +97,15 @@ gfld(file, buf)
 
 	buf--;
 	while(*++buf  = get(file)) {
-		if((*buf == &#39;\t&#39;) || (*buf == &#39;\n&#39;)) {
+		if((*buf == '\t') || (*buf == '\n')) {
 			c = *buf;
-			*buf = &#39;\0&#39;;
+			*buf = '\0';
 			return(c);
 		} else {
 			continue;
 		}
 	}
-	return(&#39;\0&#39;);
+	return('\0');
 }
 
 copy(a, b)
@@ -122,11 +122,11 @@ copy(a, b)
 comp(a, b)
 	char	*a, *b;
 {
-/*	printf(&quot;comp: %s %s\n&quot;,a,b); /*DEBUG*/
+/*	printf("comp: %s %s\n",a,b); /*DEBUG*/
 	a--;
 	b--;
 	while(*++a == *++b) {
-		if(*a == &#39;\0&#39;)	return(1);
+		if(*a == '\0')	return(1);
 	}
 	return(0);
 }
@@ -145,7 +145,7 @@ get(ifile) int ifile;
 	}
 
 	if(nread = read(ifile,buf,512)){
-		if(nread &lt; 0)goto err;
+		if(nread < 0)goto err;
 
 		ibuf = buf;
 		return(*ibuf++);
@@ -156,7 +156,7 @@ get(ifile) int ifile;
 
 err:
 	nread = 1;
-	printf(&quot;read error\n&quot;);
+	printf("read error\n");
 	return(0);
 
 }
@@ -176,24 +176,24 @@ put(fil,string,n)
 	int	i;
 	char	*o;
 
-/*printf(&quot;%d %c %d\n&quot;,fil,*string,n);/*DEBUG*/
+/*printf("%d %c %d\n",fil,*string,n);/*DEBUG*/
 
 	string--;
 
-	if((i = optr[fil] + n - 512) &gt;= 0) {
+	if((i = optr[fil] + n - 512) >= 0) {
 		n =- i;
-		o = &amp;obuf[fil][optr[fil]] -1;
-		while(--n &gt;= 0)
+		o = &obuf[fil][optr[fil]] -1;
+		while(--n >= 0)
 			*++o = *++string;
 		optr[fil] = 512;
 		flsh(fil);
 		n = i;
 	}
 
-	o = &amp;obuf[fil][optr[fil]] - 1;
+	o = &obuf[fil][optr[fil]] - 1;
 	optr[fil] =+ n;
 
-	while(--n &gt;= 0) {
+	while(--n >= 0) {
 		*++o = *++string;
 	}
 	return(0);
@@ -203,7 +203,7 @@ flsh(fil)
 {
 	extern	tp[];
 
-	if(optr[fil] &lt;= 0)	return(optr[fil]);
+	if(optr[fil] <= 0)	return(optr[fil]);
 
 	nflush++;
 	if(write(tp[fil],obuf[fil],optr[fil]) != optr[fil])

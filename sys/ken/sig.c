@@ -2,12 +2,12 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../proc.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../reg.h&quot;
+#include "../param.h"
+#include "../systm.h"
+#include "../user.h"
+#include "../proc.h"
+#include "../inode.h"
+#include "../reg.h"
 
 /*
  * Priority for tracing
@@ -40,7 +40,7 @@ struct
 
 /*
  * Send the specified signal to
- * all processes with &#39;tp&#39; as its
+ * all processes with 'tp' as its
  * controlling teletype.
  * Called by tty.c for quits and
  * interrupts.
@@ -49,8 +49,8 @@ signal(tp, sig)
 {
 	register struct proc *p;
 
-	for(p = &amp;proc[0]; p &lt; &amp;proc[NPROC]; p++)
-		if(p-&gt;p_ttyp == tp)
+	for(p = &proc[0]; p < &proc[NPROC]; p++)
+		if(p->p_ttyp == tp)
 			psignal(p, sig);
 }
 
@@ -63,14 +63,14 @@ int *p;
 {
 	register *rp;
 
-	if(sig &gt;= NSIG)
+	if(sig >= NSIG)
 		return;
 	rp = p;
-	if(rp-&gt;p_sig != SIGKIL)
-		rp-&gt;p_sig = sig;
-	if(rp-&gt;p_stat &gt; PUSER)
-		rp-&gt;p_stat = PUSER;
-	if(rp-&gt;p_stat == SWAIT)
+	if(rp->p_sig != SIGKIL)
+		rp->p_sig = sig;
+	if(rp->p_stat > PUSER)
+		rp->p_stat = PUSER;
+	if(rp->p_stat == SWAIT)
 		setrun(rp);
 }
 
@@ -91,13 +91,13 @@ issig()
 	register struct proc *p;
 
 	p = u.u_procp;
-	if(n = p-&gt;p_sig) {
-		if (p-&gt;p_flag&amp;STRC) {
+	if(n = p->p_sig) {
+		if (p->p_flag&STRC) {
 			stop();
-			if ((n = p-&gt;p_sig) == 0)
+			if ((n = p->p_sig) == 0)
 				return(0);
 		}
-		if((u.u_signal[n]&amp;1) == 0)
+		if((u.u_signal[n]&1) == 0)
 			return(n);
 	}
 	return(0);
@@ -115,13 +115,13 @@ stop()
 
 loop:
 	cp = u.u_procp;
-	if(cp-&gt;p_ppid != 1)
-	for (pp = &amp;proc[0]; pp &lt; &amp;proc[NPROC]; pp++)
-		if (pp-&gt;p_pid == cp-&gt;p_ppid) {
+	if(cp->p_ppid != 1)
+	for (pp = &proc[0]; pp < &proc[NPROC]; pp++)
+		if (pp->p_pid == cp->p_ppid) {
 			wakeup(pp);
-			cp-&gt;p_stat = SSTOP;
+			cp->p_stat = SSTOP;
 			swtch();
-			if ((cp-&gt;p_flag&amp;STRC)==0 || procxmt())
+			if ((cp->p_flag&STRC)==0 || procxmt())
 				return;
 			goto loop;
 		}
@@ -141,18 +141,18 @@ psig()
 	register *rp;
 
 	rp = u.u_procp;
-	n = rp-&gt;p_sig;
-	rp-&gt;p_sig = 0;
+	n = rp->p_sig;
+	rp->p_sig = 0;
 	if((p=u.u_signal[n]) != 0) {
 		u.u_error = 0;
-		if(n != SIGINS &amp;&amp; n != SIGTRC)
+		if(n != SIGINS && n != SIGTRC)
 			u.u_signal[n] = 0;
 		n = u.u_ar0[R6] - 4;
 		grow(n);
 		suword(n+2, u.u_ar0[RPS]);
 		suword(n, u.u_ar0[R7]);
 		u.u_ar0[R6] = n;
-		u.u_ar0[RPS] =&amp; ~TBIT;
+		u.u_ar0[RPS] =& ~TBIT;
 		u.u_ar0[R7] = p;
 		return;
 	}
@@ -171,12 +171,12 @@ psig()
 		if(core())
 			n =+ 0200;
 	}
-	u.u_arg[0] = (u.u_ar0[R0]&lt;&lt;8) | n;
+	u.u_arg[0] = (u.u_ar0[R0]<<8) | n;
 	exit();
 }
 
 /*
- * Create a core image on the file &quot;core&quot;
+ * Create a core image on the file "core"
  * If you are looking for protection glitches,
  * there are probably a wealth of them here
  * when this occurs to a suid command.
@@ -191,8 +191,8 @@ core()
 	extern schar;
 
 	u.u_error = 0;
-	u.u_dirp = &quot;core&quot;;
-	ip = namei(&amp;schar, 1);
+	u.u_dirp = "core";
+	ip = namei(&schar, 1);
 	if(ip == NULL) {
 		if(u.u_error)
 			return(0);
@@ -200,17 +200,17 @@ core()
 		if(ip == NULL)
 			return(0);
 	}
-	if(!access(ip, IWRITE) &amp;&amp;
-	   (ip-&gt;i_mode&amp;IFMT) == 0 &amp;&amp;
+	if(!access(ip, IWRITE) &&
+	   (ip->i_mode&IFMT) == 0 &&
 	   u.u_uid == u.u_ruid) {
 		itrunc(ip);
 		u.u_offset[0] = 0;
 		u.u_offset[1] = 0;
-		u.u_base = &amp;u;
+		u.u_base = &u;
 		u.u_count = USIZE*64;
 		u.u_segflg = 1;
 		writei(ip);
-		s = u.u_procp-&gt;p_size - USIZE;
+		s = u.u_procp->p_size - USIZE;
 		estabur(0, s, 0, 0);
 		u.u_base = 0;
 		u.u_count = s*64;
@@ -231,15 +231,15 @@ char *sp;
 {
 	register a, si, i;
 
-	if(sp &gt;= -u.u_ssize*64)
+	if(sp >= -u.u_ssize*64)
 		return(0);
 	si = ldiv(-sp, 64) - u.u_ssize + SINCR;
-	if(si &lt;= 0)
+	if(si <= 0)
 		return(0);
 	if(estabur(u.u_tsize, u.u_dsize, u.u_ssize+si, u.u_sep))
 		return(0);
-	expand(u.u_procp-&gt;p_size+si);
-	a = u.u_procp-&gt;p_addr + u.u_procp-&gt;p_size;
+	expand(u.u_procp->p_size+si);
+	a = u.u_procp->p_addr + u.u_procp->p_size;
 	for(i=u.u_ssize; i; i--) {
 		a--;
 		copyseg(a-si, a);
@@ -257,34 +257,34 @@ ptrace()
 {
 	register struct proc *p;
 
-	if (u.u_arg[2] &lt;= 0) {
-		u.u_procp-&gt;p_flag =| STRC;
+	if (u.u_arg[2] <= 0) {
+		u.u_procp->p_flag =| STRC;
 		return;
 	}
-	for (p=proc; p &lt; &amp;proc[NPROC]; p++) 
-		if (p-&gt;p_stat==SSTOP
-		 &amp;&amp; p-&gt;p_pid==u.u_arg[0]
-		 &amp;&amp; p-&gt;p_ppid==u.u_procp-&gt;p_pid)
+	for (p=proc; p < &proc[NPROC]; p++) 
+		if (p->p_stat==SSTOP
+		 && p->p_pid==u.u_arg[0]
+		 && p->p_ppid==u.u_procp->p_pid)
 			goto found;
 	u.u_error = ESRCH;
 	return;
 
     found:
 	while (ipc.ip_lock)
-		sleep(&amp;ipc, IPCPRI);
-	ipc.ip_lock = p-&gt;p_pid;
+		sleep(&ipc, IPCPRI);
+	ipc.ip_lock = p->p_pid;
 	ipc.ip_data = u.u_ar0[R0];
-	ipc.ip_addr = u.u_arg[1] &amp; ~01;
+	ipc.ip_addr = u.u_arg[1] & ~01;
 	ipc.ip_req = u.u_arg[2];
-	p-&gt;p_flag =&amp; ~SWTED;
+	p->p_flag =& ~SWTED;
 	setrun(p);
-	while (ipc.ip_req &gt; 0)
-		sleep(&amp;ipc, IPCPRI);
+	while (ipc.ip_req > 0)
+		sleep(&ipc, IPCPRI);
 	u.u_ar0[R0] = ipc.ip_data;
-	if (ipc.ip_req &lt; 0)
+	if (ipc.ip_req < 0)
 		u.u_error = EIO;
 	ipc.ip_lock = 0;
-	wakeup(&amp;ipc);
+	wakeup(&ipc);
 }
 
 /*
@@ -297,11 +297,11 @@ procxmt()
 	register int i;
 	register int *p;
 
-	if (ipc.ip_lock != u.u_procp-&gt;p_pid)
+	if (ipc.ip_lock != u.u_procp->p_pid)
 		return(0);
 	i = ipc.ip_req;
 	ipc.ip_req = 0;
-	wakeup(&amp;ipc);
+	wakeup(&ipc);
 	switch (i) {
 
 	/* read user I */
@@ -321,45 +321,45 @@ procxmt()
 	/* read u */
 	case 3:
 		i = ipc.ip_addr;
-		if (i&lt;0 || i &gt;= (USIZE&lt;&lt;6))
+		if (i<0 || i >= (USIZE<<6))
 			goto error;
-		ipc.ip_data = u.inta[i&gt;&gt;1];
+		ipc.ip_data = u.inta[i>>1];
 		break;
 
 	/* write user I (for now, always an error) */
 	case 4:
-		if (suiword(ipc.ip_addr, 0) &lt; 0)
+		if (suiword(ipc.ip_addr, 0) < 0)
 			goto error;
 		suiword(ipc.ip_addr, ipc.ip_data);
 		break;
 
 	/* write user D */
 	case 5:
-		if (suword(ipc.ip_addr, 0) &lt; 0)
+		if (suword(ipc.ip_addr, 0) < 0)
 			goto error;
 		suword(ipc.ip_addr, ipc.ip_data);
 		break;
 
 	/* write u */
 	case 6:
-		p = &amp;u.inta[ipc.ip_addr&gt;&gt;1];
-		if (p &gt;= u.u_fsav &amp;&amp; p &lt; &amp;u.u_fsav[25])
+		p = &u.inta[ipc.ip_addr>>1];
+		if (p >= u.u_fsav && p < &u.u_fsav[25])
 			goto ok;
-		for (i=0; i&lt;9; i++)
-			if (p == &amp;u.u_ar0[regloc[i]])
+		for (i=0; i<9; i++)
+			if (p == &u.u_ar0[regloc[i]])
 				goto ok;
 		goto error;
 	ok:
-		if (p == &amp;u.u_ar0[RPS]) {
+		if (p == &u.u_ar0[RPS]) {
 			ipc.ip_data =| 0170000;	/* assure user space */
-			ipc.ip_data =&amp; ~0340;	/* priority 0 */
+			ipc.ip_data =& ~0340;	/* priority 0 */
 		}
 		*p = ipc.ip_data;
 		break;
 
 	/* set signal and continue */
 	case 7:
-		u.u_procp-&gt;p_sig = ipc.ip_data;
+		u.u_procp->p_sig = ipc.ip_data;
 		return(1);
 
 	/* force exit */

@@ -2,8 +2,8 @@
 #define	LIST	-2
 #define	RANGE	-3
 #define	EOF	-4
-char	*crontab	&quot;/usr/lib/crontab&quot;;
-char	*crontmp	&quot;/tmp/crontmp&quot;;
+char	*crontab	"/usr/lib/crontab";
+char	*crontmp	"/tmp/crontmp";
 char	*aend;
 char	*itime[2];
 int	*loct;
@@ -47,7 +47,7 @@ loop:
 				;
 		}
 		t = itime[1] + 60;
-		if(t &lt; itime[1])
+		if(t < itime[1])
 			itime[0]++;
 		itime[1] = t;
 	}
@@ -77,7 +77,7 @@ char *p;
 		return(cp+1);
 
 	case RANGE:
-		if(*cp &gt; v || cp[1] &lt; v)
+		if(*cp > v || cp[1] < v)
 			flag++;
 		return(cp+2);
 	}
@@ -93,7 +93,7 @@ slp()
 
 	time(t);
 	i = itime[1] - t[1];
-	if(i &gt; 0)
+	if(i > 0)
 		sleep(i);
 }
 
@@ -115,7 +115,7 @@ char *s;
 	unlink(crontmp);
 	if(fork())
 		exit();
-	execl(&quot;/bin/sh&quot;, &quot;sh&quot;, &quot;-t&quot;, 0);
+	execl("/bin/sh", "sh", "-t", 0);
 	exit();
 }
 
@@ -128,8 +128,8 @@ init()
 	int n;
 	extern char end[];
 
-	if(fopen(crontab, ib) &lt; 0) {
-		write(1, &quot;cannot open table\n&quot;, 18);
+	if(fopen(crontab, ib) < 0) {
+		write(1, "cannot open table\n", 18);
 		exit();
 	}
 	cp = end;
@@ -138,34 +138,34 @@ init()
 
 loop:
 	ocp = cp;
-	if(cp+100 &gt; aend) {
+	if(cp+100 > aend) {
 		aend =+ 512;
 		brk(aend);
 	}
 	for(i=0;; i++) {
 		do
 			c = getc(ib);
-		while(c == &#39; &#39; || c == &#39;\t&#39;);
-		if(c &lt;= 0 || c == &#39;\n&#39;)
+		while(c == ' ' || c == '\t');
+		if(c <= 0 || c == '\n')
 			goto ignore;
 		if(i == 5)
 			break;
-		if(c == &#39;*&#39;) {
+		if(c == '*') {
 			*cp++ = ANY;
 			continue;
 		}
 		n = 0;
-		while(c &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39;) {
-			n = n*10 + c-&#39;0&#39;;
+		while(c >= '0' && c <= '9') {
+			n = n*10 + c-'0';
 			c = getc(ib);
 		}
-		if(n &lt; 0 || n &gt; 100)
+		if(n < 0 || n > 100)
 			goto ignore;
-		if(c == &#39;,&#39;)
+		if(c == ',')
 			goto list;
-		if(c == &#39;-&#39;)
+		if(c == '-')
 			goto range;
-		if(c != &#39;\t&#39; &amp;&amp; c != &#39; &#39;)
+		if(c != '\t' && c != ' ')
 			goto ignore;
 		*cp++ = n;
 		continue;
@@ -176,16 +176,16 @@ loop:
 	list1:
 		n = 0;
 		c = getc(ib);
-		while(c &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39;) {
-			n = n*10 + c-&#39;0&#39;;
+		while(c >= '0' && c <= '9') {
+			n = n*10 + c-'0';
 			c = getc(ib);
 		}
-		if(n &lt; 0 || n &gt; 100)
+		if(n < 0 || n > 100)
 			goto ignore;
 		*cp++ = n;
-		if(c == &#39;,&#39;)
+		if(c == ',')
 			goto list1;
-		if(c != &#39;\t&#39; &amp;&amp; c != &#39; &#39;)
+		if(c != '\t' && c != ' ')
 			goto ignore;
 		*cp++ = LIST;
 		continue;
@@ -195,32 +195,32 @@ loop:
 		*cp++ = n;
 		n = 0;
 		c = getc(ib);
-		while(c &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39;) {
-			n = n*10 + c-&#39;0&#39;;
+		while(c >= '0' && c <= '9') {
+			n = n*10 + c-'0';
 			c = getc(ib);
 		}
-		if(n &lt; 0 || n &gt; 100)
+		if(n < 0 || n > 100)
 			goto ignore;
-		if(c != &#39;\t&#39; &amp;&amp; c != &#39; &#39;)
+		if(c != '\t' && c != ' ')
 			goto ignore;
 		*cp++ = n;
 	}
-	while(c != &#39;\n&#39;) {
-		if(c &lt;= 0)
+	while(c != '\n') {
+		if(c <= 0)
 			goto ignore;
-		if(c == &#39;%&#39;)
-			c = &#39;\n&#39;;
+		if(c == '%')
+			c = '\n';
 		*cp++ = c;
 		c = getc(ib);
 	}
-	*cp++ = &#39;\n&#39;;
+	*cp++ = '\n';
 	*cp++ = 0;
 	goto loop;
 
 ignore:
 	cp = ocp;
-	while(c != &#39;\n&#39;) {
-		if(c &lt;= 0) {
+	while(c != '\n') {
+		if(c <= 0) {
 			close(ib[0]);
 			*cp++ = EOF;
 			*cp++ = EOF;

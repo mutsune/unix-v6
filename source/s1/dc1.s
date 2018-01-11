@@ -19,7 +19,7 @@
 	blo	1f
 	tst	(sp)+
 	mov	(sp)+,0f
-	cmpb	*0f,$&#39;-
+	cmpb	*0f,$'-
 	beq	8f
 	sys	0; 9f
 .data
@@ -32,7 +32,7 @@
 	sys	exit
 
 /
-4:	&lt;Input file.\n&gt;
+4:	<Input file.\n>
 5:	.even
 /
 2:
@@ -164,7 +164,7 @@ case177:
 	2			/rti
 /
 in177:
-	mov	$&#39; ,ch
+	mov	$' ,ch
 	mov	$1,r0
 	sys	write; 1f; 1
 	clr delflag
@@ -173,7 +173,7 @@ in177:
 .bss
 delflag: .=.+2
 .text
-1:	&lt;\n&gt;
+1:	<\n>
 	.even
 /
 /
@@ -209,11 +209,11 @@ case041:
 /
 in041:
 	jsr	pc,readc
-	cmp	r0,$&#39;&lt;
+	cmp	r0,$'<
 	jeq	in74a
-	cmp	r0,$&#39;=
+	cmp	r0,$'=
 	jeq	in75a
-	cmp	r0,$&#39;&gt;
+	cmp	r0,$'>
 	jeq	in76a
 /
 	mov	$field,r1
@@ -221,7 +221,7 @@ in041:
 1:
 	jsr	pc,readc
 	movb	r0,(r1)+
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	1b
 	clrb	(r1)+
 /
@@ -235,9 +235,9 @@ in041:
 	sys	exit
 .data
 8:	6f; 7f; field; 0
-6:	&lt;/bin/sh\0&gt;
-7:	&lt;-c\0&gt;
-screamer: &lt;!\n&gt;
+6:	</bin/sh\0>
+7:	<-c\0>
+screamer: <!\n>
 	.even
 .bss
 field:	.=.+70.
@@ -298,7 +298,7 @@ case163:
 	jsr	pc,readc
 	cmp	r5,$pdl
 	bne	2f
-	movb	$&#39;s,ch
+	movb	$'s,ch
 	jmp	eh
 2:
 	clr	r2
@@ -347,7 +347,7 @@ symout:
 	sys	write; 7f; 8f-7f
 	jmp	reset
 /
-7:	&lt;Symbol table overflow.\n&gt;
+7:	<Symbol table overflow.\n>
 8:	.even
 /
 /
@@ -379,7 +379,7 @@ case123:
 	jsr	pc,readc
 	cmp	r5,$pdl
 	bne	2f
-	movb	$&#39;S,ch
+	movb	$'S,ch
 	jbr	eh
 2:
 	clr	r3
@@ -522,7 +522,7 @@ case072:
 	jsr	pc,readc
 	cmp	r5,$pdl
 	bne	2f
-	movb	$&#39;:,ch
+	movb	$':,ch
 	jmp	eh
 2:
 	asl	r0
@@ -683,7 +683,7 @@ case114:
 	jsr	pc,push
 	jbr	loop
 4:
-	movb	$&#39;L,ch
+	movb	$'L,ch
 	jbr	eh
 /
 /
@@ -1362,14 +1362,14 @@ case133:
 	jsr	pc,allocate
 	jsr	pc,push
 1:	jsr	pc,readc
-	cmp	r0,$&#39;]
+	cmp	r0,$']
 	bne	3f
 	tst	(sp)
 	beq	1f
 	dec	(sp)
 	br	2f
 3:
-	cmp	r0,$&#39;[
+	cmp	r0,$'[
 	bne	2f
 	inc	(sp)
 2:
@@ -1408,7 +1408,7 @@ in170:
 	rts	pc
 2:
 	jsr	pc,readc
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	3f
 	mov	r0,savec
 3:
@@ -1418,7 +1418,7 @@ nderr:
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	jmp	reset
-1:	&lt;Nesting depth.\n&gt;
+1:	<Nesting depth.\n>
 2:	.even
 /
 .data
@@ -1439,7 +1439,7 @@ in077:
 	mov	source,-(sp)
 	clr	source
 	jsr	pc,readc
-	cmp	r0,$&#39;!
+	cmp	r0,$'!
 	bne	1f
 	jsr	pc,in041
 	mov	(sp)+,source
@@ -1454,16 +1454,16 @@ in077:
 1:
 	jsr	pc,readc
 	jsr	pc,putchar
-	cmp	r0,$&#39;\\
+	cmp	r0,$'\\
 	beq	2b
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1b
 	mov	(sp)+,source
 	mov	r1,*readptr
 	jmp	loop
 /
 /
-/	case &lt; for conditional execution
+/	case < for conditional execution
 /
 case074:
 	jsr	pc,in074
@@ -1471,7 +1471,7 @@ case074:
 	jmp	aff074
 /
 /
-/	case !&lt; for conditional execution
+/	case !< for conditional execution
 /
 in74a:
 	jsr	pc,in074
@@ -1518,7 +1518,7 @@ in75a:
 	jmp	inneg
 /
 /
-/	case &gt; for conditional execution
+/	case > for conditional execution
 /
 case076:
 	jsr	pc,in074
@@ -1526,7 +1526,7 @@ case076:
 	jmp	aff074
 /
 /
-/	case !&gt; for conditional execution
+/	case !> for conditional execution
 /
 in76a:
 	jsr	pc,in074
@@ -1548,7 +1548,7 @@ err:
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	jmp	reset
-1:	&lt;Fatal error\n&gt;; 2: .even
+1:	<Fatal error\n>; 2: .even
 /
 eh1:
 	jsr	pc,release
@@ -1560,7 +1560,7 @@ eh:
 	mov	errstack,sp
 	jmp	loop
 .data
-1:	&lt;(  ) ?\n&gt;
+1:	<(  ) ?\n>
 2:	.even
 .text
 /
@@ -1581,12 +1581,12 @@ readin:
 	jsr	pc,create
 	jsr	pc,readc
 1:
-	cmpb	ch,$&#39;0
+	cmpb	ch,$'0
 	blt	3f
-	cmpb	ch,$&#39;9
+	cmpb	ch,$'9
 	bgt	3f
 	mov	ch,r0
-	sub	$&#39;0,r0
+	sub	$'0,r0
 4:
 	tst	dp
 	beq	8f
@@ -1617,9 +1617,9 @@ readin:
 	mov	r0,ch
 	br	1b
 3:
-	cmpb	ch,$&#39;A
+	cmpb	ch,$'A
 	blt	1f
-	cmpb	ch,$&#39;F
+	cmpb	ch,$'F
 	bgt	1f
 	mov	ch,r0
 	sub	$67,r0
@@ -1630,7 +1630,7 @@ readin:
 	jsr	pc,readc
 	br	5b
 1:
-	cmpb	ch,$&#39;.
+	cmpb	ch,$'.
 	bne	1f
 	tst	dp
 	bne	1f
@@ -1758,7 +1758,7 @@ in160:
 /	sys	write; sphdr; 4
 	br	1f
 /
-sphdr:	&lt;    &gt;
+sphdr:	<    >
 	.even
 /
 1:	cmp	r5,$pdl
@@ -1798,7 +1798,7 @@ case146:
 /
 	mov	(r2),r3
 	beq	1b
-	movb	$&#39;0,7f+3
+	movb	$'0,7f+3
 	mov	r2,r0
 	sub	$stable,r0
 	asr	r0
@@ -1807,7 +1807,7 @@ case146:
 	mov	$1,r0
 	sys	write; 7f; 8f-7f
 .data
-7:	&lt;&quot; (0)&quot;&gt;
+7:	<" (0)">
 8:	.even
 .text
 	mov	2(r3),r1
@@ -1888,11 +1888,11 @@ printf:
 	beq	2f
 	mov	(sp),r1
 	jsr	pc,chsign
-	mov	$&#39;-,ch
+	mov	$'-,ch
 	jsr	pc,wrchar
 	br	1f
 2:
-/	mov	$&#39; ,ch
+/	mov	$' ,ch
 /	jsr	pc,wrchar
 1:
 	mov	strptr,r1
@@ -2156,7 +2156,7 @@ tenout:
 	clr	r2
 	dvd	$10.,r2
 	br	3b
-dot:	&lt;.&gt;
+dot:	<.>
 	.even
 ct:	.=.+2
 /
@@ -2188,7 +2188,7 @@ unout:
 	mov	$1,r0
 	tst	(sp)
 	beq	2f
-	mov	$&#39;1,ch
+	mov	$'1,ch
 	jsr	pc,wrchar
 	br	1b
 2:
@@ -2202,10 +2202,10 @@ unout:
 	jsr	pc,release
 	jmp	prout
 /
-ding:	&lt;&gt;			/&lt;bell prefix form feed&gt;
-sp5:	&lt;\\\n     &gt;
-minus:	&lt;-&gt;
-one:	&lt;1&gt;
+ding:	<>			/<bell prefix form feed>
+sp5:	<\\\n     >
+minus:	<->
+one:	<1>
 	.even
 .bss
 count:	.=.+2
@@ -2228,7 +2228,7 @@ bigout:
 	mov	4(sp),r1
 	jsr	pc,length
 	bne	2f
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	tst	dflg
 	beq	3f
 	mov	tptr,r1
@@ -2260,7 +2260,7 @@ bigout:
 	jsr	pc,rewind
 	jsr	pc,getchar
 	jsr	pc,release
-	add	$&#39;0,r0
+	add	$'0,r0
 	tst	dflg
 	beq	3f
 	mov	tptr,r1
@@ -2283,7 +2283,7 @@ bigout:
 	mov	r1,-(sp)
 	mov	strptr,r1
 3:
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	pc,putchar
 	dec	(sp)
 	bne	3b
@@ -2307,19 +2307,19 @@ bigout:
 	jsr	pc,length
 	cmp	r0,2(sp)	/end of field
 	bhis	1f
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	pc,putchar
 	br	1b
 1:
 	tst	(sp)		/negative
 	beq	1f
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	mov	strptr,r1
 	dec	w(r1)
 	jsr	pc,putchar
 1:
 	mov	strptr,r1
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,putchar
 	tst	(sp)+
 	tst	(sp)+
@@ -2343,9 +2343,9 @@ hexout:
 	jmp	err
 1:
 	add	$60,r0
-	cmp	r0,$&#39;9
+	cmp	r0,$'9
 	blos	2f
-	add	$&#39;A-&#39;9-1,r0
+	add	$'A-'9-1,r0
 2:
 	mov	strptr,r1
 	jsr	pc,putchar
@@ -2395,7 +2395,7 @@ junk:
 	sys	write; 1f; 2f-1f
 	jmp	loop
 .data
-1:	&lt;0 not in switch.\n&gt;
+1:	<0 not in switch.\n>
 2:	.even
 .text
 /
@@ -2415,7 +2415,7 @@ pdlout:
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	jmp	reset
-1:	&lt;Out of pushdown.\n&gt;
+1:	<Out of pushdown.\n>
 2:	.even
 /
 /
@@ -2445,9 +2445,9 @@ source: .=.+2
 savec:	.=.+2
 ch:	.=.+2
 .text
-nl:	&lt;\n&gt;
-asczero:	&lt;0&gt;
-qm:	&lt;?\n&gt;
+nl:	<\n>
+asczero:	<0>
+qm:	<?\n>
 	.even
 /
 .bss
@@ -2481,9 +2481,9 @@ casetab:
 	case060; 071	/9
 	case072; 072	/:
 	case073; 073	/;
-	case074; 074	/&lt;
+	case074; 074	/<
 	case075; 075	/=
-	case076; 076	/&gt;
+	case076; 076	/>
 	case077; 077	/?
 	case060; 101	/A
 	case060; 102	/B
@@ -2533,7 +2533,7 @@ reset:
 	bes	1f
 	tst	r0
 	beq	1f
-	cmpb	rathole,$&#39;q
+	cmpb	rathole,$'q
 	bne	1b
 1:
 	sys	exit

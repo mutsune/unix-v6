@@ -15,7 +15,7 @@ _locv:
 	neg	r2
 	neg	r3
 	sbc	r2
-	movb	$&#39;-,(r4)+
+	movb	$'-,(r4)+
 1:
 	jsr	pc,1f
 	clrb	(r4)+
@@ -28,7 +28,7 @@ _locv:
 
 1:
 	jsr	pc,divid
-	add	$&#39;0,r1
+	add	$'0,r1
 	mov	r1,-(sp)
 	ashc	$0,r2
 	beq	1f

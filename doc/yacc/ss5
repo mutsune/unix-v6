@@ -7,18 +7,18 @@ delete or alter symbol table entries, and, typically, set switches to avoid putt
 .PP
 It is generally not acceptable to stop all processing when an error is found; we wish to continue
 scanning the input to find any further syntax errors.
-This leads to the problem of getting the parser ``restarted&#39;&#39; after an error.
+This leads to the problem of getting the parser ``restarted'' after an error.
 The general class of algorithms to do this involves reading ahead and discarding a number of tokens
 from the input string, and attempting to adjust the parser so that input can continue.
 .PP
 To allow the user some control over this process,
 Yacc provides a simple, but reasonably general, feature.
-The token name ``error&#39;&#39; is reserved for error handling.
+The token name ``error'' is reserved for error handling.
 This name can be used in grammar rules;
 in effect, it suggests places where errors are expected, and recovery might take place.
 The parser attempts to find the last time in the input when the special
-token ``error&#39;&#39; is permitted.
-The parser then behaves as though it saw the token name ``error&#39;&#39; as an input token,
+token ``error'' is permitted.
+The parser then behaves as though it saw the token name ``error'' as an input token,
 and attempts to parse according to the rule encountered.
 The token at which the error was detected remains the next input token after this error token is processed.
 If no special error rules have been specified, the processing effectively halts when an error is detected.
@@ -53,12 +53,12 @@ The above form of grammar rule is very general, but
 somewhat difficult to control.
 Somewhat easier to deal with are rules of the form
 .DS
-statement :  error \&#39;;\&#39;  ;
+statement :  error \';\'  ;
 .DE
 Here, when there is an error, the parser will again attempt to skip over the statement, but in
-this case will do so by skipping to the next ``;&#39;&#39;.
-All tokens after the error and before the next ``;&#39;&#39; give syntax errors, and are discarded.
-When the ``;&#39;&#39; is seen, this rule will be reduced, and any ``cleanup&#39;&#39;
+this case will do so by skipping to the next ``;''.
+All tokens after the error and before the next ``;'' give syntax errors, and are discarded.
+When the ``;'' is seen, this rule will be reduced, and any ``cleanup''
 action associated with it will be performed.
 .PP
 Still another form of error rule arises in interactive applications, where
@@ -66,11 +66,11 @@ we may wish to prompt the user who has incorrectly input a line, and allow
 him to reenter the line.
 In C we might write:
 .DS
-inputline:	error \&#39;\en\&#39; prompt inputline
+inputline:	error \'\en\' prompt inputline
 	= { $$ = $4; };
 
 prompt:	/* matches no input */
-	= {  printf( &quot;Reenter last line: &quot; ); };
+	= {  printf( "Reenter last line: " ); };
 .DE
 There is one difficulty with this approach;
 the parser must correctly process three input tokens before it is prepared to
@@ -87,8 +87,8 @@ yyerrok ;
 .DE
 in his action
 after such a grammar rule, and the desired effect will take place;
-this name will be expanded, using the ``# define&#39;&#39; mechanism of C or
-the ``define&#39;&#39; mechanism of Ratfor, into an appropriate code sequence.
+this name will be expanded, using the ``# define'' mechanism of C or
+the ``define'' mechanism of Ratfor, into an appropriate code sequence.
 For example, in the situation discussed above where we
 want to prompt the user to produce input,
 we probably want to consider that the
@@ -101,14 +101,14 @@ The grammar rule for the nonterminal symbol prompt becomes:
 prompt:	/* matches no input */
 	= {
 		yyerrok;
-		printf( &quot;Reenter last line: &quot; );
+		printf( "Reenter last line: " );
 	} ;
 .DE
 .PP
 There is another special feature which the user may
 wish to use in error recovery.
 As mentioned above, the token seen immediately
-after the ``error&#39;&#39; symbol is the input token at which the
+after the ``error'' symbol is the input token at which the
 error was discovered.
 Sometimes, this is seen to be inappropriate; for example, an
 error recovery action might
@@ -141,5 +141,5 @@ statement :  error
 .DE
 .PP
 These mechanisms are admittedly crude, but do allow for a simple, fairly effective recovery of the parser
-from many errors, and have the virtue that the user can get ``handles&#39;&#39; by which he can deal with
+from many errors, and have the virtue that the user can get ``handles'' by which he can deal with
 the error actions required by the lexical and output portions of the system.

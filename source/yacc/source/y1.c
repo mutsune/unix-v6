@@ -1,13 +1,13 @@
-# include &quot;dextern&quot;
+# include "dextern"
   /*     * * * *    y a c c     * * * *     */
 
   /*      features to be fixed up ...
 
   ***  Print estimate of total space needed for parser
-  ***  Either list inputs on y.output, or list empty prdn&#39;s in states
+  ***  Either list inputs on y.output, or list empty prdn's in states
   ***  Mention nonterms not used (or, rules. not reduced) as nonfatal error
   ***  Output states where conflicts were found by default on y.output
-  ***  Engage in newspeak: production=&gt;grammar rules, term=&gt;token, etc.
+  ***  Engage in newspeak: production=>grammar rules, term=>token, etc.
   ***  handle # define, #ifdef, etc., in yacc actions, %{ %}
   */
 
@@ -46,12 +46,12 @@ whereami(){ /* sets the variable machine to UNIX, GCOS, or IBM */
   int i;
 
   i = 1;
-  i = i &lt;&lt; 30;
+  i = i << 30;
   if( i == 0 ) {
     machine = UNIX;
     return;
     }
-  i = i &lt;&lt; 4;
+  i = i << 4;
   if( i == 0 ){
     machine = IBM;
     return;
@@ -67,35 +67,35 @@ windup(){
   cflush(1);
   if( !oflag ) cexit(0);
 
-  for( i=3; i&lt;10; ++i ) cclose(i);
+  for( i=3; i<10; ++i ) cclose(i);
   switch( machine ){
 
   case GCOS:
     if( rflag ){
-      if( foutput&lt;0 ) system( &quot;./yopt -r&quot; );
-      else system( &quot;./yopt -rv&quot; );
+      if( foutput<0 ) system( "./yopt -r" );
+      else system( "./yopt -rv" );
       }
     else {
-      if( foutput&lt;0 ) system( &quot;./yopt&quot; );
-      else system( &quot;./yopt -v&quot; );
+      if( foutput<0 ) system( "./yopt" );
+      else system( "./yopt -v" );
       }
     cexit(0);  /* terminate */
 
   case UNIX:
-    cp = &quot;/usr/yacc/yopti&quot;;
-    if( rflag ) execl( cp, cp, (foutput&lt;0)?&quot;-r&quot;:&quot;-rv&quot;, 0 );
-    else if( foutput&lt;0 ) execl( cp, cp, 0 );
-    else execl( cp, cp, &quot;-v&quot;, 0 );
-    error( &quot;optimization execl call fails&quot; );
+    cp = "/usr/yacc/yopti";
+    if( rflag ) execl( cp, cp, (foutput<0)?"-r":"-rv", 0 );
+    else if( foutput<0 ) execl( cp, cp, 0 );
+    else execl( cp, cp, "-v", 0 );
+    error( "optimization execl call fails" );
 
   case IBM:
     if( rflag ){
-      if( foutput&lt;0 ) system( &quot;MH2019.yaccopt -r&quot; );
-      else system( &quot;MH2019.yaccopt -rv&quot; );
+      if( foutput<0 ) system( "MH2019.yaccopt -r" );
+      else system( "MH2019.yaccopt -rv" );
       }
     else {
-      if( foutput&lt;0 ) system( &quot;MH2019.yaccopt&quot; );
-      else system( &quot;MH2019.yaccopt -v&quot; );
+      if( foutput<0 ) system( "MH2019.yaccopt" );
+      else system( "MH2019.yaccopt -v" );
       }
     cexit(0);
 
@@ -127,26 +127,26 @@ char *writem(pp) struct item *pp; { /* creates output string for item pointed to
 	static char sarr[100];
 	char *q;
 
-	for( p=pp-&gt;pitem; *p&gt;0 ; ++p ) ;
+	for( p=pp->pitem; *p>0 ; ++p ) ;
 	p = prdptr[-*p];
 	q = chcopy( sarr, nontrst[*p-NTBASE].name );
-	q = chcopy( q, &quot; : &quot; );
+	q = chcopy( q, " : " );
 
 	for(;;){
-		*q++ = ++p==(pp-&gt;pitem) ? &#39;_&#39; : &#39; &#39;;
-		if((i = *p) &lt;= 0) break;
+		*q++ = ++p==(pp->pitem) ? '_' : ' ';
+		if((i = *p) <= 0) break;
 		q = chcopy( q, symnam(i) );
 		}
 
-	*q = &#39;\0&#39; ;
+	*q = '\0' ;
 	return( sarr );
 	}
 
 char *symnam(i){ /* return a pointer to the name of symbol i */
 	char *cp;
 
-	cp = (i&gt;=NTBASE) ? nontrst[i-NTBASE].name : trmset[i].name ;
-	if( *cp == &#39; &#39; ) ++cp;
+	cp = (i>=NTBASE) ? nontrst[i-NTBASE].name : trmset[i].name ;
+	if( *cp == ' ' ) ++cp;
 	return( cp );
 	}
 
@@ -157,40 +157,40 @@ summary(){ /* output the summary on the tty */
 
 	if( !rflag ){
 		settab();
-		printf(&quot;\nint nterms %d;&quot;,nterms);
-		printf(&quot;\nint nnonter %d;&quot;, nnonter);
-		printf(&quot;\nint nstate %d;&quot;, nstate);
-		printf(&quot;\nchar *yysterm[] {&quot;);
-		for (i=1;i&lt;=nterms;i++) if( trmset[i].value &gt;= 0400 ) printf(&quot;\n\&quot;%s\&quot;,&quot;,symnam(i));
-		printf( &quot;\n0 };\n&quot; );
-		printf(&quot;\nchar *yysnter[] {&quot;);
-		for (i=0;i&lt;nnonter;i++) printf(&quot;\n\&quot;%s\&quot;,&quot;,nontrst[i].name);
-		printf(&quot;\n\&quot;%s\&quot; };\n&quot;,nontrst[nnonter].name);
+		printf("\nint nterms %d;",nterms);
+		printf("\nint nnonter %d;", nnonter);
+		printf("\nint nstate %d;", nstate);
+		printf("\nchar *yysterm[] {");
+		for (i=1;i<=nterms;i++) if( trmset[i].value >= 0400 ) printf("\n\"%s\",",symnam(i));
+		printf( "\n0 };\n" );
+		printf("\nchar *yysnter[] {");
+		for (i=0;i<nnonter;i++) printf("\n\"%s\",",nontrst[i].name);
+		printf("\n\"%s\" };\n",nontrst[nnonter].name);
 		}
 
   settty();
-  printf(&quot;\n%d/%d terminals, %d/%d nonterminals\n&quot;, nterms, tlim,
+  printf("\n%d/%d terminals, %d/%d nonterminals\n", nterms, tlim,
       nnonter, ntlim );
-  printf(&quot;%d/%d grammar rules, %d/%d states\n&quot;, nprod, prdlim, nstate, stsize );
-  printf(&quot;%d shift/reduce, %d reduce/reduce conflicts reported\n&quot;, zzsrconf, zzrrconf );
+  printf("%d/%d grammar rules, %d/%d states\n", nprod, prdlim, nstate, stsize );
+  printf("%d shift/reduce, %d reduce/reduce conflicts reported\n", zzsrconf, zzrrconf );
   pn = pstate[nstate+1];
-  printf(&quot;%d/%d working sets used\n&quot;, zzcwset,  wssize );
-  printf(&quot;memory: states,etc. %d/%d, parser %d/%d\n&quot;, pn-mem0, memsiz,
+  printf("%d/%d working sets used\n", zzcwset,  wssize );
+  printf("memory: states,etc. %d/%d, parser %d/%d\n", pn-mem0, memsiz,
       memact, actsiz );
-  printf(&quot;%d/%d distinct lookahead sets\n&quot;, nlset, lsetsz );
-  printf(&quot;%d extra closures\n&quot;, zzclose - 2*nstate );
-  printf(&quot;%d action entries\n&quot;, zzacent );
-  printf(&quot;%d action entries saved through merging %d states\n&quot;,zzacsave,zznsave);
-  printf(&quot;%d goto entries\n&quot;, zzgoent );
-  printf(&quot;%d entries saved by goto default\n&quot;, zzgobest );
+  printf("%d/%d distinct lookahead sets\n", nlset, lsetsz );
+  printf("%d extra closures\n", zzclose - 2*nstate );
+  printf("%d action entries\n", zzacent );
+  printf("%d action entries saved through merging %d states\n",zzacsave,zznsave);
+  printf("%d goto entries\n", zzgoent );
+  printf("%d entries saved by goto default\n", zzgobest );
   if( zzsrconf!=0 || zzrrconf!=0 ){
     cflush( errfileno );
     cout = errfileno;
-    printf(&quot;\nconflicts: &quot;);
-    if( zzsrconf )printf( &quot;%d shift/reduce&quot; , zzsrconf );
-    if( zzsrconf &amp;&amp; zzrrconf )printf( &quot;, &quot; );
-    if( zzrrconf )printf( &quot;%d reduce/reduce&quot; , zzrrconf );
-    printf( &quot;\n&quot; );
+    printf("\nconflicts: ");
+    if( zzsrconf )printf( "%d shift/reduce" , zzsrconf );
+    if( zzsrconf && zzrrconf )printf( ", " );
+    if( zzrrconf )printf( "%d reduce/reduce" , zzrrconf );
+    printf( "\n" );
     }
   }
 
@@ -200,26 +200,26 @@ error(s,a1){ /* write out error comment */
 	++nerrors;
 	cflush( errfileno );
 	cout = errfileno;   /* set output to tty */
-	printf(&quot;\n fatal error: &quot;);
+	printf("\n fatal error: ");
 	printf(s,a1);
-        printf(&quot;, line %d\n&quot;, lineno );
+        printf(", line %d\n", lineno );
 	if( !fatfl ) return;
 	summary();
 	cexit(1);
 	}
 
 arrset(s) char s[]; {
-	printf(&quot;\nint %s[] {0&quot;, s );
+	printf("\nint %s[] {0", s );
 	arrndx = 1;
 	}
 
 arrval(n){
-	printf(&quot;,%d&quot;,n);
-	if( (++arrndx%10) == 0 ) printf(&quot;\n&quot;);
+	printf(",%d",n);
+	if( (++arrndx%10) == 0 ) printf("\n");
 	}
 
 arrdone(){
-	printf(&quot;,-1};\n&quot;);
+	printf(",-1};\n");
 	}
 
 copy(v) char *v; {	/* copy ctokn to v */
@@ -242,13 +242,13 @@ int *yalloc(n){ /* allocate n+1 words from vector mem */
 	int *omem;
 	omem = mem;
 	mem =+ n+1;
-	if(mem-mem0 &gt;= memsiz) error(&quot;memory overflow&quot;);
+	if(mem-mem0 >= memsiz) error("memory overflow");
 	return(omem);
 	}
 
 aryfil( v, n, c ) int *v,n,c; { /* set elements 0 through n-1 to c */
   int i;
-  for( i=0; i&lt;n; ++i ) v[i] = c;
+  for( i=0; i<n; ++i ) v[i] = c;
   }
 
 union( a, b, c ) int *a, *b, *c; {
@@ -259,7 +259,7 @@ union( a, b, c ) int *a, *b, *c; {
   _REGISTER int i, x, sub;
 
   sub = 0;
-  for( i=0; i&lt;tbitset; ++i ){
+  for( i=0; i<tbitset; ++i ){
     x = b[i] | c[i];
     if( x != b[i] ) sub=1;
     a[i] = x;
@@ -269,13 +269,13 @@ union( a, b, c ) int *a, *b, *c; {
 
 prlook( pp ) int *pp;{
 	int j;
-	pp = pp-&gt;lset;
-	if( pp == 0 ) printf(&quot;\tNULL&quot;);
+	pp = pp->lset;
+	if( pp == 0 ) printf("\tNULL");
 	else {
-		printf(&quot; { &quot; );
-		for( j=1; j&lt;=nterms; ++j ){
-			if( (pp[j&gt;&gt;4]&gt;&gt;(j&amp;017) )&amp;01 != 0 ) printf( &quot;%s &quot;, symnam(j) );
+		printf(" { " );
+		for( j=1; j<=nterms; ++j ){
+			if( (pp[j>>4]>>(j&017) )&01 != 0 ) printf( "%s ", symnam(j) );
 			}
-		printf( &quot;}&quot; );
+		printf( "}" );
 		}
 	}

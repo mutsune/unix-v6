@@ -33,7 +33,7 @@ which must be a child (no more distant descendant)
 of the tracing process.
 A process being traced
 behaves normally until it encounters some signal whether internally generated
-like ``illegal instruction&#39;&#39; or externally generated like ``interrupt.&#39;&#39;
+like ``illegal instruction'' or externally generated like ``interrupt.''
 See signal (II) for the list.
 Then the traced process enters a stopped state
 and its parent is notified via
@@ -62,7 +62,7 @@ if the parent does not expect to trace the child.
 .s3
 .lp +4 4
 1,2	The
-word in the child process&#39;s address space
+word in the child process's address space
 at
 .it addr
 is returned (in r0).
@@ -77,7 +77,7 @@ is ignored.
 .s3
 .lp +4 4
 3	The word
-of the system&#39;s per-process data area corresponding to
+of the system's per-process data area corresponding to
 .it addr
 is returned.
 .it Addr
@@ -92,7 +92,7 @@ structure in the system.
 4,5	The
 given
 .it data
-is written at the word in the process&#39;s address space corresponding to
+is written at the word in the process's address space corresponding to
 .it addr,
 which must be even.
 No useful value is returned.
@@ -102,7 +102,7 @@ Attempts to write in pure procedure result in termination of the
 child, instead of going through or causing an error for the parent.
 .s3
 .lp +4 4
-6	The process&#39;s system data is written,
+6	The process's system data is written,
 as it is read with request 3.
 Only a few locations can be written in this way:
 the general registers,
@@ -113,13 +113,13 @@ and certain bits of the processor status word.
 7	The
 .it data
 argument is taken as a signal number
-and the child&#39;s execution continues
+and the child's execution continues
 as if it had incurred that signal.
 Normally the signal number will be
 either 0 to indicate that the signal which caused the stop
 should be ignored,
 or that value fetched out of the
-process&#39;s image indicating which signal caused
+process's image indicating which signal caused
 the stop.
 .s3
 .lp +4 4
@@ -134,7 +134,7 @@ The
 .it wait
 call is used to determine
 when a process stops;
-in such a case the ``termination&#39;&#39; status
+in such a case the ``termination'' status
 returned by
 .it wait
 has the value 0177 to indicate stoppage rather
@@ -147,7 +147,7 @@ on subsequent
 .it exec
 (II)
  calls.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 wait (II), signal (II), cdb (I)
 .sh DIAGNOSTICS
 From assembler, the c-bit (error bit) is set on errors;
@@ -159,7 +159,7 @@ The request 0 call should be able to specify
 signals which are to be treated normally and not cause a stop.
 In this way, for example,
 programs with simulated floating point (which
-use ``illegal instruction&#39;&#39; signals at a very high rate)
+use ``illegal instruction'' signals at a very high rate)
 could be efficiently debugged.
 .s3
 Also, it should be possible to stop a process on occurrence of a system

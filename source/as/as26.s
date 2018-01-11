@@ -9,7 +9,7 @@ opline:
 		br 2f
 	cmp	r4,$5
 	beq	opeof
-	cmp	r4,$&#39;&lt;
+	cmp	r4,$'<
 	bne	xpr
 	jmp	opl17
 xxpr:
@@ -80,7 +80,7 @@ opeof:
 	tstb	-(r1)
 	br	1b
 1:
-	movb	$&#39;\n,(r1)+
+	movb	$'\n,(r1)+
 	clrb	(r1)+
 	tst	(sp)+
 	rts	pc
@@ -115,7 +115,7 @@ op2b:
 	asr	(sp)
 	cmp	(sp),rlimit
 	blo	1f
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 1:
 	bis	(sp)+,r2
 	bis	(sp)+,r2
@@ -163,7 +163,7 @@ opl36:
 	beq	2f
 	add	$2,r2
 2:
-	add	r2,dot		/ if doesn&#39;t fit
+	add	r2,dot		/ if doesn't fit
 	add	$2,dot
 	tst	(sp)+
 	rts	pc
@@ -176,7 +176,7 @@ opl36:
 	cmp	r0,$br
 	beq	2f
 	mov	$402,r2
-	xor	r0,r2		/ flip cond, add &quot;.+6&quot;
+	xor	r0,r2		/ flip cond, add ".+6"
 	mov	$1,r3
 	jsr	pc,outw
 2:
@@ -232,7 +232,7 @@ dobranch:
 	jsr	pc,outw
 	rts	pc
 2:
-	jsr	r5,error; &#39;b
+	jsr	r5,error; 'b
 	clr	r2
 	br	3b
 
@@ -266,7 +266,7 @@ opl11:
 opl16:
 	jsr	pc,expres
 	jsr	pc,outb
-	cmp	r4,$&#39;,
+	cmp	r4,$',
 	bne	1f
 	jsr	pc,readop
 	br	opl16
@@ -274,7 +274,7 @@ opl16:
 	tst	(sp)+
 	rts	pc
 
-/ &lt; (.ascii)
+/ < (.ascii)
 opl17:
 	jsr	pc,getw
 	mov	$1,r3
@@ -316,7 +316,7 @@ opl23:
 	blo	1f
 	bisb	$40,(r4)
 	jsr	pc,readop
-	cmp	r4,$&#39;,
+	cmp	r4,$',
 	bne	1f
 	jsr	pc,readop
 	br	opl23
@@ -375,18 +375,18 @@ opl32:
 addres:
 	clr	-(sp)
 4:
-	cmp	r4,$&#39;(
+	cmp	r4,$'(
 	beq	alp
-	cmp	r4,$&#39;-
+	cmp	r4,$'-
 	beq	amin
-	cmp	r4,$&#39;$
+	cmp	r4,$'$
 	beq	adoll
-	cmp	r4,$&#39;*
+	cmp	r4,$'*
 	bne	getx
 	jmp	astar
 getx:
 	jsr	pc,expres
-	cmp	r4,$&#39;(
+	cmp	r4,$'(
 	bne	2f
 	jsr	pc,readop
 	mov	r2,(r5)+
@@ -428,7 +428,7 @@ alp:
 	jsr	pc,expres
 	jsr	pc,checkrp
 	jsr	pc,checkreg
-	cmp	r4,$&#39;+
+	cmp	r4,$'+
 	beq	1f
 	tst	(sp)+
 	beq	2f
@@ -448,10 +448,10 @@ alp:
 
 amin:
 	jsr	pc,readop
-	cmp	r4,$&#39;(
+	cmp	r4,$'(
 	beq	1f
 	mov	r4,savop
-	mov	$&#39;-,r4
+	mov	$'-,r4
 	br	getx
 1:
 	jsr	pc,readop
@@ -475,14 +475,14 @@ adoll:
 astar:
 	tst	(sp)
 	beq	1f
-	jsr	r5,error; &#39;*
+	jsr	r5,error; '*
 1:
 	mov	$10,(sp)
 	jsr	pc,readop
 	jmp	4b
 
 errora:
-	jsr	r5,error; &#39;a
+	jsr	r5,error; 'a
 	rts	pc
 
 checkreg:
@@ -501,13 +501,13 @@ checkreg:
 	rts	pc
 
 errore:
-	jsr	r5,error; &#39;e
+	jsr	r5,error; 'e
 	rts	pc
 
 checkrp:
-	cmp	r4,$&#39;)
+	cmp	r4,$')
 	beq	1f
-	jsr	r5,error; &#39;)
+	jsr	r5,error; ')
 	rts	pc
 1:
 	jsr	pc,readop

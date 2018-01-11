@@ -29,17 +29,17 @@ start:
 	cmp	r0,sp
 	blo	1b
 	jsr	pc,getc
-	cmp	r0,$&#39;k
+	cmp	r0,$'k
 	bne	3f
 	mov	$rkblk,r0
 	br	1f
 3:
-	cmp	r0,$&#39;p
+	cmp	r0,$'p
 	bne	2b
 	mov	$rpblk,r0
 1:
 	mov	r0,rxblk
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	pc,putc
 	mov	$names,r1
 
@@ -47,9 +47,9 @@ start:
 	mov	r1,r2
 2:
 	jsr	pc,getc
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
-	cmp	r0,$&#39;/
+	cmp	r0,$'/
 	beq	3f
 	movb	r0,(r2)+
 	br	2b
@@ -198,30 +198,30 @@ getc:
 	bge	1b
 	mov	tkb,r0
 	bic	$!177,r0
-	cmp	r0,$&#39;A
+	cmp	r0,$'A
 	blo	1f
-	cmp	r0,$&#39;Z
+	cmp	r0,$'Z
 	bhi	1f
 	add	$40,r0
 1:
-	cmp	r0,$&#39;\r
+	cmp	r0,$'\r
 	bne	putc
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 
 tps = 177564
 tpb = 177566
 putc:
 	tstb	tps
 	bge	putc
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
-	mov	$&#39;\r,r0
+	mov	$'\r,r0
 	jsr	pc,putc
-	mov	$&#39;\n+200,r0
+	mov	$'\n+200,r0
 	jsr	pc,putc
 	clr	r0
 	jsr	pc,putc
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	rts	pc
 1:
 	mov	r0,tpb

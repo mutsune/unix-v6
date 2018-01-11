@@ -236,7 +236,7 @@ struct tconst czero, cone, fczero;
 
 #define	TYLEN	2
 #define	TYPE	07
-#define	XTYPE	(03&lt;&lt;3)
+#define	XTYPE	(03<<3)
 #define	PTR	010
 #define	FUNC	020
 #define	ARRAY	030

@@ -29,11 +29,11 @@ gocv:
 	rts	r5
 
 eocv:
-	mov	$&#39;e,-(sp)
+	mov	$'e,-(sp)
 	br	1f
 
 docv:
-	mov	$&#39;d,-(sp)
+	mov	$'d,-(sp)
 1:
 	tst	gflg
 	bne	1f
@@ -48,7 +48,7 @@ docv:
 2:
 	tst	nflg
 	beq	2f
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	r5,fputcc
 2:
 	mov	ndig,r1
@@ -67,7 +67,7 @@ docv:
 	sub	r2,(sp)
 	tst	r2
 	bgt	2f
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	r5,fputcc
 	br	3f
 2:
@@ -76,12 +76,12 @@ docv:
 	jsr	r5,fputcc
 	sob	r2,2b
 3:
-	mov	$&#39;.,r0
+	mov	$'.,r0
 	jsr	r5,fputcc
 	neg	r2
 	ble	2f
 3:
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	r5,fputcc
 	sob	r2,3b
 2:
@@ -96,20 +96,20 @@ docv:
 	jsr	r5,fputcc
 	mov	(sp)+,r1
 	bge	2f
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	r5,fputcc
 	neg	r1
 	br	3f
 2:
-	mov	$&#39;+,r0
+	mov	$'+,r0
 	jsr	r5,fputcc
 3:
 	clr	r0
 	div	$10.,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	r5,fputcc
 	mov	r1,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	r5,fputcc
 	tst	(sp)+
 	rts	r5
@@ -156,12 +156,12 @@ focv:
 1:
 	tst	nflg
 	beq	1f
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	r5,fputcc
 1:
 	tst	r2
 	bgt	1f
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	r5,fputcc
 	br	2f
 1:
@@ -171,7 +171,7 @@ focv:
 2:
 	tst	(sp)+
 	beq	1f
-	mov	$&#39;.,r0
+	mov	$'.,r0
 	jsr	r5,fputcc
 1:
 	mov	ndig,-(sp)
@@ -180,7 +180,7 @@ focv:
 	bge	1f
 	neg	r2
 2:
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	r5,fputcc
 	dec	ndig
 	ble	1f
@@ -199,7 +199,7 @@ focv:
 getarg:
 	clr	nflg
 	setd
-	cmpb	itype,$&#39;r
+	cmpb	itype,$'r
 	beq	1f
 	seti
 	cmpb	ilen,$4

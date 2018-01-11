@@ -2,15 +2,15 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../reg.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../filsys.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../file.h&quot;
-#include &quot;../conf.h&quot;
+#include "../param.h"
+#include "../systm.h"
+#include "../reg.h"
+#include "../buf.h"
+#include "../filsys.h"
+#include "../user.h"
+#include "../inode.h"
+#include "../file.h"
+#include "../conf.h"
 
 /*
  * the fstat system call.
@@ -22,7 +22,7 @@ fstat()
 	fp = getf(u.u_ar0[R0]);
 	if(fp == NULL)
 		return;
-	stat1(fp-&gt;f_inode, u.u_arg[0]);
+	stat1(fp->f_inode, u.u_arg[0]);
 }
 
 /*
@@ -33,7 +33,7 @@ stat()
 	register ip;
 	extern uchar;
 
-	ip = namei(&amp;uchar, 0);
+	ip = namei(&uchar, 0);
 	if(ip == NULL)
 		return;
 	stat1(ip, u.u_arg[1]);
@@ -50,14 +50,14 @@ int *ip;
 	register i, *bp, *cp;
 
 	iupdat(ip, time);
-	bp = bread(ip-&gt;i_dev, ldiv(ip-&gt;i_number+31, 16));
-	cp = bp-&gt;b_addr + 32*lrem(ip-&gt;i_number+31, 16) + 24;
-	ip = &amp;(ip-&gt;i_dev);
-	for(i=0; i&lt;14; i++) {
+	bp = bread(ip->i_dev, ldiv(ip->i_number+31, 16));
+	cp = bp->b_addr + 32*lrem(ip->i_number+31, 16) + 24;
+	ip = &(ip->i_dev);
+	for(i=0; i<14; i++) {
 		suword(ub, *ip++);
 		ub =+ 2;
 	}
-	for(i=0; i&lt;4; i++) {
+	for(i=0; i<4; i++) {
 		suword(ub, *cp++);
 		ub =+ 2;
 	}
@@ -74,10 +74,10 @@ dup()
 	fp = getf(u.u_ar0[R0]);
 	if(fp == NULL)
 		return;
-	if ((i = ufalloc()) &lt; 0)
+	if ((i = ufalloc()) < 0)
 		return;
 	u.u_ofile[i] = fp;
-	fp-&gt;f_count++;
+	fp->f_count++;
 }
 
 /*
@@ -94,15 +94,15 @@ smount()
 	if(u.u_error)
 		return;
 	u.u_dirp = u.u_arg[1];
-	ip = namei(&amp;uchar, 0);
+	ip = namei(&uchar, 0);
 	if(ip == NULL)
 		return;
-	if(ip-&gt;i_count!=1 || (ip-&gt;i_mode&amp;(IFBLK&amp;IFCHR))!=0)
+	if(ip->i_count!=1 || (ip->i_mode&(IFBLK&IFCHR))!=0)
 		goto out;
 	smp = NULL;
-	for(mp = &amp;mount[0]; mp &lt; &amp;mount[NMOUNT]; mp++) {
-		if(mp-&gt;m_bufp != NULL) {
-			if(d == mp-&gt;m_dev)
+	for(mp = &mount[0]; mp < &mount[NMOUNT]; mp++) {
+		if(mp->m_bufp != NULL) {
+			if(d == mp->m_dev)
 				goto out;
 		} else
 		if(smp == NULL)
@@ -118,16 +118,16 @@ smount()
 		brelse(mp);
 		goto out1;
 	}
-	smp-&gt;m_inodp = ip;
-	smp-&gt;m_dev = d;
-	smp-&gt;m_bufp = getblk(NODEV);
-	bcopy(mp-&gt;b_addr, smp-&gt;m_bufp-&gt;b_addr, 256);
-	smp = smp-&gt;m_bufp-&gt;b_addr;
-	smp-&gt;s_ilock = 0;
-	smp-&gt;s_flock = 0;
-	smp-&gt;s_ronly = u.u_arg[2] &amp; 1;
+	smp->m_inodp = ip;
+	smp->m_dev = d;
+	smp->m_bufp = getblk(NODEV);
+	bcopy(mp->b_addr, smp->m_bufp->b_addr, 256);
+	smp = smp->m_bufp->b_addr;
+	smp->s_ilock = 0;
+	smp->s_flock = 0;
+	smp->s_ronly = u.u_arg[2] & 1;
 	brelse(mp);
-	ip-&gt;i_flag =| IMOUNT;
+	ip->i_flag =| IMOUNT;
 	prele(ip);
 	return;
 
@@ -150,30 +150,30 @@ sumount()
 	d = getmdev();
 	if(u.u_error)
 		return;
-	for(mp = &amp;mount[0]; mp &lt; &amp;mount[NMOUNT]; mp++)
-		if(mp-&gt;m_bufp!=NULL &amp;&amp; d==mp-&gt;m_dev)
+	for(mp = &mount[0]; mp < &mount[NMOUNT]; mp++)
+		if(mp->m_bufp!=NULL && d==mp->m_dev)
 			goto found;
 	u.u_error = EINVAL;
 	return;
 
 found:
-	for(ip = &amp;inode[0]; ip &lt; &amp;inode[NINODE]; ip++)
-		if(ip-&gt;i_number!=0 &amp;&amp; d==ip-&gt;i_dev) {
+	for(ip = &inode[0]; ip < &inode[NINODE]; ip++)
+		if(ip->i_number!=0 && d==ip->i_dev) {
 			u.u_error = EBUSY;
 			return;
 		}
 	(*bdevsw[d.d_major].d_close)(d, 0);
-	ip = mp-&gt;m_inodp;
-	ip-&gt;i_flag =&amp; ~IMOUNT;
+	ip = mp->m_inodp;
+	ip->i_flag =& ~IMOUNT;
 	iput(ip);
-	ip = mp-&gt;m_bufp;
-	mp-&gt;m_bufp = NULL;
+	ip = mp->m_bufp;
+	mp->m_bufp = NULL;
 	brelse(ip);
 }
 
 /*
  * Common code for mount and umount.
- * Check that the user&#39;s argument is a reasonable
+ * Check that the user's argument is a reasonable
  * thing on which to mount, and return the device number if so.
  */
 getmdev()
@@ -181,13 +181,13 @@ getmdev()
 	register d, *ip;
 	extern uchar;
 
-	ip = namei(&amp;uchar, 0);
+	ip = namei(&uchar, 0);
 	if(ip == NULL)
 		return;
-	if((ip-&gt;i_mode&amp;IFMT) != IFBLK)
+	if((ip->i_mode&IFMT) != IFBLK)
 		u.u_error = ENOTBLK;
-	d = ip-&gt;i_addr[0];
-	if(ip-&gt;i_addr[0].d_major &gt;= nblkdev)
+	d = ip->i_addr[0];
+	if(ip->i_addr[0].d_major >= nblkdev)
 		u.u_error = ENXIO;
 	iput(ip);
 	return(d);

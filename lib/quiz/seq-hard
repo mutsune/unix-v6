@@ -1,5 +1,5 @@
-1,1,2,1,2,2,3,1,2,2,3,2,3,3,4:1{(1&#39;s in binary nos)}:number of 1&#39;s in binary numbers
-1,1,2,2,4,2,6,4,6,4,10:4{(phi(n))}:Euler&#39;s [totient|phi]{ function}|phi(n)
+1,1,2,1,2,2,3,1,2,2,3,2,3,3,4:1{(1's in binary nos)}:number of 1's in binary numbers
+1,1,2,2,4,2,6,4,6,4,10:4{(phi(n))}:Euler's [totient|phi]{ function}|phi(n)
 1,2,2,4,2,4,2,4,6,2:6{(diff of primes)}:diff{erences} [between|of] primes
 1,2,4,11,34:156{(unlabeled graphs)}:{unlabeled }graphs
 1,2,5,14,42,132:429{(Catalan)}:Catalan{ numbers}

@@ -45,9 +45,9 @@ char partab[];			/* ASCII table: parity, character class */
 #define	TTIPRI	10
 #define	TTOPRI	20
 
-#define	CERASE	&#39;#&#39;		/* default special characters */
+#define	CERASE	'#'		/* default special characters */
 #define	CEOT	004
-#define	CKILL	&#39;@&#39;
+#define	CKILL	'@'
 #define	CQUIT	034		/* FS, cntl shift L */
 #define	CINTR	0177		/* DEL */
 

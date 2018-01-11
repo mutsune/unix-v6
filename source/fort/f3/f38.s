@@ -31,7 +31,7 @@ sstop:
 	jsr	r5,geti
 1:
 	jsr	r5,code
-		&lt;	stop; %d\n\0&gt;; .even
+		<	stop; %d\n\0>; .even
 		r0
 	br	8f
 
@@ -43,7 +43,7 @@ spaus:
 	bne	7f
 	jsr	r5,geti
 	jsr	r5,code
-		&lt;	paus; %d\n\0&gt;; .even
+		<	paus; %d\n\0>; .even
 		r0
 	br	8f
 
@@ -54,7 +54,7 @@ sretu:
 	br	sstop
 1:
 	jsr	r5,code
-		&lt;	retrn\n\0&gt;; .even
+		<	retrn\n\0>; .even
 8:
 scont:
 	tstb	(r1)
@@ -90,6 +90,6 @@ scall:
 1:
 	jsr	r5,funcappl
 	jsr	r5,code
-		&lt;0\n\0&gt;; .even
+		<0\n\0>; .even
 	br	8b
 

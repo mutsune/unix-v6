@@ -28,13 +28,13 @@ stype:
 	tst	r0
 	bne	3f		/ junk error if not identifier
 	mov	symtab(r3),r0
-	bic	$![377\&lt;8+7],r0 / size,type
+	bic	$![377\<8+7],r0 / size,type
 	beq	2f
 	cmp	r0,(sp)		/ redefined, but same
 	beq	2f
 	jsr	r5,error; 3.
 2:
-	bic	$377\&lt;8+7,symtab(r3)
+	bic	$377\<8+7,symtab(r3)
 	bis	(sp),symtab(r3)	/ set in type and size
 	mov	r3,-(sp)
 	jsr	r5,getsym
@@ -56,8 +56,8 @@ stype:
 	rts	r5
 
 funtab:
-	&lt;function\0&gt;
-	&lt;\0&gt;
+	<function\0>
+	<\0>
 
 getype:
 	mov	r1,r2
@@ -81,14 +81,14 @@ tvaltab:
 	realcon
 
 typtab:
-	&lt;logical*1\0&gt;
-	&lt;logical\0&gt;
-	&lt;integer*1\0&gt;
-	&lt;integer*2\0&gt;
-	&lt;integer\0&gt;
-	&lt;doublecomplex\0&gt;
-	&lt;doubleprecision\0&gt;
-	&lt;complex\0&gt;
-	&lt;real*8\0&gt;
-	&lt;real\0&gt;
-	&lt;\0&gt;
+	<logical*1\0>
+	<logical\0>
+	<integer*1\0>
+	<integer*2\0>
+	<integer\0>
+	<doublecomplex\0>
+	<doubleprecision\0>
+	<complex\0>
+	<real*8\0>
+	<real\0>
+	<\0>

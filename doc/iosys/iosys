@@ -5,7 +5,7 @@
 .ps 10
 .vs 11p
 .br
-.tl &#39;-&#39;&#39;&#39;
+.tl '-'''
 .de pg
 .sp .5
 ..
@@ -20,17 +20,17 @@
 .ft R
 ..
 .de he
-.tl &#39;-&#39;&#39;&#39;
-&#39;sp .5i
+.tl '-'''
+'sp .5i
 .ft I
-.if e  &#39;tl &#39;% - Unix I/O System&#39;&#39;&#39;
-.if o &#39;tl &#39;&#39;&#39;Unix I/O System - %&#39;
+.if e  'tl '% - Unix I/O System'''
+.if o 'tl '''Unix I/O System - %'
 .ft P
-&#39;sp .5i
-&#39;ns
+'sp .5i
+'ns
 ..
 .de fo
-&#39;bp
+'bp
 ..
 .de MS
 .ne 4
@@ -74,11 +74,11 @@ ordinary files.
 .pg
 It is assumed that the reader has a good knowledge
 of the overall structure of the file system as discussed
-in the paper ``The Unix Time-sharing System.&#39;&#39;
+in the paper ``The Unix Time-sharing System.''
 Moreover the present document is intended to be used in
 conjunction with a copy of the system code,
 since it is basically an exegesis of that code.
-.MS &quot;Device Classes&quot;
+.MS "Device Classes"
 There are two classes of device:
 .it block
 and
@@ -121,7 +121,7 @@ several similar hardware interfaces.
 The major device numbers for block and character devices
 are used as indices in separate tables;
 they both start at 0 and therefore overlap.
-.MS &quot;Overview of I/O&quot;
+.MS "Overview of I/O"
 The purpose of
 the
 .it open
@@ -132,7 +132,7 @@ system tables.
 The first of these is the
 .it u_ofile
 table,
-which is stored in the system&#39;s per-process
+which is stored in the system's per-process
 data area
 .it u.
 This table is indexed by
@@ -178,7 +178,7 @@ Finally, there is a pointer to the
 entry for the file in the
 .it inode
 table,
-which contains a copy of the file&#39;s i-node.
+which contains a copy of the file's i-node.
 Notice that an entry in the
 .it file
 table corresponds precisely to an instance of
@@ -218,7 +218,7 @@ During the processing of an
 or
 .it creat
 call for a special file,
-the system always calls the device&#39;s
+the system always calls the device's
 .it open
 routine to allow for any special processing
 required (rewinding a tape, turning on
@@ -242,7 +242,7 @@ When a
 or
 .it write
 takes place,
-the user&#39;s arguments
+the user's arguments
 and the
 .it file
 table entry are used to set up the
@@ -269,7 +269,7 @@ special file need not be mapped.
 In any event, the resulting physical block number
 is used, as discussed below, to
 read or write the appropriate device.
-.MS &quot;Character device drivers&quot;
+.MS "Character device drivers"
 The
 .it cdevsw
 table specifies the interface routines present for
@@ -337,14 +337,14 @@ if
 that
 .it u.u_base
 refers to the system address space instead of
-the user&#39;s.
+the user's.
 .pg
 The
 .it write
 routine
 should copy up to
 .it u.u_count
-characters from the user&#39;s buffer to the device,
+characters from the user's buffer to the device,
 decrementing
 .it u.u_count
 for each character passed.
@@ -352,10 +352,10 @@ For most drivers, which work one character at a time,
 the routine
 .pg
 .ti 5
-.it &quot;cpass( )&quot;
+.it "cpass( )"
 .pg
 is used to pick up characters
-from the user&#39;s buffer.
+from the user's buffer.
 Successive calls on it return
 the characters to be written until
 .it u.u_count
@@ -372,7 +372,7 @@ a probably large number of characters into an internal
 buffer may also use the routine
 .pg
 .ti 5
-.it &quot;iomove(buffer, offset, count, flag)&quot;
+.it "iomove(buffer, offset, count, flag)"
 .pg
 which is faster when many characters must be moved.
 .it Iomove
@@ -393,12 +393,12 @@ the count is not too large and is non-zero.
 As an efficiency note,
 .it iomove
 is much slower if any of
-.it &quot;buffer+offset, count&quot;
+.it "buffer+offset, count"
 or
 .it u.u_base
 is odd.
 .pg
-The device&#39;s
+The device's
 .it read
 routine is called under conditions similar to
 .it write,
@@ -408,7 +408,7 @@ is guaranteed to be non-zero.
 To return characters to the user, the routine
 .pg
 .ti 5
-.it &quot;passc(c)&quot;
+.it "passc(c)"
 .pg
 is available; it takes care of housekeeping
 like
@@ -425,7 +425,7 @@ the flag should be
 .it B_READ
 but the same cautions apply.
 .pg
-The ``special-functions&#39;&#39; routine
+The ``special-functions'' routine
 is invoked by the
 .it stty
 and
@@ -433,11 +433,11 @@ and
 system calls as follows:
 .pg
 .ti 5
-.it &quot;(*p) (dev, v)&quot;
+.it "(*p) (dev, v)"
 .pg
 where
 .it p
-is a pointer to the device&#39;s routine,
+is a pointer to the device's routine,
 .it dev
 is the device number,
 and
@@ -456,14 +456,14 @@ is 0;
 the device should take up to 3 words of
 control information from
 the array
-.it &quot;u.u_arg[0...2].&quot;
+.it "u.u_arg[0...2]."
 .pg
 Finally, each device should have appropriate interrupt-time
 routines.
 When an interrupt occurs, it is turned into a C-compatible call
-on the devices&#39;s interrupt routine.
+on the devices's interrupt routine.
 The interrupt-catching mechanism makes
-the low-order four bits of the ``new PS&#39;&#39; word in the
+the low-order four bits of the ``new PS'' word in the
 trap vector for the interrupt available
 to the interrupt handler.
 This is conventionally used by drivers
@@ -477,8 +477,8 @@ A number of subroutines are available which are useful
 to character device drivers.
 Most of these handlers, for example, need a place
 to buffer characters in the internal interface
-between their ``top half&#39;&#39; (read/write)
-and ``bottom half&#39;&#39; (interrupt) routines.
+between their ``top half'' (read/write)
+and ``bottom half'' (interrupt) routines.
 For relatively low data-rate devices, the best mechanism
 is the character queue maintained by the
 routines
@@ -502,7 +502,7 @@ struct {
 A character is placed on the end of a queue by
 .pg
 .ti 5
-.it &quot;putc(c, &amp;queue)&quot;
+.it "putc(c, &queue)"
 .pg
 where
 .it c
@@ -515,7 +515,7 @@ The first character on the queue may be retrieved
 by
 .pg
 .ti 5
-.it &quot;getc(&amp;queue)&quot;
+.it "getc(&queue)"
 .pg
 which returns either the (non-negative) character
 or \(mi1 if the queue is empty.
@@ -533,7 +533,7 @@ to device handlers is the sleep-wakeup mechanism.
 The call
 .pg
 .ti 5
-.it &quot;sleep(event, priority)&quot;
+.it "sleep(event, priority)"
 .pg
 causes the process to wait (allowing other processes to run)
 until the
@@ -547,7 +547,7 @@ process with higher
 The call
 .pg
 .ti 5
-.it &quot;wakeup(event)&quot;
+.it "wakeup(event)"
 .pg
 indicates that the
 .it event
@@ -585,7 +585,7 @@ in a routine called at interrupt time, since the process
 which is running is almost certainly not the
 process which should go to sleep.
 Likewise, none of the variables in the user area
-``\fIu\fB.\fR&#39;&#39;
+``\fIu\fB.\fR''
 should be touched, let alone changed, by an interrupt routine.
 .pg
 If a device driver
@@ -597,7 +597,7 @@ generally cause an interrupt),
 the call
 .pg
 .ti 5
-.it &quot;sleep(&amp;lbolt, priority)
+.it "sleep(&lbolt, priority)
 .pg
 may be given.
 .it Lbolt
@@ -607,7 +607,7 @@ by the clock interrupt routine.
 The routines
 .pg
 .ti 5
-.it &quot;spl4( ), spl5( ), spl6( ), spl7( )&quot;
+.it "spl4( ), spl5( ), spl6( ), spl7( )"
 .pg
 are available to
 set the processor priority level as indicated to avoid
@@ -617,7 +617,7 @@ If a device needs to know about real-time intervals,
 then
 .pg
 .ti 5
-.it &quot;timeout(func, arg, interval)
+.it "timeout(func, arg, interval)
 .pg
 will be useful.
 This routine arranges that after
@@ -629,7 +629,7 @@ will be called with
 as argument, in the style
 .pg
 .ti 5
-.it &quot;(*func)(arg)
+.it "(*func)(arg)
 .pg
 Timeouts are used, for example,
 to provide real-time delays after function characters
@@ -648,7 +648,7 @@ Also, the specified
 is called at clock-interrupt time, so it should
 conform to the requirements of interrupt routines
 in general.
-.ms &quot;An example&quot;
+.ms "An example"
 The driver for the paper-tape
 reader/punch is worth examining
 as a fairly simple example of
@@ -692,7 +692,7 @@ Thus
 .it open
 loops until the state changes, meanwhile
 sleeping on the
-``lightning bolt&#39;&#39;
+``lightning bolt''
 .it lbolt.
 If it did not sleep at all, it would prevent
 any other process from running until the reader came on-line;
@@ -728,7 +728,7 @@ The
 .it pcread
 routine
 tries to pick up characters from the input queue
-and passes them back until the user&#39;s read call
+and passes them back until the user's read call
 is satisfied.
 If there
 are no characters it checks
@@ -746,14 +746,14 @@ be passed back, indicating an end-of-file.
 If the state is still
 .it READING
 the routine enables another character by fiddling the
-device&#39;s reader control register,
+device's reader control register,
 provided it is not active,
 and goes to sleep.
 .pg
 When a reader interrupt occurs
 and the state is
 .it WAITING,
-and the device&#39;s error bit is set,
+and the device's error bit is set,
 the interrupt is ignored;
 if there is no error the state is set to
 .it READING,
@@ -783,7 +783,7 @@ Looking again at
 notice that
 the priority  level is raised
 by
-.it &quot;spl4( )&quot;
+.it "spl4( )"
 to prevent interrupts during the loop.
 This is done because of the
 possibility that the input queue is empty,
@@ -869,7 +869,7 @@ it
 wakes up the write routine,
 which is presumably waiting for the queue to
 empty.
-.MS &quot;The Block-device Interface&quot;
+.MS "The Block-device Interface"
 Handling of block devices is mediated by a collection
 of routines which manage a set of buffers containing
 the images of blocks of data on the various devices.
@@ -885,14 +885,14 @@ The main data base for this mechanism is the
 table of buffers
 .it buf.
 Each buffer header contains a pair of pointers
-.it &quot;(b_forw, b_back)&quot;
+.it "(b_forw, b_back)"
 which maintain a doubly-linked list
 of the buffers associated with a particular
 block device, and a
 pair of pointers
-.it &quot;(av_forw, av_back)&quot;
+.it "(av_forw, av_back)"
 which generally maintain a doubly-linked list of blocks
-which are ``free,&#39;&#39; that is,
+which are ``free,'' that is,
 eligible to be reallocated for another transaction.
 Buffers which have I/O in progress
 or are busy for other purposes do not appear in this list.
@@ -931,7 +931,7 @@ or not is indicated by the
 .it B_DONE
 bit; see below).
 In either case the buffer, and the corresponding
-device block, is made ``busy,&#39;&#39;
+device block, is made ``busy,''
 so that other processes referring to it
 are obliged to wait until it becomes free.
 .it Getblk
@@ -958,10 +958,10 @@ use by others and place it on the free list.
 puts the
 buffer on the appropriate device queue,
 waits for the write to be done,
-and sets the user&#39;s error flag if required.
+and sets the user's error flag if required.
 .it
 .it Bawrite
-places the buffer on the device&#39;s queue, but does not wait
+places the buffer on the device's queue, but does not wait
 for completion, so that errors cannot be reflected directly to
 the user.
 .it Bdwrite
@@ -1003,13 +1003,13 @@ not be accessed again soon and one might as
 well start the writing process as soon as possible.
 .pg
 In any event, notice that the routines
-.it &quot;getblk&quot;
+.it "getblk"
 and
 .it bread
 dedicate the given block exclusively to the
 use of the caller, and make others wait,
 while one of
-.it &quot;brelse, bwrite, bawrite,&quot;
+.it "brelse, bwrite, bawrite,"
 or
 .it bdwrite
 must eventually be called to free the block for use by others.
@@ -1059,7 +1059,7 @@ scheme may be implemented.
 .ms B_BUSY
 This bit indicates that the buffer header is not on
 the free list, i.e. is
-dedicated to someone&#39;s exclusive use.
+dedicated to someone's exclusive use.
 The buffer still remains attached to the list of
 blocks associated with its device, however.
 When
@@ -1131,7 +1131,7 @@ of data in the system (including the buffers)
 were mapped by the relocation hardware to
 a physical address differing from its
 virtual address.
-.MS &quot;Block Device Drivers&quot;
+.MS "Block Device Drivers"
 The
 .it bdevsw
 table contains the names of the interface routines
@@ -1155,7 +1155,7 @@ a read/write flag, the core address (including extended-memory
 bits),
 the block number, a (negative) word count,
 and the major and minor device number.
-The r\o&#39;o^&#39;le of the strategy routine
+The r\o'o^'le of the strategy routine
 is to carry out the operation as requested by the
 information in the buffer header.
 When the transaction is complete the
@@ -1173,7 +1173,7 @@ otherwise,
 In cases where the device
 is capable, under error-free operation,
 of transferring fewer words than requested,
-the device&#39;s word-count register should be placed
+the device's word-count register should be placed
 in the residual count slot of
 the buffer header;
 otherwise, the residual count should be set to 0.
@@ -1184,7 +1184,7 @@ records shorter than requested are quite normal,
 and the user should be told the actual length of the record.
 [However the mechanism has not been integrated
 into normal I/O even on magtape and is used only
-in ``raw&#39;&#39; I/O as discussed below.]
+in ``raw'' I/O as discussed below.]
 .pg
 Notice that although the most usual argument
 to the strategy routines
@@ -1202,13 +1202,13 @@ Care has to be taken that
 no extraneous bits get turned on in the
 flag word.
 .pg
-The device&#39;s table specified by
+The device's table specified by
 .it bdevsw
 has a
 byte to contain an active flag and an error count,
 a pair of links which constitute the
 head of the chain of buffers for the device
-.it &quot;(b_forw, b_back),&quot;
+.it "(b_forw, b_back),"
 and a first and last pointer for a device queue.
 Of these things, all are used solely by the device driver
 itself
@@ -1226,7 +1226,7 @@ Since buffers which have been handed over to
 the strategy routines are never
 on the list of free buffers,
 the pointers in the buffer which maintain the free list
-.it &quot;(av_forw, av_back)&quot;
+.it "(av_forw, av_back)"
 are also used to contain the pointers
 which maintain the device queues.
 .pg
@@ -1234,7 +1234,7 @@ A couple of routines
 are provided which are useful to block device drivers.
 .pg
 .ti 5
-.it &quot;iodone(bp)  ,&quot;
+.it "iodone(bp)  ,"
 .pg
 arranges that the buffer to which
 .it bp
@@ -1252,7 +1252,7 @@ standards adhered to by certain DEC hardware,
 the routine
 .pg
 .ti 5
-.it &quot;devstart(bp, devloc, devblk, hbcom)&quot;
+.it "devstart(bp, devloc, devblk, hbcom)"
 .pg
 is useful.
 Here
@@ -1266,7 +1266,7 @@ is the block number,
 and
 .it hbcom
 is a quantity to be stored in the high byte of
-the device&#39;s command register.
+the device's command register.
 It is understood, when using this routine, that
 the device registers are laid out in the order
 .pg
@@ -1289,7 +1289,7 @@ and structure of read and write commands.
 The routine
 .pg
 .ti 5
-.it &quot;geterror(bp)&quot;
+.it "geterror(bp)"
 .pg
 can be used to examine the error bit in a buffer header
 and arrange that any error indication found therein is
@@ -1298,7 +1298,7 @@ It may be called only in the non-interrupt
 part of a driver when I/O has completed
 .it (B_DONE
 has been set).
-.ms &quot;An example&quot;
+.ms "An example"
 The RF disk driver is worth studying
 as the simplest example of a block I/O device.
 Its
@@ -1334,10 +1334,10 @@ If there was no error or if
 the queue is advanced and
 .it rfstart
 is called to begin another transaction.
-.MS &quot;Raw Block-device I/O&quot;
+.MS "Raw Block-device I/O"
 A scheme has been set up whereby block device drivers may
 provide the ability to transfer information
-directly between the user&#39;s core image and the device
+directly between the user's core image and the device
 without the use of buffers and in blocks as large as
 the caller requests.
 The method involves setting up a character-type special file
@@ -1348,7 +1348,7 @@ and
 .it write
 routines which set up what is usually a private,
 non-shared buffer header with the appropriate information
-and call the device&#39;s strategy routine.
+and call the device's strategy routine.
 If desired, separate
 .it open
 and
@@ -1358,14 +1358,14 @@ A special-function routine might come in handy, especially for
 magtape.
 .pg
 A great deal of work has to be done to generate the
-``appropriate information&#39;&#39;
+``appropriate information''
 to put in the argument buffer for
 the strategy module;
 the worst part is to map relocated user addresses to physical addresses.
 Most of this work is done by
 .pg
 .ti 5
-.it &quot;physio(strat, bp, dev, rw)
+.it "physio(strat, bp, dev, rw)
 .pg
 whose arguments are the name of the
 strategy routine
@@ -1381,7 +1381,7 @@ whose value is either
 or
 .it B_WRITE.
 .it Physio
-makes sure that the user&#39;s base address and count are
+makes sure that the user's base address and count are
 even (because most devices work in words)
 and that the core area affected is contiguous
 in physical space;

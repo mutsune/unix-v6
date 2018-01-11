@@ -5,11 +5,11 @@
 /*
  *   KL/DL-11 driver
  */
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../tty.h&quot;
-#include &quot;../proc.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../user.h"
+#include "../tty.h"
+#include "../proc.h"
 
 /* base address */
 #define	KLADDR	0177560	/* console */
@@ -34,14 +34,14 @@ klopen(dev, flag)
 	register char *addr;
 	register struct tty *tp;
 
-	if(dev.d_minor &gt;= NKL11+NDL11) {
+	if(dev.d_minor >= NKL11+NDL11) {
 		u.u_error = ENXIO;
 		return;
 	}
-	tp = &amp;kl11[dev.d_minor];
-	if (u.u_procp-&gt;p_ttyp == 0) {
-		u.u_procp-&gt;p_ttyp = tp;
-		tp-&gt;t_dev = dev;
+	tp = &kl11[dev.d_minor];
+	if (u.u_procp->p_ttyp == 0) {
+		u.u_procp->p_ttyp = tp;
+		tp->t_dev = dev;
 	}
 	/*
 	 * set up minor 0 to address KLADDR
@@ -51,46 +51,46 @@ klopen(dev, flag)
 	addr = KLADDR + 8*dev.d_minor;
 	if(dev.d_minor)
 		addr =+ KLBASE-KLADDR-8;
-	if(dev.d_minor &gt;= NKL11)
+	if(dev.d_minor >= NKL11)
 		addr =+ DLBASE-KLBASE-8*NKL11+8;
-	tp-&gt;t_addr = addr;
-	if ((tp-&gt;t_state&amp;ISOPEN) == 0) {
-		tp-&gt;t_state = ISOPEN|CARR_ON;
-		tp-&gt;t_flags = XTABS|LCASE|ECHO|CRMOD;
-		tp-&gt;t_erase = CERASE;
-		tp-&gt;t_kill = CKILL;
+	tp->t_addr = addr;
+	if ((tp->t_state&ISOPEN) == 0) {
+		tp->t_state = ISOPEN|CARR_ON;
+		tp->t_flags = XTABS|LCASE|ECHO|CRMOD;
+		tp->t_erase = CERASE;
+		tp->t_kill = CKILL;
 	}
-	addr-&gt;klrcsr =| IENABLE|DSRDY|RDRENB;
-	addr-&gt;kltcsr =| IENABLE;
+	addr->klrcsr =| IENABLE|DSRDY|RDRENB;
+	addr->kltcsr =| IENABLE;
 }
 
 klclose(dev)
 {
 	register struct tty *tp;
 
-	tp = &amp;kl11[dev.d_minor];
+	tp = &kl11[dev.d_minor];
 	wflushtty(tp);
-	tp-&gt;t_state = 0;
+	tp->t_state = 0;
 }
 
 klread(dev)
 {
-	ttread(&amp;kl11[dev.d_minor]);
+	ttread(&kl11[dev.d_minor]);
 }
 
 klwrite(dev)
 {
-	ttwrite(&amp;kl11[dev.d_minor]);
+	ttwrite(&kl11[dev.d_minor]);
 }
 
 klxint(dev)
 {
 	register struct tty *tp;
 
-	tp = &amp;kl11[dev.d_minor];
+	tp = &kl11[dev.d_minor];
 	ttstart(tp);
-	if (tp-&gt;t_outq.c_cc == 0 || tp-&gt;t_outq.c_cc == TTLOWAT)
-		wakeup(&amp;tp-&gt;t_outq);
+	if (tp->t_outq.c_cc == 0 || tp->t_outq.c_cc == TTLOWAT)
+		wakeup(&tp->t_outq);
 }
 
 klrint(dev)
@@ -98,12 +98,12 @@ klrint(dev)
 	register int c, *addr;
 	register struct tty *tp;
 
-	tp = &amp;kl11[dev.d_minor];
-	addr = tp-&gt;t_addr;
-	c = addr-&gt;klrbuf;
-	addr-&gt;klrcsr =| RDRENB;
-	if ((c&amp;0177)==0)
-		addr-&gt;kltbuf = c;	/* hardware botch */
+	tp = &kl11[dev.d_minor];
+	addr = tp->t_addr;
+	c = addr->klrbuf;
+	addr->klrcsr =| RDRENB;
+	if ((c&0177)==0)
+		addr->kltbuf = c;	/* hardware botch */
 	ttyinput(c, tp);
 }
 
@@ -112,6 +112,6 @@ int *v;
 {
 	register struct tty *tp;
 
-	tp = &amp;kl11[dev.d_minor];
+	tp = &kl11[dev.d_minor];
 	ttystty(tp, v);
 }

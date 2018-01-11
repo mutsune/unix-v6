@@ -2,12 +2,12 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../systm.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../inode.h"
+#include "../user.h"
+#include "../buf.h"
+#include "../systm.h"
 
 /*
  * Bmap defines the structure of file system storage
@@ -24,19 +24,19 @@ int bn;
 	register *bp, *bap, nb;
 	int *nbp, d, i;
 
-	d = ip-&gt;i_dev;
-	if(bn &amp; ~077777) {
+	d = ip->i_dev;
+	if(bn & ~077777) {
 		u.u_error = EFBIG;
 		return(0);
 	}
 
-	if((ip-&gt;i_mode&amp;ILARG) == 0) {
+	if((ip->i_mode&ILARG) == 0) {
 
 		/*
 		 * small file algorithm
 		 */
 
-		if((bn &amp; ~7) != 0) {
+		if((bn & ~7) != 0) {
 
 			/*
 			 * convert small to large
@@ -44,26 +44,26 @@ int bn;
 
 			if ((bp = alloc(d)) == NULL)
 				return(NULL);
-			bap = bp-&gt;b_addr;
-			for(i=0; i&lt;8; i++) {
-				*bap++ = ip-&gt;i_addr[i];
-				ip-&gt;i_addr[i] = 0;
+			bap = bp->b_addr;
+			for(i=0; i<8; i++) {
+				*bap++ = ip->i_addr[i];
+				ip->i_addr[i] = 0;
 			}
-			ip-&gt;i_addr[0] = bp-&gt;b_blkno;
+			ip->i_addr[0] = bp->b_blkno;
 			bdwrite(bp);
-			ip-&gt;i_mode =| ILARG;
+			ip->i_mode =| ILARG;
 			goto large;
 		}
-		nb = ip-&gt;i_addr[bn];
-		if(nb == 0 &amp;&amp; (bp = alloc(d)) != NULL) {
+		nb = ip->i_addr[bn];
+		if(nb == 0 && (bp = alloc(d)) != NULL) {
 			bdwrite(bp);
-			nb = bp-&gt;b_blkno;
-			ip-&gt;i_addr[bn] = nb;
-			ip-&gt;i_flag =| IUPD;
+			nb = bp->b_blkno;
+			ip->i_addr[bn] = nb;
+			ip->i_flag =| IUPD;
 		}
 		rablock = 0;
-		if (bn&lt;7)
-			rablock = ip-&gt;i_addr[bn+1];
+		if (bn<7)
+			rablock = ip->i_addr[bn+1];
 		return(nb);
 	}
 
@@ -72,53 +72,53 @@ int bn;
 	 */
 
     large:
-	i = bn&gt;&gt;8;
-	if(bn &amp; 0174000)
+	i = bn>>8;
+	if(bn & 0174000)
 		i = 7;
-	if((nb=ip-&gt;i_addr[i]) == 0) {
-		ip-&gt;i_flag =| IUPD;
+	if((nb=ip->i_addr[i]) == 0) {
+		ip->i_flag =| IUPD;
 		if ((bp = alloc(d)) == NULL)
 			return(NULL);
-		ip-&gt;i_addr[i] = bp-&gt;b_blkno;
+		ip->i_addr[i] = bp->b_blkno;
 	} else
 		bp = bread(d, nb);
-	bap = bp-&gt;b_addr;
+	bap = bp->b_addr;
 
 	/*
-	 * &quot;huge&quot; fetch of double indirect block
+	 * "huge" fetch of double indirect block
 	 */
 
 	if(i == 7) {
-		i = ((bn&gt;&gt;8) &amp; 0377) - 7;
+		i = ((bn>>8) & 0377) - 7;
 		if((nb=bap[i]) == 0) {
 			if((nbp = alloc(d)) == NULL) {
 				brelse(bp);
 				return(NULL);
 			}
-			bap[i] = nbp-&gt;b_blkno;
+			bap[i] = nbp->b_blkno;
 			bdwrite(bp);
 		} else {
 			brelse(bp);
 			nbp = bread(d, nb);
 		}
 		bp = nbp;
-		bap = bp-&gt;b_addr;
+		bap = bp->b_addr;
 	}
 
 	/*
 	 * normal indirect fetch
 	 */
 
-	i = bn &amp; 0377;
-	if((nb=bap[i]) == 0 &amp;&amp; (nbp = alloc(d)) != NULL) {
-		nb = nbp-&gt;b_blkno;
+	i = bn & 0377;
+	if((nb=bap[i]) == 0 && (nbp = alloc(d)) != NULL) {
+		nb = nbp->b_blkno;
 		bap[i] = nb;
 		bdwrite(nbp);
 		bdwrite(bp);
 	} else
 		brelse(bp);
 	rablock = 0;
-	if(i &lt; 255)
+	if(i < 255)
 		rablock = bap[i+1];
 	return(nb);
 }
@@ -126,7 +126,7 @@ int bn;
 /*
  * Pass back  c  to the user at his location u_base;
  * update u_base, u_count, and u_offset.  Return -1
- * on the last character of the user&#39;s read.
+ * on the last character of the user's read.
  * u_base is in the user address space unless u_segflg is set.
  */
 passc(c)
@@ -135,7 +135,7 @@ char c;
 
 	if(u.u_segflg)
 		*u.u_base = c; else
-		if(subyte(u.u_base, c) &lt; 0) {
+		if(subyte(u.u_base, c) < 0) {
 			u.u_error = EFAULT;
 			return(-1);
 		}
@@ -147,10 +147,10 @@ char c;
 }
 
 /*
- * Pick up and return the next character from the user&#39;s
+ * Pick up and return the next character from the user's
  * write call at location u_base;
  * update u_base, u_count, and u_offset.  Return -1
- * when u_count is exhausted.  u_base is in the user&#39;s
+ * when u_count is exhausted.  u_base is in the user's
  * address space unless u_segflg is set.
  */
 cpass()
@@ -161,7 +161,7 @@ cpass()
 		return(-1);
 	if(u.u_segflg)
 		c = *u.u_base; else
-		if((c=fubyte(u.u_base)) &lt; 0) {
+		if((c=fubyte(u.u_base)) < 0) {
 			u.u_error = EFAULT;
 			return(-1);
 		}
@@ -169,7 +169,7 @@ cpass()
 	if(++u.u_offset[1] == 0)
 		u.u_offset[0]++;
 	u.u_base++;
-	return(c&amp;0377);
+	return(c&0377);
 }
 
 /*

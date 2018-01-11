@@ -62,8 +62,8 @@ struct	field {
 	char *n[2];
 }	fields[NF];
 int proto[9] {
-	&amp;fold,
-	&amp;nodict,
+	&fold,
+	&nodict,
 	0,
 	1,
 	0,
@@ -81,25 +81,25 @@ char **argv;
 	register int *p;
 	int *q;
 
-	for(a=0; a&lt;128; a++)
+	for(a=0; a<128; a++)
 		nofold[a] = a;
 	nodict[127] = 1;
 	copyproto();
 	eargv = argv;
-	while (--argc &gt; 0) {
-		if(**++argv == &#39;-&#39;) for(arg = *argv;;) {
+	while (--argc > 0) {
+		if(**++argv == '-') for(arg = *argv;;) {
 			switch(*++arg) {
-			case &#39;\0&#39;:
-				if(arg[-1] == &#39;-&#39;)
-					eargv[eargc++] = &quot;-&quot;;
+			case '\0':
+				if(arg[-1] == '-')
+					eargv[eargc++] = "-";
 				break;
 
-			case &#39;m&#39;:
+			case 'm':
 				mflg++;
 				continue;
 
-			case &#39;o&#39;:
-				if(--argc &gt; 0)
+			case 'o':
+				if(--argc > 0)
 					outfil = *++argv;
 				continue;
 
@@ -108,9 +108,9 @@ char **argv;
 				break;
 			}
 			break;
-		} else if (**argv == &#39;+&#39;) {
-			if(++nfields&gt;=NF) {
-				mess(&quot;Too many keys\n&quot;);
+		} else if (**argv == '+') {
+			if(++nfields>=NF) {
+				mess("Too many keys\n");
 				exit(1);
 			}
 			copyproto();
@@ -118,18 +118,18 @@ char **argv;
 		} else
 			eargv[eargc++] = *argv;
 	}
-	q = &amp;fields[0];
-	for(a=1; a&lt;=nfields; a++) {
-		p = &amp;fields[a];
-		for(i=0; i&lt;5; i++)	/*sensitive to sizeof(proto)*/
+	q = &fields[0];
+	for(a=1; a<=nfields; a++) {
+		p = &fields[a];
+		for(i=0; i<5; i++)	/*sensitive to sizeof(proto)*/
 			if(p[i] != proto[i])
 				goto next;
-		for(i=0; i&lt;5; i++)
+		for(i=0; i<5; i++)
 			p[i] = q[i];
 next:	;
 	}
 	if(eargc == 0)
-		eargv[eargc++] = &quot;-&quot;;
+		eargv[eargc++] = "-";
 
 	a = MEM;
 	i = lspace = sbrk(0);
@@ -137,33 +137,33 @@ next:	;
 		a =- 512;
 	brk(a =- 512);	/* for recursion */
 	a =- i;
-	nlines = ((a-L)&gt;&gt;1) &amp; 077777;
+	nlines = ((a-L)>>1) & 077777;
 	nlines =/ 5;
 	ntext = nlines*8;
 	tspace = lspace+nlines;
-	file = &quot;/usr/tmp/stmXaa&quot;;
+	file = "/usr/tmp/stmXaa";
 loop:
 	filep = file;
-	while(*filep != &#39;X&#39;)
+	while(*filep != 'X')
 		filep++;
-	for(*filep = &#39;a&#39;;;(*filep)++) {
-		if(stat(file, lspace) &lt; 0) {
+	for(*filep = 'a';;(*filep)++) {
+		if(stat(file, lspace) < 0) {
 			a = creat(file, 0600);
-			if(a &gt;= 0)
+			if(a >= 0)
 				break;
 		}
-		if(*filep == &#39;z&#39;) {
-			if(file[1] != &#39;t&#39;) {
-				file = &quot;/tmp/stmXaa&quot;;
+		if(*filep == 'z') {
+			if(file[1] != 't') {
+				file = "/tmp/stmXaa";
 				goto loop;
 			}
-			mess(&quot;Cannot locate temp\n&quot;);
+			mess("Cannot locate temp\n");
 			exit(1);
 		}
 	}
 	close(a);
 	filep++;
-	if ((signal(2, 1) &amp; 01) == 0)
+	if ((signal(2, 1) & 01) == 0)
 		signal(2, term);
 	nfiles = eargc;
 	if(!mflg) {
@@ -171,7 +171,7 @@ loop:
 		sort();
 		close(0);
 	}
-	for(a = mflg?0:eargc; a+N &lt; nfiles; a=+N) {
+	for(a = mflg?0:eargc; a+N < nfiles; a=+N) {
 		newfile();
 		merge(a, a+N);
 	}
@@ -196,21 +196,21 @@ sort()
 	do {
 		cp = tspace;
 		lp = lspace;
-		while(lp &lt; lspace+nlines &amp;&amp; cp &lt; tspace+ntext) {
+		while(lp < lspace+nlines && cp < tspace+ntext) {
 			*lp++ = cp;
-			while((*cp++ = c = getc(ibuf)) != &#39;\n&#39;) {
-				if(c &gt;= 0) continue;
+			while((*cp++ = c = getc(ibuf)) != '\n') {
+				if(c >= 0) continue;
 				cp--;
 				close(ibuf[0]);
-				if(i &lt; eargc) {
+				if(i < eargc) {
 					if((f = setfil(i++)) == 0)
 						ibuf[0] = 0;
-					else if(fopen(f, ibuf) &lt; 0)
+					else if(fopen(f, ibuf) < 0)
 						cant(f);
 				} else
 					break;
 			}
-			if(c &lt; 0) {
+			if(c < 0) {
 				done++;
 				lp--;
 				break;
@@ -220,12 +220,12 @@ sort()
 		if(done == 0 || nfiles != eargc)
 			newfile(); else
 			oldfile();
-		while(lp &gt; lspace) {
+		while(lp > lspace) {
 			cp = *--lp;
 			if(*cp)
 				do
 				putc(*cp, obuf);
-				while(*cp++ != &#39;\n&#39;);
+				while(*cp++ != '\n');
 		}
 		fflush(obuf);
 		close(obuf[0]);
@@ -250,11 +250,11 @@ merge(a, b)
 
 	p = lspace;
 	j = 0;
-	for(i=a; i&lt;b; i++) {
+	for(i=a; i<b; i++) {
 		f = setfil(i);
 		if(f == 0)
-			p-&gt;b[0] = dup(0);
-		else if(fopen(f, p-&gt;b) &lt; 0)
+			p->b[0] = dup(0);
+		else if(fopen(f, p->b) < 0)
 			cant(f);
 		ibuf[j] = p;
 		if(!rline(p)) j++;
@@ -267,11 +267,11 @@ merge(a, b)
 		l = 0;
 		while(i--) {
 			cp = ibuf[i];
-			if(*cp == &#39;\0&#39;) {
+			if(*cp == '\0') {
 				l = 1;
 				if(rline(ibuf[i])) {
 					k = i;
-					while(++k &lt; j)
+					while(++k < j)
 						ibuf[k-1] = ibuf[k];
 					j--;
 				}
@@ -280,29 +280,29 @@ merge(a, b)
 	} while(l);
 
 	i = j;
-	if(i &gt; 0) for(;;) {
+	if(i > 0) for(;;) {
 		cp = ibuf[i-1];
-		if(i == 1 || cmp(&amp;ibuf[i-1], &amp;ibuf[i-2]))
+		if(i == 1 || cmp(&ibuf[i-1], &ibuf[i-2]))
 			do
 				putc(*cp, obuf);
-			while(*cp++ != &#39;\n&#39;);
+			while(*cp++ != '\n');
 		if(rline(ibuf[i-1])) {
 			i--;
 			if(i == 0)
 				break;
 		}
-		cp = &amp;ibuf[i];
-		while (--cp.ip &gt; ibuf &amp;&amp; cmp(cp.ip, cp.ip-1) &lt; 0) {
+		cp = &ibuf[i];
+		while (--cp.ip > ibuf && cmp(cp.ip, cp.ip-1) < 0) {
 			p = *cp.ip;
 			*cp.ip = *(cp.ip-1);
 			*(cp.ip-1) = p;
 		}
 	}
 	p = lspace;
-	for(i=a; i&lt;b; i++) {
-		close(p-&gt;b[0]);
+	for(i=a; i<b; i++) {
+		close(p->b[0]);
 		p++;
-		if(i &gt;= eargc)
+		if(i >= eargc)
 			close(creat(setfil(i)));
 	}
 	fflush(obuf);
@@ -315,23 +315,23 @@ struct merg *mp;
 	register char *cp;
 	register *bp, c;
 
-	bp = mp-&gt;b;
-	cp = mp-&gt;l;
+	bp = mp->b;
+	cp = mp->l;
 	do {
 		c = getc(bp);
-		if(c &lt; 0)
+		if(c < 0)
 			return(1);
 		*cp++ = c;
-	} while(c != &#39;\n&#39;);
-	*cp = &#39;\0&#39;;
+	} while(c != '\n');
+	*cp = '\0';
 	return(0);
 }
 
 newfile()
 {
 
-	if(fcreat(setfil(nfiles), obuf) &lt; 0) {
-		mess(&quot;Can&#39;t create temp\n&quot;);
+	if(fcreat(setfil(nfiles), obuf) < 0) {
+		mess("Can't create temp\n");
 		term();
 	}
 	nfiles++;
@@ -341,14 +341,14 @@ char *
 setfil(i)
 {
 
-	if(i &lt; eargc)
-		if(eargv[i][0] == &#39;-&#39; &amp;&amp; eargv[i][1] == &#39;\0&#39;)
+	if(i < eargc)
+		if(eargv[i][0] == '-' && eargv[i][1] == '\0')
 			return(0);
 		else
 			return(eargv[i]);
 	i =- eargc;
-	filep[0] = i/26 + &#39;a&#39;;
-	filep[1] = i%26 + &#39;a&#39;;
+	filep[0] = i/26 + 'a';
+	filep[1] = i%26 + 'a';
 	return(file);
 }
 
@@ -356,8 +356,8 @@ oldfile()
 {
 
 	if(outfil) {
-		if(fcreat(outfil, obuf) &lt; 0) {
-			mess(&quot;Can&#39;t create output\n&quot;);
+		if(fcreat(outfil, obuf) < 0) {
+			mess("Can't create output\n");
 			term();
 		}
 	} else
@@ -366,9 +366,9 @@ oldfile()
 
 cant(f)
 {
-	mess(&quot;Can&#39;t open &quot;);
+	mess("Can't open ");
 	mess(f);
-	mess(&quot;\n&quot;);
+	mess("\n");
 	term();
 }
 
@@ -378,7 +378,7 @@ term()
 
 	if(nfiles == eargc)
 		nfiles++;
-	for(i=eargc; i&lt;nfiles; i++) {
+	for(i=eargc; i<nfiles; i++) {
 		unlink(setfil(i));
 	}
 	exit(error);
@@ -393,7 +393,7 @@ int	*a,*b;
 	rb = *b - 1;
 
 	while(*++ra == *++rb)
-		if(*ra == &#39;\n&#39;)
+		if(*ra == '\n')
 			return(0);
 
 	return(*rb - *ra);
@@ -408,12 +408,12 @@ char *pp;
 	register char *p;
 
 	p = pp;
-	if( (i=fp-&gt;m[j]) &lt; 0)
+	if( (i=fp->m[j]) < 0)
 		return(-1);
-	while(i-- &gt; 0) {
+	while(i-- > 0) {
 		if(tabchar != 0) {
 			while(*p != tabchar)
-				if(*p != &#39;\n&#39;)
+				if(*p != '\n')
 					p++;
 				else goto ret;
 			p++;
@@ -421,17 +421,17 @@ char *pp;
 			while(blank(*p))
 				p++;
 			while(!blank(*p))
-				if(*p != &#39;\n&#39;)
+				if(*p != '\n')
 					p++;
 				else goto ret;
 		}
 	}
-	if(fp-&gt;bflg)
+	if(fp->bflg)
 		while(blank(*p))
 			p++;
-	i = fp-&gt;n[j];
-	while(i-- &gt; 0) {
-		if(*p != &#39;\n&#39;)
+	i = fp->n[j];
+	while(i-- > 0) {
+		if(*p != '\n')
 			p++;
 		else goto ret;
 	} 
@@ -442,7 +442,7 @@ ret:
 digit(c)
 {
 
-	return(c &lt;= &#39;9&#39; &amp;&amp; c &gt;= &#39;0&#39;);
+	return(c <= '9' && c >= '0');
 }
 
 mess(s)
@@ -457,8 +457,8 @@ copyproto()
 	register int i, *p, *q;
 
 	p = proto;
-	q = &amp;fields[nfields];
-	for(i=0; i&lt;sizeof(proto)/2; i++)
+	q = &fields[nfields];
+	for(i=0; i<sizeof(proto)/2; i++)
 		*q++ = *p++;
 }
 
@@ -466,41 +466,41 @@ field(s,k)
 char *s;
 {
 	register struct field *p;
-	p = &amp;fields[nfields];
+	p = &fields[nfields];
 	for(; *s!=0; s++) {
 		switch(*s) {
-		case &#39;\0&#39;:
+		case '\0':
 			return;
 
-		case &#39;a&#39;:
-			p-&gt;code = nofold;
+		case 'a':
+			p->code = nofold;
 			break;
 
-		case &#39;b&#39;:
-			p-&gt;bflg++;
+		case 'b':
+			p->bflg++;
 			break;
 
-		case &#39;d&#39;:
-			p-&gt;ignore = dict;
+		case 'd':
+			p->ignore = dict;
 			break;
 
-		case &#39;n&#39;:
-			p-&gt;nflg++;
+		case 'n':
+			p->nflg++;
 			break;
-		case &#39;t&#39;:
+		case 't':
 			tabchar = *++s;
 			if(tabchar == 0) s--;
 			break;
 
-		case &#39;r&#39;:
-			p-&gt;rflg = -1;
+		case 'r':
+			p->rflg = -1;
 			break;
 
 		default:
-			p-&gt;m[k] = number(&amp;s);
-			if(*s == &#39;.&#39;)
+			p->m[k] = number(&s);
+			if(*s == '.')
 				s++;
-			p-&gt;n[k] = number(&amp;s);
+			p->n[k] = number(&s);
 			s--;
 		}
 	}
@@ -514,14 +514,14 @@ char **ppa;
 	pa = *ppa;
 	n = 0;
 	while(digit(*pa))
-		n = n*10 + *pa++ - &#39;0&#39;;
+		n = n*10 + *pa++ - '0';
 	*ppa = pa;
 	return(n);
 }
 
 blank(c)
 {
-	if(c==&#39; &#39; || c==&#39;\t&#39;)
+	if(c==' ' || c=='\t')
 		return(1);
 	return(0);
 }
@@ -551,35 +551,35 @@ char *a, *l;
 	es = qses;
 
 start:
-	if((n=l-a) &lt;= es)
+	if((n=l-a) <= es)
 		return;
 
 
-	n = ((n/(2*es))*es) &amp; 077777;
+	n = ((n/(2*es))*es) & 077777;
 	hp = lp = a+n;
 	i = a;
 	j = l-es;
 
 
 	for(;;) {
-		if(i &lt; lp) {
+		if(i < lp) {
 			if((c = (*qscmp)(i, lp)) == 0) {
 				qsexc(i, lp =- es);
 				continue;
 			}
-			if(c &lt; 0) {
+			if(c < 0) {
 				i =+ es;
 				continue;
 			}
 		}
 
 loop:
-		if(j &gt; hp) {
+		if(j > hp) {
 			if((c = (*qscmp)(hp, j)) == 0) {
 				qsexc(hp =+ es, j);
 				goto loop;
 			}
-			if(c &gt; 0) {
+			if(c > 0) {
 				if(i == lp) {
 					qstexc(i, hp =+ es, j);
 					i = lp =+ es;
@@ -596,8 +596,8 @@ loop:
 
 
 		if(i == lp) {
-			for(k=lp+2; k&lt;=hp;) *(*k++)=&#39;\0&#39;;
-			if(lp-a &gt;= l-hp) {
+			for(k=lp+2; k<=hp;) *(*k++)='\0';
+			if(lp-a >= l-hp) {
 				qs1(hp+es, l);
 				l = lp;
 			} else {

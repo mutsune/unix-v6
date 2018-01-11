@@ -11,12 +11,12 @@ declimpl:
 	bne	1f		/ already declared
 	jsr	r5,getname
 	movb	symbuf,r0
-	cmp	r0,$&#39;a
+	cmp	r0,$'a
 	blo	2f
-	sub	$6,r0		/ map &#39;a -&gt; &#39;Z+1
+	sub	$6,r0		/ map 'a -> 'Z+1
 2:
 	asl	r0
-	bis	imptab-[2*&#39;A](r0),symtab(r3)
+	bis	imptab-[2*'A](r0),symtab(r3)
 1:
 	bit	$70,symtab(r3)		/ class
 	bne	1f

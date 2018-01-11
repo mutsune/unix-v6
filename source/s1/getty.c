@@ -30,8 +30,8 @@
 #define	TAB3	006000
 #define	FF1	040000
 
-#define	ERASE	&#39;#&#39;
-#define	KILL	&#39;@&#39;
+#define	ERASE	'#'
+#define	KILL	'@'
 
 /*
  * speeds
@@ -60,40 +60,40 @@ struct	tab {
 	char	*message;	/* login message */
 } itab[] {
 
-/* table &#39;0&#39;-1-2 300,150,110 */
+/* table '0'-1-2 300,150,110 */
 
-	&#39;0&#39;, 1,
+	'0', 1,
 	ANYP+RAW+NL1+CR1, ANYP+ECHO+CR1,
 	B300, B300,
-	&quot;\n\r\033;\007login: &quot;,
+	"\n\r\033;\007login: ",
 
 	1, 2,
 	ANYP+RAW+NL1+CR1, EVENP+ECHO+FF1+CR2+TAB1+NL1,
 	B150, B150,
-	&quot;\n\r\033:\006\006\017login: &quot;,
+	"\n\r\033:\006\006\017login: ",
 
-	2, &#39;0&#39;,
+	2, '0',
 	ANYP+RAW+NL1+CR1, ANYP+ECHO+CRMOD+XTABS+LCASE+CR1,
 	B110, B110,
-	&quot;\n\rlogin: &quot;,
+	"\n\rlogin: ",
 
-/* table &#39;-&#39; -- Console TTY 110 */
-	&#39;-&#39;, &#39;-&#39;,
+/* table '-' -- Console TTY 110 */
+	'-', '-',
 	ANYP+RAW+NL1+CR1, ANYP+ECHO+CRMOD+XTABS+LCASE+CR1,
 	B110, B110,
-	&quot;\n\rlogin: &quot;,
+	"\n\rlogin: ",
 
-/* table &#39;1&#39; -- 150 */
-	&#39;1&#39;, &#39;1&#39;,
+/* table '1' -- 150 */
+	'1', '1',
 	ANYP+RAW+NL1+CR1, EVENP+ECHO+FF1+CR2+TAB1+NL1,
 	B150, B150,
-	&quot;\n\r\033:\006\006\017login: &quot;,
+	"\n\r\033:\006\006\017login: ",
 
-/* table &#39;2&#39; -- 9600 */
-	&#39;2&#39;, &#39;2&#39;,
+/* table '2' -- 9600 */
+	'2', '2',
 	ANYP+RAW+NL1+CR1, ANYP+XTABS+ECHO+CRMOD+FF1,
 	B9600, B9600,
-	&quot;\n\r\033;login: &quot;,
+	"\n\r\033;login: ",
 };
 
 #define	NITAB	sizeof itab/sizeof itab[0]
@@ -113,38 +113,38 @@ char **argv;
 	signal(SIGINT, 1);
 	signal(SIGQIT, 0);
 */
-	tname = &#39;0&#39;;
-	if (argc &gt; 1)
+	tname = '0';
+	if (argc > 1)
 		tname = *argv[1];
 	for (;;) {
-		for(tabp = itab; tabp &lt; &amp;itab[NITAB]; tabp++)
-			if(tabp-&gt;tname == tname)
+		for(tabp = itab; tabp < &itab[NITAB]; tabp++)
+			if(tabp->tname == tname)
 				break;
-		if(tabp &gt;= &amp;itab[NITAB])
+		if(tabp >= &itab[NITAB])
 			tabp = itab;
-		tmode.sgispd = tabp-&gt;ispeed;
-		tmode.sgospd = tabp-&gt;ospeed;
-		tmode.sgflag = tabp-&gt;iflags;
-		tmode.sgispd = tabp-&gt;ispeed;
-		tmode.sgospd = tabp-&gt;ospeed;
-		stty(0, &amp;tmode);
-		puts(tabp-&gt;message);
-		stty(0, &amp;tmode);
+		tmode.sgispd = tabp->ispeed;
+		tmode.sgospd = tabp->ospeed;
+		tmode.sgflag = tabp->iflags;
+		tmode.sgispd = tabp->ispeed;
+		tmode.sgospd = tabp->ospeed;
+		stty(0, &tmode);
+		puts(tabp->message);
+		stty(0, &tmode);
 		if(getname()) {
 			tmode.sgerase = ERASE;
 			tmode.sgkill = KILL;
-			tmode.sgflag = tabp-&gt;fflags;
+			tmode.sgflag = tabp->fflags;
 			if(crmod)
 				tmode.sgflag =| CRMOD;
 			if(upper)
 				tmode.sgflag =| LCASE;
 			if(lower)
-				tmode.sgflag =&amp; ~LCASE;
-			stty(0, &amp;tmode);
-			execl(&quot;/bin/login&quot;, &quot;login&quot;, name, 0);
+				tmode.sgflag =& ~LCASE;
+			stty(0, &tmode);
+			execl("/bin/login", "login", name, 0);
 			exit(1);
 		}
-		tname = tabp-&gt;nname;
+		tname = tabp->nname;
 	}
 }
 
@@ -159,18 +159,18 @@ getname()
 	lower = 0;
 	np = name;
 	do {
-		if (read(0, &amp;cs, 1) &lt;= 0)
+		if (read(0, &cs, 1) <= 0)
 			exit(0);
-		if ((c = cs&amp;0177) == 0)
+		if ((c = cs&0177) == 0)
 			return(0);
-		write(1, &amp;cs, 1);
-		if (c&gt;=&#39;a&#39; &amp;&amp; c &lt;=&#39;z&#39;)
+		write(1, &cs, 1);
+		if (c>='a' && c <='z')
 			lower++;
-		else if (c&gt;=&#39;A&#39; &amp;&amp; c&lt;=&#39;Z&#39;) {
+		else if (c>='A' && c<='Z') {
 			upper++;
-			c =+ &#39;a&#39;-&#39;A&#39;;
+			c =+ 'a'-'A';
 		} else if (c==ERASE) {
-			if (np &gt; name)
+			if (np > name)
 				np--;
 			continue;
 		} else if (c==KILL) {
@@ -178,13 +178,13 @@ getname()
 			continue;
 		}
 		*np++ = c;
-	} while (c!=&#39;\n&#39; &amp;&amp; c!=&#39;\r&#39; &amp;&amp; np &lt;= &amp;name[16]);
+	} while (c!='\n' && c!='\r' && np <= &name[16]);
 	*--np = 0;
-	if (c == &#39;\r&#39;) {
-		write(1, &quot;\n&quot;, 1);
+	if (c == '\r') {
+		write(1, "\n", 1);
 		crmod++;
 	} else
-		write(1, &quot;\r&quot;, 1);
+		write(1, "\r", 1);
 	return(1);
 }
 

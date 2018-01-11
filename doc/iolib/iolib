@@ -1,6 +1,6 @@
 .ds s \\s8
 .ds S \\s0
-.ds * \v&#39;.2m&#39;*\v&#39;-.2m&#39;
+.ds * \v'.2m'*\v'-.2m'
 .tr ~.
 .ds . \s14~\s0
 .tr _\(ul
@@ -25,7 +25,7 @@ M. E. Lesk
 The C language [1] now exists on three operating systems.
 .FS
 * This document is an abbreviated form of
-``The Portable C Library&#39;&#39;, by M. E. Lesk, describing only
+``The Portable C Library'', by M. E. Lesk, describing only
 the UNIX section of the library.
 .FE
 A set of library routines common to
@@ -104,7 +104,7 @@ File 1 is the standard output; it is normally the
 teletype in time-sharing or the line printer in batch.
 File 2 is the error file; it is an output file, normally the same
 as file 1, except that when file 1 is diverted via a command
-line &#39;&gt;&#39; operator, file 2 remains attached to the
+line '>' operator, file 2 remains attached to the
 original destination, usually the terminal.
 It is used for error message output.
 These popular \*sUNIX\*S conventions are considered part
@@ -112,11 +112,11 @@ of the C library specification.
 By closing 0 or 1, the default input or output may be re-directed;
 this can also be done on the command line by
 .ft I
-&gt;file
+>file
 .ft P
 for output or
 .ft I
-&lt;file
+<file
 .ft P
 for input.
 .PP
@@ -156,7 +156,7 @@ On \*sUNIX\*S
 Characters range from \(mi128 to +127 in numeric value,
 there is sign extension when characters are assigned to integers,
 and right shifts are arithmetic.
-The ``first&#39;&#39; character in a word is stored in the right half word.
+The ``first'' character in a word is stored in the right half word.
 .PP
 More serious problems of compatibility are caused by the loaders
 on the different operating systems.
@@ -187,7 +187,7 @@ fd
 .ft P
 represents a file-descriptor; if not present, it is taken
 to be 0 for input and 1 for output.  When your program
-starts, remember that these are associated with the ``standard&#39;&#39;
+starts, remember that these are associated with the ``standard''
 input and output files.
 .sn
 COPEN (filename, type)
@@ -224,7 +224,7 @@ although leading digits are not recommended on \*sGCOS\*S.
 .ft I
 Type:
 .ft R
-a character `r&#39;, `w&#39;, or `a&#39; meaning read, write, or append.
+a character `r', `w', or `a' meaning read, write, or append.
 Note that the type is a single character, whereas the
 file name must be a string.
 .sn
@@ -234,7 +234,7 @@ CGETC ( fd )
 Cgetc
 .ft R
 returns the next character from the input unit associated with \fIfd\fR. 
-On end of file \fIcgetc\fR returns `\\0&#39;.
+On end of file \fIcgetc\fR returns `\\0'.
 To signal end of file from the teletype,
 type the special symbol appropriate to \*sUNIX\*S:
 EOT (control-D)
@@ -263,7 +263,7 @@ fd
 .ft R
 is terminated and
 any output buffers are emptied.
-You usually don&#39;t have to call
+You usually don't have to call
 .ft I
 cclose; cexit
 .ft R
@@ -272,10 +272,10 @@ do it for you on all open files.
 However, to write some data
 on a file and then read it back in, the correct sequence is:
 .DS
-fd = copen (``file&#39;&#39;, `w&#39;);
+fd = copen (``file'', `w');
 write on fd ...
 cclose (fd);
-fd = copen(``file&#39;&#39;, `r&#39;);
+fd = copen(``file'', `r');
 read from fd ...
 .DE
 .sn
@@ -352,13 +352,13 @@ string pointed to by \fIs.\fR  If the last character read
 from this input unit was newline, then \fIgets\fR reads
 the next line, which on \*sGCOS\*S and \*sIBM\*S corresponds exactly
 to a logical record.
-The terminating newline is replaced by `\\0&#39;.
+The terminating newline is replaced by `\\0'.
 The value of \fIgets\fR is \fIs,\fR or 0 if end of file.
 .sn
 PUTS (s)
 .sN
 Copies the string \fIs\fR onto the standard output unit. 
-The terminating `\\0&#39; is replaced by a newline character.
+The terminating `\\0' is replaced by a newline character.
 The value of
 .I
 puts
@@ -380,10 +380,10 @@ fd,
 which must be open for input.
 After
 .ft I
-ungetc (`a&#39;, fd); ungetc (`b&#39;, fd);
+ungetc (`a', fd); ungetc (`b', fd);
 .ft R
 the next two characters
-to be read from \fIfd\fR will be `b&#39; and then `a&#39;.
+to be read from \fIfd\fR will be `b' and then `a'.
 Up to 100 characters may be pushed back on each file.
 This subroutine permits a program to read past the end
 of its input, and then restore it for the next routine to read.
@@ -401,7 +401,7 @@ Note that
 scanf
 .ft R
 actually requires only one character
-of ``unget&#39;&#39; capability; thus it is possible that
+of ``unget'' capability; thus it is possible that
 future implementors may change the specification of the
 .ft I
 ungetc
@@ -437,10 +437,10 @@ which are simply copied to the output stream, and conversion
 specifications, each of which causes conversion and printing of the
 next successive argument to \fIprintf\fR.
 .sp
-Each conversion specification is introduced by the character `%&#39;.
-Following the `%&#39;, there may be:
+Each conversion specification is introduced by the character `%'.
+Following the `%', there may be:
 .in 5
-\(em an optional minus sign `\(mi&#39; which specifies left adjustment of the
+\(em an optional minus sign `\(mi' which specifies left adjustment of the
 converted argument in the indicated field;
 .sp 3p
 \(em an optional digit string specifying a minimum field width; if the converted
@@ -451,7 +451,7 @@ the padding character is blank normally and zero if the field
 width was specified with a leading zero
 (note that this does not imply an octal field width);
 .sp 3p
-\(em an optional period `.&#39; which serves to separate the field width
+\(em an optional period `.' which serves to separate the field width
 from the next digit string;
 .sp 3p
 \(em an optional digit string (the precision) which specifies the maximum
@@ -503,7 +503,7 @@ and converted to decimal notation of the form
 .ft I
 [\(mi]\|m.nnnnnnE\|[\(mi]\|xx
 .ft R
-where the length of the string of \fIn\fP&#39;s is specified by
+where the length of the string of \fIn\fP's is specified by
 the precision.
 The default precision is 6 and the maximum is 22.
 .sp 3p
@@ -515,23 +515,23 @@ form
 [\(mi]mmm.nnnnn
 .ft R
 where the length of the string of
-\fIn\fR&#39;s is specified by
+\fIn\fR's is specified by
 the precision.  The default precision is 6 and the maximum
 is 22.
 Note that the precision does not determine
 the number of significant digits printed in \fBf\fR format.
 .in 0
 .sp 3p
-If no recognizable conversion character appears after the `%&#39;, that character
-is printed; thus `%&#39; may be printed by use of the string ``%%&#39;&#39;.
+If no recognizable conversion character appears after the `%', that character
+is printed; thus `%' may be printed by use of the string ``%%''.
 .PP
 As an example of \fIprintf,\fR the following program fragment
 .DS
 .I
 int i, j; float x; char \**s;
-i = 35; j=2; x= 1.732; s = ``ritchie&#39;&#39;;
-printf (``%d %f %s\\n&#39;&#39;, i, x, s);
-printf (``%o, %4d or %\(mi4d%5.5s\\n&#39;&#39;, i, j, j, s);
+i = 35; j=2; x= 1.732; s = ``ritchie'';
+printf (``%d %f %s\\n'', i, x, s);
+printf (``%o, %4d or %\(mi4d%5.5s\\n'', i, j, j, s);
 .R
 .DE
 would print
@@ -551,7 +551,7 @@ cout.
 It is possible to direct output to a string instead of to a file.
 This is indicated by \(mi1 as the first argument.
 The second argument should be a pointer to the string.
-\fIPrintf\fR will put a terminating `\\0&#39; onto the string.
+\fIPrintf\fR will put a terminating `\\0' onto the string.
 .sn
 SCANF (\|[fd, ] control-string, arg1, arg2, ....)
 .sp .5
@@ -615,7 +615,7 @@ The conversion character indicates the interpretation of the
 input field; the corresponding pointer argument must
 usually be of a restricted type.
 Pointers, rather than variable names, are required
-by the ``call-by-value&#39;&#39; semantics of the C language.
+by the ``call-by-value'' semantics of the C language.
 The following conversion characters are legal:
 .in 5
 .ti -0.2i
@@ -637,7 +637,7 @@ the corresponding argument should be an integer pointer.
 \fBs\fR	indicates that a character string is expected;
 the corresponding argument should be a character pointer
 pointing to an array of characters large enough to accept the
-string and a terminating `\\0&#39;, which will be added.
+string and a terminating `\\0', which will be added.
 The input field is terminated by a space character
 or a newline.
 .ti -0.2i
@@ -734,7 +734,7 @@ For example, the call
 .nf
 .ft I
 int i; float x; char name[50];
-scanf ( ``%d%f%s&#39;&#39;, &amp;i, &amp;x, name);
+scanf ( ``%d%f%s'', &i, &x, name);
 .ft R
 .in 0
 with the input line
@@ -759,14 +759,14 @@ name
 .ft R
 will contain
 .ft I
-``thompson\\0&#39;&#39;.
+``thompson\\0''.
 .ft R
 Or,
 .ft I
 .nf
 .in 10
 int i; float x; char name[50];
-scanf (``%2d%f%\**d%[1234567890]&#39;&#39;, &amp;i, &amp;x, name);
+scanf (``%2d%f%\**d%[1234567890]'', &i, &x, name);
 .ft R
 .in 0
 with input
@@ -784,12 +784,12 @@ i,
 .ft I
 x,
 .ft R
-skip ``0123&#39;&#39;,
-and place the string ``56\\0&#39;&#39; in
+skip ``0123'',
+and place the string ``56\\0'' in
 .ft I
 name.
 .ft R
-The next call to \fIcgetc\fR will return `a&#39;.
+The next call to \fIcgetc\fR will return `a'.
 .PP
 .ft I
 Scanf
@@ -813,7 +813,7 @@ and find out how many there were, you could try
 .ne 3
 int a[4], amax;
 char line[100];
-amax = scanf (\(mi1, gets(line), ``%d%d%d%d&#39;&#39;, &amp;a[0], &amp;a[1], &amp;a[2], &amp;a[3]);
+amax = scanf (\(mi1, gets(line), ``%d%d%d%d'', &a[0], &a[1], &a[2], &a[3]);
 .in 0
 .ft R
 .fi
@@ -833,7 +833,7 @@ you make the departure from portability required
 to tell the other system how big a C item (integer, float,
 structure, etc.) really is in machine units.
 .sn
-COPEN (name, direction, ``i&#39;&#39;)
+COPEN (name, direction, ``i'')
 .sN
 When
 .ft I
@@ -982,7 +982,7 @@ areas is used,
 .I
 nargs()
 .R
-doesn&#39;t work at all.
+doesn't work at all.
 .sn
 CALLOC (n, sizeof(object))
 .sN
@@ -1043,7 +1043,7 @@ The
 .ft I
 format
 .ft R
-argument should be either `f&#39; or `e&#39;; `e&#39; is default.
+argument should be either `f' or `e'; `e' is default.
 See the explanation of
 .ft I
 printf
@@ -1078,7 +1078,7 @@ INTSS ()
 .sN
 This routine tells you whether you are running in
 foreground or background.
-The definition of ``foreground&#39;&#39; is that
+The definition of ``foreground'' is that
 the standard input is the terminal.
 .sn
 WDLENG (\|)

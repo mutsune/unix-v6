@@ -1,7 +1,7 @@
 /
 /
 
-/ sqrt &amp; dsqrt fortran functions
+/ sqrt & dsqrt fortran functions
 
 .globl	sqrt.
 .globl	dsqrt.

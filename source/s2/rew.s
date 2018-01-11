@@ -5,7 +5,7 @@
 	tst	(sp)+
 	mov	(sp)+,r0
 	movb	(r0)+,r1
-	cmp	r1,$&#39;m
+	cmp	r1,$'m
 	beq	rewm
 	movb	r1,tapx+8
 	tstb	(r0)
@@ -34,12 +34,12 @@ error:
 	sys	write; 0f; 2
 	sys	exit
 0:
-	&lt;?\n&gt;
+	<?\n>
 
 tapx:
-	&lt;/dev/tap0\0&gt;
+	</dev/tap0\0>
 mtx:
-	&lt;/dev/mt0\0&gt;
+	</dev/mt0\0>
 	.even
 
 .bss

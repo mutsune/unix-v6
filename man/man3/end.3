@@ -33,7 +33,7 @@ possibility is
 .nf
 	extern end;
 	...
-	... = brk(&amp;end+...);
+	... = brk(&end+...);
 .fi
 .s3
 (see
@@ -63,13 +63,13 @@ is to call
 .it sbrk(0),
 which returns the value of the current program break,
 instead of referring to
-.it &amp;end,
+.it &end,
 which yields the program break at the instant execution started.
 .s3
 These symbols are accessible from assembly
 language
 if it is remembered that they should be prefixed by
-`\*_&#39;
-.sh &quot;SEE ALSO&quot;
+`\*_'
+.sh "SEE ALSO"
 break (II), alloc (III)
 .sh BUGS

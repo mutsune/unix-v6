@@ -3,6 +3,6 @@ system(str)
 {
 int status;
   if(fork() == 0)
-    execl(&quot;/bin/sh&quot;, &quot;sh&quot;, &quot;-c&quot;, str, 0);
-  wait(&amp;status);
+    execl("/bin/sh", "sh", "-c", str, 0);
+  wait(&status);
   }

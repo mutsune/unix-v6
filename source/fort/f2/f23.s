@@ -22,12 +22,12 @@ equiv:
 1:
 	jsr	r5,getln
 		rts r5
-	cmp	r0,$&#39;e
+	cmp	r0,$'e
 	bne	1b
 	mov	$line+11.,r1
 	mov	r5,-(sp)
 2:				/ start equivalence group
-	cmpb	(r1)+,$&#39;(		/ check (
+	cmpb	(r1)+,$'(		/ check (
 	bne	9f			/ syntax error
 	jsr	r5,getsym
 	tst	r0
@@ -36,13 +36,13 @@ equiv:
 	jsr	r5,equset
 	movb	(r1)+,r2
 	clr	r4			/ offset
-	cmp	r2,$&#39;,
+	cmp	r2,$',
 	beq	3f
-	cmp	r2,$&#39;(			/ subscripted vble
+	cmp	r2,$'(			/ subscripted vble
 	bne	9f			/ syntax error
 	jsr	r5,consub		/ get subscript
 	mov	r0,r4
-	cmpb	(r1)+,$&#39;,
+	cmpb	(r1)+,$',
 	bne	9f
 3:					/ rest of group
 	jsr	r5,getsym		/ next ident
@@ -51,7 +51,7 @@ equiv:
 	jsr	r5,equset
 	clr	r0
 	mov	r3,r2
-	cmpb	(r1),$&#39;(		/ subscript?
+	cmpb	(r1),$'(		/ subscript?
 	bne	4f
 	inc	r1
 	jsr	r5,consub
@@ -62,8 +62,8 @@ equiv:
 	cmp	r2,r3
 	bne	4b			/ not yet in different group
 	sub	r4,r0			/ adjust offsets
-	sub	eqvtab+4(r5),r0		/ left vble&#39;s offset
-	add	eqvtab+4(r3),r0		/ new vble&#39;s offset
+	sub	eqvtab+4(r5),r0		/ left vble's offset
+	add	eqvtab+4(r3),r0		/ new vble's offset
 4:
 	sub	r0,eqvtab+4(r2)
 	mov	eqvtab+2(r2),r2
@@ -79,9 +79,9 @@ equiv:
 	jsr	r5,error; 23.		/ inconsistency!
 6:
 	movb	(r1)+,r0
-	cmp	r0,$&#39;,
+	cmp	r0,$',
 	beq	3b
-	cmp	r0,$&#39;)
+	cmp	r0,$')
 	bne	9f
 	movb	(r1)+,r0
 	bne	3f
@@ -89,7 +89,7 @@ equiv:
 	mov	(sp)+,r5
 	br	1b
 3:
-	cmp	r0,$&#39;,
+	cmp	r0,$',
 	beq	2b
 9:
 	jsr	r5,error; 24.		/ equivalence syntax

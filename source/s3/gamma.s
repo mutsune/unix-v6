@@ -16,7 +16,7 @@ stfps = 170200^tst
 /	returned in the globl cell signgam.
 /
 /	The coefficients for expansion around zero
-/	are #5243 from Hart &amp; Cheney; for expansion
+/	are #5243 from Hart & Cheney; for expansion
 /	around infinity they are #5404.
 /
 /	movf	arg,fr0
@@ -62,7 +62,7 @@ erret:
 	rts	pc
 
 /
-/	here for positive x &gt; 8
+/	here for positive x > 8
 /	the log of the gamma function is
 /	approximated directly by the asymptotic series.
 /
@@ -127,9 +127,9 @@ negative:
 
 /
 /	control comes here for arguments less than 8.
-/	if the argument is 2&lt;x&lt;3 then compute by
+/	if the argument is 2<x<3 then compute by
 /	a rational approximation.
-/	if x&lt;2 or x&gt;3 then the argument
+/	if x<2 or x>3 then the argument
 /	is reduced in range by the formula
 /	gamma(x+1) = x*gamma(x)
 /

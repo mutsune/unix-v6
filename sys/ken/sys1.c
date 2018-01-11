@@ -2,18 +2,18 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../proc.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../reg.h&quot;
-#include &quot;../inode.h&quot;
+#include "../param.h"
+#include "../systm.h"
+#include "../user.h"
+#include "../proc.h"
+#include "../buf.h"
+#include "../reg.h"
+#include "../inode.h"
 
 /*
  * exec system call.
  * Because of the fact that an I/O buffer is used
- * to store the caller&#39;s arguments during exec,
+ * to store the caller's arguments during exec,
  * and more buffers are needed to read in the text file,
  * deadly embraces waiting for free buffers are possible.
  * Therefore the number of processes simultaneously
@@ -35,14 +35,14 @@ exec()
 	 * for execute permission
 	 */
 
-	ip = namei(&amp;uchar, 0);
+	ip = namei(&uchar, 0);
 	if(ip == NULL)
 		return;
-	while(execnt &gt;= NEXEC)
-		sleep(&amp;execnt, EXPRI);
+	while(execnt >= NEXEC)
+		sleep(&execnt, EXPRI);
 	execnt++;
 	bp = getblk(NODEV);
-	if(access(ip, IEXEC) || (ip-&gt;i_mode&amp;IFMT)!=0)
+	if(access(ip, IEXEC) || (ip->i_mode&IFMT)!=0)
 		goto bad;
 
 	/*
@@ -50,7 +50,7 @@ exec()
 	 * allocated disk buffer
 	 */
 
-	cp = bp-&gt;b_addr;
+	cp = bp->b_addr;
 	na = 0;
 	nc = 0;
 	while(ap = fuword(u.u_arg[1])) {
@@ -64,7 +64,7 @@ exec()
 				goto bad;
 			*cp++ = c;
 			nc++;
-			if(nc &gt; 510) {
+			if(nc > 510) {
 				u.u_error = E2BIG;
 				goto bad;
 			}
@@ -72,7 +72,7 @@ exec()
 				break;
 		}
 	}
-	if((nc&amp;1) != 0) {
+	if((nc&1) != 0) {
 		*cp++ = 0;
 		nc++;
 	}
@@ -87,7 +87,7 @@ exec()
 	 * w3 = bss size
 	 */
 
-	u.u_base = &amp;u.u_arg[0];
+	u.u_base = &u.u_arg[0];
 	u.u_count = 8;
 	u.u_offset[1] = 0;
 	u.u_offset[0] = 0;
@@ -107,7 +107,7 @@ exec()
 		u.u_error = ENOEXEC;
 		goto bad;
 	}
-	if(u.u_arg[1]!=0 &amp;&amp; (ip-&gt;i_flag&amp;ITEXT)==0 &amp;&amp; ip-&gt;i_count!=1) {
+	if(u.u_arg[1]!=0 && (ip->i_flag&ITEXT)==0 && ip->i_count!=1) {
 		u.u_error = ETXTBSY;
 		goto bad;
 	}
@@ -118,8 +118,8 @@ exec()
 	 * exceed of max sizes
 	 */
 
-	ts = ((u.u_arg[1]+63)&gt;&gt;6) &amp; 01777;
-	ds = ((u.u_arg[2]+u.u_arg[3]+63)&gt;&gt;6) &amp; 01777;
+	ts = ((u.u_arg[1]+63)>>6) & 01777;
+	ds = ((u.u_arg[2]+u.u_arg[3]+63)>>6) & 01777;
 	if(estabur(ts, ds, SSIZE, sep))
 		goto bad;
 
@@ -135,8 +135,8 @@ exec()
 	xalloc(ip);
 	c = USIZE+ds+SSIZE;
 	expand(c);
-	while(--c &gt;= USIZE)
-		clearseg(u.u_procp-&gt;p_addr+c);
+	while(--c >= USIZE)
+		clearseg(u.u_procp->p_addr+c);
 
 	/*
 	 * read in data segment
@@ -157,7 +157,7 @@ exec()
 	u.u_ssize = SSIZE;
 	u.u_sep = sep;
 	estabur(u.u_tsize, u.u_dsize, u.u_ssize, u.u_sep);
-	cp = bp-&gt;b_addr;
+	cp = bp->b_addr;
 	ap = -nc - na*2 - 4;
 	u.u_ar0[R6] = ap;
 	suword(ap, na);
@@ -174,14 +174,14 @@ exec()
 	 * set SUID/SGID protections, if no tracing
 	 */
 
-	if ((u.u_procp-&gt;p_flag&amp;STRC)==0) {
-		if(ip-&gt;i_mode&amp;ISUID)
+	if ((u.u_procp->p_flag&STRC)==0) {
+		if(ip->i_mode&ISUID)
 			if(u.u_uid != 0) {
-				u.u_uid = ip-&gt;i_uid;
-				u.u_procp-&gt;p_uid = ip-&gt;i_uid;
+				u.u_uid = ip->i_uid;
+				u.u_procp->p_uid = ip->i_uid;
 			}
-		if(ip-&gt;i_mode&amp;ISGID)
-			u.u_gid = ip-&gt;i_gid;
+		if(ip->i_mode&ISGID)
+			u.u_gid = ip->i_gid;
 	}
 
 	/*
@@ -189,32 +189,32 @@ exec()
 	 */
 
 	c = ip;
-	for(ip = &amp;u.u_signal[0]; ip &lt; &amp;u.u_signal[NSIG]; ip++)
-		if((*ip &amp; 1) == 0)
+	for(ip = &u.u_signal[0]; ip < &u.u_signal[NSIG]; ip++)
+		if((*ip & 1) == 0)
 			*ip = 0;
-	for(cp = &amp;regloc[0]; cp &lt; &amp;regloc[6];)
+	for(cp = &regloc[0]; cp < &regloc[6];)
 		u.u_ar0[*cp++] = 0;
 	u.u_ar0[R7] = 0;
-	for(ip = &amp;u.u_fsav[0]; ip &lt; &amp;u.u_fsav[25];)
+	for(ip = &u.u_fsav[0]; ip < &u.u_fsav[25];)
 		*ip++ = 0;
 	ip = c;
 
 bad:
 	iput(ip);
 	brelse(bp);
-	if(execnt &gt;= NEXEC)
-		wakeup(&amp;execnt);
+	if(execnt >= NEXEC)
+		wakeup(&execnt);
 	execnt--;
 }
 
 /*
  * exit system call:
- * pass back caller&#39;s r0
+ * pass back caller's r0
  */
 rexit()
 {
 
-	u.u_arg[0] = u.u_ar0[R0] &lt;&lt; 8;
+	u.u_arg[0] = u.u_ar0[R0] << 8;
 	exit();
 }
 
@@ -230,10 +230,10 @@ exit()
 	register int *q, a;
 	register struct proc *p;
 
-	u.u_procp-&gt;p_flag =&amp; ~STRC;
-	for(q = &amp;u.u_signal[0]; q &lt; &amp;u.u_signal[NSIG];)
+	u.u_procp->p_flag =& ~STRC;
+	for(q = &u.u_signal[0]; q < &u.u_signal[NSIG];)
 		*q++ = 1;
-	for(q = &amp;u.u_ofile[0]; q &lt; &amp;u.u_ofile[NOFILE]; q++)
+	for(q = &u.u_ofile[0]; q < &u.u_ofile[NOFILE]; q++)
 		if(a = *q) {
 			*q = NULL;
 			closef(a);
@@ -242,30 +242,30 @@ exit()
 	xfree();
 	a = malloc(swapmap, 1);
 	if(a == NULL)
-		panic(&quot;out of swap&quot;);
+		panic("out of swap");
 	p = getblk(swapdev, a);
-	bcopy(&amp;u, p-&gt;b_addr, 256);
+	bcopy(&u, p->b_addr, 256);
 	bwrite(p);
 	q = u.u_procp;
-	mfree(coremap, q-&gt;p_size, q-&gt;p_addr);
-	q-&gt;p_addr = a;
-	q-&gt;p_stat = SZOMB;
+	mfree(coremap, q->p_size, q->p_addr);
+	q->p_addr = a;
+	q->p_stat = SZOMB;
 
 loop:
-	for(p = &amp;proc[0]; p &lt; &amp;proc[NPROC]; p++)
-	if(q-&gt;p_ppid == p-&gt;p_pid) {
-		wakeup(&amp;proc[1]);
+	for(p = &proc[0]; p < &proc[NPROC]; p++)
+	if(q->p_ppid == p->p_pid) {
+		wakeup(&proc[1]);
 		wakeup(p);
-		for(p = &amp;proc[0]; p &lt; &amp;proc[NPROC]; p++)
-		if(q-&gt;p_pid == p-&gt;p_ppid) {
-			p-&gt;p_ppid  = 1;
-			if (p-&gt;p_stat == SSTOP)
+		for(p = &proc[0]; p < &proc[NPROC]; p++)
+		if(q->p_pid == p->p_ppid) {
+			p->p_ppid  = 1;
+			if (p->p_stat == SSTOP)
 				setrun(p);
 		}
 		swtch();
 		/* no return */
 	}
-	q-&gt;p_ppid = 1;
+	q->p_ppid = 1;
 	goto loop;
 }
 
@@ -284,38 +284,38 @@ wait()
 	f = 0;
 
 loop:
-	for(p = &amp;proc[0]; p &lt; &amp;proc[NPROC]; p++)
-	if(p-&gt;p_ppid == u.u_procp-&gt;p_pid) {
+	for(p = &proc[0]; p < &proc[NPROC]; p++)
+	if(p->p_ppid == u.u_procp->p_pid) {
 		f++;
-		if(p-&gt;p_stat == SZOMB) {
-			u.u_ar0[R0] = p-&gt;p_pid;
-			bp = bread(swapdev, f=p-&gt;p_addr);
+		if(p->p_stat == SZOMB) {
+			u.u_ar0[R0] = p->p_pid;
+			bp = bread(swapdev, f=p->p_addr);
 			mfree(swapmap, 1, f);
-			p-&gt;p_stat = NULL;
-			p-&gt;p_pid = 0;
-			p-&gt;p_ppid = 0;
-			p-&gt;p_sig = 0;
-			p-&gt;p_ttyp = 0;
-			p-&gt;p_flag = 0;
-			p = bp-&gt;b_addr;
-			u.u_cstime[0] =+ p-&gt;u_cstime[0];
-			dpadd(u.u_cstime, p-&gt;u_cstime[1]);
-			dpadd(u.u_cstime, p-&gt;u_stime);
-			u.u_cutime[0] =+ p-&gt;u_cutime[0];
-			dpadd(u.u_cutime, p-&gt;u_cutime[1]);
-			dpadd(u.u_cutime, p-&gt;u_utime);
-			u.u_ar0[R1] = p-&gt;u_arg[0];
+			p->p_stat = NULL;
+			p->p_pid = 0;
+			p->p_ppid = 0;
+			p->p_sig = 0;
+			p->p_ttyp = 0;
+			p->p_flag = 0;
+			p = bp->b_addr;
+			u.u_cstime[0] =+ p->u_cstime[0];
+			dpadd(u.u_cstime, p->u_cstime[1]);
+			dpadd(u.u_cstime, p->u_stime);
+			u.u_cutime[0] =+ p->u_cutime[0];
+			dpadd(u.u_cutime, p->u_cutime[1]);
+			dpadd(u.u_cutime, p->u_utime);
+			u.u_ar0[R1] = p->u_arg[0];
 			brelse(bp);
 			return;
 		}
-		if(p-&gt;p_stat == SSTOP) {
-			if((p-&gt;p_flag&amp;SWTED) == 0) {
-				p-&gt;p_flag =| SWTED;
-				u.u_ar0[R0] = p-&gt;p_pid;
-				u.u_ar0[R1] = (p-&gt;p_sig&lt;&lt;8) | 0177;
+		if(p->p_stat == SSTOP) {
+			if((p->p_flag&SWTED) == 0) {
+				p->p_flag =| SWTED;
+				u.u_ar0[R0] = p->p_pid;
+				u.u_ar0[R1] = (p->p_sig<<8) | 0177;
 				return;
 			}
-			p-&gt;p_flag =&amp; ~(STRC|SWTED);
+			p->p_flag =& ~(STRC|SWTED);
 			setrun(p);
 		}
 	}
@@ -334,15 +334,15 @@ fork()
 	register struct proc *p1, *p2;
 
 	p1 = u.u_procp;
-	for(p2 = &amp;proc[0]; p2 &lt; &amp;proc[NPROC]; p2++)
-		if(p2-&gt;p_stat == NULL)
+	for(p2 = &proc[0]; p2 < &proc[NPROC]; p2++)
+		if(p2->p_stat == NULL)
 			goto found;
 	u.u_error = EAGAIN;
 	goto out;
 
 found:
 	if(newproc()) {
-		u.u_ar0[R0] = p1-&gt;p_pid;
+		u.u_ar0[R0] = p1->p_pid;
 		u.u_cstime[0] = 0;
 		u.u_cstime[1] = 0;
 		u.u_stime = 0;
@@ -351,7 +351,7 @@ found:
 		u.u_utime = 0;
 		return;
 	}
-	u.u_ar0[R0] = p2-&gt;p_pid;
+	u.u_ar0[R0] = p2->p_pid;
 
 out:
 	u.u_ar0[R7] =+ 2;
@@ -359,7 +359,7 @@ out:
 
 /*
  * break system call.
- *  -- bad planning: &quot;break&quot; is a dirty word in C.
+ *  -- bad planning: "break" is a dirty word in C.
  */
 sbreak()
 {
@@ -372,19 +372,19 @@ sbreak()
 	 * set n to new total size
 	 */
 
-	n = (((u.u_arg[0]+63)&gt;&gt;6) &amp; 01777);
+	n = (((u.u_arg[0]+63)>>6) & 01777);
 	if(!u.u_sep)
 		n =- nseg(u.u_tsize) * 128;
-	if(n &lt; 0)
+	if(n < 0)
 		n = 0;
 	d = n - u.u_dsize;
 	n =+ USIZE+u.u_ssize;
 	if(estabur(u.u_tsize, u.u_dsize+d, u.u_ssize, u.u_sep))
 		return;
 	u.u_dsize =+ d;
-	if(d &gt; 0)
+	if(d > 0)
 		goto bigger;
-	a = u.u_procp-&gt;p_addr + n - u.u_ssize;
+	a = u.u_procp->p_addr + n - u.u_ssize;
 	i = n;
 	n = u.u_ssize;
 	while(n--) {
@@ -396,7 +396,7 @@ sbreak()
 
 bigger:
 	expand(n);
-	a = u.u_procp-&gt;p_addr + n;
+	a = u.u_procp->p_addr + n;
 	n = u.u_ssize;
 	while(n--) {
 		a--;

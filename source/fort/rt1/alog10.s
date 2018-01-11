@@ -1,7 +1,7 @@
 /
 /
 
-/ alog10 &amp; dlog10 fortran functions
+/ alog10 & dlog10 fortran functions
 
 .globl	dlog10.
 .globl	alog10.

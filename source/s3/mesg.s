@@ -2,7 +2,7 @@
 
 / usage:
 /   jsr r5,mesg
-/       &lt;string ending in \0&gt;
+/       <string ending in \0>
 /      .even
 /   ...
 /

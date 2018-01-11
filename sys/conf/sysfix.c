@@ -22,21 +22,21 @@ char **argv;
 {
 	register word, rel, s;
 
-	if (argc&lt;3) {
-		printf(&quot;Arg count\n&quot;);
+	if (argc<3) {
+		printf("Arg count\n");
 		exit(1);
 	}
-	if ((tbuf[0] = open(argv[1], 0)) &lt; 0) {
-		printf(&quot;Input file\n&quot;);
+	if ((tbuf[0] = open(argv[1], 0)) < 0) {
+		printf("Input file\n");
 		exit(1);
 	}
 	rbuf[0] = open(argv[1], 0);
-	if ((fcreat(argv[2], obuf)) &lt; 0) {
-		printf(&quot;Output file\n&quot;);
+	if ((fcreat(argv[2], obuf)) < 0) {
+		printf("Output file\n");
 		exit(1);
 	}
 	if (getw(tbuf) != 0407) {
-		printf(&quot;Bad input format\n&quot;);
+		printf("Bad input format\n");
 		exit(1);
 	}
 	putw(0407, obuf);
@@ -47,7 +47,7 @@ char **argv;
 	getw(tbuf);
 	getw(tbuf);
 	if (getw(tbuf) != 0) {
-		printf(&quot;No relocation bits\n&quot;);
+		printf("No relocation bits\n");
 		exit(1);
 	}
 	putw(txtsiz, obuf);
@@ -66,11 +66,11 @@ char **argv;
 	seek(rbuf[0], 020+txtsiz, 0);
 	seek(rbuf[0], txtsiz, 1);
 	seek(rbuf[0], datsiz, 1);
-	s = datsiz &gt;&gt; 1;
+	s = datsiz >> 1;
 	while (s--) {
 		word = getw(tbuf);
 		rel = getw(rbuf);
-		if (rel&amp;01)
+		if (rel&01)
 			word =- datrel;
 		word =+ getrel(rel);
 		putw(word, obuf);
@@ -83,11 +83,11 @@ char **argv;
 	seek(rbuf[0], 020+txtsiz, 0);
 	seek(rbuf[0], datsiz, 1);
 	seek(tbuf[0], 020, 0);
-	s = txtsiz &gt;&gt; 1;
+	s = txtsiz >> 1;
 	while(s--) {
 		rel = getw(rbuf);
 		word = getw(tbuf);
-		if (rel&amp;01)
+		if (rel&01)
 			word =- txtrel;
 		word =+ getrel(rel);
 		putw(word, obuf);
@@ -101,7 +101,7 @@ char **argv;
 	seek(tbuf[0], datsiz, 1);
 	seek(tbuf[0], datsiz, 1);
 	s = symsiz;
-	while ((s =- 12) &gt;= 0) {
+	while ((s =- 12) >= 0) {
 		putw(getw(tbuf), obuf);
 		putw(getw(tbuf), obuf);
 		putw(getw(tbuf), obuf);
@@ -109,7 +109,7 @@ char **argv;
 		rel = getw(tbuf);
 		putw(rel, obuf);
 		word = getw(tbuf);
-		switch(rel&amp;07) {
+		switch(rel&07) {
 			case 2:
 				word =+ txtrel;
 				break;
@@ -127,7 +127,7 @@ char **argv;
 
 getrel(r)
 {
-	switch (r&amp;016) {
+	switch (r&016) {
 
 	case 02:	/* ref to text */
 		return(txtrel);
@@ -140,7 +140,7 @@ getrel(r)
 		return(0);
 
 	default:
-		printf(&quot;Bad relocation %o\n&quot;, r);
+		printf("Bad relocation %o\n", r);
 		return(0);
 	}
 }

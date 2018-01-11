@@ -9,7 +9,7 @@
 1:
 	tstb	(r1)
 	beq	1f
-	cmpb	(r1),$&#39;v
+	cmpb	(r1),$'v
 	bne	2f
 	inc	r1
 	incb	vflg
@@ -39,16 +39,16 @@
 	jmp	*(r1)
 
 swlst:
-	&#39;r; comr
-	&#39;u; comu
-	&#39;d; comd
-	&#39;x; comx
-	&#39;t; comt
+	'r; comr
+	'u; comu
+	'd; comd
+	'x; comx
+	't; comt
 	 0; 0
 
 userr:
 	jsr	r5,diag
-		&lt;bad usage\n\0&gt;
+		<bad usage\n\0>
 	.even
 
 putc:
@@ -90,14 +90,14 @@ magerr:
 	mov	arglst,r1
 	jsr	r5,print
 	jsr	r5,diag
-		&lt; -- not in archive format\n\0&gt;
+		< -- not in archive format\n\0>
 	.even
 
 mktmp:
 	sys	stat; tfil; buf
 	bes	1f
 	incb	tfil+8
-	cmpb	tfil+8,$&#39;z
+	cmpb	tfil+8,$'z
 	blo	mktmp
 	br	tferr
 1:
@@ -116,7 +116,7 @@ mktmp:
 
 tferr:
 	jsr	r5,diag
-		&lt;cannot open temp file\n\0&gt;
+		<cannot open temp file\n\0>
 	.even
 
 getdir:
@@ -150,7 +150,7 @@ trim:
 1:
 	tstb	(r0)
 	beq	1f
-	cmpb	(r0)+,$&#39;/
+	cmpb	(r0)+,$'/
 	beq	trim
 	br	1b
 1:
@@ -229,14 +229,14 @@ operr:
 	mov	9b,r1
 	jsr	r5,print
 	jsr	r5,diag
-		&lt; -- cannot open\n\0&gt;
+		< -- cannot open\n\0>
 	.even
 
 phserr:
 	mov	9b,r1
 	jsr	r5,print
 	jsr	r5,diag
-		&lt; -- phase error\n\0&gt;
+		< -- phase error\n\0>
 	.even
 
 copyfl:
@@ -312,13 +312,13 @@ noxerr:
 	mov	$rname,r1
 	jsr	r5,print
 	jsr	r5,diag
-		&lt; -- cannot create\n\0&gt;
+		< -- cannot create\n\0>
 	.even
 
 table:
 	mov	$rname,r1
 	jsr	r5,print
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	r5,putc
 	rts	r5
 
@@ -328,11 +328,11 @@ mesg:
 	tstb	vflg
 	beq	1f
 	jsr	r5,putc
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	r5,putc
 	mov	$rname,r1
 	jsr	r5,print
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	r5,putc
 1:
 	mov	(sp)+,r1
@@ -362,13 +362,13 @@ comr:
 		br copfl
 	jsr	r5,match
 		br 2f
-	jsr	r5,mesg; &#39;r
+	jsr	r5,mesg; 'r
 	jsr	r5,skip
 	jsr	r5,mvfil
 	br	1b
 2:
 	jsr	r5,copyfl
-	jsr	r5,mesg; &#39;c
+	jsr	r5,mesg; 'c
 	br	1b
 
 comu:
@@ -386,13 +386,13 @@ comu:
 2:
 	jsr	r5,oldnew
 		br 3f
-	jsr	r5,mesg; &#39;r
+	jsr	r5,mesg; 'r
 	jsr	r5,skip
 	jsr	r5,mvfil
 	br	1b
 3:
 	jsr	r5,copyfl
-	jsr	r5,mesg; &#39;c
+	jsr	r5,mesg; 'c
 	br	1b
 
 comd:
@@ -406,11 +406,11 @@ comd:
 		br 2f
 	mov	$-1,(r1)
 	jsr	r5,skip
-	jsr	r5,mesg; &#39;d
+	jsr	r5,mesg; 'd
 	br	1b
 2:
 	jsr	r5,copyfl
-	jsr	r5,mesg; &#39;c
+	jsr	r5,mesg; 'c
 	br	1b
 1:
 	jsr	r5,nfound
@@ -418,12 +418,12 @@ comd:
 
 noaf:
 	jsr	r5,diag
-		&lt;no archive file\n\0&gt;
+		<no archive file\n\0>
 	.even
 
 crterr:
 	jsr	r5,diag
-		&lt;cannot create archive file\n\0&gt;
+		<cannot create archive file\n\0>
 	.even
 
 copfl:
@@ -436,7 +436,7 @@ copfl:
 	beq	1b
 	tst	-(r1)
 	jsr	r5,mvfil
-	jsr	r5,mesg; &#39;a
+	jsr	r5,mesg; 'a
 	br	1b
 1:
 	sys	signal; 2; 1 / no interrupts during copy back
@@ -455,7 +455,7 @@ copfl:
 
 done:
 	jsr	r5,diag
-		&lt;\0&gt;
+		<\0>
 	.even
 
 comx:
@@ -471,7 +471,7 @@ comx:
 	mov	$-1,(r1)
 3:
 	jsr	r5,xtract
-	jsr	r5,mesg; &#39;x
+	jsr	r5,mesg; 'x
 	br	1b
 2:
 	jsr	r5,skip
@@ -516,10 +516,10 @@ nfound:
 	rts	r5
 
 notfnd:
-	&lt; -- not found\n\0&gt;
+	< -- not found\n\0>
 	.even
 
-tfil:	&lt;/tmp/vtma\0&gt;
+tfil:	</tmp/vtma\0>
 	.even
 magic:	-147.
 

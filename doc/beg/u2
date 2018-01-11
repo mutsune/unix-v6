@@ -8,7 +8,7 @@ how do we get the information stored in the machine?
 Most of these tasks are done with
 the
 .UC UNIX
-``text editor&#39;&#39;
+``text editor''
 .C ed .
 Since
 .C ed
@@ -17,7 +17,7 @@ is thoroughly documented in
 and explained in
 .ul
 A Tutorial Introduction to the UNIX Text Editor,
-we won&#39;t spend any time here describing how to use it.
+we won't spend any time here describing how to use it.
 All we want it for right now is to make some
 .ul
 files.
@@ -27,7 +27,7 @@ a simplistic but adequate definition.)
 To create a file with some text in it, do the following:
 .B1
  ed	(invokes the text editor)
- a	(command to ``ed&#39;&#39;, to add text)
+ a	(command to ``ed'', to add text)
 .I
  now type in
  whatever text you want ...
@@ -38,29 +38,29 @@ At this point we could do various editing operations
 on the text we typed in, such as correcting spelling mistakes,
 rearranging paragraphs and the like.
 Finally, we write the information we have typed
-into a file with the editor command ``w&#39;&#39;:
+into a file with the editor command ``w'':
 .B1
 w junk
 .B2
 .C ed
 will respond with the number of characters it wrote
-into the file called ``junk&#39;&#39;.
+into the file called ``junk''.
 .PP
-Suppose we now add a few more lines with ``a&#39;&#39;,
-terminate them with ``.&#39;&#39;,
-and write the whole thing out as ``temp&#39;&#39;, using
+Suppose we now add a few more lines with ``a'',
+terminate them with ``.'',
+and write the whole thing out as ``temp'', using
 .B1
 w temp
 .B2
-We should now have two files, a smaller one called ``junk&#39;&#39; and a bigger one
-(bigger by the extra lines) called ``temp&#39;&#39;.
-Type a ``q&#39;&#39; to quit the editor.
+We should now have two files, a smaller one called ``junk'' and a bigger one
+(bigger by the extra lines) called ``temp''.
+Type a ``q'' to quit the editor.
 .SH
 What files are out there?
 .PP
 The
 .C ls
-(for ``list&#39;&#39;) command lists the names
+(for ``list'') command lists the names
 (not contents) of any of the files that
 .UC UNIX
 knows about.
@@ -77,13 +77,13 @@ which are indeed our two files.
 They are sorted into alphabetical order automatically,
 but other variations are possible.
 For example,
-if we add the optional argument ``-t&#39;&#39;,
+if we add the optional argument ``-t'',
 .B1
 ls -t
 .B2
 lists them in the order in which they were last changed,
 most recent first.
-The ``-l&#39;&#39; option gives a ``long&#39;&#39; listing:
+The ``-l'' option gives a ``long'' listing:
 .B1
 ls -l
 .B2
@@ -96,15 +96,15 @@ The date and time are of the last change to the file.
 The 41 and 78 are the number of characters
 (you got the same thing from
 .C ed ).
-``bwk&#39;&#39; is the owner of the file _ the person
+``bwk'' is the owner of the file _ the person
 who created it.
-The ``-rw-rw-rw-&#39;&#39; tells who has permission to read and write the file,
+The ``-rw-rw-rw-'' tells who has permission to read and write the file,
 in this case everyone.
 .PP
 Options can be combined:
-``ls -lt&#39;&#39; would give the same thing,
+``ls -lt'' would give the same thing,
 but sorted into time order.
-You can also name the files you&#39;re interested in,
+You can also name the files you're interested in,
 and 
 .C ls
 will list the information about them only.
@@ -113,12 +113,12 @@ More details can be found in
 .PP
 It is generally true of
 .UC UNIX
-programs that ``flag&#39;&#39; arguments like ``-t&#39;&#39;
+programs that ``flag'' arguments like ``-t''
 precede filename arguments.
 .SH
 Printing Files
 .PP
-Now that you&#39;ve got a file of text,
+Now that you've got a file of text,
 how do you print it so people can look at it?
 There are a host of programs that do that,
 probably more than are needed.
@@ -131,12 +131,12 @@ ed junk
 1,$p
 .B2
 .C ed
-will reply with the count of the characters in ``junk&#39;&#39;
+will reply with the count of the characters in ``junk''
 and then print all the lines in the file.
 After you learn how to use the editor,
 you can be selective about the parts you print.
 .PP
-There are times when it&#39;s not feasible to use the editor for printing.
+There are times when it's not feasible to use the editor for printing.
 For example, there is a limit on how big a file
 .C ed
 can handle
@@ -160,7 +160,7 @@ or, to print two files,
 .B1
 cat junk temp
 .B2
-The two files are simply concatenated (hence the name ``cat&#39;&#39;)
+The two files are simply concatenated (hence the name ``cat'')
 onto the terminal.
 .PP
 .C pr
@@ -178,17 +178,17 @@ Thus,
 .B1
 pr junk temp
 .B2
-will list ``junk&#39;&#39; neatly,
+will list ``junk'' neatly,
 then skip to the top of a new page and list
-``temp&#39;&#39; neatly.
+``temp'' neatly.
 .PP
 .C pr
 will also produce multi-column output:
 .B1
 pr -3 junk 
 .B2
-prints ``junk&#39;&#39; in 3-column format.
-You can use any reasonable number in place of ``3&#39;&#39;
+prints ``junk'' in 3-column format.
+You can use any reasonable number in place of ``3''
 and 
 .C pr
 will do its best.
@@ -228,7 +228,7 @@ like this:
 .B1
 mv junk precious
 .B2
-This means that what used to be ``junk&#39;&#39; is now ``precious&#39;&#39;.
+This means that what used to be ``junk'' is now ``precious''.
 If you do an
 .C ls
 command now,
@@ -253,9 +253,9 @@ command:
 cp precious temp1
 .B2
 makes a duplicate copy of 
-``precious&#39;&#39;
+``precious''
 in
-``temp1&#39;&#39;.
+``temp1''.
 .PP
 Finally, when you get tired of creating and moving
 files,
@@ -266,13 +266,13 @@ called
 rm temp temp1
 .B2
 will remove all of the files named.
-You will get a warning message if one of the named files wasn&#39;t there.
+You will get a warning message if one of the named files wasn't there.
 .SH
-Filename, What&#39;s in a
+Filename, What's in a
 .PP
-So far we have used filenames without ever saying what&#39;s
+So far we have used filenames without ever saying what's
 a legal name,
-so it&#39;s time for a couple of rules.
+so it's time for a couple of rules.
 First, filenames are limited to 14 characters,
 which is enough to be descriptive.
 Second, although you can use almost any character
@@ -284,9 +284,9 @@ We already saw, for example,
 that in the
 .C ls
 command,
-``ls -t&#39;&#39; meant to list in time order.
+``ls -t'' meant to list in time order.
 So if you had a file whose name
-was ``-t&#39;&#39;,
+was ``-t'',
 you would have a tough time listing it by name.
 There are a number of other characters which
 have special meaning either to
@@ -295,12 +295,12 @@ as a whole or to numerous commands.
 To avoid pitfalls,
 you would probably do well to 
 use only letters, numbers and the period.
-(Don&#39;t use the period as the first character of a filename,
+(Don't use the period as the first character of a filename,
 for reasons too complicated to go into.)
 .sp
 .PP
 On to some more positive suggestions.
-Suppose you&#39;re typing a large document
+Suppose you're typing a large document
 like a book.
 Logically this divides into many small pieces,
 like chapters and perhaps sections.
@@ -345,9 +345,9 @@ You can say
 .B1
 pr chap*
 .B2
-The ``*&#39;&#39; means ``anything at all&#39;&#39;,
+The ``*'' means ``anything at all'',
 so this translates into ``print all files
-whose names begin with `chap&#39; &#39;&#39;,
+whose names begin with `chap' '',
 listed in alphabetical order.
 This shorthand notation
 is not a property of the
@@ -355,7 +355,7 @@ is not a property of the
 command, by the way.
 It is system-wide, a service of the program
 that interprets commands
-(the ``shell&#39;&#39;
+(the ``shell''
 .SE sh (I)).
 Using that fact, you can see how to list the files of the book:
 .B1
@@ -369,15 +369,15 @@ chap1.2
 chap1.3
  ...
 .B2
-The ``*&#39;&#39; is not limited to the last position in a filename _
+The ``*'' is not limited to the last position in a filename _
 it can be anywhere.
 Thus
 .B1
 rm *junk*
 .B2
-removes all files that contain ``junk&#39;&#39;
+removes all files that contain ``junk''
 as any part of their name.
-As a special case, ``*&#39;&#39; by itself matches every filename,
+As a special case, ``*'' by itself matches every filename,
 so
 .B1
 pr *
@@ -391,29 +391,29 @@ rm *
 removes
 .ul
 all files.
-(You had better be sure that&#39;s what you wanted to say!)
+(You had better be sure that's what you wanted to say!)
 .PP
-The ``*&#39;&#39; is not the only pattern-matching feature available.
+The ``*'' is not the only pattern-matching feature available.
 Suppose you want to print only chapters 1 through 4 and 9 of the
 book.
 Then you can say
 .B1
 pr chap[12349]*
 .B2
-The ``[...]&#39;&#39; 
+The ``[...]'' 
 means to match any of the characters inside the brackets.
 You can also do this 
 with
 .B1
 pr chap[1-49]*
 .B2
-``[a-z]&#39;&#39; matches any character in the range
+``[a-z]'' matches any character in the range
 .ul
 a
 through
 .ul 
 z.
-There is also a ``?&#39;&#39; character, which matches any single character,
+There is also a ``?'' character, which matches any single character,
 so
 .B1
 pr ?
@@ -421,41 +421,41 @@ pr ?
 will print all files which have single-character names.
 .PP
 Of these niceties,
-``*&#39;&#39; is probably the most useful,
+``*'' is probably the most useful,
 and you should get used to it.
 The others are frills, but worth knowing.
 .PP
 If you should ever have to turn off the special meaning
-of ``*&#39;&#39;, ``?&#39;&#39;, etc.,
+of ``*'', ``?'', etc.,
 enclose the entire argument in quotes (single or double),
 as in
 .B1
-ls &quot;?&quot;
+ls "?"
 .B2
 .SH
-What&#39;s in a Filename, Continued
+What's in a Filename, Continued
 .PP
-When you first made that file called ``junk&#39;&#39;,
+When you first made that file called ``junk'',
 how did 
 .UC UNIX
-know that there wasn&#39;t another ``junk&#39;&#39; somewhere else,
+know that there wasn't another ``junk'' somewhere else,
 especially since the person in the next office is also
 reading this tutorial?
 The reason is that generally each user of 
 .UC UNIX
-has his own ``directory&#39;&#39;,
+has his own ``directory'',
 which contains only the files that belong to him.
 When you create a new file,
 unless you take special action,
 the new file is made in your own directory,
 and is unrelated to any other file of the same name
-that might exist in someone else&#39;s directory.
+that might exist in someone else's directory.
 .PP
 The set of all files that
 .UC UNIX
 knows about are organized into a (usually big) tree,
 with your files located several branches up into the tree.
-It is possible for you to ``walk&#39;&#39; around this tree,
+It is possible for you to ``walk'' around this tree,
 and to find any file in the system, by starting at the root
 of the tree and walking along the right set of branches.
 .PP
@@ -463,7 +463,7 @@ To begin, type
 .B1
 ls /
 .B2
-``/&#39;&#39; is the name of the root of the tree (a convention used
+``/'' is the name of the root of the tree (a convention used
 by
 .UC UNIX ).
 You will get a response something like this:
@@ -482,7 +482,7 @@ that
 knows about.
 On most
 systems,
-``usr&#39;&#39; is a directory that contains all the
+``usr'' is a directory that contains all the
 normal users of the system, like you.
 Now try
 .B1
@@ -502,14 +502,14 @@ Now try
 .B1
 cat  /usr/your-name/junk
 .B2
-(if ``junk&#39;&#39; is still around).
+(if ``junk'' is still around).
 The name
 .B1
 /usr/your-name/junk
 .B2
-is called the ``pathname&#39;&#39; of the file that
-you normally think of as ``junk&#39;&#39;.
-``Pathname&#39;&#39; has an obvious meaning:
+is called the ``pathname'' of the file that
+you normally think of as ``junk''.
+``Pathname'' has an obvious meaning:
 it represents the full name of the path you have to follow
 through the tree of directories to get to a particular file.
 It is a universal rule in
@@ -540,9 +540,9 @@ junk  temp
 .tr //
 .B2
 .PP
-Notice that Mary&#39;s ``junk&#39;&#39; is unrelated to Eve&#39;s.
+Notice that Mary's ``junk'' is unrelated to Eve's.
 .PP
-This isn&#39;t too exciting if all the files of interest are in your own
+This isn't too exciting if all the files of interest are in your own
 directory, but if you work with someone else
 or on several projects concurrently,
 it becomes handy indeed.
@@ -560,7 +560,7 @@ or make your own copy of one of his files by
 cp  /usr/your-neighbor/his-file  yourfile
 .B2
 .PP
-(If your neighbor doesn&#39;t want you poking around in his files,
+(If your neighbor doesn't want you poking around in his files,
 or vice versa,
 privacy can be arranged.
 Each file and directory can have read-write-execute permissions for the owner,
@@ -580,11 +580,11 @@ As a final experiment with pathnames, try
 ls  /bin  /usr/bin
 .B2
 Do some of the names look familiar?
-When you run a program, by typing its name after a ``%&#39;&#39;,
+When you run a program, by typing its name after a ``%'',
 the system simply looks for a file of that name.
 It looks first in your directory
-(where it typically doesn&#39;t find it),
-then in ``/bin&#39;&#39; and finally in ``/usr/bin&#39;&#39;.
+(where it typically doesn't find it),
+then in ``/bin'' and finally in ``/usr/bin''.
 There is nothing magic about commands like
 .C cat
 or
@@ -596,7 +596,7 @@ What if you work regularly with someone else on common information
 in his directory?
 You could just log in as your friend each time you want to,
 but you can also say
-``I want to work on his files instead of my own&#39;&#39;.
+``I want to work on his files instead of my own''.
 This is done by changing the directory that you are
 currently in:
 .B1
@@ -606,20 +606,20 @@ Now when you use a filename in something like
 .C cat
 or
 .C pr ,
-it refers to the file in ``your-friend&#39;s&#39;&#39; directory.
-Changing directories doesn&#39;t affect any permissions associated
+it refers to the file in ``your-friend's'' directory.
+Changing directories doesn't affect any permissions associated
 with a file _
-if you couldn&#39;t access a file from your own directory,
-changing to another directory won&#39;t alter that fact.
+if you couldn't access a file from your own directory,
+changing to another directory won't alter that fact.
 .PP
-If you forget what directory you&#39;re in, type
+If you forget what directory you're in, type
 .B1
 pwd
 .B2
-(``print working directory&#39;&#39;)
+(``print working directory'')
 to find out.
 .PP
-It is often convenient to arrange one&#39;s files
+It is often convenient to arrange one's files
 so that all the files related to one thing are in a directory separate
 from other projects.
 For example, when you write your book, you might want to keep all the text
@@ -645,8 +645,8 @@ by saying
 .B1
 chdir ..
 .B2
-``..&#39;&#39; is the name of the parent of whatever directory you are currently in.
-For completeness, ``.&#39;&#39; is an alternate name
+``..'' is the name of the parent of whatever directory you are currently in.
+For completeness, ``.'' is an alternate name
 for the directory you are in.
 .SH
 Using Files instead of the Terminal
@@ -665,32 +665,32 @@ ls
 to get a list of files.
 But you can also say
 .B1
-ls &gt;filelist
+ls >filelist
 .B2
-to get a list of your files in the file ``filelist&#39;&#39;.
-(``filelist&#39;&#39; will be created if it doesn&#39;t already exist,
+to get a list of your files in the file ``filelist''.
+(``filelist'' will be created if it doesn't already exist,
 or overwritten if it does.)
-The symbol ``&gt;&#39;&#39; is used throughout
+The symbol ``>'' is used throughout
 .UC UNIX
 to mean ``put the output on the following file,
-rather than on the terminal&#39;&#39;.
+rather than on the terminal''.
 Nothing is produced on the terminal.
 As another example, you could concatenate
 several files into one by capturing the output of
 .C cat
 in a file:
 .B1
-cat  f1  f2  f3 &gt;temp
+cat  f1  f2  f3 >temp
 .B2
 .PP
-Similarly, the symbol ``&lt;&#39;&#39; means to take the input
+Similarly, the symbol ``<'' means to take the input
 for a program from the following file,
 instead of from the terminal.
 Thus, you could make up a script of commonly used editing commands
-and put them into a file called ``script&#39;&#39;.
+and put them into a file called ``script''.
 Then you can run the script on a file by saying
 .B1
-ed file &lt;script
+ed file <script
 .B2
 .SH
 Pipes
@@ -710,14 +710,14 @@ For example,
 pr  f  g  h
 .B2
 will print the files
-``f&#39;&#39;, ``g&#39;&#39; and ``h&#39;&#39;,
+``f'', ``g'' and ``h'',
 beginning each on a new page.
 Suppose you want
 them run together instead.
 You could say
 .B1
 .ne 3
-cat  f  g  h  &gt;temp
+cat  f  g  h  >temp
 pr  temp
 rm  temp
 .B2
@@ -756,12 +756,12 @@ and thus can be used in pipelines.
 The Shell
 .PP
 We have already mentioned once or twice the mysterious
-``shell,&#39;&#39;
+``shell,''
 which is in fact
 .SE sh (I).
 The shell is the program that interprets what you type as
 commands and arguments.
-It also looks after translating ``*&#39;&#39;, etc.,
+It also looks after translating ``*'', etc.,
 into lists of filenames.
 .PP
 The shell has other capabilities too.
@@ -773,7 +773,7 @@ Thus
 .B1
 date; who
 .B2
-does both commands before returning with a ``%&#39;&#39;.
+does both commands before returning with a ``%''.
 .PP
 You can also have more than one program running
 .ul
@@ -782,27 +782,27 @@ if you wish.
 For example, if you are doing something time-consuming,
 like the editor script
 of an earlier section,
-and you don&#39;t want to wait around for the results before starting something else,
+and you don't want to wait around for the results before starting something else,
 you can say
 .B1
-ed  file  &lt;script &amp;
+ed  file  <script &
 .B2
 The ampersand at the end of a command line
 says ``start this command running,
-then take further commands from the terminal immediately.&#39;&#39;
+then take further commands from the terminal immediately.''
 Thus the script will begin,
 but you can do something else at the same time.
 Of course, to keep the output from interfering
-with what you&#39;re doing on the terminal,
+with what you're doing on the terminal,
 it would be better to have said
 .B1
-ed  file  &lt;script &gt;lines &amp;
+ed  file  <script >lines &
 .B2
 which would save the output lines in a file
 called
-``lines&#39;&#39;.
+``lines''.
 .PP
-When you initiate a command with ``&amp;&#39;&#39;,
+When you initiate a command with ``&'',
 .UC UNIX
 replies with a number
 called the process number,
@@ -817,12 +817,12 @@ You might also read
 .PP
 You can say
 .B1 1
-(command-1; command-2; command-3) &amp;
+(command-1; command-2; command-3) &
 .B2
 to start these commands in the background,
 or you can start a background pipeline with
 .B1
-command-1 | command-2 &amp;
+command-1 | command-2 &
 .B2
 .PP
 Just as you can tell the editor
@@ -834,13 +834,13 @@ to get commands.
 albeit a clever one.)
 For instance, suppose you want to set tabs on
 your terminal, and find out the date
-and who&#39;s on the system every time you log in.
+and who's on the system every time you log in.
 Then you can put the three necessary commands
 (
 .C tabs ;
 .C date ;
 .C who )
-into a file, let&#39;s call it  ``xxx&#39;&#39;,
+into a file, let's call it  ``xxx'',
 and then run it with
 either
 .B1
@@ -848,20 +848,20 @@ sh xxx
 .B2
 or
 .B1
-sh &lt;xxx
+sh <xxx
 .B2
-This says to run the shell with the file ``xxx&#39;&#39; as input.
+This says to run the shell with the file ``xxx'' as input.
 The effect is as if you had typed 
-the contents of ``xxx&#39;&#39;
+the contents of ``xxx''
 on the terminal.
 (If this is to be a regular thing,
 you can eliminate the 
 need to type
-``sh&#39;&#39;;
+``sh'';
 see
 .SE chmod (I)
 and
 .SE sh (I).)
 .PP
 The shell has quite a few other capabilities as well,
-some of which we&#39;ll get to in the section on programming.
+some of which we'll get to in the section on programming.

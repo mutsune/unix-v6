@@ -22,7 +22,7 @@ are stored for later execution.
 They are stored in sorted ascending order.
 Non-numbered statements are immediately executed.
 The result of an immediate expression statement
-(that does not have `=&#39; as its highest operator) is printed.
+(that does not have `=' as its highest operator) is printed.
 .s3
 Statements have the following syntax:
 .s3
@@ -51,7 +51,7 @@ Return to system level.
 expression expression expression
 .br
 A line is drawn on the Tektronix 611 display
-`/dev/vt0&#39;
+`/dev/vt0'
 from
 the current display position
 to the XY co-ordinates specified by the
@@ -178,7 +178,7 @@ list
 .br
 The list of expressions and strings are concatenated and
 printed.
-(A string is delimited by &quot; characters.)
+(A string is delimited by " characters.)
 .s3
 .lp +5 5
 .bd prompt
@@ -315,9 +315,9 @@ Assignment binds right to left,
 all other operators bind left to right.
 .s3
 .lp +5 5
-&amp;  |
+&  |
 .br
-&amp;
+&
 (logical and)
 has result zero if either of its arguments are zero.
 It has result one if both its arguments are non-zero.
@@ -327,19 +327,19 @@ has result zero if both of its arguments are zero.
 It has result one if either of its arguments are non-zero.
 .s3
 .lp +5 5
-&lt;  &lt;=  &gt;  &gt;=  ==  &lt;&gt;
+<  <=  >  >=  ==  <>
 .br
 The relational operators
-(&lt; less than, &lt;= less than or equal,
-&gt; greater than,
-&gt;= greater than or equal,
+(< less than, <= less than or equal,
+> greater than,
+>= greater than or equal,
 == equal to,
-&lt;&gt; not equal to)
+<> not equal to)
 return one if their arguments are in the specified
 relation.
 They return zero otherwise.
 Relational operators at the same level extend as follows:
-a&gt;b&gt;c is the same as a&gt;b&amp;b&gt;c.
+a>b>c is the same as a>b&b>c.
 .s3
 .lp +5 5
 + \*-
@@ -399,13 +399,13 @@ is the arctangent of \fIx\fR.  Its value
 is between \*-\(*p/2 and \(*p/2.
 .s3
 .lp +5 5
-.bd &quot;rnd( )&quot;
+.bd "rnd( )"
 .br
 is a uniformly distributed random
 number between zero and one.
 .s3
 .lp +5 5
-.bd &quot;expr( )&quot;
+.bd "expr( )"
 .br
 is the only form of program input.
 A line is read from the input and

@@ -8,7 +8,7 @@ db \*- debug
 ]
 .sh DESCRIPTION
 Unlike
-many debugging packages (including DEC&#39;s ODT, on
+many debugging packages (including DEC's ODT, on
 which
 .it db
 is loosely based),
@@ -53,7 +53,7 @@ on the use of the name during the assembly.
 value.
 .s3
 .lp +4 3
-3.	A decimal number immediately followed by `\fB.\fR&#39; is
+3.	A decimal number immediately followed by `\fB.\fR' is
 an absolute quantity with the appropriate value.
 .s3
 .lp +4 3
@@ -71,7 +71,7 @@ requests.
 6.	A \fB*\fR before
 an expression forms an expression whose value is the
 number in the word addressed by the first expression.
-A \fB*\fR alone is equivalent to `\fB*.\fR&#39;.
+A \fB*\fR alone is equivalent to `\fB*.\fR'.
 .s3
 .lp +4 3
 7.	Expressions separated by \fB+\fR or blank are expressions
@@ -91,10 +91,10 @@ must be relocatable.
 Names for registers are
 built in:
 .s3
-.bd &quot;   r0 ... r5&quot;
-.bd &quot;   sp&quot;
-.bd &quot;   pc&quot;
-.bd &quot;   fr0 ... fr5&quot;
+.bd "   r0 ... r5"
+.bd "   sp"
+.bd "   pc"
+.bd "   fr0 ... fr5"
 .s3
 These may be examined.
 Their values are deduced from the contents
@@ -102,7 +102,7 @@ of the stack in a core image file.  They are meaningless
 in a file that is not a core image.
 .s3
 If no address is given for a command, the current address
-(also specified by ``\fB.\fR&#39;&#39;) is assumed.  In general, ``\fB.\fR&#39;&#39;
+(also specified by ``\fB.\fR'') is assumed.  In general, ``\fB.\fR''
 points to the last word or byte printed by
 .it db.
 .s3
@@ -122,7 +122,7 @@ The following commands are used to examine the specified file.
 \\	The addressed byte is printed in octal.
 .s3
 .lp +4 3
-&quot;	The addressed word is printed as two ASCII characters.
+"	The addressed word is printed as two ASCII characters.
 .s3
 .lp +4 3
 .tr |\*a
@@ -140,20 +140,20 @@ Often, the result will appear exactly as it was written
 in the source program.
 .s3
 .lp +4 3
-&amp;	The addressed word is interpreted as a symbolic address
+&	The addressed word is interpreted as a symbolic address
 and is printed as the name of the symbol whose value is closest
 to the addressed word, possibly followed by a signed offset.
 .s3
 .lp +4 3
-&lt;nl&gt;	(i. e., the character ``new line&#39;&#39;)  This command advances
-the current location counter ``\fB.\fR&#39;&#39; and prints the resulting
+<nl>	(i. e., the character ``new line'')  This command advances
+the current location counter ``\fB.\fR'' and prints the resulting
 location in the mode last specified by
 one of the above requests.
 .s3
 .lp +4 3
-^	This character decrements ``\fB.\fR&#39;&#39; and prints the
+^	This character decrements ``\fB.\fR'' and prints the
 resulting location in the mode last selected
-one of the above requests.  It is a converse to &lt;nl&gt;.
+one of the above requests.  It is a converse to <nl>.
 .s3
 .lp +4 3
 %	Exit.
@@ -162,8 +162,8 @@ one of the above requests.  It is a converse to &lt;nl&gt;.
 Odd addresses to word-oriented commands are rounded
 down.
 The incrementing and decrementing
-of ``\fB.\fR&#39;&#39; done by the
-.bd &lt;nl&gt;
+of ``\fB.\fR'' done by the
+.bd <nl>
 and
 .bd ^
 requests is by one or
@@ -174,7 +174,7 @@ The address portion of any of the above commands
 may be followed by a comma and then by an
 expression.  In this case that number of sequential
 words or bytes specified by the expression is printed.
-``\fB.\fR&#39;&#39; is advanced so that it points at the
+``\fB.\fR'' is advanced so that it points at the
 last thing printed.
 .s3
 There are two commands to interpret the value
@@ -183,9 +183,9 @@ of expressions.
 .lp +4 3
 =	When preceded by an expression, the value of the expression
 is typed in octal.
-When not preceded by an expression, the value of ``\fB.\fR&#39;&#39; is
+When not preceded by an expression, the value of ``\fB.\fR'' is
 indicated.
-This command does not change the value of ``\fB.\fR&#39;&#39;.
+This command does not change the value of ``\fB.\fR''.
 .s3
 .lp +4 3
 :	An attempt is made to print the given expression
@@ -204,7 +204,7 @@ The following command may be used to patch the file being debugged.
 .lp +4 3
 !	This command must be preceded by an expression.
 The value of the expression is stored at the location
-addressed by the current value of ``\fB.\fR&#39;&#39;.
+addressed by the current value of ``\fB.\fR''.
 The opcodes do not appear in the symbol
 table, so the user must assemble them by hand.
 .s3
@@ -238,7 +238,7 @@ Second, addresses
 in core images do not correspond with the
 addresses used by the program because in a core image
 there is a header containing the
-system&#39;s per-process
+system's per-process
 data for the dumped process, and also because the
 stack is stored contiguously with the text and data
 part of the core image rather than at the highest possible
@@ -265,7 +265,7 @@ This means that locations above the program break
 and below the stack
 effectively do not exist (and are not, in fact, recorded
 in the core file).
-Locations above the user&#39;s stack pointer are mapped,
+Locations above the user's stack pointer are mapped,
 in looking at the core file, to
 the place where they are really stored.
 The per-process data kept by the
@@ -275,17 +275,17 @@ cannot currently be examined (except by \fB$\fR).
 .s3
 If one wants to examine
 a file which has an associated name list,
-but is not a core image file, the last argument ``\fB\*-\fR&#39;&#39;
+but is not a core image file, the last argument ``\fB\*-\fR''
 can be used (actually the only purpose of the
 last argument is to make the number of
 arguments not equal to two).
 This feature is used most frequently in
 examining the memory file /dev/mem.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 as (I), core (V), a.out (V), od (I)
 .sh DIAGNOSTICS
-``File not found&#39;&#39; if the first argument
-cannot be read; otherwise ``\fB?\fR&#39;&#39;.
+``File not found'' if the first argument
+cannot be read; otherwise ``\fB?\fR''.
 .sh BUGS
 There should be some way to examine the registers
 and other per-process data in a core image;

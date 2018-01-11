@@ -1,28 +1,28 @@
 #
-#include &quot;ne.h&quot;
-#include &quot;y.tab.c&quot;
+#include "ne.h"
+#include "y.tab.c"
 
 char *cntrl[] {
-	&quot;sup&quot;, &quot;super&quot;, &quot;sub&quot;,
-	&quot;.EN&quot;,
-	&quot;sum&quot;, &quot;from&quot;, &quot;to&quot;,
-	&quot;hat&quot;, &quot;dot&quot;, &quot;dotdot&quot;, &quot;bar&quot;, &quot;tilde&quot;, &quot;under&quot;,
-	&quot;prod&quot;, &quot;int&quot;, &quot;integral&quot;, &quot;union&quot;, &quot;inter&quot;,
-	&quot;pile&quot;, &quot;lpile&quot;, &quot;cpile&quot;, &quot;rpile&quot;, &quot;over&quot;, &quot;sqrt&quot;,
-	&quot;above&quot;, &quot;size&quot;, &quot;font&quot;, &quot;roman&quot;, &quot;italic&quot;, &quot;bold&quot;,
-	&quot;left&quot;, &quot;right&quot;,
-	&quot;delim&quot;, &quot;DELIM&quot;,
-	&quot;DEFINE&quot;,&quot;define&quot;,
-	&quot;.gsize&quot;, &quot;.GSIZE&quot;, &quot;gsize&quot;, &quot;GSIZE&quot;, &quot;gfont&quot;, &quot;GFONT&quot;,
-	&quot;HAT&quot;, &quot;DOT&quot;, &quot;DOTDOT&quot;, &quot;BAR&quot;, &quot;TILDE&quot;, &quot;UNDER&quot;,
-	&quot;PROD&quot;, &quot;INT&quot;, &quot;INTEGRAL&quot;, &quot;UNION&quot;, &quot;INTER&quot;,
-	&quot;SUM&quot;, &quot;FROM&quot;, &quot;TO&quot;,
-	&quot;SUP&quot;, &quot;SUPER&quot;, &quot;SUB&quot;, &quot;PILE&quot;, &quot;LPILE&quot;, &quot;CPILE&quot;, &quot;RPILE&quot;, &quot;OVER&quot;, &quot;SQRT&quot;,
-	&quot;ABOVE&quot;, &quot;SIZE&quot;, &quot;FONT&quot;, &quot;ROMAN&quot;, &quot;ITALIC&quot;, &quot;BOLD&quot;,
-	&quot;LEFT&quot;, &quot;RIGHT&quot;, 
-	&quot;up&quot;, &quot;UP&quot;, &quot;down&quot;, &quot;DOWN&quot;, &quot;fwd&quot;, &quot;FWD&quot;, &quot;back&quot;, &quot;BACK&quot;,
-	&quot;mark&quot;, &quot;MARK&quot;, &quot;lineup&quot;, &quot;LINEUP&quot;,
-	&quot;matrix&quot;, &quot;lcol&quot;, &quot;ccol&quot;, &quot;rcol&quot;, &quot;col&quot;,
+	"sup", "super", "sub",
+	".EN",
+	"sum", "from", "to",
+	"hat", "dot", "dotdot", "bar", "tilde", "under",
+	"prod", "int", "integral", "union", "inter",
+	"pile", "lpile", "cpile", "rpile", "over", "sqrt",
+	"above", "size", "font", "roman", "italic", "bold",
+	"left", "right",
+	"delim", "DELIM",
+	"DEFINE","define",
+	".gsize", ".GSIZE", "gsize", "GSIZE", "gfont", "GFONT",
+	"HAT", "DOT", "DOTDOT", "BAR", "TILDE", "UNDER",
+	"PROD", "INT", "INTEGRAL", "UNION", "INTER",
+	"SUM", "FROM", "TO",
+	"SUP", "SUPER", "SUB", "PILE", "LPILE", "CPILE", "RPILE", "OVER", "SQRT",
+	"ABOVE", "SIZE", "FONT", "ROMAN", "ITALIC", "BOLD",
+	"LEFT", "RIGHT", 
+	"up", "UP", "down", "DOWN", "fwd", "FWD", "back", "BACK",
+	"mark", "MARK", "lineup", "LINEUP",
+	"matrix", "lcol", "ccol", "rcol", "col",
 	0};
 
 
@@ -59,75 +59,75 @@ int sw -1;
 
 getc(){
   loop:
-	if(sw &gt;= 0){
-		lastchar = (peek&lt;0) ? *swt[sw]++ : peek;
+	if(sw >= 0){
+		lastchar = (peek<0) ? *swt[sw]++ : peek;
 		peek = -1;
-		if(lastchar != &#39;\0&#39;)return(lastchar);
+		if(lastchar != '\0')return(lastchar);
 		peek = speek[sw--];
-		return(&#39; &#39;);
+		return(' ');
 		}
-	lastchar = (peek&lt;0) ? getchar() : peek;
-	if( lastchar==&#39;\n&#39; )
+	lastchar = (peek<0) ? getchar() : peek;
+	if( lastchar=='\n' )
 		linect++;
 	peek = -1;
-	if( lastchar!= &#39;\0&#39; )
+	if( lastchar!= '\0' )
 		return(lastchar);
-	if( ++ifile &gt; svargc ){
-		peek = &#39;\0&#39;;
-		return(&#39;\0&#39;);
+	if( ++ifile > svargc ){
+		peek = '\0';
+		return('\0');
 	}
 	close(fin);
 	linect = 1;
-	if( (fin=open(svargv[ifile],0)) &gt;= 0 )
+	if( (fin=open(svargv[ifile],0)) >= 0 )
 		goto loop;
-	error(FATAL,&quot;can&#39;t open file %s\n&quot;, svargv[ifile]);
+	error(FATAL,"can't open file %s\n", svargv[ifile]);
 }
 
 yylex(){
 	int c, type;
   beg:
-	while( (c=getc())==&#39; &#39; || c==&#39;\n&#39;);
+	while( (c=getc())==' ' || c=='\n');
 	yylval=c;
 	switch(c){
 
-	case &#39;\0&#39;:
-		return(&#39;\0&#39;);
-	case &#39;~&#39;:
+	case '\0':
+		return('\0');
+	case '~':
 		return(SPACE);
-	case &#39;^&#39;:
+	case '^':
 		return(THIN);
-	case &#39;\t&#39;:
+	case '\t':
 		return(TAB);
-	case &#39;{&#39;:
+	case '{':
 		return(MQ);
-	case &#39;}&#39;:
+	case '}':
 		return(MQ1);
-	case &#39;&quot;&#39;:
-		for(sp=0; (c=getc())!=&#39;&quot;&#39;; ){
-			if(c !=&#39;\\&#39;)token[sp++]=c;
-			else { if((c=getc())!= &#39;&quot;&#39;)token[sp++]=&#39;\\&#39;;
+	case '"':
+		for(sp=0; (c=getc())!='"'; ){
+			if(c !='\\')token[sp++]=c;
+			else { if((c=getc())!= '"')token[sp++]='\\';
 				token[sp++] = c; }
-			if( sp&gt;=SSIZE )
-				error(FATAL,&quot;quoted string %.20s... too long&quot;, token);
+			if( sp>=SSIZE )
+				error(FATAL,"quoted string %.20s... too long", token);
 		}
-		token[sp]=&#39;\0&#39;;
-		yylval= &amp;token[0];
+		token[sp]='\0';
+		yylval= &token[0];
 		return(QTEXT);
 	}
 	if( c==righteq )
-		return(&#39;\0&#39;);
+		return('\0');
 
 	getstr(token, c);
-	if((type = lookup(token,nptr)) &gt;= 0){
-		if(sw &gt;= 9)
-			error(FATAL,&quot;definitions nested &gt; 9&quot;, sw);
+	if((type = lookup(token,nptr)) >= 0){
+		if(sw >= 9)
+			error(FATAL,"definitions nested > 9", sw);
 		swt[++sw] = sptr[type];
 		speek[sw] = peek;
 		peek = -1;
 		goto beg;
 		}
 	type = lookup(token,cntrl);
-	if( type &lt; 0 )
+	if( type < 0 )
 		return(CONTIG);
 	if( icntrl[type]==DEFINE ) {
 		define();
@@ -150,24 +150,24 @@ yylex(){
 }
 
 getstr(s,c) char *s, c; {
-	for (sp=0; c!=&#39; &#39; &amp;&amp; c!=&#39;\t&#39; &amp;&amp; c!=&#39;\n&#39; &amp;&amp; c!=&#39;{&#39; &amp;&amp; c!=&#39;}&#39;
-		&amp;&amp; c!=&#39;&quot;&#39; &amp;&amp; c!=&#39;~&#39; &amp;&amp; c!=&#39;^&#39; &amp;&amp; c!=righteq; ) {
-		if(c == &#39;\\&#39;) if((c = getc()) != &#39;&quot;&#39;)s[sp++] = &#39;\\&#39;;
+	for (sp=0; c!=' ' && c!='\t' && c!='\n' && c!='{' && c!='}'
+		&& c!='"' && c!='~' && c!='^' && c!=righteq; ) {
+		if(c == '\\') if((c = getc()) != '"')s[sp++] = '\\';
 		s[sp++] = c;
-		if( sp&gt;=SSIZE )
-			error(FATAL,&quot;token %.20s... too long&quot;,s);
+		if( sp>=SSIZE )
+			error(FATAL,"token %.20s... too long",s);
 		c = getc();
 		}
-	if( c==&#39;{&#39; || c==&#39;}&#39; || c==&#39;&quot;&#39; || c==&#39;~&#39; || c==&#39;^&#39; || c==&#39;\t&#39; || c==righteq )
+	if( c=='{' || c=='}' || c=='"' || c=='~' || c=='^' || c=='\t' || c==righteq )
 		peek = c;
-	s[sp]=&#39;\0&#39;;
+	s[sp]='\0';
 	yylval = s;
 }
 
 lookup(str,tbl) char *str; char *tbl[]; {
 	register i,j, r;
 	for(i=0; tbl[i]!=0; i++){ /* table of tbl wds */
-		for( j=0; (r=tbl[i][j])==str[j] &amp;&amp; r!=&#39;\0&#39;; j++);
+		for( j=0; (r=tbl[i][j])==str[j] && r!='\0'; j++);
 		if( r == str[j] )
 			return(i);
 	}
@@ -176,39 +176,39 @@ lookup(str,tbl) char *str; char *tbl[]; {
 
 cstr(s,quote) char *s; int quote; {
 	int del,c,i;
-	while((del=getc()) == &#39; &#39; || del == &#39;\t&#39; || del == &#39;\n&#39;);
+	while((del=getc()) == ' ' || del == '\t' || del == '\n');
 	if(quote)
 		for(i=0; (c=getc()) != del;)
 			s[i++] = c;
 	else {
 		s[0] = del;
-		for(i=1; (c=getc())!=&#39; &#39; &amp;&amp; c!= &#39;\t&#39; &amp;&amp; c!=&#39;\n&#39;;)
+		for(i=1; (c=getc())!=' ' && c!= '\t' && c!='\n';)
 			s[i++]=c;
 	}
-	s[i] = &#39;\0&#39;;
+	s[i] = '\0';
 	return(s);
 }
 
 define() {
 	char *alloc();
 	int i, c;
-	while( (c=getc())==&#39; &#39; || c==&#39;\n&#39; );
+	while( (c=getc())==' ' || c=='\n' );
 	getstr(token,c);
-	if((i = lookup(token,nptr)) &gt;= 0){
+	if((i = lookup(token,nptr)) >= 0){
 		yyval = i;
 		free(sptr[yyval]);
 	} else {
 		yyval = ptr++;
-		for(i=0; token[i] != &#39;\0&#39;; i++);
+		for(i=0; token[i] != '\0'; i++);
 		nptr[yyval] = alloc(i+1);
 		for(i=0; nptr[yyval][i]=token[i]; i++);
 	}
-	if(dbg)printf(&quot;.\tdefine %s\n&quot;,nptr[yyval]);
+	if(dbg)printf(".\tdefine %s\n",nptr[yyval]);
 	cstr(token,1);
-	for(i=0; token[i] != &#39;\0&#39;; i++);
+	for(i=0; token[i] != '\0'; i++);
 	sptr[yyval] = alloc(i+1);
 	for(i=0; sptr[yyval][i] = token[i]; i++);
-	if(dbg)printf(&quot;.\tname %s defined as %s\n&quot;,nptr[yyval],sptr[yyval]);
+	if(dbg)printf(".\tname %s defined as %s\n",nptr[yyval],sptr[yyval]);
 }
 
 delim() {
@@ -217,14 +217,14 @@ delim() {
 	cstr(token,0);
 	lefteq = token[0];
 	righteq = token[1];
-	if( (lefteq == &#39;o&#39; &amp;&amp; righteq == &#39;f&#39;) || (lefteq == &#39;O&#39; &amp;&amp; righteq == &#39;F&#39;) )
-		lefteq = righteq = &#39;\0&#39;;
+	if( (lefteq == 'o' && righteq == 'f') || (lefteq == 'O' && righteq == 'F') )
+		lefteq = righteq = '\0';
 }
 
 globsize() {
 	extern int gsize;
 	int c;
-	while( (c=getc())==&#39; &#39; || c==&#39;\n&#39; );
+	while( (c=getc())==' ' || c=='\n' );
 	getstr(token,c);
 	gsize = numb(token);
 	yyval = eqnreg = 0;
@@ -232,6 +232,6 @@ globsize() {
 
 globfont() {
 	extern int gfont;
-	while( (gfont=getc())==&#39; &#39; || gfont==&#39;\n&#39; );
+	while( (gfont=getc())==' ' || gfont=='\n' );
 	yyval = eqnreg = 0;
 }

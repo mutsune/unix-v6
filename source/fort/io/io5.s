@@ -37,7 +37,7 @@ qocv:
 	jsr	r5,fmtchr
 	tst	r0
 	beq	2f
-	cmp	r0,$&#39;&quot;
+	cmp	r0,$'"
 	beq	2f
 	jsr	r5,fputcc
 	br	1b
@@ -79,7 +79,7 @@ locv:
 	mov	width,r1
 	dec	r1
 	jsr	r5,spaces
-	mov	$&#39;f,r0
+	mov	$'f,r0
 	movb	ilen,r1
 	mov	ilval,r2
 2:
@@ -89,7 +89,7 @@ locv:
 	bgt	2b
 	br	2f
 1:
-	mov	$&#39;t,r0
+	mov	$'t,r0
 2:
 	jsr	r5,fputcc
 	rts	r5

@@ -10,11 +10,11 @@
  *	lib2 should have dhdm.o, dh.o and dhfdm.o in that order.
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../tty.h&quot;
-#include &quot;../proc.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../user.h"
+#include "../tty.h"
+#include "../proc.h"
 
 #define	DHADDR	0160020
 #define	NDH11	16	/* number of lines */
@@ -73,27 +73,27 @@ dhopen(dev, flag)
 	register struct tty *tp;
 	extern dhstart();
 
-	if (dev.d_minor &gt;= NDH11) {
+	if (dev.d_minor >= NDH11) {
 		u.u_error = ENXIO;
 		return;
 	}
-	tp = &amp;dh11[dev.d_minor];
-	tp-&gt;t_addr = dhstart;
-	tp-&gt;t_dev = dev;
-	DHADDR-&gt;dhcsr =| IENABLE;
-	tp-&gt;t_state =| WOPEN|SSTART;
-	if ((tp-&gt;t_state&amp;ISOPEN) == 0) {
-		tp-&gt;t_erase = CERASE;
-		tp-&gt;t_kill = CKILL;
-		tp-&gt;t_speeds = SSPEED | (SSPEED&lt;&lt;8);
-		tp-&gt;t_flags = ODDP|EVENP|ECHO;
+	tp = &dh11[dev.d_minor];
+	tp->t_addr = dhstart;
+	tp->t_dev = dev;
+	DHADDR->dhcsr =| IENABLE;
+	tp->t_state =| WOPEN|SSTART;
+	if ((tp->t_state&ISOPEN) == 0) {
+		tp->t_erase = CERASE;
+		tp->t_kill = CKILL;
+		tp->t_speeds = SSPEED | (SSPEED<<8);
+		tp->t_flags = ODDP|EVENP|ECHO;
 		dhparam(tp);
 	}
 	dmopen(dev);
-	tp-&gt;t_state =&amp; ~WOPEN;
-	tp-&gt;t_state =| ISOPEN;
-	if (u.u_procp-&gt;p_ttyp == 0)
-		u.u_procp-&gt;p_ttyp = tp;
+	tp->t_state =& ~WOPEN;
+	tp->t_state =| ISOPEN;
+	if (u.u_procp->p_ttyp == 0)
+		u.u_procp->p_ttyp = tp;
 }
 
 /*
@@ -103,9 +103,9 @@ dhclose(dev)
 {
 	register struct tty *tp;
 
-	tp = &amp;dh11[dev.d_minor];
+	tp = &dh11[dev.d_minor];
 	dmclose(dev);
-	tp-&gt;t_state =&amp; (CARR_ON|SSTART);
+	tp->t_state =& (CARR_ON|SSTART);
 	wflushtty(tp);
 }
 
@@ -114,7 +114,7 @@ dhclose(dev)
  */
 dhread(dev)
 {
-	ttread(&amp;dh11[dev.d_minor]);
+	ttread(&dh11[dev.d_minor]);
 }
 
 /*
@@ -122,7 +122,7 @@ dhread(dev)
  */
 dhwrite(dev)
 {
-	ttwrite(&amp;dh11[dev.d_minor]);
+	ttwrite(&dh11[dev.d_minor]);
 }
 
 /*
@@ -133,16 +133,16 @@ dhrint()
 	register struct tty *tp;
 	register int c;
 
-	while ((c = DHADDR-&gt;dhnxch) &lt; 0) {	/* char. present */
-		tp = &amp;dh11[(c&gt;&gt;8)&amp;017];
-		if (tp &gt;= &amp;dh11[NDH11])
+	while ((c = DHADDR->dhnxch) < 0) {	/* char. present */
+		tp = &dh11[(c>>8)&017];
+		if (tp >= &dh11[NDH11])
 			continue;
-		if((tp-&gt;t_state&amp;ISOPEN)==0 || (c&amp;PERROR)) {
+		if((tp->t_state&ISOPEN)==0 || (c&PERROR)) {
 			wakeup(tp);
 			continue;
 		}
-		if (c&amp;FRERROR)		/* break */
-			if (tp-&gt;t_flags&amp;RAW)
+		if (c&FRERROR)		/* break */
+			if (tp->t_flags&RAW)
 				c = 0;		/* null (for getty) */
 			else
 				c = 0177;	/* DEL (intr) */
@@ -159,7 +159,7 @@ int *av;
 	register struct tty *tp;
 	register r;
 
-	tp = &amp;dh11[dev.d_minor];
+	tp = &dh11[dev.d_minor];
 	if (ttystty(tp, av))
 		return;
 	dhparam(tp);
@@ -177,26 +177,26 @@ struct tty *atp;
 
 	tp = atp;
 	spl5();
-	DHADDR-&gt;dhcsr.lobyte = tp-&gt;t_dev.d_minor | IENABLE;
+	DHADDR->dhcsr.lobyte = tp->t_dev.d_minor | IENABLE;
 	/*
 	 * Hang up line?
 	 */
-	if (tp-&gt;t_speeds.lobyte==0) {
-		tp-&gt;t_flags =| HUPCL;
-		dmclose(tp-&gt;t_dev);
+	if (tp->t_speeds.lobyte==0) {
+		tp->t_flags =| HUPCL;
+		dmclose(tp->t_dev);
 		return;
 	}
-	lpr = (tp-&gt;t_speeds.hibyte&lt;&lt;10) | (tp-&gt;t_speeds.lobyte&lt;&lt;6);
-	if (tp-&gt;t_speeds.lobyte == 4)		/* 134.5 baud */
+	lpr = (tp->t_speeds.hibyte<<10) | (tp->t_speeds.lobyte<<6);
+	if (tp->t_speeds.lobyte == 4)		/* 134.5 baud */
 		lpr =| BITS6|PENABLE|HDUPLX; else
-		if (tp-&gt;t_flags&amp;EVENP)
-			if (tp-&gt;t_flags&amp;ODDP)
+		if (tp->t_flags&EVENP)
+			if (tp->t_flags&ODDP)
 				lpr =| BITS8; else
 				lpr =| BITS7|PENABLE; else
 			lpr =| BITS7|OPAR|PENABLE;
-	if (tp-&gt;t_speeds.lobyte == 3)	/* 110 baud */
+	if (tp->t_speeds.lobyte == 3)	/* 110 baud */
 		lpr =| TWOSB;
-	DHADDR-&gt;dhlpr = lpr;
+	DHADDR->dhlpr = lpr;
 	spl0();
 }
 
@@ -210,17 +210,17 @@ dhxint()
 	register struct tty *tp;
 	register ttybit, bar;
 
-	bar = dhsar &amp; ~DHADDR-&gt;dhbar;
-	DHADDR-&gt;dhcsr =&amp; ~XINT;
+	bar = dhsar & ~DHADDR->dhbar;
+	DHADDR->dhcsr =& ~XINT;
 	ttybit = 1;
 	for (tp = dh11; bar; tp++) {
-		if(bar&amp;ttybit) {
-			dhsar =&amp; ~ttybit;
-			bar =&amp; ~ttybit;
-			tp-&gt;t_state =&amp; ~BUSY;
+		if(bar&ttybit) {
+			dhsar =& ~ttybit;
+			bar =& ~ttybit;
+			tp->t_state =& ~BUSY;
 			dhstart(tp);
 		}
-		ttybit =&lt;&lt; 1;
+		ttybit =<< 1;
 	}
 }
 
@@ -236,35 +236,35 @@ struct tty *atp;
 	int sps;
 	char *cp;
 
-	sps = PS-&gt;integ;
+	sps = PS->integ;
 	spl5();
 	tp = atp;
 	/*
-	 * If it&#39;s currently active, or delaying,
+	 * If it's currently active, or delaying,
 	 * no need to do anything.
 	 */
-	if (tp-&gt;t_state&amp;(TIMEOUT|BUSY))
+	if (tp->t_state&(TIMEOUT|BUSY))
 		goto out;
 	/*
 	 * t_char is a delay indicator which may have been
 	 * left over from the last start.
 	 * Arrange for the delay.
 	 */
-	if (c = tp-&gt;t_char) {
-		tp-&gt;t_char = 0;
-		timeout(ttrstrt, tp, (c&amp;0177)+6);
-		tp-&gt;t_state =| TIMEOUT;
+	if (c = tp->t_char) {
+		tp->t_char = 0;
+		timeout(ttrstrt, tp, (c&0177)+6);
+		tp->t_state =| TIMEOUT;
 		goto out;
 	}
-	cp = dh_clist[tp-&gt;t_dev.d_minor];
+	cp = dh_clist[tp->t_dev.d_minor];
 	nch = 0;
 	/*
 	 * Copy DHNCH characters, or up to a delay indicator,
 	 * to the DMA area.
 	 */
-	while (nch &gt; -DHNCH &amp;&amp; (c = getc(&amp;tp-&gt;t_outq))&gt;=0) {
-		if (c &gt;= 0200) {
-			tp-&gt;t_char = c;
+	while (nch > -DHNCH && (c = getc(&tp->t_outq))>=0) {
+		if (c >= 0200) {
+			tp->t_char = c;
 			break;
 		}
 		*cp++ = c;
@@ -274,27 +274,27 @@ struct tty *atp;
 	 * If the writer was sleeping on output overflow,
 	 * wake him when low tide is reached.
 	 */
-	if (tp-&gt;t_outq.c_cc&lt;=TTLOWAT &amp;&amp; tp-&gt;t_state&amp;ASLEEP) {
-		tp-&gt;t_state =&amp; ~ASLEEP;
-		wakeup(&amp;tp-&gt;t_outq);
+	if (tp->t_outq.c_cc<=TTLOWAT && tp->t_state&ASLEEP) {
+		tp->t_state =& ~ASLEEP;
+		wakeup(&tp->t_outq);
 	}
 	/*
 	 * If any characters were set up, start transmission;
 	 * otherwise, check for possible delay.
 	 */
 	if (nch) {
-		DHADDR-&gt;dhcsr.lobyte = tp-&gt;t_dev.d_minor | IENABLE;
-		DHADDR-&gt;dhcar = cp+nch;
-		DHADDR-&gt;dhbcr = nch;
-		c = 1&lt;&lt;tp-&gt;t_dev.d_minor;
-		DHADDR-&gt;dhbar =| c;
+		DHADDR->dhcsr.lobyte = tp->t_dev.d_minor | IENABLE;
+		DHADDR->dhcar = cp+nch;
+		DHADDR->dhbcr = nch;
+		c = 1<<tp->t_dev.d_minor;
+		DHADDR->dhbar =| c;
 		dhsar =| c;
-		tp-&gt;t_state =| BUSY;
-	} else if (c = tp-&gt;t_char) {
-		tp-&gt;t_char = 0;
-		timeout(ttrstrt, tp, (c&amp;0177)+6);
-		tp-&gt;t_state =| TIMEOUT;
+		tp->t_state =| BUSY;
+	} else if (c = tp->t_char) {
+		tp->t_char = 0;
+		timeout(ttrstrt, tp, (c&0177)+6);
+		tp->t_state =| TIMEOUT;
 	}
     out:
-	PS-&gt;integ = sps;
+	PS->integ = sps;
 }

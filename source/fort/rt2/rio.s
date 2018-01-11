@@ -51,7 +51,7 @@ rwrite.:temp
 	sys	exit
 
 rf:
-	&lt;fortrf\0&gt;
+	<fortrf\0>
 	.even
 rfin:	.=.+2
 rfout:	.=.+2

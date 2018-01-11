@@ -1,7 +1,7 @@
 /
 /
 
-/ abs &amp; dabs fortran functions
+/ abs & dabs fortran functions
 
 .globl	abs.
 .globl	dabs.

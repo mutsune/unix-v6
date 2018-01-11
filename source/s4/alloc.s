@@ -15,12 +15,12 @@
 /#define BUSY 01
 /
 /char *allocs[2] {		/*initial empty arena*/
-/	&amp;allocs[1],
-/	&amp;allocs[0]
+/	&allocs[1],
+/	&allocs[0]
 /};
 /struct { int word; };
-/char **allocp &amp;allocs[1];	/*current search pointer*/
-/char **alloct &amp;allocs[1];	/*top of arena (last cell)*/
+/char **allocp &allocs[1];	/*current search pointer*/
+/char **alloct &allocs[1];	/*top of arena (last cell)*/
 /
 /alloc(nbytes)
 /{
@@ -34,26 +34,26 @@
 /	nwords = (nbytes+(2*sizeof(p)-1))/sizeof(p);
 /	for(p=allocp;;) {
 /		do {
-/			if((p-&gt;word&amp;BUSY)==0) {
-/				while(((q = *p)-&gt;word&amp;BUSY)==0)
+/			if((p->word&BUSY)==0) {
+/				while(((q = *p)->word&BUSY)==0)
 /					*p = *q;
-/				if(q &gt;= &amp;p[nwords])
+/				if(q >= &p[nwords])
 /					goto found;
 /			}
 /			q = p;
-/			p = p-&gt;word &amp; ~BUSY;
-/		} while(q&gt;=allocp || p&lt;allocp);
+/			p = p->word & ~BUSY;
+/		} while(q>=allocp || p<allocp);
 /		if((*alloct=t=sbrk(BLOK*sizeof(p))) == -1)
 /			return(-1);
 /		if(t!=alloct+1)
-/			alloct-&gt;word =| BUSY;
-/		alloct = (*t = &amp;t[BLOK]-1);
+/			alloct->word =| BUSY;
+/		alloct = (*t = &t[BLOK]-1);
 /		*alloct = allocs;
-/		alloct-&gt;word =| BUSY;
+/		alloct->word =| BUSY;
 /	}
 /found:
-/	allocp = &amp;p[nwords];
-/	if(q&gt;allocp)
+/	allocp = &p[nwords];
+/	if(q>allocp)
 /		*allocp = *p;
 /	*p = allocp.word|BUSY;
 /	return(p+1);
@@ -63,7 +63,7 @@
 /char **p;
 /{
 /	allocp = p-1;
-/	allocp-&gt;word =&amp; ~BUSY;
+/	allocp->word =& ~BUSY;
 /}
 .globl	_allocs
 .data

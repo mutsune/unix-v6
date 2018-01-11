@@ -1,7 +1,7 @@
 /
 /
 
-/ max1, amax1 &amp; dmax1 fortran functions
+/ max1, amax1 & dmax1 fortran functions
 
 .globl	amax1.
 .globl	dmax1.

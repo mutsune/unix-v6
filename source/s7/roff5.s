@@ -62,27 +62,27 @@ punct:
 	clz
 2:
 	rts	pc
-3: &lt; .,()&quot;\&#39;`\0&gt;	/should be more
+3: < .,()"\'`\0>	/should be more
 .even
 maplow:
-	cmp	r2,$&#39;a
+	cmp	r2,$'a
 	bhis	1f
-	add	$&#39;a-&#39;A,r2
+	add	$'a-'A,r2
 1:
 	rts	pc
 
 vowel:
-	cmp	r2,$&#39;a
+	cmp	r2,$'a
 	beq	1f
-	cmp	r2,$&#39;e
+	cmp	r2,$'e
 	beq	1f
-	cmp	r2,$&#39;i
+	cmp	r2,$'i
 	beq	1f
-	cmp	r2,$&#39;o
+	cmp	r2,$'o
 	beq	1f
-	cmp	r2,$&#39;u
+	cmp	r2,$'u
 	beq	1f
-	cmp	r2,$&#39;y
+	cmp	r2,$'y
 1:
 	rts	pc
 
@@ -129,7 +129,7 @@ digram:
 	jsr	pc,alph2
 	beq	2f
 	movb	(r0),r2
-	mov	$&#39;a,r1
+	mov	$'a,r1
 	jsr	r5,dilook; bxh
 	br	4f
 2:
@@ -173,14 +173,14 @@ dilook:
 	bic	$!177,r2
 	bic	$!177,r1
 	jsr	pc,maplow
-	sub	$&#39;a,r2
-	cmp	r2,$&#39;z-&#39;a
+	sub	$'a,r2
+	cmp	r2,$'z-'a
 	bhi	3f
 	mov	r2,r4
 	mov	r1,r2
 	jsr	pc,maplow
-	sub	$&#39;a,r2
-	cmp	r2,$&#39;z-&#39;a
+	sub	$'a,r2
+	cmp	r2,$'z-'a
 	bhi	3f
 	mov	r3,-(sp)
 	mov	r2,r3
@@ -215,7 +215,7 @@ suffix:
 	jsr	pc,alph
 	bne	4f
 	jsr	pc,maplow
-	sub	$&#39;a,r2
+	sub	$'a,r2
 	asl	r2
 	mov	suftab(r2),-(sp)
 	bic	$!37777,(sp)

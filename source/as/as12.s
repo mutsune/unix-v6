@@ -13,7 +13,7 @@ error:
 	mov	r0,-(sp)
 	mov	*curarg,r0
 	clr	*curarg
-	jsr	r5,filerr; &#39;\n
+	jsr	r5,filerr; '\n
 	mov	(sp)+,r0
 1:
 	mov	r2,-(sp)
@@ -25,7 +25,7 @@ error:
 2:
 	clr	r2
 	dvd	$10.,r2
-	add	$&#39;0,r3
+	add	$'0,r3
 	movb	r3,-(r0)
 	mov	r2,r3
 	sob	r1,2b
@@ -38,7 +38,7 @@ error:
 	rts	r5
 
 	.data
-1:	&lt;f xxxx\n&gt;
+1:	<f xxxx\n>
 	.even
 	.text
 
@@ -55,7 +55,7 @@ betwen:
 putw:
 	tst	ifflg
 	beq	1f
-	cmp	r4,$&#39;\n
+	cmp	r4,$'\n
 	bne	2f
 1:
 	mov	r4,*obufp

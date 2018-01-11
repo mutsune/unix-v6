@@ -4,65 +4,65 @@ salloc \*- string allocation and manipulation
 .sh SYNOPSIS
 .nf
 (get size in r0)
-.bd &quot;jsr	pc,allocate&quot;
+.bd "jsr	pc,allocate"
 (header address in r1)
 .s3
 (get source header address in r0,
 destination header address in r1)
-.bd &quot;jsr	pc,copy&quot;
+.bd "jsr	pc,copy"
 .s3
-.bd &quot;jsr	pc,wc&quot;
+.bd "jsr	pc,wc"
 .s3
 (all following routines assume r1 contains header address)
 .s3
-.bd &quot;jsr	pc,release&quot;
+.bd "jsr	pc,release"
 .s3
 (get character in r0)
-.bd &quot;jsr	pc,putchar&quot;
+.bd "jsr	pc,putchar"
 .s3
-.bd &quot;jsr	pc,lookchar&quot;
+.bd "jsr	pc,lookchar"
 (character in r0)
 .s3
-.bd &quot;jsr	pc,getchar&quot;
+.bd "jsr	pc,getchar"
 (character in r0)
 .s3
 (get character in r0)
-.bd &quot;jsr	pc,alterchar&quot;
+.bd "jsr	pc,alterchar"
 .s3
 (get position in r0)
-.bd &quot;jsr	pc,seekchar&quot;
+.bd "jsr	pc,seekchar"
 .s3
-.bd &quot;jsr	pc,backspace&quot;
+.bd "jsr	pc,backspace"
 (character in r0)
 .s3
 (get word in r0)
-.bd &quot;jsr	pc,putword&quot;
+.bd "jsr	pc,putword"
 .s3
-.bd &quot;jsr	pc,lookword&quot;
+.bd "jsr	pc,lookword"
 (word in r0)
 .s3
-.bd &quot;jsr	pc,getword&quot;
+.bd "jsr	pc,getword"
 (word in r0)
 .s3
 (get word in r0)
-.bd &quot;jsr	pc,alterword&quot;
+.bd "jsr	pc,alterword"
 .s3
-.bd &quot;jsr	pc,backword&quot;
+.bd "jsr	pc,backword"
 (word in r0)
 .s3
-.bd &quot;jsr	pc,length&quot;
+.bd "jsr	pc,length"
 (length in r0)
 .s3
-.bd &quot;jsr	pc,position&quot;
+.bd "jsr	pc,position"
 (position in r0)
 .s3
-.bd &quot;jsr	pc,rewind&quot;
+.bd "jsr	pc,rewind"
 .s3
-.bd &quot;jsr	pc,create&quot;
+.bd "jsr	pc,create"
 .s3
-.bd &quot;jsr	pc,fsfile&quot;
+.bd "jsr	pc,fsfile"
 .s3
-.bd &quot;jsr	pc,zero&quot;
+.bd "jsr	pc,zero"
 .fi
 .sh DESCRIPTION
 This package is a complete set of routines
@@ -165,21 +165,21 @@ and
 .if t .ta 1i
 .if n .ta 13
 /lib/libs.a	library, accessed by
-.it &quot;ld ... -ls&quot;
+.it "ld ... -ls"
 .br
 alloc.d	temporary file for string storage
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 alloc (III)
 .sh DIAGNOSTICS
-`error in copy&#39; \*- disk write error encountered in
+`error in copy' \*- disk write error encountered in
 .it copy.
 .br
-`error in allocator&#39; \*- routine called with bad header pointer.
+`error in allocator' \*- routine called with bad header pointer.
 .br
-`cannot open output file&#39; \*- temp file 
+`cannot open output file' \*- temp file 
 .it alloc.d 
 cannot be created or opened.
 .br
-`out of space&#39; \*- no sufficiently large block or no 
+`out of space' \*- no sufficiently large block or no 
 header is available for a new or growing block.
 .sh BUGS

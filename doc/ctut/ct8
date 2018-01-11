@@ -4,7 +4,7 @@ Bit Operators
 C has several operators for logical bit-operations.
 For example,
 .E1
-x = x &amp; 0177;
+x = x & 0177;
 .E2
 forms the bit-wise 
 .UC AND
@@ -19,30 +19,30 @@ Other operators are
 \(or	inclusive OR
 ^	(circumflex) exclusive OR
 .tr+~
-+	(tilde) 1&#39;s complement
++	(tilde) 1's complement
 .tr++
 !	logical NOT
-&lt;&lt;	left shift (as in x&lt;&lt;2)
-&gt;&gt;	right shift	(arithmetic on PDP\(hy11; logical on H6070, IBM360)
+<<	left shift (as in x<<2)
+>>	right shift	(arithmetic on PDP\(hy11; logical on H6070, IBM360)
 .E2
 .NH
 Assignment Operators
 .PP
 An unusual feature of C
 is that the normal binary operators like
-`+&#39;, `\(mi&#39;, etc.
-can be combined with the assignment operator `=&#39;
+`+', `\(mi', etc.
+can be combined with the assignment operator `='
 to form new assignment operators.
 For example,
 .E1
 x =- 10;
 .E2
-uses the assignment operator `=\(mi&#39; to decrement 
+uses the assignment operator `=\(mi' to decrement 
 .UL x
 by 10,
 and
 .E1
-x =&amp; 0177
+x =& 0177
 .E2
 forms the
 .UC AND
@@ -55,7 +55,7 @@ particularly if
 is a complicated expression.
 The classic example is summing an array:
 .E1
-for( sum=i=0; i&lt;n; i\*+ )
+for( sum=i=0; i<n; i\*+ )
 	sum =+ array[i];
 .E2
 But the spaces around the operator are critical!
@@ -83,7 +83,7 @@ This is quite contrary to the experience of most programmers.
 In particular, watch out for things like
 .E1
 c=\**s\*+;
-y=&amp;x[0];
+y=&x[0];
 .E2
 both of which are almost certainly not what you wanted.
 Newer versions of various compilers are courteous enough to warn you about the ambiguity.
@@ -92,7 +92,7 @@ Because all other operators in an expression are evaluated
 before the assignment operator,
 the order of evaluation should be watched carefully:
 .E1
-x = x&lt;&lt;y | z;
+x = x<<y | z;
 .E2
 means
 ``shift
@@ -105,22 +105,22 @@ then
 with
 .UL z,
 and store in
-.UL x\*.&#39;&#39;
+.UL x\*.''
 But
 .E1
-x =&lt;&lt; y | z;
+x =<< y | z;
 .E2
 means
 ``shift
 .UL x
 left by
 .UL y|z
-places&#39;&#39;,
+places'',
 which is rather different.
 .NH
 Floating Point
 .PP
-We&#39;ve skipped over floating point so far,
+We've skipped over floating point so far,
 and the treatment here will be hasty.
 C has single and double precision numbers
 (where the precision depends on the machine at hand).
@@ -129,7 +129,7 @@ For example,
 	double sum;
 	float avg, y[10];
 	sum = 0\*.0;
-	for( i=0; i&lt;n; i\*+ )
+	for( i=0; i<n; i\*+ )
 		sum =+ y[i];
 	avg = sum/n;
 .E2
@@ -186,7 +186,7 @@ and
 to floating point.
 .PP
 Floating constants are just like those in Fortran or PL/I,
-except that the exponent letter is `e&#39; instead of `E&#39;.
+except that the exponent letter is `e' instead of `E'.
 Thus:
 .E1
 	pi = 3\*.14159;
@@ -195,7 +195,7 @@ Thus:
 .PP
 .UL printf
 will format floating point numbers:
-.UL ``%w\*.df&#39;&#39;
+.UL ``%w\*.df''
 in the format string will print the corresponding variable
 in a field
 .UL w
@@ -208,7 +208,7 @@ instead of an
 .UL f
 will produce exponential notation.
 .NH
-Horrors! goto&#39;s and labels
+Horrors! goto's and labels
 .PP
 C has 
 a
@@ -216,8 +216,8 @@ a
 statement and labels, so you can branch about
 the way you used to.
 But most of the time
-.UL goto&#39;s
-aren&#39;t needed.
+.UL goto's
+aren't needed.
 (How many have we used up to this point?)
 The code can almost always be more clearly expressed by
 .UL for/while,
@@ -225,7 +225,7 @@ The code can almost always be more clearly expressed by
 and compound statements.
 .PP
 One use of
-.UL goto&#39;s
+.UL goto's
 with some legitimacy is in a program
 which
 contains a long loop,
@@ -244,7 +244,7 @@ out of more than one level of
 .UL for
 or 
 .UL while\*.
-.UL goto&#39;s
+.UL goto's
 can only branch to labels within the same function.
 .NH
 Acknowledgements

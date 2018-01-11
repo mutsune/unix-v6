@@ -65,9 +65,9 @@ scan3:
 2:
 	mov	efno,r0
 	beq	1f
-	jsr	r5,ptemp; &#39;s; efno; line
+	jsr	r5,ptemp; 's; efno; line
 	jsr	r5,code
-		&lt;.%d:\n\0&gt;; .even
+		<.%d:\n\0>; .even
 		r0
 1:
 	jsr	r5,isagn
@@ -102,7 +102,7 @@ ifstmt:
 	jsr	r5,lookup; stmtab1
 		br 2f
 	mov	r2,r1
-	cmp	r0,$4		/ don&#39;t allow end
+	cmp	r0,$4		/ don't allow end
 	beq	2f
 	jmp	*sublst1(r0)
 1:
@@ -152,28 +152,28 @@ fmtlst:
 	sform
 	sdata
 stmtab:
-	&lt;do\0&gt;
+	<do\0>
 stmtab1:
-	&lt;if(\0&gt;
-	&lt;endfile\0&gt;
-	&lt;end\0&gt;		/ keep in this spot!!!
-	&lt;assign\0&gt;
-	&lt;call\0&gt;
-	&lt;continue\0&gt;
-	&lt;return\0&gt;
-	&lt;goto\0&gt;
-	&lt;pause\0&gt;
-	&lt;stop\0&gt;
-	&lt;read\0&gt;
-	&lt;print\0&gt;
-	&lt;write\0&gt;
-	&lt;rewind\0&gt;
-	&lt;backspace\0&gt;
-	&lt;\0&gt;
+	<if(\0>
+	<endfile\0>
+	<end\0>		/ keep in this spot!!!
+	<assign\0>
+	<call\0>
+	<continue\0>
+	<return\0>
+	<goto\0>
+	<pause\0>
+	<stop\0>
+	<read\0>
+	<print\0>
+	<write\0>
+	<rewind\0>
+	<backspace\0>
+	<\0>
 
 fmttab:
-	&lt;format\0&gt;
-	&lt;data\0&gt;
-	&lt;\0&gt;
+	<format\0>
+	<data\0>
+	<\0>
 	.even
 

@@ -2,12 +2,12 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../systm.h&quot;
+#include "../param.h"
+#include "../inode.h"
+#include "../user.h"
+#include "../buf.h"
+#include "../conf.h"
+#include "../systm.h"
 
 /*
  * Read the file corresponding to
@@ -30,37 +30,37 @@ struct inode *aip;
 	ip = aip;
 	if(u.u_count == 0)
 		return;
-	ip-&gt;i_flag =| IACC;
-	if((ip-&gt;i_mode&amp;IFMT) == IFCHR) {
-		(*cdevsw[ip-&gt;i_addr[0].d_major].d_read)(ip-&gt;i_addr[0]);
+	ip->i_flag =| IACC;
+	if((ip->i_mode&IFMT) == IFCHR) {
+		(*cdevsw[ip->i_addr[0].d_major].d_read)(ip->i_addr[0]);
 		return;
 	}
 
 	do {
 		lbn = bn = lshift(u.u_offset, -9);
-		on = u.u_offset[1] &amp; 0777;
+		on = u.u_offset[1] & 0777;
 		n = min(512-on, u.u_count);
-		if((ip-&gt;i_mode&amp;IFMT) != IFBLK) {
-			dn = dpcmp(ip-&gt;i_size0&amp;0377, ip-&gt;i_size1,
+		if((ip->i_mode&IFMT) != IFBLK) {
+			dn = dpcmp(ip->i_size0&0377, ip->i_size1,
 				u.u_offset[0], u.u_offset[1]);
-			if(dn &lt;= 0)
+			if(dn <= 0)
 				return;
 			n = min(n, dn);
 			if ((bn = bmap(ip, lbn)) == 0)
 				return;
-			dn = ip-&gt;i_dev;
+			dn = ip->i_dev;
 		} else {
-			dn = ip-&gt;i_addr[0];
+			dn = ip->i_addr[0];
 			rablock = bn+1;
 		}
-		if (ip-&gt;i_lastr+1 == lbn)
+		if (ip->i_lastr+1 == lbn)
 			bp = breada(dn, bn, rablock);
 		else
 			bp = bread(dn, bn);
-		ip-&gt;i_lastr = lbn;
+		ip->i_lastr = lbn;
 		iomove(bp, on, n, B_READ);
 		brelse(bp);
-	} while(u.u_error==0 &amp;&amp; u.u_count!=0);
+	} while(u.u_error==0 && u.u_count!=0);
 }
 
 /*
@@ -82,9 +82,9 @@ struct inode *aip;
 	register struct inode *ip;
 
 	ip = aip;
-	ip-&gt;i_flag =| IACC|IUPD;
-	if((ip-&gt;i_mode&amp;IFMT) == IFCHR) {
-		(*cdevsw[ip-&gt;i_addr[0].d_major].d_write)(ip-&gt;i_addr[0]);
+	ip->i_flag =| IACC|IUPD;
+	if((ip->i_mode&IFMT) == IFCHR) {
+		(*cdevsw[ip->i_addr[0].d_major].d_write)(ip->i_addr[0]);
 		return;
 	}
 	if (u.u_count == 0)
@@ -92,31 +92,31 @@ struct inode *aip;
 
 	do {
 		bn = lshift(u.u_offset, -9);
-		on = u.u_offset[1] &amp; 0777;
+		on = u.u_offset[1] & 0777;
 		n = min(512-on, u.u_count);
-		if((ip-&gt;i_mode&amp;IFMT) != IFBLK) {
+		if((ip->i_mode&IFMT) != IFBLK) {
 			if ((bn = bmap(ip, bn)) == 0)
 				return;
-			dn = ip-&gt;i_dev;
+			dn = ip->i_dev;
 		} else
-			dn = ip-&gt;i_addr[0];
+			dn = ip->i_addr[0];
 		if(n == 512) 
 			bp = getblk(dn, bn); else
 			bp = bread(dn, bn);
 		iomove(bp, on, n, B_WRITE);
 		if(u.u_error != 0)
 			brelse(bp); else
-		if ((u.u_offset[1]&amp;0777)==0)
+		if ((u.u_offset[1]&0777)==0)
 			bawrite(bp); else
 			bdwrite(bp);
-		if(dpcmp(ip-&gt;i_size0&amp;0377, ip-&gt;i_size1,
-		  u.u_offset[0], u.u_offset[1]) &lt; 0 &amp;&amp;
-		  (ip-&gt;i_mode&amp;(IFBLK&amp;IFCHR)) == 0) {
-			ip-&gt;i_size0 = u.u_offset[0];
-			ip-&gt;i_size1 = u.u_offset[1];
+		if(dpcmp(ip->i_size0&0377, ip->i_size1,
+		  u.u_offset[0], u.u_offset[1]) < 0 &&
+		  (ip->i_mode&(IFBLK&IFCHR)) == 0) {
+			ip->i_size0 = u.u_offset[0];
+			ip->i_size1 = u.u_offset[1];
 		}
-		ip-&gt;i_flag =| IUPD;
-	} while(u.u_error==0 &amp;&amp; u.u_count!=0);
+		ip->i_flag =| IUPD;
+	} while(u.u_error==0 && u.u_count!=0);
 }
 
 /*
@@ -127,7 +127,7 @@ max(a, b)
 char *a, *b;
 {
 
-	if(a &gt; b)
+	if(a > b)
 		return(a);
 	return(b);
 }
@@ -140,14 +140,14 @@ min(a, b)
 char *a, *b;
 {
 
-	if(a &lt; b)
+	if(a < b)
 		return(a);
 	return(b);
 }
 
 /*
- * Move &#39;an&#39; bytes at byte location
- * &amp;bp-&gt;b_addr[o] to/from (flag) the
+ * Move 'an' bytes at byte location
+ * &bp->b_addr[o] to/from (flag) the
  * user/kernel (u.segflg) area starting at u.base.
  * Update all the arguments by the number
  * of bytes moved.
@@ -167,8 +167,8 @@ struct buf *bp;
 	register int n, t;
 
 	n = an;
-	cp = bp-&gt;b_addr + o;
-	if(u.u_segflg==0 &amp;&amp; ((n | cp | u.u_base)&amp;01)==0) {
+	cp = bp->b_addr + o;
+	if(u.u_segflg==0 && ((n | cp | u.u_base)&01)==0) {
 		if (flag==B_WRITE)
 			cp = copyin(u.u_base, cp, n);
 		else
@@ -184,12 +184,12 @@ struct buf *bp;
 	}
 	if (flag==B_WRITE) {
 		while(n--) {
-			if ((t = cpass()) &lt; 0)
+			if ((t = cpass()) < 0)
 				return;
 			*cp++ = t;
 		}
 	} else
 		while (n--)
-			if(passc(*cp++) &lt; 0)
+			if(passc(*cp++) < 0)
 				return;
 }

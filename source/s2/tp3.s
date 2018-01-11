@@ -20,7 +20,7 @@ gettape:
 3:
 	tstb	(r2)
 	beq	4f
-	cmpb	(r2),$&#39;/
+	cmpb	(r2),$'/
 	bne	2f
 4:
 	mov	r1,-(sp)
@@ -38,7 +38,7 @@ gettape:
 	mov	*parg,r1
 	jsr	pc,pstr
 	jsr	r5,mesg
-		&lt; not found\n\0&gt;; .even
+		< not found\n\0>; .even
 2:
 	dec	narg
 	add	$2,parg
@@ -48,7 +48,7 @@ gettape:
 	rts	r5
 
 delete:
-	jsr	r5,verify; &#39;d
+	jsr	r5,verify; 'd
 		rts pc
 	jsr	pc,clrent
 	rts	pc
@@ -66,12 +66,12 @@ numbx:
 1:
 	mov	$catlb,r2
 1:
-	mov	$&quot;  ,(r2)+
+	mov	$"  ,(r2)+
 	cmp	r2,$catlb+12.
 	blo	1b
 	cmp	(r5),$2
 	bne	1f
-	mov	$&quot;00,-2(r2)
+	mov	$"00,-2(r2)
 1:
 	mov	(sp)+,r1
 	jsr	pc,numb2
@@ -98,7 +98,7 @@ numb2:
 	jsr	pc,numb1
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,(r2)+
 	rts	pc
 
@@ -224,7 +224,7 @@ phserr:
 	mov	$name,r1
 	jsr	pc,pstr
 	jsr	r5,mesg
-		&lt; -- Phase error\n\0&gt;; .even
+		< -- Phase error\n\0>; .even
 	mov	(sp)+,r1
 	clr	time0(r1) / time
 	beq	2b
@@ -288,7 +288,7 @@ bitcalc:
 
 maperr:
 	jsr	r5,mesg
-		&lt;Tape overflow\n\0&gt;; .even
+		<Tape overflow\n\0>; .even
 	jmp	done
 
 usage:
@@ -325,22 +325,22 @@ usage:
 	mov	nentr,r0
 	jsr	r5,numb; 4
 	jsr	r5,mesg
-		&lt; entries\n\0&gt;; .even
+		< entries\n\0>; .even
 	mov	nused,r0
 	jsr	r5,numb; 4
 	jsr	r5,mesg
-		&lt; used\n\0&gt;; .even
+		< used\n\0>; .even
 	tstb	flm
 	bne	1f
 	mov	nfree,r0
 	jsr	r5,numb; 4
 	jsr	r5,mesg
-		&lt; free\n\0&gt;; .even
+		< free\n\0>; .even
 1:
 	mov	lused,r0
 	jsr	r5,numb; 4
 	jsr	r5,mesg
-		&lt; last\n\0&gt;; .even
+		< last\n\0>; .even
 	rts	pc
 
 taboc:
@@ -374,13 +374,13 @@ taboc:
 	mov	r0,(sp)
 	mov	10.(r0),r0
 	jsr	r5,numb; 3
-	mov	$&#39;/,r0
+	mov	$'/,r0
 	jsr	pc,putc
 	mov	(sp),r0
 	mov	8.(r0),r0
 	inc	r0
 	jsr	r5,numb; 2
-	mov	$&#39;/,r0
+	mov	$'/,r0
 	jsr	pc,putc
 	mov	(sp),r0
 	mov	6(r0),r0
@@ -388,45 +388,45 @@ taboc:
 	mov	(sp),r0
 	mov	4(r0),r0
 	jsr	r5,numb; 3
-	mov	$&#39;:,r0
+	mov	$':,r0
 	jsr	pc,putc
 	mov	(sp)+,r0
 	mov	2(r0),r0
 	jsr	r5,numb; 2
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,putc
 4:
 	mov	$name,r1
 	jsr	pc,pstr
 	jsr	r5,mesg
-		&lt;\n\0&gt;
+		<\n\0>
 	rts	pc
 
 pmod:
 	beq	1f
-	mov	$&#39;s,-(sp)
+	mov	$'s,-(sp)
 	br	2f
 1:
 	bit	$1,r0
 	beq	1f
-	mov	$&#39;x,-(sp)
+	mov	$'x,-(sp)
 	br	2f
 1:
-	mov	$&#39;-,-(sp)
+	mov	$'-,-(sp)
 2:
 	bit	$2,r0
 	beq	1f
-	mov	$&#39;w,-(sp)
+	mov	$'w,-(sp)
 	br	2f
 1:
-	mov	$&#39;-,-(sp)
+	mov	$'-,-(sp)
 2:
 	bit	$4,r0
 	beq	1f
-	mov	$&#39;r,r0
+	mov	$'r,r0
 	br	2f
 1:
-	mov	$&#39;-,r0
+	mov	$'-,r0
 2:
 	jsr	pc,putc
 	mov	(sp)+,r0
@@ -441,7 +441,7 @@ xtract:
 	tst	size1(r1)
 	beq	1f
 2:
-	jsr	r5,verify; &#39;x
+	jsr	r5,verify; 'x
 		rts pc
 	mov	size1(r1),r3
 	mov	tapea(r1),r0
@@ -518,5 +518,5 @@ crterr:
 	mov	$name,r1
 	jsr	pc,pstr
 	jsr	r5,mesg
-		&lt; -- create error\n\0&gt;; .even
+		< -- create error\n\0>; .even
 	rts	pc

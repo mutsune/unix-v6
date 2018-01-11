@@ -3,10 +3,10 @@
 rp \*- RP-11/RP03 moving-head disk
 .sh DESCRIPTION
 The files
-.it &quot;rp0 ... rp7&quot;
+.it "rp0 ... rp7"
 refer to sections of RP disk drive 0.
 The files
-.it &quot;rp8 ... rp15&quot;
+.it "rp8 ... rp15"
 refer to drive 1 etc.
 This is done since the size of
 a full RP drive is 81200 blocks and
@@ -70,13 +70,13 @@ minimize head movement.
 The
 .it rp
 files
-access the disk via the system&#39;s normal
+access the disk via the system's normal
 buffering mechanism
 and may be read and written without regard to
 physical disk records.
-There is also a ``raw&#39;&#39; interface
+There is also a ``raw'' interface
 which provides for direct transmission between the disk
-and the user&#39;s read or write buffer.
+and the user's read or write buffer.
 A single read or write call results in exactly one I/O operation
 and therefore raw I/O is considerably more efficient when
 many words are transmitted.

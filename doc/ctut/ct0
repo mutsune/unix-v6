@@ -1,12 +1,12 @@
 .if t .ll 6i
 .if n .ll 60
 .de h
-&#39;sp 2
-.tl &#39;C Tutorial&#39;- % -&#39;&#39;
-&#39;sp 3
+'sp 2
+.tl 'C Tutorial'- % -''
+'sp 3
 ..
 .de f
-&#39;bp
+'bp
 ..
 .wh -6 f
 .br
@@ -61,7 +61,7 @@
 .ds | \(or\|\(or
 .ds + \fR++\fP
 .ds = \fR==\fP
-.ds * \s14\v&#39;.35m&#39;*\v&#39;-.35m&#39;\s0
+.ds * \s14\v'.35m'*\v'-.35m'\s0
 .fp 3 G
 .		UL - identifiers, etc.
 .de UL
@@ -85,7 +85,7 @@
 .nf
 .if n .in 5
 .if t .in .5i
-.if t .tr &#39;\(fm
+.if t .tr '\(fm
 .if t .ss 15
 .if t .tr -\(mi
 .if t .tr _\(ru
@@ -96,7 +96,7 @@
 .		E2 - end a block
 .de E2
 .br
-.tr &#39;&#39;
+.tr ''
 .tr --
 .tr __
 .tr ~
@@ -113,7 +113,7 @@
 .if t .sp 5p
 .if n .sp
 ..
-.ds CF &quot;
+.ds CF "
 .ds LH C Tutorial
 .tr ~
 .de NH

@@ -1,10 +1,10 @@
-.h0 &quot;\\n+a Typesetting&quot;
+.h0 "\\n+a Typesetting"
 .nr b 0 1
 .sp
 .in0
 This software is distributed separately as an enhancement
 to U\s8NIX\s10.
-.h0 &quot;\na.\n+b Formatters&quot;
+.h0 "\na.\n+b Formatters"
 .sp
 .in0
 High programming skill is required to
@@ -92,98 +92,98 @@ which produces this:
 .nr 98 \n(.f
 .ps 10
 .ft I
-.ds 11 &quot;\(*s
-.nr 11 \w&#39;\*(11&#39;
+.ds 11 "\(*s
+.nr 11 \w'\*(11'
 .ps 8
-.ds 12 &quot;\fR2\fP
-.nr 12 \w&#39;\*(12&#39;
-.as 11 \v&#39;-24u&#39;\s8\|\*(12\s10\v&#39;24u&#39;
+.ds 12 "\fR2\fP
+.nr 12 \w'\*(12'
+.as 11 \v'-24u'\s8\|\*(12\s10\v'24u'
 .ps 10
-.nr 11 \n(11+\n(12+\w&#39;\s8\|&#39;
-.ds 12 &quot;\|\|
-.nr 12 \w&#39;\*(12&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;\|=\|
-.nr 12 \w&#39;\*(12&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;\|\|
-.nr 12 \w&#39;\*(12&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;\fR1\fP
-.nr 12 \w&#39;\*(12&#39;
-.ds 13 &quot;N
-.nr 13 \w&#39;\*(13&#39;
+.nr 11 \n(11+\n(12+\w'\s8\|'
+.ds 12 "\|\|
+.nr 12 \w'\*(12'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 "\|=\|
+.nr 12 \w'\*(12'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 "\|\|
+.nr 12 \w'\*(12'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 "\fR1\fP
+.nr 12 \w'\*(12'
+.ds 13 "N
+.nr 13 \w'\*(13'
 .nr 14 \n(12
 .if \n(13-\n(14 .nr 14 \n(13
 .nr 14 \n(14+.4m
-.ds 12 \v&#39;42u&#39;\h&#39;\n(14u-\n(13u/2u&#39;\*(13\
-\h&#39;-\n(13u-\n(12u/2u&#39;\v&#39;-78u&#39;\*(12\
-\h&#39;-\n(14u-\n(12u/2u&#39;\v&#39;18u&#39;\l&#39;\n(14u&#39;\v&#39;18u&#39;
+.ds 12 \v'42u'\h'\n(14u-\n(13u/2u'\*(13\
+\h'-\n(13u-\n(12u/2u'\v'-78u'\*(12\
+\h'-\n(14u-\n(12u/2u'\v'18u'\l'\n(14u'\v'18u'
 .nr 12 \n(14
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 \v&#39;.3m&#39;\s16\(*S\s10\v&#39;-.3m&#39;
-.nr 12 \w&#39;\*(12&#39;
-&#39;ps 7
-.ds 13 &quot;i\|=\|\fR1\fP
-.nr 13 \w&#39;\*(13&#39;
-&#39;ps 7
-.ds 14 &quot;N
-.nr 14 \w&#39;\*(14&#39;
-&#39;ps 10
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 \v'.3m'\s16\(*S\s10\v'-.3m'
+.nr 12 \w'\*(12'
+'ps 7
+.ds 13 "i\|=\|\fR1\fP
+.nr 13 \w'\*(13'
+'ps 7
+.ds 14 "N
+.nr 14 \w'\*(14'
+'ps 10
 .nr 15 \n(12
 .if \n(13-\n(15 .nr 15 \n(13
 .if \n(14-\n(15 .nr 15 \n(14
-.ds 15 \v&#39;60u&#39;\h&#39;\n(15u-\n(13u/2u&#39;\s7\*(13\s10\h&#39;-\n(15u-\n(13u/2u&#39;\v&#39;-60u&#39;\
-\h&#39;\n(15u-\n(12u/2u&#39;\*(12\h&#39;\n(15u-\n(12u/2u&#39;\
-\v&#39;-66u&#39;\h&#39;-\n(15u-\n(14u/2u&#39;\s7\*(14\s10\h&#39;\n(15u-\n(14u/2u&#39;\v&#39;66u&#39;\
+.ds 15 \v'60u'\h'\n(15u-\n(13u/2u'\s7\*(13\s10\h'-\n(15u-\n(13u/2u'\v'-60u'\
+\h'\n(15u-\n(12u/2u'\*(12\h'\n(15u-\n(12u/2u'\
+\v'-66u'\h'-\n(15u-\n(14u/2u'\s7\*(14\s10\h'\n(15u-\n(14u/2u'\v'66u'\
 
-.as 11 &quot;\*(15
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;\|\fR(\fP
-.nr 12 \w&#39;\*(12&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;x
-.nr 12 \w&#39;\*(12&#39;
+.as 11 "\*(15
+.nr 11 \w'\*(11'
+.ds 12 "\|\fR(\fP
+.nr 12 \w'\*(12'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 "x
+.nr 12 \w'\*(12'
 .ps 8
-.ds 13 &quot;i
-.nr 13 \w&#39;\*(13&#39;
-.as 12 \v&#39;18u&#39;\s8\*(13\|\s10\v&#39;-18u&#39;
+.ds 13 "i
+.nr 13 \w'\*(13'
+.as 12 \v'18u'\s8\*(13\|\s10\v'-18u'
 .ps 10
-.nr 12 \n(12+\n(13+\w&#39;\s8\|&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;\|\(mi\|
-.nr 12 \w&#39;\*(12&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;x
-.nr 12 \w&#39;\*(12&#39;
-.nr 12 \w&#39;\*(12&#39;
+.nr 12 \n(12+\n(13+\w'\s8\|'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 "\|\(mi\|
+.nr 12 \w'\*(12'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 "x
+.nr 12 \w'\*(12'
+.nr 12 \w'\*(12'
 .nr 10 0
 .if \n(ct-1 .nr 10 .25m
 .nr 14 .15m
 .if 2-\n(ct .nr 14 .1m
-.ds 13 \v&#39;.15m&#39;\l&#39;\n(12u\(rn&#39;\v&#39;-.15m&#39;
-.nr 13 \w&#39;\*(13&#39;
-.as 12 \h&#39;-\n(12u-\n(13u/2u+\n(14u&#39;\v&#39;0-\n(10u&#39;\*(13\v&#39;\n(10u&#39;\h&#39;-\n(13u+\n(12u/2u-\n(14u&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 12 &quot;\|\fR)\fP
-.nr 12 \w&#39;\*(12&#39;
+.ds 13 \v'.15m'\l'\n(12u\(rn'\v'-.15m'
+.nr 13 \w'\*(13'
+.as 12 \h'-\n(12u-\n(13u/2u+\n(14u'\v'0-\n(10u'\*(13\v'\n(10u'\h'-\n(13u+\n(12u/2u-\n(14u'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 12 "\|\fR)\fP
+.nr 12 \w'\*(12'
 .ps 8
-.ds 13 &quot;\fR2\fP
-.nr 13 \w&#39;\*(13&#39;
-.as 12 \v&#39;-24u&#39;\s8\|\*(13\s10\v&#39;24u&#39;
+.ds 13 "\fR2\fP
+.nr 13 \w'\*(13'
+.as 12 \v'-24u'\s8\|\*(13\s10\v'24u'
 .ps 10
-.nr 12 \n(12+\n(13+\w&#39;\s8\|&#39;
-.as 11 &quot;\*(12
-.nr 11 \w&#39;\*(11&#39;
-.ds 11 \x&#39;0&#39;\x&#39;0-30u&#39;\fI\s10\*(11\s\n(99\f\n(98\x&#39;42u&#39;
+.nr 12 \n(12+\n(13+\w'\s8\|'
+.as 11 "\*(12
+.nr 11 \w'\*(11'
+.ds 11 \x'0'\x'0-30u'\fI\s10\*(11\s\n(99\f\n(98\x'42u'
 .if \n(11-\n(.l .tm too-long eqn, file junk, between lines 2-4
 .if 168-\n(.v .ne 168u
 \*(11
@@ -195,7 +195,7 @@ which produces this:
 Automatic calculation of size changes for subscripts, sub-subscripts,
 etc.
 .op
-Full vocabulary of Greek letters, such as `gamma&#39;, `GAMMA&#39;.
+Full vocabulary of Greek letters, such as `gamma', `GAMMA'.
 .op
 Automatic calculation of large bracket sizes.
 .op
@@ -250,12 +250,12 @@ Single or double column.
 Paragraphing, display and indentation.
 .op
 Numbered equations.
-.h0 &quot;\na.\n+b U\s8NIX\s10 Programmer&#39;s Manual&quot;
+.h0 "\na.\n+b U\s8NIX\s10 Programmer's Manual"
 .sh MAN
 Print specified manual section on your terminal.
 .sh Manual
 Machine-readable version of the U\s8NIX\s10 
-Programmer&#39;s Manual.
+Programmer's Manual.
 .op
 System overview.
 .op

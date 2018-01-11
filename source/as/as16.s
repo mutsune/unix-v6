@@ -7,7 +7,7 @@ opline:
 	mov	r4,r0
 	jsr	r5,betwen; 0; 200
 		br	1f
-	cmp	r0,$&#39;&lt;
+	cmp	r0,$'<
 	bne	xpr
 	jmp	opl17
 xpr:
@@ -80,7 +80,7 @@ opl13:
 opl7:
 	jsr	pc,addres
 op2:
-	cmp	r4,$&#39;,
+	cmp	r4,$',
 	beq	1f
 	jsr	pc,errora
 	rts	pc
@@ -93,7 +93,7 @@ opl15:   / single operand
 
 opl31:	/ sob
 	jsr	pc,expres
-	cmp	r4,$&#39;,
+	cmp	r4,$',
 	beq	1f
 	jsr	pc,errora
 1:
@@ -111,14 +111,14 @@ opl11:
 opl16:
 	jsr	pc,expres
 	inc	dot
-	cmp	r4,$&#39;,
+	cmp	r4,$',
 	bne	1f
 	jsr	pc,readop
 	br	opl16
 1:
 	rts	pc
 
-/ &lt; (.ascii)
+/ < (.ascii)
 opl17:
 	add	numval,dot
 	jsr	pc,readop
@@ -135,7 +135,7 @@ opl21:
 	jsr	pc,expres
 	tst	r3
 	bne	1f
-	jsr	r5,error; &#39;U
+	jsr	r5,error; 'U
 1:
 	tst	r2
 	bne	opl22
@@ -149,7 +149,7 @@ opl23:
 	blo	1f
 	bisb	$40,(r4)
 	jsr	pc,readop
-	cmp	r4,$&#39;,
+	cmp	r4,$',
 	bne	1f
 	jsr	pc,readop
 	br	opl23
@@ -174,27 +174,27 @@ opl32:
 	blo	1f
 	bis	$40,(r4)
 	jsr	pc,readop
-	cmp	r4,$&#39;,
+	cmp	r4,$',
 	bne	1f
 	jsr	pc,readop
 	jsr	pc,expres
 	rts	pc
 1:
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 	rts	pc
 
 addres:
-	cmp	r4,$&#39;(
+	cmp	r4,$'(
 	beq	alp
-	cmp	r4,$&#39;-
+	cmp	r4,$'-
 	beq	amin
-	cmp	r4,$&#39;$
+	cmp	r4,$'$
 	beq	adoll
-	cmp	r4,$&#39;*
+	cmp	r4,$'*
 	beq	astar
 getx:
 	jsr	pc,expres
-	cmp	r4,$&#39;(
+	cmp	r4,$'(
 	bne	2f
 	jsr	pc,readop
 	jsr	pc,expres
@@ -219,7 +219,7 @@ alp:
 	jsr	pc,expres
 	jsr	pc,checkrp
 	jsr	pc,checkreg
-	cmp	r4,$&#39;+
+	cmp	r4,$'+
 	bne	1f
 	jsr	pc,readop
 	clr	r0
@@ -230,10 +230,10 @@ alp:
 
 amin:
 	jsr	pc,readop
-	cmp	r4,$&#39;(
+	cmp	r4,$'(
 	beq	1f
 	mov	r4,savop
-	mov	$&#39;-,r4
+	mov	$'-,r4
 	br	getx
 1:
 	jsr	pc,readop
@@ -252,16 +252,16 @@ adoll:
 
 astar:
 	jsr	pc,readop
-	cmp	r4,$&#39;*
+	cmp	r4,$'*
 	bne	1f
-	jsr	r5,error; &#39;*
+	jsr	r5,error; '*
 1:
 	jsr	pc,addres
 	add	r0,dot
 	rts	pc
 
 errora:
-	jsr	r5,error; &#39;a
+	jsr	r5,error; 'a
 	rts	pc
 
 checkreg:
@@ -277,13 +277,13 @@ checkreg:
 	rts	pc
 
 errore:
-	jsr	r5,error; &#39;e
+	jsr	r5,error; 'e
 	rts	pc
 
 checkrp:
-	cmp	r4,$&#39;)
+	cmp	r4,$')
 	beq	1f
-	jsr	r5,error; &#39;)
+	jsr	r5,error; ')
 	rts	pc
 1:
 	jsr	pc,readop

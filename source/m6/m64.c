@@ -1,10 +1,10 @@
 #
 
-#include &quot;m6.h&quot;
+#include "m6.h"
 
 pushget() {
-	ge = (ge+1)&amp;0177776;
-	ge-&gt;word = gf-ge; 
+	ge = (ge+1)&0177776;
+	ge->word = gf-ge; 
 	gf = ge; 
 	ge =+2;
 	++lg;
@@ -13,51 +13,51 @@ pushget() {
 dotrace() {
 	char *arg();
 	int i,j;
-	printf(&quot;\n%d %c%s&quot;,lg,sharp,arg(0));
-	for(j=9;j&gt;0&amp;&amp;*arg(j)==0;j--);
-	for(i=1;i&lt;=j;i++)
-		printf(&quot;%c%c%s%c&quot;,comma,lquote,arg(i),rquote);
-	printf(&quot;%c\n&quot;,c); 
+	printf("\n%d %c%s",lg,sharp,arg(0));
+	for(j=9;j>0&&*arg(j)==0;j--);
+	for(i=1;i<=j;i++)
+		printf("%c%c%s%c",comma,lquote,arg(i),rquote);
+	printf("%c\n",c); 
 }
 
 popget() {
 	ge = gf; 
-	gf =+ gf-&gt;word;
+	gf =+ gf->word;
 	--lg;
-	if(gf&lt;g0) diag(&quot;Software error&quot;); 
+	if(gf<g0) diag("Software error"); 
 }
 
 pushput() {
-	if(pe&amp;1) {
-		pf-&gt;prev =| 1;
+	if(pe&1) {
+		pf->prev =| 1;
 		pe++; 
 	}
-	pe-&gt;word = pf-pe; 
+	pe->word = pf-pe; 
 	pf = pe; 
 	pe =+2;
 }
 
 popput() {
 	pe = pf; 
-	pf =+ pf-&gt;word;
-	if(pf-&gt;prev&amp;1) {
+	pf =+ pf->word;
+	if(pf->prev&1) {
 		pe--;
-		pf-&gt;prev =&amp; 0177776; 
+		pf->prev =& 0177776; 
 	}
-	if(pf&lt;p0) diag(&quot;Software error&quot;); 
+	if(pf<p0) diag("Software error"); 
 }
 
 pushdef() {
-	de = (de+1)&amp;0177776;
-	de-&gt;word = df-de; 
+	de = (de+1)&0177776;
+	de->word = df-de; 
 	df = de; 
 	de =+2;
 }
 
 put() {
-	if(lp&gt;0) {
+	if(lp>0) {
 		*pe++ = c; 
-		if(pe&gt;pmax) diag(&quot;Arg collection overflow&quot;); 
+		if(pe>pmax) diag("Arg collection overflow"); 
 	}
 	else putchar(c); 
 }
@@ -68,15 +68,15 @@ get() {
 	if(lg==0) 
 		c = getchar();
 	else while(1) {
-		if(gf-&gt;marg!=0) {
-			if((c = gf[gf-&gt;marg++])==0) gf-&gt;marg = 0;
+		if(gf->marg!=0) {
+			if((c = gf[gf->marg++])==0) gf->marg = 0;
 			else return; 
 		}
-		c = (p = gf-&gt;mframe)[gf-&gt;mchar++];
+		c = (p = gf->mframe)[gf->mchar++];
 		if(c!=dollar) return;
-		n = p[gf-&gt;mchar] - &#39;0&#39;;
-		if(n&lt;0 || n&gt;9) return;
-		++gf-&gt;mchar;
-		gf-&gt;marg = arg(n) - gf; 
+		n = p[gf->mchar] - '0';
+		if(n<0 || n>9) return;
+		++gf->mchar;
+		gf->marg = arg(n) - gf; 
 	}
 }

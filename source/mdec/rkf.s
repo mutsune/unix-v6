@@ -3,12 +3,12 @@
 rkda = 177412
 
 	jsr	pc,4(r5)
-		&lt;ready drive 0 and type y\n\0&gt;; .even
+		<ready drive 0 and type y\n\0>; .even
 	jsr	pc,2(r5)
 	mov	r0,-(sp)
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	pc,(r5)
-	cmp	(sp)+,$&#39;y
+	cmp	(sp)+,$'y
 	beq	1f
 	rts	pc
 1:
@@ -31,7 +31,7 @@ rkda = 177412
 	rts	pc
 1:
 	jsr	pc,4(r5)
-		&lt;rkf: error\n\0&gt;; .even
+		<rkf: error\n\0>; .even
 	rts	pc
 
 buf:	.=.+2

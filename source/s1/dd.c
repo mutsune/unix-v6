@@ -111,94 +111,94 @@ char	**argv;
 	int a;
 
 	conv = null;
-	for(c=1; c&lt;argc; c++) {
+	for(c=1; c<argc; c++) {
 		string = argv[c];
-		if(match(&quot;ibs=&quot;)) {
+		if(match("ibs=")) {
 			ibs = number();
 			continue;
 		}
-		if(match(&quot;obs=&quot;)) {
+		if(match("obs=")) {
 			obs = number();
 			continue;
 		}
-		if(match(&quot;cbs=&quot;)) {
+		if(match("cbs=")) {
 			cbs = number();
 			continue;
 		}
-		if (match(&quot;bs=&quot;)) {
+		if (match("bs=")) {
 			bs = number();
 			continue;
 		}
-		if(match(&quot;if=&quot;)) {
+		if(match("if=")) {
 			ifile = string;
 			continue;
 		}
-		if(match(&quot;of=&quot;)) {
+		if(match("of=")) {
 			ofile = string;
 			continue;
 		}
-		if(match(&quot;skip=&quot;)) {
+		if(match("skip=")) {
 			skip = number();
 			continue;
 		}
-		if(match(&quot;count=&quot;)) {
+		if(match("count=")) {
 			count = number();
 			continue;
 		}
-		if(match(&quot;conv=&quot;)) {
+		if(match("conv=")) {
 		cloop:
-			if(match(&quot;,&quot;))
+			if(match(","))
 				goto cloop;
-			if(*string == &#39;\0&#39;)
+			if(*string == '\0')
 				continue;
-			if(match(&quot;ebcdic&quot;)) {
+			if(match("ebcdic")) {
 				conv = ebcdic;
 				goto cloop;
 			}
-			if(match(&quot;ascii&quot;)) {
+			if(match("ascii")) {
 				conv = ascii;
 				goto cloop;
 			}
-			if(match(&quot;lcase&quot;)) {
+			if(match("lcase")) {
 				cflag =| LCASE;
 				goto cloop;
 			}
-			if(match(&quot;ucase&quot;)) {
+			if(match("ucase")) {
 				cflag =| UCASE;
 				goto cloop;
 			}
-			if(match(&quot;swab&quot;)) {
+			if(match("swab")) {
 				cflag =| SWAB;
 				goto cloop;
 			}
-			if(match(&quot;noerror&quot;)) {
+			if(match("noerror")) {
 				cflag =| NERR;
 				goto cloop;
 			}
-			if(match(&quot;sync&quot;)) {
+			if(match("sync")) {
 				cflag =| SYNC;
 				goto cloop;
 			}
 		}
-		printf(&quot;bad arg: %s\n&quot;, string);
+		printf("bad arg: %s\n", string);
 		exit();
 	}
-	if(conv == null &amp;&amp; cflag&amp;(LCASE|UCASE))
+	if(conv == null && cflag&(LCASE|UCASE))
 		conv = cnull;
 	if (ifile)
 		ibf = open(ifile, 0);
 	else
 		ibf = dup(0);
-	if(ibf &lt; 0) {
-		printf(&quot;cannot open: %s\n&quot;, ifile);
+	if(ibf < 0) {
+		printf("cannot open: %s\n", ifile);
 		exit();
 	}
 	if (ofile)
 		obf = creat(ofile, 0666);
 	else
 		obf = dup(1);
-	if(obf &lt; 0) {
-		printf(&quot;cannot create: %s\n&quot;, ofile);
+	if(obf < 0) {
+		printf("cannot create: %s\n", ofile);
 		exit();
 	}
 	if (bs) {
@@ -207,7 +207,7 @@ char	**argv;
 			fflag++;
 	}
 	if(ibs == 0 || obs == 0) {
-		printf(&quot;counts: cannot be zero\n&quot;);
+		printf("counts: cannot be zero\n");
 		exit();
 	}
 	ibuf = sbrk(ibs);
@@ -216,7 +216,7 @@ char	**argv;
 	else
 		obuf = sbrk(obs);
 	if(ibuf == -1 || obuf == -1) {
-		printf(&quot;not enough memory\n&quot;);
+		printf("not enough memory\n");
 		exit();
 	}
 	ibc = 0;
@@ -224,7 +224,7 @@ char	**argv;
 	cbc = 0;
 	op = obuf;
 
-	if ((signal(2, 1) &amp; 01) == 0)
+	if ((signal(2, 1) & 01) == 0)
 		signal(2, term);
 	while(skip) {
 		read(ibf, ibuf, ibs);
@@ -235,19 +235,19 @@ loop:
 	if(ibc-- == 0) {
 		ibc = 0;
 		if(count==0 || nifr+nipr!=count) {
-			if(cflag&amp;(NERR|SYNC))
-			for(ip=ibuf+ibs; ip&gt;ibuf;)
+			if(cflag&(NERR|SYNC))
+			for(ip=ibuf+ibs; ip>ibuf;)
 				*--ip = 0;
 			ibc = read(ibf, ibuf, ibs);
 		}
 		if(ibc == -1) {
-			perror(&quot;read&quot;);
-			if((cflag&amp;NERR) == 0) {
+			perror("read");
+			if((cflag&NERR) == 0) {
 				flsh();
 				term();
 			}
 			ibc = 0;
-			for(c=0; c&lt;ibs; c++)
+			for(c=0; c<ibs; c++)
 				if(ibuf[c] != 0)
 					ibc = c;
 			stats();
@@ -258,13 +258,13 @@ loop:
 		}
 		if(ibc != ibs) {
 			nipr++;
-			if(cflag&amp;SYNC)
+			if(cflag&SYNC)
 				ibc = ibs;
 		} else
 			nifr++;
 		ip = ibuf;
-		c = (ibc&gt;&gt;1) &amp; ~1;
-		if(cflag&amp;SWAB &amp;&amp; c)
+		c = (ibc>>1) & ~1;
+		if(cflag&SWAB && c)
 		do {
 			a = *ip++;
 			ip[-1] = *ip;
@@ -294,7 +294,7 @@ flsh()
 			nopr++;
 		c = write(obf, obuf, obc);
 		if(c != obc) {
-			perror(&quot;write&quot;);
+			perror("write");
 			term();
 		}
 		obc = 0;
@@ -308,9 +308,9 @@ char *s;
 
 	cs = string;
 	while(*cs++ == *s)
-		if(*s++ == &#39;\0&#39;)
+		if(*s++ == '\0')
 			goto true;
-	if(*s != &#39;\0&#39;)
+	if(*s != '\0')
 		return(0);
 
 true:
@@ -326,32 +326,32 @@ number()
 
 	cs = string;
 	n = 0;
-	while(*cs &gt;= &#39;0&#39; &amp;&amp; *cs &lt;= &#39;9&#39;)
-		n = n*10 + *cs++ - &#39;0&#39;;
+	while(*cs >= '0' && *cs <= '9')
+		n = n*10 + *cs++ - '0';
 	for(;;)
 	switch(*cs++) {
 
-	case &#39;k&#39;:
+	case 'k':
 		n =* 1024;
 		continue;
 
-	case &#39;w&#39;:
+	case 'w':
 		n =* 2;
 		continue;
 
-	case &#39;b&#39;:
+	case 'b':
 		n =* 512;
 		continue;
 
-	case &#39;*&#39;:
-	case &#39;x&#39;:
+	case '*':
+	case 'x':
 		string = cs;
 		n =* number();
 
-	case &#39;\0&#39;:
+	case '\0':
 		return(n);
 	}
-	printf(&quot;not a number: %s\n&quot;, string);
+	printf("not a number: %s\n", string);
 	exit();
 }
 
@@ -360,10 +360,10 @@ cnull(cc)
 	register c;
 
 	c = cc;
-	if(cflag&amp;UCASE &amp;&amp; c&gt;=&#39;a&#39; &amp;&amp; c&lt;=&#39;z&#39;)
-		c =+ &#39;A&#39;-&#39;a&#39;;
-	if(cflag&amp;LCASE &amp;&amp; c&gt;=&#39;A&#39; &amp;&amp; c&lt;=&#39;Z&#39;)
-		c =+ &#39;a&#39;-&#39;A&#39;;
+	if(cflag&UCASE && c>='a' && c<='z')
+		c =+ 'A'-'a';
+	if(cflag&LCASE && c>='A' && c<='Z')
+		c =+ 'a'-'A';
 	null(c);
 }
 
@@ -372,7 +372,7 @@ null(c)
 
 	*op = c;
 	op++;
-	if(++obc &gt;= obs) {
+	if(++obc >= obs) {
 		flsh();
 		op = obuf;
 	}
@@ -388,19 +388,19 @@ ascii(cc)
 		cnull(c);
 		return;
 	}
-	if(c == &#39; &#39;) {
+	if(c == ' ') {
 		nspace++;
 		goto out;
 	}
-	while(nspace &gt; 0) {
-		null(&#39; &#39;);
+	while(nspace > 0) {
+		null(' ');
 		nspace--;
 	}
 	cnull(c);
 
 out:
-	if(++cbc &gt;= cbs) {
-		null(&#39;\n&#39;);
+	if(++cbc >= cbs) {
+		null('\n');
 		cbc = 0;
 		nspace = 0;
 	}
@@ -411,18 +411,18 @@ ebcdic(cc)
 	register c;
 
 	c = cc;
-	if(cflag&amp;UCASE &amp;&amp; c&gt;=&#39;a&#39; &amp;&amp; c&lt;=&#39;z&#39;)
-		c =+ &#39;A&#39;-&#39;a&#39;;
-	if(cflag&amp;LCASE &amp;&amp; c&gt;=&#39;A&#39; &amp;&amp; c&lt;=&#39;Z&#39;)
-		c =+ &#39;a&#39;-&#39;A&#39;;
-	c = atoe[c] &amp; 0377;
+	if(cflag&UCASE && c>='a' && c<='z')
+		c =+ 'A'-'a';
+	if(cflag&LCASE && c>='A' && c<='Z')
+		c =+ 'a'-'A';
+	c = atoe[c] & 0377;
 	if(cbs == 0) {
 		null(c);
 		return;
 	}
-	if(cc == &#39;\n&#39;) {
-		while(cbc &lt; cbs) {
-			null(atoe[&#39; &#39;]);
+	if(cc == '\n') {
+		while(cbc < cbs) {
+			null(atoe[' ']);
 			cbc++;
 		}
 		cbc = 0;
@@ -431,7 +431,7 @@ ebcdic(cc)
 	if(cbc == cbs)
 		ntrunc++;
 	cbc++;
-	if(cbc &lt;= cbs)
+	if(cbc <= cbs)
 		null(c);
 }
 
@@ -445,14 +445,14 @@ term()
 stats()
 {
 
-	printf(&quot;%l+%l records in\n&quot;, nifr, nipr);
-	printf(&quot;%l+%l records out\n&quot;, nofr, nopr);
+	printf("%l+%l records in\n", nifr, nipr);
+	printf("%l+%l records out\n", nofr, nopr);
 	if(ntrunc)
-		printf(&quot;%l truncated records\n&quot;, ntrunc);
+		printf("%l truncated records\n", ntrunc);
 }
 
 putchar(c)
 {
 
-	write(2, &amp;c, 1);
+	write(2, &c, 1);
 }

@@ -1,6 +1,6 @@
 /	hash routine for diff
 /	effectively spreads the string out into 7-bit
-/	bytes, then sums the result 1&#39;s-complement
+/	bytes, then sums the result 1's-complement
 /	by 16-bit bytes and adds 1 to avoid zero answer
 
 /	r4 hash accumulator
@@ -23,7 +23,7 @@ _readhash:
 	jsr	r5,getc; 0: 0
 	bes	2f
 	clr	r2
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	ashc	$-16.,r0
 	ashc	r3,r0
@@ -51,6 +51,6 @@ _readhash:
 	mov	(sp)+,r5
 	rts	pc
 3:
-	&lt;incomplete line omitted\n&gt;
+	<incomplete line omitted\n>
 4:
 .even

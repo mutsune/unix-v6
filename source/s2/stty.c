@@ -43,23 +43,23 @@ struct
 	int	speed;
 } speeds[]
 {
-	&quot;0&quot;,	(0&lt;&lt;8)|0,
-	&quot;50&quot;,	(1&lt;&lt;8)|1,
-	&quot;75&quot;,	(2&lt;&lt;8)|2,
-	&quot;110&quot;,	(3&lt;&lt;8)|3,
-	&quot;134&quot;,	(4&lt;&lt;8)|4,
-	&quot;134.5&quot;,(4&lt;&lt;8)|4,
-	&quot;150&quot;,	(5&lt;&lt;8)|5,
-	&quot;200&quot;,	(6&lt;&lt;8)|6,
-	&quot;300&quot;,	(7&lt;&lt;8)|7,
-	&quot;600&quot;,	(8&lt;&lt;8)|8,
-	&quot;1200&quot;,	(9&lt;&lt;8)|9,
-	&quot;1800&quot;,	(10&lt;&lt;8)|10,
-	&quot;2400&quot;,	(11&lt;&lt;8)|11,
-	&quot;4800&quot;,	(12&lt;&lt;8)|12,
-	&quot;9600&quot;,	(13&lt;&lt;8)|13,
-	&quot;exta&quot;,	(14&lt;&lt;8)|14,
-	&quot;extb&quot;,	(15&lt;&lt;8)|15,
+	"0",	(0<<8)|0,
+	"50",	(1<<8)|1,
+	"75",	(2<<8)|2,
+	"110",	(3<<8)|3,
+	"134",	(4<<8)|4,
+	"134.5",(4<<8)|4,
+	"150",	(5<<8)|5,
+	"200",	(6<<8)|6,
+	"300",	(7<<8)|7,
+	"600",	(8<<8)|8,
+	"1200",	(9<<8)|9,
+	"1800",	(10<<8)|10,
+	"2400",	(11<<8)|11,
+	"4800",	(12<<8)|12,
+	"9600",	(13<<8)|13,
+	"exta",	(14<<8)|14,
+	"extb",	(15<<8)|15,
 	0,
 };
 struct
@@ -69,142 +69,142 @@ struct
 	int	reset;
 } modes[]
 {
-	&quot;even&quot;,
+	"even",
 	EVENP, 0,
 
-	&quot;-even&quot;,
+	"-even",
 	0, EVENP,
 
-	&quot;odd&quot;,
+	"odd",
 	ODDP, 0,
 
-	&quot;-odd&quot;,
+	"-odd",
 	0, ODDP,
 
-	&quot;raw&quot;,
+	"raw",
 	RAW, 0,
 
-	&quot;-raw&quot;,
+	"-raw",
 	0, RAW,
 
-	&quot;cooked&quot;,
+	"cooked",
 	0, RAW,
 
-	&quot;-nl&quot;,
+	"-nl",
 	CRMOD, 0,
 
-	&quot;nl&quot;,
+	"nl",
 	0, CRMOD,
 
-	&quot;echo&quot;,
+	"echo",
 	ECHO, 0,
 
-	&quot;-echo&quot;,
+	"-echo",
 	0, ECHO,
 
-	&quot;LCASE&quot;,
+	"LCASE",
 	LCASE, 0,
 
-	&quot;lcase&quot;,
+	"lcase",
 	LCASE, 0,
 
-	&quot;-LCASE&quot;,
+	"-LCASE",
 	0, LCASE,
 
-	&quot;-lcase&quot;,
+	"-lcase",
 	0, LCASE,
 
-	&quot;-tabs&quot;,
+	"-tabs",
 	XTABS, 0,
 
-	&quot;tabs&quot;,
+	"tabs",
 	0, XTABS,
 
-	&quot;hup&quot;,
+	"hup",
 	HUPCL, 0,
 
-	&quot;-hup&quot;,
+	"-hup",
 	0, HUPCL,
 
-	&quot;cr0&quot;,
+	"cr0",
 	CR0, CR3,
 
-	&quot;cr1&quot;,
+	"cr1",
 	CR1, CR3,
 
-	&quot;cr2&quot;,
+	"cr2",
 	CR2, CR3,
 
-	&quot;cr3&quot;,
+	"cr3",
 	CR3, CR3,
 
-	&quot;tab0&quot;,
+	"tab0",
 	TAB0, TAB3,
 
-	&quot;tab1&quot;,
+	"tab1",
 	TAB1, TAB3,
 
-	&quot;tab2&quot;,
+	"tab2",
 	TAB2, TAB3,
 
-	&quot;tab3&quot;,
+	"tab3",
 	TAB3, TAB3,
 
-	&quot;nl0&quot;,
+	"nl0",
 	NL0, NL3,
 
-	&quot;nl1&quot;,
+	"nl1",
 	NL1, NL3,
 
-	&quot;nl2&quot;,
+	"nl2",
 	NL2, NL3,
 
-	&quot;nl3&quot;,
+	"nl3",
 	NL3, NL3,
 
-	&quot;ff0&quot;,
+	"ff0",
 	FF0, FF1,
 
-	&quot;ff1&quot;,
+	"ff1",
 	FF1, FF1,
 
-	&quot;bs0&quot;,
+	"bs0",
 	BS0, BS1,
 
-	&quot;bs1&quot;,
+	"bs1",
 	BS1, BS1,
 
-	&quot;33&quot;,
+	"33",
 	CR1, ALL,
 
-	&quot;tty33&quot;,
+	"tty33",
 	CR1, ALL,
 
-	&quot;37&quot;,
+	"37",
 	FF1+CR2+TAB1+NL1, ALL,
 
-	&quot;tty37&quot;,
+	"tty37",
 	FF1+CR2+TAB1+NL1, ALL,
 
-	&quot;05&quot;,
+	"05",
 	NL2, ALL,
 
-	&quot;vt05&quot;,
+	"vt05",
 	NL2, ALL,
 
-	&quot;tn&quot;,
+	"tn",
 	CR1, ALL,
 
-	&quot;tn300&quot;,
+	"tn300",
 	CR1, ALL,
 
-	&quot;ti&quot;,
+	"ti",
 	CR2, ALL,
 
-	&quot;ti700&quot;,
+	"ti700",
 	CR2, ALL,
 
-	&quot;tek&quot;,
+	"tek",
 	FF1, ALL,
 
 	0,
@@ -225,16 +225,16 @@ char	*argv[];
 		prmodes();
 		exit(0);
 	}
-	while(--argc &gt; 0) {
+	while(--argc > 0) {
 
 		arg = *++argv;
-		if (eq(&quot;ek&quot;))
-			mode[1] = &#39;#@&#39;;
-		if (eq(&quot;erase&quot;)) {
+		if (eq("ek"))
+			mode[1] = '#@';
+		if (eq("erase")) {
 			mode[1].lobyte = **++argv;
 			argc--;
 		}
-		if (eq(&quot;kill&quot;)) {
+		if (eq("kill")) {
 			mode[1].hibyte = **++argv;
 			argc--;
 		}
@@ -243,11 +243,11 @@ char	*argv[];
 				mode[0] = speeds[i].speed;
 		for(i=0; modes[i].string; i++)
 			if(eq(modes[i].string)) {
-				mode[2] =&amp; ~modes[i].reset;
+				mode[2] =& ~modes[i].reset;
 				mode[2] =| modes[i].set;
 			}
 		if(arg)
-			printf(&quot;unknown mode: %s\n&quot;, arg);
+			printf("unknown mode: %s\n", arg);
 	}
 	stty(1,mode);
 }
@@ -263,7 +263,7 @@ char *string;
 loop:
 	if(arg[i] != string[i])
 		return(0);
-	if(arg[i++] != &#39;\0&#39;)
+	if(arg[i++] != '\0')
 		goto loop;
 	arg = 0;
 	return(1);
@@ -274,34 +274,34 @@ prmodes()
 	register m;
 
 	if(mode[0].lobyte != mode[0].hibyte) {
-		prspeed(&quot;input speed  &quot;, mode[0].lobyte);
-		prspeed(&quot;output speed &quot;, mode[0].hibyte);
+		prspeed("input speed  ", mode[0].lobyte);
+		prspeed("output speed ", mode[0].hibyte);
 	} else
-		prspeed(&quot;speed &quot;, mode[0].lobyte);
-	printf(&quot;erase = &#39;%c&#39;; kill = &#39;%c&#39;\n&quot;, mode[1].lobyte, mode[1].hibyte);
+		prspeed("speed ", mode[0].lobyte);
+	printf("erase = '%c'; kill = '%c'\n", mode[1].lobyte, mode[1].hibyte);
 	m = mode[2];
-	if(m &amp; 0200) printf(&quot;even &quot;);
-	if(m &amp; 0100) printf(&quot;odd &quot;);
-	if(m &amp; 040) printf(&quot;raw &quot;);
-	if(m &amp; 020) printf(&quot;-nl &quot;);
-	if(m &amp; 010) printf(&quot;echo &quot;);
-	if(m &amp; 04) printf(&quot;lcase &quot;);
-	if(m &amp; 02) printf(&quot;-tabs &quot;);
-	if(m &amp; 01) printf(&quot;hup &quot;);
-	delay(m&gt;&gt;8, &quot;nl&quot;);
-	delay(m&gt;&gt;10, &quot;tab&quot;);
-	delay(m&gt;&gt;12, &quot;cr&quot;);
-	delay((m&gt;&gt;14)&amp;1, &quot;ff&quot;);
-	delay((m&gt;&gt;15)&amp;1, &quot;bs&quot;);
-	printf(&quot;\n&quot;);
+	if(m & 0200) printf("even ");
+	if(m & 0100) printf("odd ");
+	if(m & 040) printf("raw ");
+	if(m & 020) printf("-nl ");
+	if(m & 010) printf("echo ");
+	if(m & 04) printf("lcase ");
+	if(m & 02) printf("-tabs ");
+	if(m & 01) printf("hup ");
+	delay(m>>8, "nl");
+	delay(m>>10, "tab");
+	delay(m>>12, "cr");
+	delay((m>>14)&1, "ff");
+	delay((m>>15)&1, "bs");
+	printf("\n");
 }
 
 delay(m, s)
 char *s;
 {
 
-	if(m =&amp; 3)
-		printf(&quot;%s%d &quot;, s, m);
+	if(m =& 3)
+		printf("%s%d ", s, m);
 }
 
 int	speed[]
@@ -312,11 +312,11 @@ int	speed[]
 prspeed(c, s)
 {
 
-	printf(&quot;%s%d baud\n&quot;, c, speed[s]);
+	printf("%s%d baud\n", c, speed[s]);
 }
 
 putchar(c)
 {
 
-	write(2, &amp;c, 1);
+	write(2, &c, 1);
 }

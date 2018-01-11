@@ -5,7 +5,7 @@
 
 expres:
 	mov	r5,-(sp)
-	mov	$&#39;+,-(sp)
+	mov	$'+,-(sp)
 	clr	opfound
 	clr	r2
 	mov	$1,r3
@@ -29,7 +29,7 @@ advanc:
 	asl	r4
 	mov	curfb-[2*141](r4),r2
 	bpl	oprand
-	jsr	r5,error; &#39;f
+	jsr	r5,error; 'f
 	br	oprand
 2:
 	clr	r3
@@ -53,23 +53,23 @@ advanc:
 	jmp	*(r1)
 
 esw1:
-	&#39;+;	binop
-	&#39;-;	binop
-	&#39;*;	binop
-	&#39;/;	binop
-	&#39;&amp;;	binop
+	'+;	binop
+	'-;	binop
+	'*;	binop
+	'/;	binop
+	'&;	binop
 	037;	binop
 	035;	binop
 	036;	binop
-	&#39;%;	binop
-	&#39;[;	brack
-	&#39;^;	binop
+	'%;	binop
+	'[;	brack
+	'^;	binop
 	1;	exnum
-	&#39;!;	binop
+	'!;	binop
 	0;	0
 
 binop:
-	cmpb	(sp),$&#39;+
+	cmpb	(sp),$'+
 	beq	1f
 	jsr	pc,errore
 1:
@@ -86,9 +86,9 @@ brack:
 	mov	r3,-(sp)
 	jsr	pc,readop
 	jsr	pc,expres
-	cmp	r4,$&#39;]
+	cmp	r4,$']
 	beq	1f
-	jsr	r5,error; &#39;]
+	jsr	r5,error; ']
 1:
 	mov	r3,r0
 	mov	r2,r1
@@ -108,17 +108,17 @@ oprand:
 	jmp	*(r5)
 
 exsw2:
-	&#39;+; exadd
-	&#39;-; exsub
-	&#39;*; exmul
-	&#39;/; exdiv
+	'+; exadd
+	'-; exsub
+	'*; exmul
+	'/; exdiv
 	037; exor
-	&#39;&amp;; exand
+	'&; exand
 	035;exlsh
 	036;exrsh
-	&#39;%; exmod
-	&#39;!; exnot
-	&#39;^; excmbin
+	'%; exmod
+	'!; exnot
+	'^; excmbin
 	0;  0
 
 excmbin:
@@ -188,7 +188,7 @@ exnot:
 	br	eoprnd
 
 eoprnd:
-	mov	$&#39;+,(sp)
+	mov	$'+,(sp)
 	jmp	advanc
 
 combin:

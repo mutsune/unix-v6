@@ -1,4 +1,4 @@
-#include &quot;r.h&quot;
+#include "r.h"
 
 char	outbuf[80];
 int	outp	0;
@@ -8,8 +8,8 @@ outcode(p) char *p; {
 	int i,j,c,c1;
 	char *q;
 	if( p == 0 ){
-		outbuf[outp] = &#39;\0&#39;;
-		printf(&quot;%s\n&quot;, outbuf);
+		outbuf[outp] = '\0';
+		printf("%s\n", outbuf);
 		outp = cont = 0;
 		return;
 	}
@@ -17,56 +17,56 @@ outcode(p) char *p; {
 		c1 = *p;
 		switch(c){
 
-		case &#39;&quot;&#39;:
-		case &#39;\&#39;&#39;:
+		case '"':
+		case '\'':
 			for( q=p; *q != c; q++ );
 			outnum(q-p);
-			ptc(&#39;h&#39;);
+			ptc('h');
 			while( p != q )
 				ptc(*p++);
 			p++;
 			break;
-		case &#39;&gt;&#39;:
-			if( c1==&#39;=&#39; ){
-				pts(&quot;.ge.&quot;); p++;
+		case '>':
+			if( c1=='=' ){
+				pts(".ge."); p++;
 			} else
-				pts(&quot;.gt.&quot;);
+				pts(".gt.");
 			break;
-		case &#39;&lt;&#39;:
-			if( c1==&#39;=&#39; ){
-				pts(&quot;.le.&quot;); p++;
-			} else if( c1==&#39;&gt;&#39; ){
-				pts(&quot;.ne.&quot;); p++;
+		case '<':
+			if( c1=='=' ){
+				pts(".le."); p++;
+			} else if( c1=='>' ){
+				pts(".ne."); p++;
 			} else
-				pts(&quot;.lt.&quot;);
+				pts(".lt.");
 			break;
-		case &#39;=&#39;:
-			if( c1==&#39;=&#39; ){
-				pts(&quot;.eq.&quot;); p++;
+		case '=':
+			if( c1=='=' ){
+				pts(".eq."); p++;
 			} else
-				ptc(&#39;=&#39;);
+				ptc('=');
 			break;
-		case &#39;!&#39;:
-			if( c1==&#39;=&#39; ){
-				pts(&quot;.ne.&quot;); p++;
+		case '!':
+			if( c1=='=' ){
+				pts(".ne."); p++;
 			} else
-				pts(&quot;.not.&quot;);
+				pts(".not.");
 			break;
-		case &#39;&amp;&#39;:
-			if( c1==&#39;&amp;&#39; )
+		case '&':
+			if( c1=='&' )
 				p++;
-			pts(&quot;.and.&quot;);
+			pts(".and.");
 			break;
-		case &#39;|&#39;:
-			if( c1==&#39;|&#39; )
+		case '|':
+			if( c1=='|' )
 				p++;
-			pts(&quot;.or.&quot;);
+			pts(".or.");
 			break;
-		case &#39;\t&#39;:
+		case '\t':
 			tabs();
 			break;
-		case &#39;\n&#39;:
-			ptc(&#39; &#39;);
+		case '\n':
+			ptc(' ');
 			break;
 		default:
 			ptc(c);
@@ -76,7 +76,7 @@ outcode(p) char *p; {
 }
 
 ptc(c) char c; {
-	if( outp &gt; 71 )
+	if( outp > 71 )
 		contcard();
 	outbuf[outp++] = c;
 }
@@ -89,36 +89,36 @@ pts(s) char *s; {
 int	contfld	0;
 
 contcard(){
-	outbuf[outp] = &#39;\0&#39;;
-	printf(&quot;%s\n&quot;, outbuf);
-	for( outp=0; outp&lt;contfld-1; outbuf[outp++] = &#39; &#39; );
-	outbuf[outp++] = &#39;&amp;&#39;;
+	outbuf[outp] = '\0';
+	printf("%s\n", outbuf);
+	for( outp=0; outp<contfld-1; outbuf[outp++] = ' ' );
+	outbuf[outp++] = '&';
 }
 
 tabs(){
-	ptc(&#39; &#39;);
-	while( outp&lt;7 )
-		ptc(&#39; &#39;);
+	ptc(' ');
+	while( outp<7 )
+		ptc(' ');
 	while( outp%3 != 1)
-		ptc(&#39; &#39;);
+		ptc(' ');
 }
 
 outnum(n) int n; {
 	int a;
 	if( a = n/10 )
 		outnum(a);
-	ptc(n%10 + &#39;0&#39;);
+	ptc(n%10 + '0');
 }
 
 outcont(n) int n; {
-	if( n &gt; 0 )
+	if( n > 0 )
 		outnum(n);
-	outcode(&quot;\tcontinue&quot;);
+	outcode("\tcontinue");
 	outcode(0);
 }
 
 outgoto(n) int n; {
-	outcode(&quot;\tgoto &quot;);
+	outcode("\tgoto ");
 	outnum(n);
 	outcode(0);
 }

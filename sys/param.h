@@ -6,7 +6,7 @@
 #define	NINODE	100		/* number of in core inodes */
 #define	NFILE	100		/* number of in core file structures */
 #define	NMOUNT	5		/* number of mountable file systems */
-#define	NEXEC	3		/* number of simultaneous exec&#39;s */
+#define	NEXEC	3		/* number of simultaneous exec's */
 #define	MAXMEM	(64*32)		/* max core per process - first # is Kw */
 #define	SSIZE	20		/* initial stack size (*64 bytes) */
 #define	SINCR	20		/* increment of stack (*64 bytes) */

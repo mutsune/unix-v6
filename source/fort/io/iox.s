@@ -13,7 +13,7 @@
 
 bufp:	_end
 filnam:
-	&lt;fortxx\0&gt;; .even
+	<fortxx\0>; .even
 
 	.bss
 

@@ -8,7 +8,7 @@ char (*f)();
 _ptrbf = buf;
 
 fd=cout;
-adx = &amp;a1;
+adx = &a1;
 f = cputc;
 if (a1 == -1)
   {
@@ -16,42 +16,42 @@ if (a1 == -1)
   _ptrst = a2;
   adx =+ 2;
   }
-else if (a1 &gt;= 0 &amp;&amp; a1 &lt;= 9)
+else if (a1 >= 0 && a1 <= 9)
   fd = *adx++;
 __fmt = *adx++;
 
 
 while( c = *__fmt++ ){
-   if(c != &#39;%&#39;) (*f)(c,fd);
+   if(c != '%') (*f)(c,fd);
    else { x = *adx++;
-      if( *__fmt == &#39;-&#39; ){ adj = &#39;l&#39;;  __fmt++; }
-      else adj = &#39;r&#39;;
-   padchar = (*__fmt==&#39;0&#39;) ? &#39;0&#39; : &#39; &#39;;
+      if( *__fmt == '-' ){ adj = 'l';  __fmt++; }
+      else adj = 'r';
+   padchar = (*__fmt=='0') ? '0' : ' ';
       width = __conv();
-      if( *__fmt == &#39;.&#39;){++__fmt; prec = __conv();}
+      if( *__fmt == '.'){++__fmt; prec = __conv();}
       else prec = 0;
 
    s = 0;
    switch ( c = *__fmt++ ) {
-     case &#39;D&#39;:
-     case &#39;d&#39;:
+     case 'D':
+     case 'd':
 	_prt1(x); break;
-     case &#39;o&#39;:
-     case &#39;O&#39;:
+     case 'o':
+     case 'O':
          _prnt8(x); break;
-     case &#39;x&#39;:
-     case &#39;X&#39;:
+     case 'x':
+     case 'X':
           _prntx(x); break;
-      case &#39;S&#39;:
-     case &#39;s&#39;:    s=x;
+      case 'S':
+     case 's':    s=x;
         break;
-     case &#39;C&#39;:
-     case &#39;c&#39;:   *_ptrbf++ = x&amp;0777;
+     case 'C':
+     case 'c':   *_ptrbf++ = x&0777;
          break;
-     case &#39;E&#39;:
-     case &#39;e&#39;:
-     case &#39;F&#39;:
-     case &#39;f&#39;:
+     case 'E':
+     case 'e':
+     case 'F':
+     case 'f':
       dblptr = adx-1;
       zz = *dblptr;
       adx =+ 3;
@@ -63,46 +63,46 @@ while( c = *__fmt++ ){
          adx--;
    }
    if (s == 0)
-    {*_ptrbf = &#39;\0&#39;; s = buf;}
+    {*_ptrbf = '\0'; s = buf;}
    n = _clenf (s);
-   n = (prec&lt;n &amp;&amp; prec != 0) ? prec : n;
+   n = (prec<n && prec != 0) ? prec : n;
    m = width-n;
-   if (adj == &#39;r&#39;) while (m-- &gt; 0) (*f)(padchar,fd);
+   if (adj == 'r') while (m-- > 0) (*f)(padchar,fd);
    while (n--) (*f)(*s++,fd);
-   while (m-- &gt; 0) (*f)(padchar,fd);
+   while (m-- > 0) (*f)(padchar,fd);
    _ptrbf = buf;
    }
 }
-if(a1 == -1) (*f)(&#39;\0&#39;,fd);
+if(a1 == -1) (*f)('\0',fd);
 }
 
 
 _prnt8 (n)
 { /* print in octal */
 int p, k, sw;
-if (n==0) {*_ptrbf++ = &#39;0&#39;; return;}
+if (n==0) {*_ptrbf++ = '0'; return;}
 sw = 0;
-for (p=15; p &gt;= 0; p =- 3)
-  if ((k = (n&gt;&gt;p)&amp;07) || sw)
+for (p=15; p >= 0; p =- 3)
+  if ((k = (n>>p)&07) || sw)
    {
-    *_ptrbf++ = &#39;0&#39; + k;
+    *_ptrbf++ = '0' + k;
      sw = 1;
      }
 }
 _prntx (n)
 {
 	int d,a;
-	if (a = n&gt;&gt;4)
-		_prntx ( a &amp; 07777);
-	d = n&amp;017;
-	*_ptrbf++ =  d &gt; 9 ? &#39;A&#39;+d-10 : &#39;0&#39; + d;
+	if (a = n>>4)
+		_prntx ( a & 07777);
+	d = n&017;
+	*_ptrbf++ =  d > 9 ? 'A'+d-10 : '0' + d;
 }
 
 __conv()
 {
 auto c,n;
 n = 0;
-while( ((c = *__fmt++) &gt;= &#39;0&#39;) &amp;&amp; (c&lt;=&#39;9&#39;)) n = n*10+c-&#39;0&#39;;
+while( ((c = *__fmt++) >= '0') && (c<='9')) n = n*10+c-'0';
 __fmt--;
 return(n);
 }
@@ -115,16 +115,16 @@ _prt1(n)
 {
 int digs[15], *dpt;
 dpt = digs;
-if (n &gt;= 0)
+if (n >= 0)
    n = -n;
 else
-   *_ptrbf++ = &#39;-&#39;;
+   *_ptrbf++ = '-';
 for (; n != 0; n = n/10)
  *dpt++ = n%10;
 if (dpt == digs)
    *dpt++ = 0;
 while (dpt != digs)
    { --dpt;
-   *_ptrbf++ =  &#39;0&#39; - *dpt;
+   *_ptrbf++ =  '0' - *dpt;
 }
 }

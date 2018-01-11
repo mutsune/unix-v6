@@ -10,7 +10,7 @@ loop:
 	dec	r5
 	ble	done
 	mov	(sp)+,r0
-	cmpb	(r0),$&#39;-
+	cmpb	(r0),$'-
 	bne	2f
 	clr	fin
 	br	3f

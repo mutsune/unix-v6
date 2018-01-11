@@ -1,12 +1,12 @@
 int chtab[]{
 00000, /*   */
 03004, /* ! */
-02404, /* &quot; */
+02404, /* " */
 02040, /* sharp */
 02042, /* $ */
 02104, /* % */
-00001, /* &amp; */
-03002, /* &#39; */
+00001, /* & */
+03002, /* ' */
 02201, /* ( */
 02202, /* ) */
 02102, /* * */
@@ -27,9 +27,9 @@ int chtab[]{
 04000, /* 9 */
 02200, /* : */
 02402, /* ; */
-02401, /* &lt; */
+02401, /* < */
 02204, /* = */
-02400, /* &gt; */
+02400, /* > */
 03000, /* ? */
 02100, /* at */
  011,
@@ -65,7 +65,7 @@ int chtab[]{
 02024 /* _ */
 };
 	char s[128];
-	char *sp {&amp;s[0]};
+	char *sp {&s[0]};
 main(argc, argv)
 char *argv[];
 {
@@ -75,50 +75,50 @@ char *argv[];
 	int c;
 	int l;
 
-	if (argc&lt;2) {
-		puts(&quot;% &quot;);
-		while ((c=getchar())!=&#39;\0&#39;&amp;c!=&#39;\n&#39;)
+	if (argc<2) {
+		puts("% ");
+		while ((c=getchar())!='\0'&c!='\n')
 			*sp++ = c;
 		*sp = 0;
-		sp = &amp;s[0];
+		sp = &s[0];
 	} else
 		sp = *++argv;
-	puts(&quot;\n\n\n\n&quot;);
-	puts(&quot; ________________________________&quot;);
-	puts(&quot;________________\n&quot;);
+	puts("\n\n\n\n");
+	puts(" ________________________________");
+	puts("________________\n");
 	spp = sp;
 	while(*spp++);
 	spp--;
 	l = spp - sp;
-	putchar(&#39;/&#39;);
+	putchar('/');
 	puts(sp);
 	i = 49 - l;
-	while(--i&gt;0) putchar(&#39; &#39;);
-	puts(&quot;|\n&quot;);
+	while(--i>0) putchar(' ');
+	puts("|\n");
 	j = 0;
 	spp = sp;
-	while (j++&lt;12) {
-		putchar(&#39;|&#39;);
+	while (j++<12) {
+		putchar('|');
 		i = 0;
 		spp = sp;
-		while (i&lt;48) {
+		while (i<48) {
 			c = *spp++ - 040;
 			i++;
-			if (c&gt;=&#39;a&#39;-040) c = c - 040;
-			if (i&gt;l) c = 0;
-			if (c&lt;0 | c&gt;137) c = 0;
-			if ((chtab[c]&gt;&gt;(j-1))&amp;1) 
-				puts(&quot;[]&quot;);
+			if (c>='a'-040) c = c - 040;
+			if (i>l) c = 0;
+			if (c<0 | c>137) c = 0;
+			if ((chtab[c]>>(j-1))&1) 
+				puts("[]");
 			else
-				putchar(j&gt;3?&#39;0&#39;+j-3:&#39; &#39;);
+				putchar(j>3?'0'+j-3:' ');
 		}
-		puts(&quot;|\n&quot;);
+		puts("|\n");
 	}
-	putchar(&#39;|&#39;);
-	puts(&quot;____________&quot;);
-	puts(&quot;____________________________________&quot;);
-	puts(&quot;|\n&quot;);
-	puts(&quot;\n\n\n\n&quot;);
+	putchar('|');
+	puts("____________");
+	puts("____________________________________");
+	puts("|\n");
+	puts("\n\n\n\n");
 }
 
 puts(ss) char *ss; {
@@ -126,8 +126,8 @@ puts(ss) char *ss; {
 	char t;
 	i = 0;
 	while(t = *ss++) {
-		if(t &gt;= &#39;a&#39; &amp;&amp; t &lt;= &#39;z&#39;)
-			t =+ &#39;A&#39;-&#39;a&#39;;
+		if(t >= 'a' && t <= 'z')
+			t =+ 'A'-'a';
 		putchar(t);
 	}
 }

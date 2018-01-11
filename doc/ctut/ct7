@@ -15,7 +15,7 @@ and
 .ul
 definition
 are used precisely in this section;
-don&#39;t treat them as the same thing.
+don't treat them as the same thing.
 .PP
 A major shortcut exists for making 
 .UL extern
@@ -70,7 +70,7 @@ for it.
 .UL extern
 declaration for something,
 there must also eventually be an external definition of it,
-or you&#39;ll get an ``undefined symbol&#39;&#39; message.)
+or you'll get an ``undefined symbol'' message.)
 .PP
 There are some hidden pitfalls in external declarations
 and definitions if you use multiple source files.
@@ -84,7 +84,7 @@ You can get away with multiple external definitions on
 .UC UNIX,
 but not on
 .UC GCOS,
-so don&#39;t ask for trouble.
+so don't ask for trouble.
 Multiple initializations are illegal everywhere.
 Second,
 at the beginning of any file that contains functions needing a variable
@@ -115,14 +115,14 @@ You can say
 .E1
 #define	name		something
 .E2
-and thereafter anywhere ``name&#39;&#39; appears as a token,
-``something&#39;&#39; will be substituted.
+and thereafter anywhere ``name'' appears as a token,
+``something'' will be substituted.
 This is particularly useful in parametering the sizes of arrays:
 .E1
 #define	ARRAYSIZE	100
 	int	arr[ARRAYSIZE];
 	 \*.\*.\*.
-	while( i\*+ &lt; ARRAYSIZE )\*.\*.\*.
+	while( i\*+ < ARRAYSIZE )\*.\*.\*.
 .E2
 (now we can alter the entire program by changing only the
 .UL define)
@@ -132,39 +132,39 @@ or in setting up mysterious constants:
 #define	INTERRUPT	02	/\** interrupt bit \**/
 #define	ENABLED	04
  \*.\*.\*.
-if( x &amp; (SET | INTERRUPT | ENABLED) ) \*.\*.\*.
+if( x & (SET | INTERRUPT | ENABLED) ) \*.\*.\*.
 .E2
 Now we have meaningful words instead of mysterious constants.
-(The mysterious operators `&amp;&#39; (AND)
-and `\(or&#39; (OR)
+(The mysterious operators `&' (AND)
+and `\(or' (OR)
 will be covered in the next section.)
-It&#39;s an excellent practice to write programs
+It's an excellent practice to write programs
 without any literal constants except in
 .UL #define
 statements.
 .PP
 There are several warnings about
 .UL #define\*.
-First, there&#39;s no semicolon at the end of a
+First, there's no semicolon at the end of a
 .UL #define;
 all the text from the name to the end of the line
 (except for comments)
-is taken to be the ``something&#39;&#39;.
-When it&#39;s put into the text, blanks are placed around it.
+is taken to be the ``something''.
+When it's put into the text, blanks are placed around it.
 Good style typically makes the name in the 
 .UL #define
 upper case _
 this makes parameters more visible.
 Definitions affect things only after they occur,
 and only within the file in which they occur.
-Defines can&#39;t be nested.
+Defines can't be nested.
 Last, if there is a
 .UL #define
 in a file,
 then the first character of the file 
 .ul
 must
-be a `#&#39;,
+be a `#',
 to signal the preprocessor that definitions exist.
 .WS
 .PP
@@ -172,7 +172,7 @@ The other control word known to C is
 .UL #include\*.
 To include one file in your source at compilation time, say
 .E1
-#include &quot;filename&quot;
+#include "filename"
 .E2
 This is useful for putting a lot of heavily used data definitions and 
 .UL #define
@@ -181,9 +181,9 @@ As with
 .UL #define,
 the first line of a file containing a
 .UL #include
-has to begin with a `#&#39;.
+has to begin with a `#'.
 And
 .UL #include
-can&#39;t be nested _
-an included file can&#39;t contain another
+can't be nested _
+an included file can't contain another
 .UL #include\*.

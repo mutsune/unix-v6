@@ -34,11 +34,11 @@ value:	.=.+4				/ space for return value
 /	2. arg list (pointers to values)
 /	   begins at 2(r3)
 /	3. entry name is name of function
-/	   followed by &quot;.&quot;
+/	   followed by "."
 /	4. first word after entry point is
 /	   location of return value. this is
 /	   true for both functions and subroutines
 /	5. second word after entry point is
 /	   pointer to pdp-11 code body
 /	6. return is expedited by a jump to
-/	   the globl routine &quot;retrn&quot;
+/	   the globl routine "retrn"

@@ -25,7 +25,7 @@ getlab:
 	jsr	r5,geticon
 		br 1f
 	mov	r0,temp
-	jsr	r5,ptemp; &#39;r; temp; line
+	jsr	r5,ptemp; 'r; temp; line
 	tst	(r5)+
 1:
 	rts	r5

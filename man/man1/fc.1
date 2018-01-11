@@ -11,11 +11,11 @@ fc \*- Fortran compiler
 is the UNIX Fortran compiler.
 It accepts three types of arguments:
 .s3
-Arguments whose names end with `.f&#39; are assumed to be
+Arguments whose names end with `.f' are assumed to be
 Fortran source program units; they are compiled, and
 the object program is left on the file sfile1.o (i.e.
-the file whose name is that of the source with `.o&#39; substituted
-for `.f&#39;).
+the file whose name is that of the source with `.o' substituted
+for `.f').
 .s3
 Other arguments (except for
 \fB\*-c\fR)
@@ -49,10 +49,10 @@ conversions involving integer, real, double
 precision and complex are allowed.
 .s3
 .lp +4 4
-2.	Two forms of ``implicit&#39;&#39; statements are recognized:
-.bd &quot;implicit integer /i\*-n/&quot;,
+2.	Two forms of ``implicit'' statements are recognized:
+.bd "implicit integer /i\*-n/",
 or
-.bd &quot;implicit integer (i\-n).&quot;
+.bd "implicit integer (i\-n)."
 .s3
 .lp +4 4
 3.	The types
@@ -64,7 +64,7 @@ and real*8 (double precision)
 are supported.
 .s3
 .lp +4 4
-4.	\fB&amp;\fR as the first character of a line
+4.	\fB&\fR as the first character of a line
 signals a continuation card.
 .s3
 .lp +4 4
@@ -74,7 +74,7 @@ signals a continuation card.
 6.	All keywords are recognized in lower case.
 .s3
 .lp +4 4
-7.	The notion of `column 7&#39; is not implemented.
+7.	The notion of `column 7' is not implemented.
 .s3
 .lp +4 4
 8.	G-format input is free form\*-
@@ -91,7 +91,7 @@ the field.
 .lp +4 4
 11.	A sequence of
 .it n
-characters in double quotes `&quot;&#39; is equivalent to
+characters in double quotes `"' is equivalent to
 .it n
 .bd h
 followed by those characters.
@@ -109,9 +109,9 @@ must be identical to the number contained
 in the record being read.
 .s3
 .lp +4 4
-14.	If the first character in an input file is ``#&#39;&#39;,
+14.	If the first character in an input file is ``#'',
 a preprocessor identical to the C preprocessor
-is called, which implements ``#define&#39;&#39; and ``#include&#39;&#39;
+is called, which implements ``#define'' and ``#include''
 preprocessor statements.
 (See the C reference manual for details.)
 The preprocessor does not recognize
@@ -124,7 +124,7 @@ Unit number
 .it n
 refers to file
 fort\fInn;\fR
-(e.g. unit 9 is file `fort09&#39;).
+(e.g. unit 9 is file `fort09').
 For input, the file must exist;
 for output, it will be created.
 Unit 5 is permanently associated with
@@ -145,7 +145,7 @@ f.tmp[123]	temporary (deleted)
 /lib/libf.a	builtin functions, etc.
 /lib/liba.a	system library
 .fi
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 rc (I), which announces a more pleasant Fortran dialect;
 the ANSI standard;
 ld (I) for loader flags.

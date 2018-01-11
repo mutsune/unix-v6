@@ -40,14 +40,14 @@ _getnum:
 	tst	decpt
 	bne	1f
 	clr	nfract
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	bne	1f
 	mov	pc,decpt
 	br	1b
 1:
 	tst	totdig
 	beq	1f
-	cmp	r0,$&#39;e
+	cmp	r0,$'e
 	bne	1f
 	clr	-(sp)
 	clr	_cval
@@ -55,9 +55,9 @@ _getnum:
 	clr	_cval
 	mov	$10.,base
 	jsr	pc,_getchar
-	cmp	r0,$&#39;+
+	cmp	r0,$'+
 	beq	2f
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	bne	3f
 	inc	(sp)
 	br	2f
@@ -77,7 +77,7 @@ _getnum:
 	mov	r0,_peekc
 	tst	totdig
 	bne	1f
-	mov	$39.,r0		/ &quot;.&quot; operator
+	mov	$39.,r0		/ "." operator
 9:
 	mov	(sp)+,r2
 	rts	pc
@@ -127,7 +127,7 @@ _getnum:
 	tst	(sp)+
 	mov	$21.,r0
 	br	9b
-fperr:	&lt;No floating point!\0&gt;; .even
+fperr:	<No floating point!\0>; .even
 	.endif
 
 getdig:
@@ -138,7 +138,7 @@ getdig:
 1:
 	jsr	pc,_getchar
 2:
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	1f
 	inc	totdig
@@ -149,7 +149,7 @@ getdig:
 	tst	(r5)+
 	rts	r5
 1:
-	add	$&#39;0,r0
+	add	$'0,r0
 	rts	r5
 
 .bss

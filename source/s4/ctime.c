@@ -17,9 +17,9 @@
  *
  * The routine corrects for daylight saving
  * time and will work in any time zone provided
- * &quot;timezone&quot; is adjusted to the difference between
+ * "timezone" is adjusted to the difference between
  * Greenwich and local standard time (measured in seconds).
- * In places like Michigan &quot;daylight&quot; must
+ * In places like Michigan "daylight" must
  * be initialized to 0 to prevent the conversion
  * to daylight time.
  * There is a table which accounts for the peculiarities
@@ -58,8 +58,8 @@ int	dmsize[12]
 int timezone	5*60*60;
 int tzname[]
 {
-	&quot;EST&quot;,
-	&quot;EDT&quot;,
+	"EST",
+	"EDT",
 };
 int	daylight 1;	/* Allow daylight conversion */
 /*
@@ -112,9 +112,9 @@ int tim[];
 	}
 	daylbegin = sunday(ct, daylbegin);
 	daylend = sunday(ct, daylend);
-	if (daylight &amp;&amp;
-	    (dayno&gt;daylbegin || (dayno==daylbegin &amp;&amp; ct[HOUR]&gt;=2)) &amp;&amp;
-	    (dayno&lt;daylend || (dayno==daylend &amp;&amp; ct[HOUR]&lt;1))) {
+	if (daylight &&
+	    (dayno>daylbegin || (dayno==daylbegin && ct[HOUR]>=2)) &&
+	    (dayno<daylend || (dayno==daylend && ct[HOUR]<1))) {
 		dpadd(t, 1*60*60);
 		ct = gmtime(t);
 		ct[ISDAY]++;
@@ -134,7 +134,7 @@ int *at;
 
 	t = at;
 	d = ad;
-	if (d &gt;= 58)
+	if (d >= 58)
 		d =+ dysize(t[YEAR]) - 365;
 	return(d - (d - t[YDAY] + t[WDAY] + 700) % 7);
 }
@@ -155,7 +155,7 @@ int tim[];
 
 	d0 = ldiv(tim[0], tim[1], 28800);
 	d1 = ldivr;
-	tp = &amp;xtime[0];
+	tp = &xtime[0];
 
 	/*
 	 * generate hours:minutes:seconds
@@ -179,7 +179,7 @@ int tim[];
 	/*
 	 * year number
 	 */
-	for(d1=70; d0 &gt;= dysize(d1); d1++)
+	for(d1=70; d0 >= dysize(d1); d1++)
 		d0 =- dysize(d1);
 	xtime[YEAR] = d1;
 	xtime[YDAY] = d0;
@@ -190,7 +190,7 @@ int tim[];
 
 	if (dysize(d1)==366)
 		dmsize[1] = 29;
-	for(d1=0; d0 &gt;= dmsize[d1]; d1++)
+	for(d1=0; d0 >= dmsize[d1]; d1++)
 		d0 =- dmsize[d1];
 	dmsize[1] = 28;
 	*tp++ = d0+1;
@@ -206,15 +206,15 @@ int *t;
 	register int *tp;
 
 	cp = cbuf;
-	for (ncp = &quot;Day Mon 00 00:00:00 1900\n&quot;; *cp++ = *ncp++;);
-	ncp = &amp;&quot;SunMonTueWedThuFriSat&quot;[3*t[6]];
+	for (ncp = "Day Mon 00 00:00:00 1900\n"; *cp++ = *ncp++;);
+	ncp = &"SunMonTueWedThuFriSat"[3*t[6]];
 	cp = cbuf;
 	*cp++ = *ncp++;
 	*cp++ = *ncp++;
 	*cp++ = *ncp++;
 	cp++;
-	tp = &amp;t[4];
-	ncp = &amp;&quot;JanFebMarAprMayJunJulAugSepOctNovDec&quot;[(*tp)*3];
+	tp = &t[4];
+	ncp = &"JanFebMarAprMayJunJulAugSepOctNovDec"[(*tp)*3];
 	*cp++ = *ncp++;
 	*cp++ = *ncp++;
 	*cp++ = *ncp++;
@@ -240,10 +240,10 @@ ct_numb(acp, n)
 
 	cp = acp;
 	cp++;
-	if (n&gt;=10)
-		*cp++ = (n/10)%10 + &#39;0&#39;;
+	if (n>=10)
+		*cp++ = (n/10)%10 + '0';
 	else
-		*cp++ = &#39; &#39;;
-	*cp++ = n%10 + &#39;0&#39;;
+		*cp++ = ' ';
+	*cp++ = n%10 + '0';
 	return(cp);
 }

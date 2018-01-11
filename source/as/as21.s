@@ -34,7 +34,7 @@ go:
 	blo	2f
 	cmp	r0,$3			/data
 	bhi	2f
-	add	$31,r4			/mark &quot;estimated&quot;
+	add	$31,r4			/mark "estimated"
 	mov	r4,(r1)+
 	jsr	pc,getw
 	mov	r4,(r1)+
@@ -56,7 +56,7 @@ go:
 1:
 	jsr	pc,getw
 	bvs	1f
-	add	$31,r4			/ &quot;estimated&quot;
+	add	$31,r4			/ "estimated"
 	mov	r4,(r1)+
 	jsr	pc,getw
 	mov	r4,(r1)+

@@ -7,12 +7,12 @@ int *buf, bufsiz;
 
 	if (lowpc == 0) {
 		profil(0, 0, 0, 0);
-		o = creat(&quot;mon.out&quot;, 0666);
-		write(o, sbuf, ssiz&lt;&lt;1);
+		o = creat("mon.out", 0666);
+		write(o, sbuf, ssiz<<1);
 		close(o);
 		return;
 	}
-	if (nargs() &lt;= 4)
+	if (nargs() <= 4)
 		cntsiz = 0;
 	ssiz = bufsiz;
 	buf[0] = lowpc;
@@ -21,11 +21,11 @@ int *buf, bufsiz;
 	sbuf = buf;
 	buf =+ 3*(cntsiz+1);
 	bufsiz =- 3*(cntsiz+1);
-	if (bufsiz&lt;=0)
+	if (bufsiz<=0)
 		return;
-	o = ((highpc - lowpc)&gt;&gt;1) &amp; 077777;
-	if(bufsiz &lt; o)
-		o = ldiv(bufsiz, 0, o&lt;&lt;1); else
+	o = ((highpc - lowpc)>>1) & 077777;
+	if(bufsiz < o)
+		o = ldiv(bufsiz, 0, o<<1); else
 		o = 077777;
-	profil(buf, bufsiz&lt;&lt;1, lowpc, o&lt;&lt;1);
+	profil(buf, bufsiz<<1, lowpc, o<<1);
 }

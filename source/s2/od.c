@@ -23,37 +23,37 @@ char **argv;
 
 	fout = dup(1);
 	argv++;
-	if(argc &gt; 1) {
+	if(argc > 1) {
 		p = *argv;
-		if(*p == &#39;-&#39;) {
-			while((i = *p++) != &#39;\0&#39;) {
+		if(*p == '-') {
+			while((i = *p++) != '\0') {
 				switch(i) {
-				case &#39;o&#39;:
+				case 'o':
 					conv =| 001;
 					f = 6;
 					break;
-				case &#39;d&#39;:
+				case 'd':
 					conv =| 002;
 					f = 5;
 					break;
-				case &#39;a&#39;:
+				case 'a':
 					conv =| 004;
 					f = 4;
 					break;
-				case &#39;h&#39;:
+				case 'h':
 					conv =| 010;
 					f = 4;
 					break;
-				case &#39;c&#39;:
+				case 'c':
 					conv =| 020;
 					f = 5;
 					break;
-				case &#39;b&#39;:
+				case 'b':
 					conv =| 040;
 					f = 7;
 					break;
 				}
-				if(f &gt; max)
+				if(f > max)
 					max = f;
 			}
 			argc--;
@@ -64,35 +64,35 @@ char **argv;
 		max = 6;
 		conv = 1;
 	}
-	if(argc &gt; 1)
-	if(**argv != &#39;+&#39;) {
+	if(argc > 1)
+	if(**argv != '+') {
 		fi = open(*argv, 0);
-		if(fi &lt; 0) {
-			printf(&quot;cannot open %s\n&quot;, *argv);
+		if(fi < 0) {
+			printf("cannot open %s\n", *argv);
 			goto done;
 		}
 		argv++;
 		argc--;
 	}
-	if(argc &gt; 1)
+	if(argc > 1)
 		offset(*argv);
 
 loop:
 	f = 1;
 	a[0] = addr[0];
 	a[1] = addr[1];
-	for(i=0; i&lt;nword; i++) {
+	for(i=0; i<nword; i++) {
 		w = getw();
 		if(eof)
 			break;
 		word[i] = w;
 		if(i)
-			f =&amp; w==k; else
+			f =& w==k; else
 			k = w;
 	}
 	if(i)
-	if(f &amp;&amp; !eof) {
-		if(!(flag &amp;&amp; k==key)) {
+	if(f && !eof) {
+		if(!(flag && k==key)) {
 			dupl();
 			key = k;
 			from[0] = a[0];
@@ -106,7 +106,7 @@ loop:
 	if(!eof)
 		goto loop;
 	puta(addr);
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 
 done:
 	flush();
@@ -117,7 +117,7 @@ dupl()
 
 	if(flag) {
 		flag = 0;
-		line(from, &amp;key, 1);
+		line(from, &key, 1);
 	}
 }
 
@@ -127,7 +127,7 @@ int a[2];
 
 	putn(a[0], base, 4);
 	putn(a[1], base, 3);
-	putchar(&#39; &#39;);
+	putchar(' ');
 }
 
 line(a, w, n)
@@ -137,17 +137,17 @@ int w[];
 
 	f = 1;
 	for(c=1; c; c=+c) {
-		if((c&amp;conv) == 0)
+		if((c&conv) == 0)
 			continue;
 		if(f) {
 			puta(a);
 			f = 0;
 		} else
-			for(i=0; i&lt;8; i++)
-				putchar(&#39; &#39;);
-		for(i=0; i&lt;n; i++) {
+			for(i=0; i<8; i++)
+				putchar(' ');
+		for(i=0; i<n; i++) {
 			putx(w[i], c);
-			putchar(i==n-1? &#39;\n&#39;: &#39; &#39;);
+			putchar(i==n-1? '\n': ' ');
 		}
 	}
 }
@@ -175,14 +175,14 @@ putx(n, c)
 	case 020:
 		pre(5);
 		putc(n);
-		putchar(&#39; &#39;);
-		putc(n&gt;&gt;8);
+		putchar(' ');
+		putc(n>>8);
 		break;
 	case 040:
 		pre(7);
-		putn(n&amp;0377, 8, 3);
-		putchar(&#39; &#39;);
-		putn((n&gt;&gt;8)&amp;0377, 8, 3);
+		putn(n&0377, 8, 3);
+		putchar(' ');
+		putn((n>>8)&0377, 8, 3);
 		break;
 	}
 }
@@ -199,49 +199,49 @@ getw()
 	b2 = getc();
 	if(b2 == -1)
 		b2 = 0;
-	return(b1|(b2&lt;&lt;8));
+	return(b1|(b2<<8));
 }
 
 getc()
 {
 
-	if(gidx &gt;= gcnt) {
+	if(gidx >= gcnt) {
 		gcnt = read(fi, gbuf, 512);
-		if(gcnt &lt;= 0)
+		if(gcnt <= 0)
 			return(-1);
 		gidx = 0;
 	}
-	if(++addr[1] &gt;= basem) {
+	if(++addr[1] >= basem) {
 		addr[0]++;
 		addr[1] = 0;
 	}
-	return(gbuf[gidx++]&amp;0377);
+	return(gbuf[gidx++]&0377);
 }
 
 putc(c)
 {
-	c =&amp; 0377;
-	if(c&gt;037 &amp;&amp; c&lt;0177 &amp;&amp; c!=&#39;\\&#39;) {
-		putchar(&#39; &#39;);
+	c =& 0377;
+	if(c>037 && c<0177 && c!='\\') {
+		putchar(' ');
 		putchar(c);
 		return;
 	}
-	putchar(&#39;\\&#39;);
+	putchar('\\');
 	switch(c) {
-	case &#39;\0&#39;:
-		putchar(&#39;0&#39;);
+	case '\0':
+		putchar('0');
 		break;
-	case &#39;\n&#39;:
-		putchar(&#39;n&#39;);
+	case '\n':
+		putchar('n');
 		break;
-	case &#39;\\&#39;:
-		putchar(&#39;\\&#39;);
+	case '\\':
+		putchar('\\');
 		break;
-	case &#39;\t&#39;:
-		putchar(&#39;t&#39;);
+	case '\t':
+		putchar('t');
 		break;
 	default:
-		putchar(&#39;?&#39;);
+		putchar('?');
 	}
 }
 
@@ -251,17 +251,17 @@ putn(n, b, c)
 	if(!c)
 		return;
 	putn(ldiv(0,n,b),b,c-1);
-	if((n=lrem(0,n,b)) &gt; 9)
-		putchar(n-10+&#39;a&#39;); else
-		putchar(n+&#39;0&#39;);
+	if((n=lrem(0,n,b)) > 9)
+		putchar(n-10+'a'); else
+		putchar(n+'0');
 }
 
 pre(n)
 {
 	int i;
 
-	for(i=n; i&lt;max; i++)
-		putchar(&#39; &#39;);
+	for(i=n; i<max; i++)
+		putchar(' ');
 }
 
 offset(s)
@@ -274,29 +274,29 @@ char s[];
 	while(*p++);
 	i = p-s-1;
 	b = 0;
-	if(i &gt; 0)
-		if(p[-2] == &#39;b&#39;) {
+	if(i > 0)
+		if(p[-2] == 'b') {
 			i--;
 			b++;
 			p--;
 		}
-	if(i &gt; 0)
-		if(p[-2] == &#39;.&#39;) {
+	if(i > 0)
+		if(p[-2] == '.') {
 			i--;
 			base = 10;
 			basem = 1000;
 		}
 	a[0] = 0;
-	for(j=0; i-j&gt;3; j++) {
+	for(j=0; i-j>3; j++) {
 		d = s[j];
-		if(d&gt;=&#39;0&#39; &amp;&amp; d&lt;=&#39;9&#39;)
-			a[0] = a[0]*base + d-&#39;0&#39;;
+		if(d>='0' && d<='9')
+			a[0] = a[0]*base + d-'0';
 	}
 	a[1] = 0;
-	for(; i-j&gt;0; j++) {
+	for(; i-j>0; j++) {
 		d = s[j];
-		if(d&gt;=&#39;0&#39; &amp;&amp; d&lt;=&#39;9&#39;)
-			a[1] = a[1]*base + d-&#39;0&#39;;
+		if(d>='0' && d<='9')
+			a[1] = a[1]*base + d-'0';
 	}
 	if(b) {
 		i = a[0]*basem+a[1];
@@ -304,16 +304,16 @@ char s[];
 		a[1] = 0;
 		while(i--) {
 			a[1] =+ 512;
-			while(a[1] &gt;= basem) {
+			while(a[1] >= basem) {
 				a[1] =- basem;
 				a[0]++;
 			}
 		}
 	}
 	i = 0;
-	while(a[0] &gt; addr[0]+1) {
+	while(a[0] > addr[0]+1) {
 		addr[1] =+ 512;
-		while(addr[1] &gt;= basem) {
+		while(addr[1] >= basem) {
 			addr[1] =- basem;
 			addr[0]++;
 		}
@@ -331,284 +331,284 @@ putop(n)
 	int i, c;
 
 	p = getop(n);
-	for(i=0; (c = *p++) != &#39;\0&#39;; i++)
+	for(i=0; (c = *p++) != '\0'; i++)
 		putchar(c);
-	for(; i&lt;4; i++)
-		putchar(&#39; &#39;);
+	for(; i<4; i++)
+		putchar(' ');
 }
 
 getop(n)
 {
 
-	switch(n&amp;0170000)
+	switch(n&0170000)
 	{
 	case 0000000:
-		switch(n&amp;0177000)
+		switch(n&0177000)
 		{
 		case 0004000:
-			return(&quot;jsr&quot;);
+			return("jsr");
 
 		case 0077000:
-			return(&quot;sob&quot;);
+			return("sob");
 		}
-		switch(n&amp;0177400)
+		switch(n&0177400)
 		{
 		case 0000400:
-			return(&quot;br&quot;);
+			return("br");
 
 		case 0001000:
-			return(&quot;bne&quot;);
+			return("bne");
 
 		case 0001400:
-			return(&quot;beq&quot;);
+			return("beq");
 
 		case 0002000:
-			return(&quot;bge&quot;);
+			return("bge");
 
 		case 0002400:
-			return(&quot;blt&quot;);
+			return("blt");
 
 		case 0003000:
-			return(&quot;bgt&quot;);
+			return("bgt");
 
 		case 0003400:
-			return(&quot;ble&quot;);
+			return("ble");
 		}
-		switch(n&amp;0177700)
+		switch(n&0177700)
 		{
 		case 0000100:
-			return(&quot;jmp&quot;);
+			return("jmp");
 
 		case 0000300:
-			return(&quot;swab&quot;);
+			return("swab");
 
 		case 0005000:
-			return(&quot;clr&quot;);
+			return("clr");
 
 		case 0005100:
-			return(&quot;com&quot;);
+			return("com");
 
 		case 0005200:
-			return(&quot;inc&quot;);
+			return("inc");
 
 		case 0005300:
-			return(&quot;dec&quot;);
+			return("dec");
 
 		case 0005400:
-			return(&quot;neg&quot;);
+			return("neg");
 
 		case 0005500:
-			return(&quot;adc&quot;);
+			return("adc");
 
 		case 0005600:
-			return(&quot;sbc&quot;);
+			return("sbc");
 
 		case 0005700:
-			return(&quot;tst&quot;);
+			return("tst");
 
 		case 0006000:
-			return(&quot;ror&quot;);
+			return("ror");
 
 		case 0006100:
-			return(&quot;rol&quot;);
+			return("rol");
 
 		case 0006200:
-			return(&quot;asr&quot;);
+			return("asr");
 
 		case 0006300:
-			return(&quot;asl&quot;);
+			return("asl");
 
 		case 0006400:
-			return(&quot;mark&quot;);
+			return("mark");
 
 		case 0006500:
-			return(&quot;mfpi&quot;);
+			return("mfpi");
 
 		case 0006600:
-			return(&quot;mtpi&quot;);
+			return("mtpi");
 
 		case 0006700:
-			return(&quot;sxt&quot;);
+			return("sxt");
 		}
-		switch(n&amp;0177740)
+		switch(n&0177740)
 		{
 		case 0000240:
-			return(&quot;flag&quot;);
+			return("flag");
 		}
-		switch(n&amp;0177770)
+		switch(n&0177770)
 		{
 		case 0000200:
-			return(&quot;rts&quot;);
+			return("rts");
 
 		case 0000230:
-			return(&quot;spl&quot;);
+			return("spl");
 		}
-		switch(n&amp;0177777)
+		switch(n&0177777)
 		{
 		case 0000000:
-			return(&quot;halt&quot;);
+			return("halt");
 
 		case 0000001:
-			return(&quot;wait&quot;);
+			return("wait");
 
 		case 0000002:
-			return(&quot;rti&quot;);
+			return("rti");
 
 		case 0000003:
-			return(&quot;bpt&quot;);
+			return("bpt");
 
 		case 0000004:
-			return(&quot;iot&quot;);
+			return("iot");
 
 		case 0000005:
-			return(&quot;rset&quot;);
+			return("rset");
 
 		case 0000006:
-			return(&quot;rtt&quot;);
+			return("rtt");
 		}
 		break;
 
 	case 0010000:
-		return(&quot;mov &quot;);
+		return("mov ");
 
 	case 0020000:
-		return(&quot;cmp&quot;);
+		return("cmp");
 
 	case 0030000:
-		return(&quot;bit&quot;);
+		return("bit");
 
 	case 0040000:
-		return(&quot;bic&quot;);
+		return("bic");
 
 	case 0050000:
-		return(&quot;bis&quot;);
+		return("bis");
 
 	case 0060000:
-		return(&quot;add&quot;);
+		return("add");
 
 	case 0070000:
-		switch(n&amp;0177000)
+		switch(n&0177000)
 		{
 		case 0070000:
-			return(&quot;mul&quot;);
+			return("mul");
 
 		case 0071000:
-			return(&quot;div&quot;);
+			return("div");
 
 		case 0072000:
-			return(&quot;ash&quot;);
+			return("ash");
 
 		case 0073000:
-			return(&quot;ashc&quot;);
+			return("ashc");
 
 		case 0074000:
-			return(&quot;xor&quot;);
+			return("xor");
 		}
 		break;
 
 	case 0100000:
-		switch(n&amp;0177400)
+		switch(n&0177400)
 		{
 		case 0100000:
-			return(&quot;bpl&quot;);
+			return("bpl");
 
 		case 0100400:
-			return(&quot;bmi&quot;);
+			return("bmi");
 
 		case 0101000:
-			return(&quot;bhi&quot;);
+			return("bhi");
 
 		case 0101400:
-			return(&quot;blos&quot;);
+			return("blos");
 
 		case 0102000:
-			return(&quot;bvc&quot;);
+			return("bvc");
 
 		case 0102400:
-			return(&quot;bvs&quot;);
+			return("bvs");
 
 		case 0103000:
-			return(&quot;bhis&quot;);
+			return("bhis");
 
 		case 0103400:
-			return(&quot;blo&quot;);
+			return("blo");
 
 		case 0104000:
-			return(&quot;emt&quot;);
+			return("emt");
 
 		case 0104400:
-			return(&quot;sys&quot;);
+			return("sys");
 		}
-		switch(n&amp;0177700)
+		switch(n&0177700)
 		{
 		case 0105000:
-			return(&quot;clrb&quot;);
+			return("clrb");
 
 		case 0105100:
-			return(&quot;comb&quot;);
+			return("comb");
 
 		case 0105200:
-			return(&quot;incb&quot;);
+			return("incb");
 
 		case 0105300:
-			return(&quot;decb&quot;);
+			return("decb");
 
 		case 0105400:
-			return(&quot;negb&quot;);
+			return("negb");
 
 		case 0105500:
-			return(&quot;adcb&quot;);
+			return("adcb");
 
 		case 0105600:
-			return(&quot;sbcb&quot;);
+			return("sbcb");
 
 		case 0105700:
-			return(&quot;tstb&quot;);
+			return("tstb");
 
 		case 0106000:
-			return(&quot;rorb&quot;);
+			return("rorb");
 
 		case 0106100:
-			return(&quot;rolb&quot;);
+			return("rolb");
 
 		case 0106200:
-			return(&quot;asrb&quot;);
+			return("asrb");
 
 		case 0106300:
-			return(&quot;aslb&quot;);
+			return("aslb");
 
 		case 0106500:
-			return(&quot;mfpd&quot;);
+			return("mfpd");
 
 		case 0106600:
-			return(&quot;mfpd&quot;);
+			return("mfpd");
 		}
 		break;
 
 	case 0110000:
-		return(&quot;movb&quot;);
+		return("movb");
 
 	case 0120000:
-		return(&quot;cmpb&quot;);
+		return("cmpb");
 
 	case 0130000:
-		return(&quot;bitb&quot;);
+		return("bitb");
 
 	case 0140000:
-		return(&quot;bicb&quot;);
+		return("bicb");
 
 	case 0150000:
-		return(&quot;bisb&quot;);
+		return("bisb");
 
 	case 0160000:
-		return(&quot;sub&quot;);
+		return("sub");
 
 	case 0170000:
-		switch(n&amp;01777000)
+		switch(n&01777000)
 		{
 		case 0:0;
 		}
 		break;
 	}
-	return(&quot;???&quot;);
+	return("???");
 }

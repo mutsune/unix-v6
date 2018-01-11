@@ -3,14 +3,14 @@ struct {
 	int word; 
 };
 
-struct {		/*&quot;put stack&quot;, currently gathering args*/
+struct {		/*"put stack", currently gathering args*/
 	int prev;	/*previous frame ptr, self-relative*/
 	int pan;	/*argument number of arg being collected*/
 	int pa0;	/*self-relative ptr oo arg0*/
 #define pend 6
 };
 
-struct {		/*&quot;get stack&quot;, currently expanding macros*/
+struct {		/*"get stack", currently expanding macros*/
 	int prev;	/* prev frame ptr, self-realtive*/
 	int mframe;	/* ptr to macro definition frame*/
 	int mchar;	/* next char relative to def. frame*/
@@ -18,7 +18,7 @@ struct {		/*&quot;get stack&quot;, currently expanding macros*/
 	int ga0;	/* arg0 ptr self-rel*/
 };
 
-struct {		/*&quot;definition stack&quot;*/
+struct {		/*"definition stack"*/
 	int prev;	/* prev frame ptr, self-relative*/
 	int dswitch;	/* builtin func code, neg for dead definition*/
 	int dtext;	/* definition text prt rel to df*/
@@ -39,7 +39,7 @@ char metas[];
 char one[];
 int rescan;
 int traceflag;
-int trashflag;		/* nonzero when dead def&#39;n exist*/
+int trashflag;		/* nonzero when dead def'n exist*/
 
 int lp;			/* arg collection level (out level)*/
 int lg;			/*input level (get level) */

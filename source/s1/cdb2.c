@@ -13,13 +13,13 @@ psymoff(v, lim)
 	register char *w;
 
 	w = vallook(v);
-	if (w &gt; lim) {
-		printf(&quot;%.1o&quot;, v);
+	if (w > lim) {
+		printf("%.1o", v);
 		return;
 	}
-	printf(&quot;%.8s&quot;, ssymbol);
+	printf("%.8s", ssymbol);
 	if (w)
-		printf(&quot;+%d&quot;, w);
+		printf("+%d", w);
 }
 
 #define	ISP	1
@@ -47,166 +47,166 @@ struct optab {
 	int	itype;
 	char	*iname;
 } optab[] {
-	0107777, 0010000, DOUBLE, &quot;mov&quot;,
-	0107777, 0020000, DOUBLE, &quot;cmp&quot;,
-	0107777, 0030000, DOUBLE, &quot;bit&quot;,
-	0107777, 0040000, DOUBLE, &quot;bic&quot;,
-	0107777, 0050000, DOUBLE, &quot;bis&quot;,
-	0007777, 0060000, DOUBLE, &quot;add&quot;,
-	0007777, 0160000, DOUBLE, &quot;su&quot;,
-	0100077, 0005000, SINGLE, &quot;clr&quot;,
-	0100077, 0005100, SINGLE, &quot;com&quot;,
-	0100077, 0005200, SINGLE, &quot;inc&quot;,
-	0100077, 0005300, SINGLE, &quot;dec&quot;,
-	0100077, 0005400, SINGLE, &quot;neg&quot;,
-	0100077, 0005500, SINGLE, &quot;adc&quot;,
-	0100077, 0005600, SINGLE, &quot;sbc&quot;,
-	0100077, 0005700, SINGLE, &quot;tst&quot;,
-	0100077, 0006000, SINGLE, &quot;ror&quot;,
-	0100077, 0006100, SINGLE, &quot;rol&quot;,
-	0100077, 0006200, SINGLE, &quot;asr&quot;,
-	0100077, 0006300, SINGLE, &quot;asl&quot;,
-	0000077, 0000100, SINGLE, &quot;jmp&quot;,
-	0000077, 0000300, SINGLE, &quot;swab&quot;,
-	0000077, 0170100, SINGLW, &quot;ldfps&quot;,
-	0000077, 0170200, SINGLW, &quot;stfps&quot;,
-	0000077, 0170300, SINGLW, &quot;stst&quot;,
-	0000077, 0170400, SINGLW, &quot;clrf&quot;,
-	0000077, 0170500, SINGLW, &quot;tstf&quot;,
-	0000077, 0170600, SINGLW, &quot;absf&quot;,
-	0000077, 0170700, SINGLW, &quot;negf&quot;,
-	0000077, 0006700, SINGLW, &quot;sxt&quot;,
-	0000077, 0006600, SINGLW, &quot;mtpi&quot;,
-	0000077, 0106600, SINGLW, &quot;mtpd&quot;,
-	0000077, 0006500, SINGLW, &quot;mfpi&quot;,
-	0000077, 0106500, SINGLW, &quot;mfpd&quot;,
-	0000777, 0070000, MULDIV, &quot;mul&quot;,
-	0000777, 0071000, MULDIV, &quot;div&quot;,
-	0000777, 0072000, MULDIV, &quot;ash&quot;,
-	0000777, 0073000, MULDIV, &quot;ashc&quot;,
-	0000377, 0000400, BRANCH, &quot;br&quot;,
-	0000377, 0001000, BRANCH, &quot;bne&quot;,
-	0000377, 0001400, BRANCH, &quot;beq&quot;,
-	0000377, 0002000, BRANCH, &quot;bge&quot;,
-	0000377, 0002400, BRANCH, &quot;blt&quot;,
-	0000377, 0003000, BRANCH, &quot;bgt&quot;,
-	0000377, 0003400, BRANCH, &quot;ble&quot;,
-	0000377, 0100000, BRANCH, &quot;bpl&quot;,
-	0000377, 0100400, BRANCH, &quot;bmi&quot;,
-	0000377, 0101000, BRANCH, &quot;bhi&quot;,
-	0000377, 0101400, BRANCH, &quot;blos&quot;,
-	0000377, 0102000, BRANCH, &quot;bvc&quot;,
-	0000377, 0102400, BRANCH, &quot;bvs&quot;,
-	0000377, 0103000, BRANCH, &quot;bhis&quot;,
-	0000377, 0103400, BRANCH, &quot;blo&quot;,
-	0000000, 0000000, NOADDR, &quot;halt&quot;,
-	0000000, 0000001, NOADDR, &quot;wait&quot;,
-	0000000, 0000002, NOADDR, &quot;rti&quot;,
-	0000000, 0000004, NOADDR, &quot;iot&quot;,
-	0000000, 0000005, NOADDR, &quot;reset&quot;,
-	0000377, 0171000, FLTREV, &quot;mulf&quot;,
-	0000377, 0171400, FLTREV, &quot;modf&quot;,
-	0000377, 0172000, FLTREV, &quot;addf&quot;,
-	0000377, 0172400, FLTREV, &quot;movf&quot;,
-	0000377, 0173000, FLTREV, &quot;subf&quot;,
-	0000377, 0173400, FLTREV, &quot;cmpf&quot;,
-	0000377, 0174000, FLTNOR, &quot;movf&quot;,
-	0000377, 0174400, FLTREV, &quot;divf&quot;,
-	0000377, 0175000, FLTNOR, &quot;movei&quot;,
-	0000377, 0175400, FLTNOR, &quot;movfi&quot;,
-	0000377, 0176000, FLTNOR, &quot;movfo&quot;,
-	0000377, 0176400, FLTREV, &quot;movie&quot;,
-	0000377, 0177000, FLTREV, &quot;movif&quot;,
-	0000377, 0177400, FLTREV, &quot;movof&quot;,
-	0000000, 0170000, NOADDR, &quot;cfcc&quot;,
-	0000000, 0170001, NOADDR, &quot;setf&quot;,
-	0000000, 0170002, NOADDR, &quot;seti&quot;,
-	0000000, 0170011, NOADDR, &quot;setd&quot;,
-	0000000, 0170012, NOADDR, &quot;setl&quot;,
-	0000777, 0004000, SPECL1, &quot;jsr&quot;,
-	0000777, 0074000, SPECL1, &quot;xor&quot;,
-	0000007, 0000200, SPECL2, &quot;rts&quot;,
-	0000017, 0000240, SPECL3, &quot;cflg&quot;,
-	0000017, 0000260, SPECL3, &quot;sflg&quot;,
-	0000377, 0104000, SPECL4, &quot;emt&quot;,
-	0000377, 0104400, SPECL5, &quot;sys&quot;,
-	0000077, 0006400, SPECL7, &quot;mark&quot;,
-	0000777, 0077000, SPECL8, &quot;sob&quot;,
-	0000007, 0000230, SPECL9, &quot;spl&quot;,
-	0177777, 0000000, SPECL6, &quot;oct&quot;,
+	0107777, 0010000, DOUBLE, "mov",
+	0107777, 0020000, DOUBLE, "cmp",
+	0107777, 0030000, DOUBLE, "bit",
+	0107777, 0040000, DOUBLE, "bic",
+	0107777, 0050000, DOUBLE, "bis",
+	0007777, 0060000, DOUBLE, "add",
+	0007777, 0160000, DOUBLE, "su",
+	0100077, 0005000, SINGLE, "clr",
+	0100077, 0005100, SINGLE, "com",
+	0100077, 0005200, SINGLE, "inc",
+	0100077, 0005300, SINGLE, "dec",
+	0100077, 0005400, SINGLE, "neg",
+	0100077, 0005500, SINGLE, "adc",
+	0100077, 0005600, SINGLE, "sbc",
+	0100077, 0005700, SINGLE, "tst",
+	0100077, 0006000, SINGLE, "ror",
+	0100077, 0006100, SINGLE, "rol",
+	0100077, 0006200, SINGLE, "asr",
+	0100077, 0006300, SINGLE, "asl",
+	0000077, 0000100, SINGLE, "jmp",
+	0000077, 0000300, SINGLE, "swab",
+	0000077, 0170100, SINGLW, "ldfps",
+	0000077, 0170200, SINGLW, "stfps",
+	0000077, 0170300, SINGLW, "stst",
+	0000077, 0170400, SINGLW, "clrf",
+	0000077, 0170500, SINGLW, "tstf",
+	0000077, 0170600, SINGLW, "absf",
+	0000077, 0170700, SINGLW, "negf",
+	0000077, 0006700, SINGLW, "sxt",
+	0000077, 0006600, SINGLW, "mtpi",
+	0000077, 0106600, SINGLW, "mtpd",
+	0000077, 0006500, SINGLW, "mfpi",
+	0000077, 0106500, SINGLW, "mfpd",
+	0000777, 0070000, MULDIV, "mul",
+	0000777, 0071000, MULDIV, "div",
+	0000777, 0072000, MULDIV, "ash",
+	0000777, 0073000, MULDIV, "ashc",
+	0000377, 0000400, BRANCH, "br",
+	0000377, 0001000, BRANCH, "bne",
+	0000377, 0001400, BRANCH, "beq",
+	0000377, 0002000, BRANCH, "bge",
+	0000377, 0002400, BRANCH, "blt",
+	0000377, 0003000, BRANCH, "bgt",
+	0000377, 0003400, BRANCH, "ble",
+	0000377, 0100000, BRANCH, "bpl",
+	0000377, 0100400, BRANCH, "bmi",
+	0000377, 0101000, BRANCH, "bhi",
+	0000377, 0101400, BRANCH, "blos",
+	0000377, 0102000, BRANCH, "bvc",
+	0000377, 0102400, BRANCH, "bvs",
+	0000377, 0103000, BRANCH, "bhis",
+	0000377, 0103400, BRANCH, "blo",
+	0000000, 0000000, NOADDR, "halt",
+	0000000, 0000001, NOADDR, "wait",
+	0000000, 0000002, NOADDR, "rti",
+	0000000, 0000004, NOADDR, "iot",
+	0000000, 0000005, NOADDR, "reset",
+	0000377, 0171000, FLTREV, "mulf",
+	0000377, 0171400, FLTREV, "modf",
+	0000377, 0172000, FLTREV, "addf",
+	0000377, 0172400, FLTREV, "movf",
+	0000377, 0173000, FLTREV, "subf",
+	0000377, 0173400, FLTREV, "cmpf",
+	0000377, 0174000, FLTNOR, "movf",
+	0000377, 0174400, FLTREV, "divf",
+	0000377, 0175000, FLTNOR, "movei",
+	0000377, 0175400, FLTNOR, "movfi",
+	0000377, 0176000, FLTNOR, "movfo",
+	0000377, 0176400, FLTREV, "movie",
+	0000377, 0177000, FLTREV, "movif",
+	0000377, 0177400, FLTREV, "movof",
+	0000000, 0170000, NOADDR, "cfcc",
+	0000000, 0170001, NOADDR, "setf",
+	0000000, 0170002, NOADDR, "seti",
+	0000000, 0170011, NOADDR, "setd",
+	0000000, 0170012, NOADDR, "setl",
+	0000777, 0004000, SPECL1, "jsr",
+	0000777, 0074000, SPECL1, "xor",
+	0000007, 0000200, SPECL2, "rts",
+	0000017, 0000240, SPECL3, "cflg",
+	0000017, 0000260, SPECL3, "sflg",
+	0000377, 0104000, SPECL4, "emt",
+	0000377, 0104400, SPECL5, "sys",
+	0000077, 0006400, SPECL7, "mark",
+	0000777, 0077000, SPECL8, "sob",
+	0000007, 0000230, SPECL9, "spl",
+	0177777, 0000000, SPECL6, "oct",
 };
 
 struct systab {
 	int	argc;
 	char	*sname;
 } systab[] {
-	1, &quot;indir&quot;,
-	0, &quot;exit&quot;,
-	0, &quot;fork&quot;,
-	2, &quot;read&quot;,
-	2, &quot;write&quot;,
-	2, &quot;open&quot;,
-	0, &quot;close&quot;,
-	0, &quot;wait&quot;,
-	2, &quot;creat&quot;,
-	2, &quot;link&quot;,
-	1, &quot;unlink&quot;,
-	2, &quot;exec&quot;,
-	1, &quot;chdir&quot;,
-	0, &quot;time&quot;,
-	3, &quot;mknod&quot;,
-	2, &quot;chmod&quot;,
-	2, &quot;chown&quot;,
-	1, &quot;break&quot;,
-	2, &quot;stat&quot;,
-	2, &quot;seek&quot;,
-	0, &quot;getpid&quot;,
-	3, &quot;mount&quot;,
-	1, &quot;umount&quot;,
-	0, &quot;setuid&quot;,
-	0, &quot;getuid&quot;,
-	0, &quot;stime&quot;,
-	3, &quot;ptrace&quot;,
-	0, &quot;27&quot;,
-	1, &quot;fstat&quot;,
-	0, &quot;29&quot;,
-	1, &quot;smdate&quot;,
-	1, &quot;stty&quot;,
-	1, &quot;gtty&quot;,
-	0, &quot;33&quot;,
-	0, &quot;nice&quot;,
-	0, &quot;sleep&quot;,
-	0, &quot;sync&quot;,
-	1, &quot;kill&quot;,
-	0, &quot;switch&quot;,
-	0, &quot;39&quot;,
-	0, &quot;40&quot;,
-	0, &quot;dup&quot;,
-	0, &quot;pipe&quot;,
-	1, &quot;times&quot;,
-	4, &quot;profil&quot;,
-	0, &quot;45&quot;,
-	0, &quot;setgid&quot;,
-	0, &quot;getgid&quot;,
-	2, &quot;signal&quot;,
-	0, &quot;49&quot;,
-	0, &quot;50&quot;,
-	0, &quot;51&quot;,
-	0, &quot;52&quot;,
-	0, &quot;53&quot;,
-	0, &quot;54&quot;,
-	0, &quot;55&quot;,
-	0, &quot;56&quot;,
-	0, &quot;57&quot;,
-	0, &quot;58&quot;,
-	0, &quot;59&quot;,
-	0, &quot;60&quot;,
-	0, &quot;61&quot;,
-	0, &quot;62&quot;,
-	0, &quot;63&quot;,
+	1, "indir",
+	0, "exit",
+	0, "fork",
+	2, "read",
+	2, "write",
+	2, "open",
+	0, "close",
+	0, "wait",
+	2, "creat",
+	2, "link",
+	1, "unlink",
+	2, "exec",
+	1, "chdir",
+	0, "time",
+	3, "mknod",
+	2, "chmod",
+	2, "chown",
+	1, "break",
+	2, "stat",
+	2, "seek",
+	0, "getpid",
+	3, "mount",
+	1, "umount",
+	0, "setuid",
+	0, "getuid",
+	0, "stime",
+	3, "ptrace",
+	0, "27",
+	1, "fstat",
+	0, "29",
+	1, "smdate",
+	1, "stty",
+	1, "gtty",
+	0, "33",
+	0, "nice",
+	0, "sleep",
+	0, "sync",
+	1, "kill",
+	0, "switch",
+	0, "39",
+	0, "40",
+	0, "dup",
+	0, "pipe",
+	1, "times",
+	4, "profil",
+	0, "45",
+	0, "setgid",
+	0, "getgid",
+	2, "signal",
+	0, "49",
+	0, "50",
+	0, "51",
+	0, "52",
+	0, "53",
+	0, "54",
+	0, "55",
+	0, "56",
+	0, "57",
+	0, "58",
+	0, "59",
+	0, "60",
+	0, "61",
+	0, "62",
+	0, "63",
 };
 
-char	*regname[] { &quot;r0&quot;, &quot;r1&quot;, &quot;r2&quot;, &quot;r3&quot;, &quot;r4&quot;, &quot;r5&quot;, &quot;sp&quot;, &quot;pc&quot;};
+char	*regname[] { "r0", "r1", "r2", "r3", "r4", "r5", "sp", "pc"};
 
 printins(f)
 {
@@ -216,49 +216,49 @@ printins(f)
 	dotinc = 2;
 	ins = cget(dot, ISP);
 	if (vallook(dot)==0)
-		printf(&quot;%.8s:&quot;, ssymbol);
-	printf(&quot;\t&quot;);
+		printf("%.8s:", ssymbol);
+	printf("\t");
 	for (p=optab;; p++)
-		if ((ins &amp; ~p-&gt;mask) == p-&gt;val)
+		if ((ins & ~p->mask) == p->val)
 			break;
-	printf(&quot;%s&quot;, p-&gt;iname);
-	switch (p-&gt;itype) {
+	printf("%s", p->iname);
+	switch (p->itype) {
 
 	/* rts */
 	case SPECL2:
-		ins =&amp; 07;
+		ins =& 07;
 
 	case SINGLE:
-		if (ins &lt; 0)
-			printf(&quot;b&quot;);
+		if (ins < 0)
+			printf("b");
 
 	case SINGLW:
-		printf(&quot;\t&quot;);
+		printf("\t");
 		paddr(ins);
 		return;
 
 	case FLTREV:
-		ins =&amp; 0377;
+		ins =& 0377;
 
 	case MULDIV:
-		ins = ((ins&gt;&gt;6)&amp;07) | ((ins&lt;&lt;6)&amp;07700);
+		ins = ((ins>>6)&07) | ((ins<<6)&07700);
 		goto doub;
 
 	case FLTNOR:
-		ins =&amp; 0377;
+		ins =& 0377;
 
 	/* jsr, xor */
 	case SPECL1:
-		ins =&amp; 0777;
+		ins =& 0777;
 		goto doub;
 
 	case DOUBLE:
-		if (ins&lt;0)
-			printf(&quot;b&quot;);
+		if (ins<0)
+			printf("b");
 	doub:
-		printf(&quot;\t&quot;);
-		paddr(ins&gt;&gt;6);
-		printf(&quot;,&quot;);
+		printf("\t");
+		paddr(ins>>6);
+		printf(",");
 		paddr(ins);
 		return;
 
@@ -267,57 +267,57 @@ printins(f)
 
 	/* sob */
 	case SPECL8:
-		printf(&quot;\t&quot;);
-		paddr((ins&gt;&gt;6)&amp;07);
-		printf(&quot;,&quot;);
-		ins = - (ins&amp;077);
+		printf("\t");
+		paddr((ins>>6)&07);
+		printf(",");
+		ins = - (ins&077);
 		goto bran;
 
 	case BRANCH:
-		printf(&quot;\t&quot;);
+		printf("\t");
 	bran:
-		ins =&amp; 0377;
-		if (ins&amp;0200)
+		ins =& 0377;
+		if (ins&0200)
 			ins =| 0177400;
-		ins = dot + (ins&lt;&lt;1) + 2;
+		ins = dot + (ins<<1) + 2;
 		psymoff(ins, 010000);
 		return;
 
 	/* emt */
 	case SPECL4:
-		ins =&amp; 0377;
+		ins =& 0377;
 	/* mark */
 	case SPECL7:
-		ins =&amp; 077;
+		ins =& 077;
 	/* spl */
 	case SPECL9:
-		ins =&amp; 07;
-		printf(&quot;\t%d&quot;, ins);
+		ins =& 07;
+		printf("\t%d", ins);
 		return;
 
 	/* sys */
 	case SPECL5:
-		printf(&quot;\t%s&quot;, systab[ins =&amp; 077].sname);
-		if (ins==0 &amp;&amp; f==0) {	/* indir */
+		printf("\t%s", systab[ins =& 077].sname);
+		if (ins==0 && f==0) {	/* indir */
 			w = dot;
 			dot = cget(dot+2, ISP);
-			printf(&quot; {&quot;);
+			printf(" {");
 			printins(1);
-			printf(&quot;}&quot;);
+			printf("}");
 			dotinc = 4;
 			dot = w;
 			return;
 		}
 		w = systab[ins].argc;
 		while (w--) {
-			printf(&quot;; &quot;);
+			printf("; ");
 			psymoff(cget(dot+dotinc, ISP), 010000);
 			dotinc =+ 2;
 		}
 		return;
 
 	default:
-		printf(&quot;\t%.1o&quot;, ins);
+		printf("\t%.1o", ins);
 	}
 }
 
@@ -326,15 +326,15 @@ paddr(aa)
 	register a, r;
 
 	a = aa;
-	r = a&amp;07;
-	a =&amp; 070;
-	if (r==7 &amp;&amp; a&amp;020) {
-		if (a&amp;010)
-			printf(&quot;*&quot;);
-		if (a&amp;040)
+	r = a&07;
+	a =& 070;
+	if (r==7 && a&020) {
+		if (a&010)
+			printf("*");
+		if (a&040)
 			psymoff(cget(dot+dotinc, ISP)+dot+dotinc+2, 010000);
 		else {
-			printf(&quot;$&quot;);
+			printf("$");
 			psymoff(cget(dot+dotinc, ISP), 010000);
 		}
 		dotinc =+ 2;
@@ -344,41 +344,41 @@ paddr(aa)
 	switch (a) {
 	/* r */
 	case 000:
-		printf(&quot;%s&quot;, r);
+		printf("%s", r);
 		return;
 
 	/* (r) */
 	case 010:
-		printf(&quot;(%s)&quot;, r);
+		printf("(%s)", r);
 		return;
 
 	/* *(r)+ */
 	case 030:
-		printf(&quot;*&quot;);
+		printf("*");
 
 	/* (r)+ */
 	case 020:
-		printf(&quot;(%s)+&quot;, r);
+		printf("(%s)+", r);
 		return;
 
 	/* *-(r) */
 	case 050:
-		printf(&quot;*&quot;);
+		printf("*");
 
 	/* -(r) */
 	case 040:
-		printf(&quot;-(%s)&quot;, r);
+		printf("-(%s)", r);
 		return;
 
 	/* *x(r) */
 	case 070:
-		printf(&quot;*&quot;);
+		printf("*");
 
 	/* x(r) */
 	case 060:
 		psymoff(cget(dot+dotinc, ISP), 010000);
 		dotinc =+ 2;
-		printf(&quot;(%s)&quot;, r);
+		printf("(%s)", r);
 		return;
 	}
 }

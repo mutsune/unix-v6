@@ -1,10 +1,10 @@
 #
-#include &quot;../param.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../proc.h&quot;
-#include &quot;../reg.h&quot;
-#include &quot;../seg.h&quot;
+#include "../param.h"
+#include "../systm.h"
+#include "../user.h"
+#include "../proc.h"
+#include "../reg.h"
+#include "../seg.h"
 
 #define	EBIT	1		/* user error bit in PS: C-bit */
 #define	UMODE	0170000		/* user-mode bits in PS word */
@@ -21,7 +21,7 @@ struct sysent	{
 } sysent[64];
 
 /*
- * Offsets of the user&#39;s registers relative to
+ * Offsets of the user's registers relative to
  * the saved r0. See reg.h
  */
 char	regloc[9]
@@ -34,8 +34,8 @@ char	regloc[9]
  * The arguments are the words saved on the system stack
  * by the hardware and software during the trap processing.
  * Their order is dictated by the hardware and the details
- * of C&#39;s calling sequence. They are peculiar in that
- * this call is not &#39;by value&#39; and changed user registers
+ * of C's calling sequence. They are peculiar in that
+ * this call is not 'by value' and changed user registers
  * get copied back on return.
  * dev is the kind of trap that occurred.
  */
@@ -45,9 +45,9 @@ trap(dev, sp, r1, nps, r0, pc, ps)
 	register struct sysent *callp;
 
 	savfp();
-	if ((ps&amp;UMODE) == UMODE)
+	if ((ps&UMODE) == UMODE)
 		dev =| USER;
-	u.u_ar0 = &amp;r0;
+	u.u_ar0 = &r0;
 	switch(dev) {
 
 	/*
@@ -62,10 +62,10 @@ trap(dev, sp, r1, nps, r0, pc, ps)
 	 *		address_of_saved_ps - 2;
 	 */
 	default:
-		printf(&quot;ka6 = %o\n&quot;, *ka6);
-		printf(&quot;aps = %o\n&quot;, &amp;ps);
-		printf(&quot;trap type %o\n&quot;, dev);
-		panic(&quot;trap&quot;);
+		printf("ka6 = %o\n", *ka6);
+		printf("aps = %o\n", &ps);
+		printf("trap type %o\n", dev);
+		panic("trap");
 
 	case 0+USER: /* bus error */
 		i = SIGBUS;
@@ -80,7 +80,7 @@ trap(dev, sp, r1, nps, r0, pc, ps)
 	 * will trap on CPUs without 11/45 FPU.
 	 */
 	case 1+USER: /* illegal instruction */
-		if(fuiword(pc-2) == SETD &amp;&amp; u.u_signal[SIGINS] == 0)
+		if(fuiword(pc-2) == SETD && u.u_signal[SIGINS] == 0)
 			goto out;
 		i = SIGINS;
 		break;
@@ -99,28 +99,28 @@ trap(dev, sp, r1, nps, r0, pc, ps)
 
 	case 6+USER: /* sys call */
 		u.u_error = 0;
-		ps =&amp; ~EBIT;
-		callp = &amp;sysent[fuiword(pc-2)&amp;077];
+		ps =& ~EBIT;
+		callp = &sysent[fuiword(pc-2)&077];
 		if (callp == sysent) { /* indirect */
 			a = fuiword(pc);
 			pc =+ 2;
 			i = fuword(a);
-			if ((i &amp; ~077) != SYS)
+			if ((i & ~077) != SYS)
 				i = 077;	/* illegal */
-			callp = &amp;sysent[i&amp;077];
-			for(i=0; i&lt;callp-&gt;count; i++)
+			callp = &sysent[i&077];
+			for(i=0; i<callp->count; i++)
 				u.u_arg[i] = fuword(a =+ 2);
 		} else {
-			for(i=0; i&lt;callp-&gt;count; i++) {
+			for(i=0; i<callp->count; i++) {
 				u.u_arg[i] = fuiword(pc);
 				pc =+ 2;
 			}
 		}
 		u.u_dirp = u.u_arg[0];
-		trap1(callp-&gt;call);
+		trap1(callp->call);
 		if(u.u_intflg)
 			u.u_error = EINTR;
-		if(u.u_error &lt; 100) {
+		if(u.u_error < 100) {
 			if(u.u_error) {
 				ps =| EBIT;
 				r0 = u.u_error;
@@ -178,10 +178,10 @@ out:
  * not in-line, because if a signal occurs
  * during processing, an (abnormal) return is simulated from
  * the last caller to savu(qsav); if this took place
- * inside of trap, it wouldn&#39;t have a chance to clean up.
+ * inside of trap, it wouldn't have a chance to clean up.
  *
  * If this occurs, the return takes place without
- * clearing u_intflg; if it&#39;s still set, trap
+ * clearing u_intflg; if it's still set, trap
  * marks an error which means that a system
  * call (like read on a typewriter) got interrupted
  * by a signal.

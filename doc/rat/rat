@@ -25,14 +25,14 @@ provides a set of decent control structures:
   \fBbreak\fR and \fBnext\fR for controlling loop exits
 .sp
 .fi
-and some ``syntactic sugar&#39;&#39;:
+and some ``syntactic sugar'':
 .sp
 .nf
   free form input (e.g., multiple statements/line)
   unobtrusive comment convention
-  translation of &gt;, &gt;=, etc., into .GT., .GE., etc.
-  ``define&#39;&#39; statement for symbolic parameters
-  ``include&#39;&#39; statement for including source files
+  translation of >, >=, etc., into .GT., .GE., etc.
+  ``define'' statement for symbolic parameters
+  ``include'' statement for including source files
 .sp
 .fi
 .PP
@@ -41,7 +41,7 @@ not only
 makes programming in Fortran more enjoyable,
 but also allows structured programming, in the sense of
 coding without
-GOTO&#39;s.
+GOTO's.
 RATFOR
 programs tend to be markedly easier
 to write, read, and make correct than their equivalents
@@ -81,7 +81,7 @@ stat	: \fBif\fP( condition ) stat
 In the grammar above,
 condition
 can be any legal Fortran condition like 
-&quot;`A .EQ. B&#39;,&quot;
+"`A .EQ. B',"
 i.e., anything that could appear in a legal Fortran logical 
 IF
 statement.
@@ -99,7 +99,7 @@ so it is
 possible to do a
 while
 zero times,
-which can&#39;t be done with a Fortran
+which can't be done with a Fortran
 DO.
 .PP
 The
@@ -191,7 +191,7 @@ assumed to be a Fortran label,
 and placed in columns 1-5.
 PP
 A
-`#&#39;
+`#'
 character in a line marks the beginning
 of a comment;
 the comment is terminated by the end of a line.
@@ -202,12 +202,12 @@ nH...
 by
 RATFOR,
 but is otherwise unaltered.
-Characters like `&gt;&#39;, `&gt;=&#39;, and `&amp;&#39;
+Characters like `>', `>=', and `&'
 are translated into their longer Fortran equivalents
-`.GT.&#39;, 
-`.GE&#39;,
+`.GT.', 
+`.GE',
 and
-`.AND&#39;,
+`.AND',
 except within quotes.
 .PP
 Any string of alphanumeric characters can be defined as a name;
@@ -217,4 +217,4 @@ it is replaced by the rest of the definition line
 (comments are stripped off).
 .PP
 An entire source file may be included by saying
-``include filename&#39;&#39; at the appropriate place.
+``include filename'' at the appropriate place.

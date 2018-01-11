@@ -9,10 +9,10 @@
  *	minor device 2 is EOF/RATHOLE
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../seg.h&quot;
+#include "../param.h"
+#include "../user.h"
+#include "../conf.h"
+#include "../seg.h"
 
 mmread(dev)
 {
@@ -23,19 +23,19 @@ mmread(dev)
 		return;
 	do {
 		bn = lshift(u.u_offset, -6);
-		on = u.u_offset[1] &amp; 077;
-		a = UISA-&gt;r[0];
-		d = UISD-&gt;r[0];
+		on = u.u_offset[1] & 077;
+		a = UISA->r[0];
+		d = UISD->r[0];
 		spl7();
-		UISA-&gt;r[0] = bn;
-		UISD-&gt;r[0] = 077406;
+		UISA->r[0] = bn;
+		UISD->r[0] = 077406;
 		if(dev.d_minor == 1)
-			UISA-&gt;r[0] = (ka6-6)-&gt;r[(bn&gt;&gt;7)&amp;07] + (bn &amp; 0177);
+			UISA->r[0] = (ka6-6)->r[(bn>>7)&07] + (bn & 0177);
 		c = fuibyte(on);
-		UISA-&gt;r[0] = a;
-		UISD-&gt;r[0] = d;
+		UISA->r[0] = a;
+		UISD->r[0] = d;
 		spl0();
-	} while(u.u_error==0 &amp;&amp; passc(c)&gt;=0);
+	} while(u.u_error==0 && passc(c)>=0);
 }
 
 mmwrite(dev)
@@ -52,19 +52,19 @@ mmwrite(dev)
 	}
 	for(;;) {
 		bn = lshift(u.u_offset, -6);
-		on = u.u_offset[1] &amp; 077;
-		if ((c=cpass())&lt;0 || u.u_error!=0)
+		on = u.u_offset[1] & 077;
+		if ((c=cpass())<0 || u.u_error!=0)
 			break;
-		a = UISA-&gt;r[0];
-		d = UISD-&gt;r[0];
+		a = UISA->r[0];
+		d = UISD->r[0];
 		spl7();
-		UISA-&gt;r[0] = bn;
-		UISD-&gt;r[0] = 077406;
+		UISA->r[0] = bn;
+		UISD->r[0] = 077406;
 		if(dev.d_minor == 1)
-			UISA-&gt;r[0] = (ka6-6)-&gt;r[(bn&gt;&gt;7)&amp;07] + (bn &amp; 0177);
+			UISA->r[0] = (ka6-6)->r[(bn>>7)&07] + (bn & 0177);
 		suibyte(on, c);
-		UISA-&gt;r[0] = a;
-		UISD-&gt;r[0] = d;
+		UISA->r[0] = a;
+		UISD->r[0] = d;
 		spl0();
 	}
 }

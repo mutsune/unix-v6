@@ -9,7 +9,7 @@
 # define ACCEPTCODE 8191
 
 # define errfileno 1      /* file number for erros and reduction message */
-# define _tbitset 6  /* 16*_tbitset - 1 &gt;= _nterms */
+# define _tbitset 6  /* 16*_tbitset - 1 >= _nterms */
 
 extern int tbitset;  /* number of wds of lookahead vector */
 extern int nolook;  /* flag to turn off lookahed computations */

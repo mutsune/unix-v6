@@ -5,36 +5,36 @@
  *
  */
 
-#include &quot;c0h.c&quot;
+#include "c0h.c"
 
 /*
  * Reduce the degree-of-reference by one.
- * e.g. turn &quot;ptr-to-int&quot; into &quot;int&quot;.
+ * e.g. turn "ptr-to-int" into "int".
  */
 decref(at)
 {
 	register t;
 
 	t = at;
-	if ((t &amp; ~TYPE) == 0) {
-		error(&quot;Illegal indirection&quot;);
+	if ((t & ~TYPE) == 0) {
+		error("Illegal indirection");
 		return(t);
 	}
-	return((t&gt;&gt;TYLEN) &amp; ~TYPE | t&amp;TYPE);
+	return((t>>TYLEN) & ~TYPE | t&TYPE);
 }
 
 /*
  * Increase the degree of reference by
- * one; e.g. turn &quot;int&quot; to &quot;ptr-to-int&quot;.
+ * one; e.g. turn "int" to "ptr-to-int".
  */
 incref(t)
 {
-	return(((t&amp;~TYPE)&lt;&lt;TYLEN) | (t&amp;TYPE) | PTR);
+	return(((t&~TYPE)<<TYLEN) | (t&TYPE) | PTR);
 }
 
 /*
  * Make a tree that causes a branch to lbl
- * if the tree&#39;s value is non-zero together with the cond.
+ * if the tree's value is non-zero together with the cond.
  */
 cbranch(tree, lbl, cond)
 struct tnode *tree;
@@ -50,7 +50,7 @@ struct tnode *tree;
 {
 
 	treeout(tree);
-	outcode(&quot;BN&quot;, EXPR, line);
+	outcode("BN", EXPR, line);
 }
 
 treeout(atree)
@@ -60,41 +60,41 @@ struct tnode *atree;
 
 	if ((tree = atree) == 0)
 		return;
-	switch(tree-&gt;op) {
+	switch(tree->op) {
 
 	case 0:
-		outcode(&quot;B&quot;, NULL);
+		outcode("B", NULL);
 		return;
 
 	case NAME:
-		outcode(&quot;BNN&quot;, NAME, tree-&gt;class, tree-&gt;type);
-		if (tree-&gt;class==EXTERN)
-			outcode(&quot;S&quot;, tree-&gt;nname);
+		outcode("BNN", NAME, tree->class, tree->type);
+		if (tree->class==EXTERN)
+			outcode("S", tree->nname);
 		else
-			outcode(&quot;N&quot;, tree-&gt;nloc);
+			outcode("N", tree->nloc);
 		return;
 
 	case CON:
 	case FCON:
 	case SFCON:
-		outcode(&quot;BNN&quot;, tree-&gt;op, tree-&gt;type, tree-&gt;value);
+		outcode("BNN", tree->op, tree->type, tree->value);
 		return;
 
 	case FSEL:
-		treeout(tree-&gt;tr1);
-		outcode(&quot;BNN&quot;, tree-&gt;op, tree-&gt;type, tree-&gt;tr2);
+		treeout(tree->tr1);
+		outcode("BNN", tree->op, tree->type, tree->tr2);
 		return;
 
 	case CBRANCH:
-		treeout(tree-&gt;btree);
-		outcode(&quot;BNN&quot;, tree-&gt;op, tree-&gt;lbl, tree-&gt;cond);
+		treeout(tree->btree);
+		outcode("BNN", tree->op, tree->lbl, tree->cond);
 		return;
 
 	default:
-		treeout(tree-&gt;tr1);
-		if (opdope[tree-&gt;op]&amp;BINARY)
-			treeout(tree-&gt;tr2);
-		outcode(&quot;BN&quot;, tree-&gt;op, tree-&gt;type);
+		treeout(tree->tr1);
+		if (opdope[tree->op]&BINARY)
+			treeout(tree->tr2);
+		outcode("BN", tree->op, tree->type);
 		return;
 	}
 }
@@ -103,14 +103,14 @@ struct tnode *atree;
  * Generate a branch
  */
 branch(lab) {
-	outcode(&quot;BN&quot;, BRANCH, lab);
+	outcode("BN", BRANCH, lab);
 }
 
 /*
  * Generate a label
  */
 label(l) {
-	outcode(&quot;BN&quot;, LABEL, l);
+	outcode("BN", LABEL, l);
 }
 
 /*
@@ -125,11 +125,11 @@ struct tname *ap;
 	register struct tname *p;
 
 	p = ap;
-	if (p==0 || ((t=p-&gt;type)&amp;~TYPE) == 0)		/* not a reference */
+	if (p==0 || ((t=p->type)&~TYPE) == 0)		/* not a reference */
 		return(1);
-	p-&gt;type = decref(t);
+	p->type = decref(t);
 	l = length(p);
-	p-&gt;type = t;
+	p->type = t;
 	return(l);
 }
 
@@ -144,17 +144,17 @@ struct tnode *acs;
 	register struct tnode *cs;
 
 	cs = acs;
-	t = cs-&gt;type;
+	t = cs->type;
 	n = 1;
-	while ((t&amp;XTYPE) == ARRAY) {
+	while ((t&XTYPE) == ARRAY) {
 		t = decref(t);
-		n = dimtab[cs-&gt;ssp&amp;0377];
+		n = dimtab[cs->ssp&0377];
 	}
-	if ((t&amp;~TYPE)==FUNC)
+	if ((t&~TYPE)==FUNC)
 		return(0);
-	if (t&gt;=PTR)
+	if (t>=PTR)
 		return(2*n);
-	switch(t&amp;TYPE) {
+	switch(t&TYPE) {
 
 	case INT:
 		return(2*n);
@@ -170,13 +170,13 @@ struct tnode *acs;
 		return(8*n);
 
 	case STRUCT:
-		return(n * dimtab[cs-&gt;lenp&amp;0377]);
+		return(n * dimtab[cs->lenp&0377]);
 
 	case RSTRUCT:
-		error(&quot;Bad structure&quot;);
+		error("Bad structure");
 		return(0);
 	}
-	error(&quot;Compiler error (length)&quot;);
+	error("Compiler error (length)");
 }
 
 /*
@@ -185,28 +185,28 @@ struct tnode *acs;
 rlength(cs)
 struct tnode *cs;
 {
-	return((length(cs)+ALIGN) &amp; ~ALIGN);
+	return((length(cs)+ALIGN) & ~ALIGN);
 }
 
 /*
- * After an &quot;if (...) goto&quot;, look to see if the transfer
+ * After an "if (...) goto", look to see if the transfer
  * is to a simple label.
  */
 simplegoto()
 {
 	register struct hshtab *csp;
 
-	if ((peeksym=symbol())==NAME &amp;&amp; nextchar()==&#39;;&#39;) {
+	if ((peeksym=symbol())==NAME && nextchar()==';') {
 		csp = csym;
-		if (csp-&gt;hclass==0 &amp;&amp; csp-&gt;htype==0) {
-			csp-&gt;htype = ARRAY;
-			if (csp-&gt;hoffset==0)
-				csp-&gt;hoffset = isn++;
+		if (csp->hclass==0 && csp->htype==0) {
+			csp->htype = ARRAY;
+			if (csp->hoffset==0)
+				csp->hoffset = isn++;
 		}
-		if ((csp-&gt;hclass==0||csp-&gt;hclass==STATIC)
-		 &amp;&amp;  csp-&gt;htype==ARRAY) {
+		if ((csp->hclass==0||csp->hclass==STATIC)
+		 &&  csp->htype==ARRAY) {
 			peeksym = -1;
-			return(csp-&gt;hoffset);
+			return(csp->hoffset);
 		}
 	}
 	return(0);
@@ -217,7 +217,7 @@ simplegoto()
  */
 nextchar()
 {
-	while (spnextchar()==&#39; &#39;)
+	while (spnextchar()==' ')
 		peekc = 0;
 	return(peekc);
 }
@@ -232,16 +232,16 @@ spnextchar()
 
 	if ((c = peekc)==0)
 		c = getchar();
-	if (c==&#39;\t&#39;)
-		c = &#39; &#39;;
-	else if (c==&#39;\n&#39;) {
-		c = &#39; &#39;;
+	if (c=='\t')
+		c = ' ';
+	else if (c=='\n') {
+		c = ' ';
 		if (inhdr==0)
 			line++;
 		inhdr = 0;
-	} else if (c==&#39;\001&#39;) {	/* SOH, insert marker */
+	} else if (c=='\001') {	/* SOH, insert marker */
 		inhdr++;
-		c = &#39; &#39;;
+		c = ' ';
 	}
 	peekc = c;
 	return(c);
@@ -253,7 +253,7 @@ spnextchar()
 chconbrk(l)
 {
 	if (l==0)
-		error(&quot;Break/continue error&quot;);
+		error("Break/continue error");
 }
 
 /*
@@ -271,18 +271,18 @@ dogoto()
 
 /*
  * The return statement, which has to convert
- * the returned object to the function&#39;s type.
+ * the returned object to the function's type.
  */
 doret()
 {
 	register struct tnode *t;
 
-	if (nextchar() != &#39;;&#39;) {
+	if (nextchar() != ';') {
 		t = tree();
-		*cp++ = &amp;funcblk;
+		*cp++ = &funcblk;
 		*cp++ = t;
 		build(ASSIGN);
-		cp[-1] = cp[-1]-&gt;tr2;
+		cp[-1] = cp[-1]->tr2;
 		build(RFORCE);
 		rcexpr(*--cp);
 	}
@@ -295,7 +295,7 @@ doret()
  */
 putchar(c)
 {
-	write(1, &amp;c, 1);
+	write(1, &c, 1);
 }
 
 outcode(s, a)
@@ -309,35 +309,35 @@ char *s;
 	bufp = obuf;
 	if (strflg)
 		bufp = sbuf;
-	ap = &amp;a;
+	ap = &a;
 	for (;;) switch(*s++) {
-	case &#39;B&#39;:
-		putw(*ap++ | (0376&lt;&lt;8), bufp);
+	case 'B':
+		putw(*ap++ | (0376<<8), bufp);
 		continue;
 
-	case &#39;N&#39;:
+	case 'N':
 		putw(*ap++, bufp);
 		continue;
 
-	case &#39;S&#39;:
+	case 'S':
 		np = *ap++;
 		n = ncps;
-		while (n-- &amp;&amp; *np) {
+		while (n-- && *np) {
 			putc(*np++, bufp);
 		}
 		putc(0, bufp);
 		continue;
 
-	case &#39;1&#39;:
+	case '1':
 		putw(1, bufp);
 		continue;
 
-	case &#39;0&#39;:
+	case '0':
 		putw(0, bufp);
 		continue;
 
-	case &#39;\0&#39;:
+	case '\0':
 		return;
 	}
-	error(&quot;Botch in outcode&quot;);
+	error("Botch in outcode");
 }

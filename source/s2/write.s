@@ -42,7 +42,7 @@
 	beq	2b
 	tstb	-1(r4)
 	bne	1b
-	cmpb	$&#39; ,-1(r3)
+	cmpb	$' ,-1(r3)
 	bne	1b
 2:
 	movb	8.+ubuf,ttyno
@@ -74,7 +74,7 @@
 	mov	$ubuf,r0
 	mov	$8.,r1
 1:
-	cmpb	$&#39; ,(r0)+
+	cmpb	$' ,(r0)+
 	beq	1f
 	dec	r1
 	bne	1b
@@ -101,7 +101,7 @@
 	beq	9f
 	tst	nlflg
 	beq	1f
-	cmp	ch,$&#39;!
+	cmp	ch,$'!
 	bne	1f
 	sys	fork
 		br mshproc
@@ -111,7 +111,7 @@
 	br	7b
 1:
 	clr	nlflg
-	cmp	ch,$&#39;\n
+	cmp	ch,$'\n
 	bne	1f
 	inc	nlflg
 1:
@@ -139,7 +139,7 @@
 	sys	exit
 
 unknown:
-	mov	$&quot;??,ubuf
+	mov	$"??,ubuf
 	br	6b
 
 mshproc:
@@ -156,42 +156,42 @@ mshp:
 	minust
 	0
 msh:
-	&lt;/bin/sh\0&gt;
+	</bin/sh\0>
 minust:
-	&lt;-t\0&gt;
+	<-t\0>
 argm:
-	&lt;Arg count\n&gt;
+	<Arg count\n>
 eargm:
 film:
-	&lt;Cannot open utmp\n&gt;
+	<Cannot open utmp\n>
 efilm:
 .data
-	&lt; &gt;		/ is ltty -1
+	< >		/ is ltty -1
 ltty:
 	.=.+1
 .text
 excl:
-	&lt;!\n&gt;
+	<!\n>
 qnl:
-	&lt;...\n&gt;
+	<...\n>
 .data
 ttyx:
-	&lt;/dev/ttyx\0&gt;
+	</dev/ttyx\0>
 ttyno	= .-2
 .text
 utmp:
-	&lt;/etc/utmp\0&gt;
+	</etc/utmp\0>
 endmsg:
-	&lt;EOT\n&gt;
+	<EOT\n>
 eendmsg:
 errmsg:
-	&lt; not logged in.\n&gt;
+	< not logged in.\n>
 eerrmsg:
 mesg:
-	&lt;\nMessage from &gt;
+	<\nMessage from >
 emesg:
 dnymes:
-	&lt;Permission denied.\n&gt;
+	<Permission denied.\n>
 ednymes:
 	.even
 	.bss

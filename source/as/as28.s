@@ -3,8 +3,8 @@
 
 / as8 -- PDP-11 assembler pass 2
 
-qnl:	&lt;?\n&gt;
-a.out:	&lt;a.out\0&gt;
+qnl:	<?\n>
+a.out:	<a.out\0>
 
 .even
 a.outp:	a.out

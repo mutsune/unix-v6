@@ -13,7 +13,7 @@ char *sbrk(incr)
 .ft R
 .sh DESCRIPTION
 .it Break
-sets the system&#39;s idea of the lowest location not used by the program
+sets the system's idea of the lowest location not used by the program
 (called the break)
 to
 .it addr
@@ -34,7 +34,7 @@ In the alternate entry
 .it sbrk,
 .it incr
 more bytes are added to the
-program&#39;s data space and a pointer to the
+program's data space and a pointer to the
 start of the new area is returned.
 .s3
 When a program begins execution via
@@ -45,7 +45,7 @@ and data storage areas.
 Ordinarily, therefore, only programs with growing
 data areas need to use
 .it break.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 exec (II), alloc (III), end (III)
 .sh DIAGNOSTICS
 The c-bit is set if the program requests more

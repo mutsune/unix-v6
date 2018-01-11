@@ -54,22 +54,22 @@ define c(x){
 scale = 20
 define l(x){
 	auto a, b, c, d, e, f, g, u, s, t
-	if(x &lt;=0) return(1-10^scale)
+	if(x <=0) return(1-10^scale)
 	t = scale
 	scale = 0
 	f = 1
 	s = x
-	while(s &gt; 0){
+	while(s > 0){
 		s = s/10
 		f = f + 1
 	}
 	scale = t + f
 	f=1
-	while(x &gt; 2){
+	while(x > 2){
 		x = sqrt(x)
 		f=f*2
 	}
-	while(x &lt; .5){
+	while(x < .5){
 		x = sqrt(x)
 		f=f*2
 	}
@@ -97,12 +97,12 @@ define a(x){
 	if(x==0) return(0)
 	t = scale
 	f=1
-	while(x &gt; .5){
+	while(x > .5){
 		scale = scale + 1
 		x= -(1-sqrt(1.+x*x))/x
 		f=f*2
 	}
-	while(x &lt; -.5){
+	while(x < -.5){
 		scale = scale + 1
 		x = -(1-sqrt(1.+x*x))/x
 		f=f*2
@@ -128,13 +128,13 @@ scale = 20
 define j(n,x){
 auto a,b,c,d,e,g,i,s
 s= -x*x/4
-if(n&lt;0){
+if(n<0){
 	n= -n
 	x= -x
 	}
 a=1
 c=1
-for(i=1;i&lt;=n;i++){
+for(i=1;i<=n;i++){
 	a=a*x
 	c = c*2*i
 	}

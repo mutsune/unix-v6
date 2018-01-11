@@ -11,23 +11,23 @@ char **argv;
 {
 	int register r,w,p;
 	struct { int x1[2], type, x2[15]; } buf;
-	fstat(1,&amp;buf);
-	t = (buf.type&amp;060000)==020000;
-	while(argc--&gt;1) {
+	fstat(1,&buf);
+	t = (buf.type&060000)==020000;
+	while(argc-->1) {
 		open[n++] = creat(argv[1],0666);
-		if(stat(argv[1],&amp;buf)&gt;=0)
-			if((buf.type&amp;060000)==020000)
+		if(stat(argv[1],&buf)>=0)
+			if((buf.type&060000)==020000)
 				t++;
 		argv++;
 	}
 	r = w = 0;
 	for(;;) {
-		for(p=0;p&lt;512;) {
-			if(r&gt;=w) {
-				if(t&gt;0&amp;&amp;p&gt;0) break;
+		for(p=0;p<512;) {
+			if(r>=w) {
+				if(t>0&&p>0) break;
 				w = read(0,in,512);
 				r = 0;
-				if(w&lt;=0) {
+				if(w<=0) {
 					stash(p);
 					return;
 				}
@@ -44,7 +44,7 @@ stash(p)
 	int i;
 	int d;
 	d = t ? 10 : p;
-	for(i=0; i&lt;p; i=+d)
-		for(k=0;k&lt;n;k++)
-			write(open[k], out+i, d&lt;p-i?d:p-i);
+	for(i=0; i<p; i=+d)
+		for(k=0;k<n;k++)
+			write(open[k], out+i, d<p-i?d:p-i);
 }

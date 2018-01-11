@@ -1,4 +1,4 @@
-.h0 &quot;\na.\n+b Basic Program Development Package&quot;
+.h0 "\na.\n+b Basic Program Development Package"
 .nr c 0 1
 .sp
 .in0
@@ -67,7 +67,7 @@ Buffered character-by-character I/O.
 .op
 Random number generator.
 .op
-Floating point interpreter for 11/40&#39;s and non-floating point
+Floating point interpreter for 11/40's and non-floating point
 machines.
 .sh (LIBP)
 An elaborated I/O library.
@@ -134,7 +134,7 @@ execution of a program.
 Uses floating point.
 .op
 Subroutine call frequency and average times for C programs.
-.h0 &quot;\na.\n+b The Programming Language ``C&#39;&#39;&quot;
+.h0 "\na.\n+b The Programming Language ``C''"
 .nr c 0 1
 .nr b 0 1
 .sh CC
@@ -200,9 +200,9 @@ machine instructions (disassembled).
 Stack trace and fault identification.
 .op
 Breakpoint tracing.
-.h0 &quot;\n+a Other Languages&quot;
+.h0 "\n+a Other Languages"
 .nr b 0 1
-.h0 &quot;\na.\n+b FORTRAN&quot;
+.h0 "\na.\n+b FORTRAN"
 .sh FC
 Compile and/or link-edit FORTRAN IV programs.
 Object code is \*(lqthreaded\*(rq.
@@ -240,8 +240,8 @@ IMPLICIT.
 .in-2
 .fi
 .sh RC
-``Ratfor&#39;&#39;, a preprocessor that adds rational
-control structure \o&#39;a\(ga&#39; la C to FORTRAN.
+``Ratfor'', a preprocessor that adds rational
+control structure \o'a\(ga' la C to FORTRAN.
 .op
 Else, for, while,
 repeat...until
@@ -256,7 +256,7 @@ Compound statements.
 Can produce genuine FORTRAN to carry away.
 .sh Manual
 Printed manual for Ratfor.
-.h0 &quot;\na.\n+b Other Algorithmic Languages&quot;
+.h0 "\na.\n+b Other Algorithmic Languages"
 .nr c 0 1
 .sh BAS
 An interpreter, similar in style to BASIC, that allows
@@ -323,7 +323,7 @@ Immediate evaluation of expressions and evaluation of
 functions upon call.
 .op
 Arbitrary precision elementary functions:
-exp, sin, cos, atan, J\v&#39;.3&#39;\s8n\s10\v&#39;-.3&#39;.
+exp, sin, cos, atan, J\v'.3'\s8n\s10\v'-.3'.
 .op
 Go-to-less programming.
 .op
@@ -345,7 +345,7 @@ no built-in functions.
 Usable as a filter.
 .sh Manual
 Reprint of basic article.
-.h0 &quot;\na.\n+b Macroprocessing&quot;
+.h0 "\na.\n+b Macroprocessing"
 .nr c 0 1
 .sh M6
 A general purpose macroprocessor.
@@ -357,7 +357,7 @@ Integer arithmetic.
 Usable as a filter.
 .sh Manual
 Printed manual for M6.
-.h0 &quot;\na.\n+b Compiler-compilers&quot;
+.h0 "\na.\n+b Compiler-compilers"
 .nr c 0 1
 .sh TMG
 A classical top-down compiler-compiler language.
@@ -391,7 +391,7 @@ Optimizes space
 taken by driving tables.
 .sh Manual
 Printed manual for the YACC compiler-writing system.
-.h0 &quot;\n+a Word Processing&quot;
+.h0 "\n+a Word Processing"
 .nr b 0 1
 .sh ROFF
 A typesetting program for terminals.

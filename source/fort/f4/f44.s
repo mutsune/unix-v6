@@ -21,13 +21,13 @@ formts:
 1:
 	jsr	r5,getln
 		br 1f
-	cmp	r0,$&#39;s
+	cmp	r0,$'s
 	beq	2f
-	cmp	r0,$&#39;f
+	cmp	r0,$'f
 	bne	1b
 	mov	efno,r0
 	jsr	r5,code
-		&lt;.%d:	&lt;\0&gt;; .even
+		<.%d:	<\0>; .even
 		r0
 	mov	$line+6,r1
 	jsr	r5,strout
@@ -58,14 +58,14 @@ formts:
 	br	1b
 1:
 	jsr	r5,code
-		&lt;	.even\n&gt;; .even
+		<	.even\n>; .even
 	jsr	r5,setln
 1:
 	jsr	r5,getln
 		br 1f
-	cmp	r0,$&#39;r
+	cmp	r0,$'r
 	beq	2f
-	cmp	r0,$&#39;i
+	cmp	r0,$'i
 	bne	1b
 	mov	efno,r0
 	neg	r0
@@ -91,13 +91,13 @@ formts:
 strout:
 	movb	(r1)+,r0
 	beq	3f
-	cmp	r0,$&#39;&gt;
+	cmp	r0,$'>
 	beq	4f
-	cmp	r0,$&#39;\\
+	cmp	r0,$'\\
 	bne	5f
 4:
 	mov	r0,-(sp)
-	mov	$&#39;\\,r0
+	mov	$'\\,r0
 	jsr	r5,putc; obuf
 	mov	(sp)+,r0
 5:
@@ -105,6 +105,6 @@ strout:
 	br	strout
 3:
 	jsr	r5,code
-		&lt;\\0\&gt;\n\0&gt;; .even
+		<\\0\>\n\0>; .even
 	rts	r5
 

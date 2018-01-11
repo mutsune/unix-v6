@@ -9,7 +9,7 @@ skipcont:
 	jsr	pc,alph2
 	beq	skipcont
 1:
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	1f
 	jsr	pc,getchar
 	br	1b
@@ -57,7 +57,7 @@ rbreak:
 	mov	$line,r2
 1:
 	movb	(r2)+,r0
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	2f
 	jsr	pc,fill
 	tst	nc
@@ -123,7 +123,7 @@ donum:
 
 
 newline:
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	pc,putchar
 	inc	nl
 	rts	pc
@@ -147,11 +147,11 @@ number1:
 	clr	-(sp)
 1:
 	jsr	pc,getchar
-	cmp	r0,$&#39;+
+	cmp	r0,$'+
 	beq	2f
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	beq	2f
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	3f
 	inc	(sp)
@@ -162,7 +162,7 @@ number1:
 	mov	r0,2(sp)
 	br	1b
 3:
-	add	$&#39;0,r0
+	add	$'0,r0
 	mov	r0,ch
 	mov	(sp)+,r0
 	bne	1f
@@ -174,12 +174,12 @@ number1:
 	mov	(r0),r0
 1:
 	mov	(sp)+,r1
-	cmp	r1,$&#39;-
+	cmp	r1,$'-
 	bne	1f
 	sub	r3,r0
 	br	2f
 1:
-	cmp	r1,$&#39;+
+	cmp	r1,$'+
 	bne	1f
 	add	r3,r0
 	br	2f
@@ -260,20 +260,20 @@ getword:
 	clr	-(sp)
 1:
 	jsr	pc,gettchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	3f
 	cmp	r0,ohc
 	bne	2f
 	inc	hypedf
 	br	1b
 2:
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	2f
 	jsr	pc,storeword
 	br	1b
 2:
 	mov	r0,-(sp)
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,storeword
 	tst	spaceflg
 	beq	2f
@@ -292,11 +292,11 @@ getword:
 	jsr	pc,gettchar
 	mov	$200,(sp)
 1:
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	beq	1f
-	cmp	$&#39;\n,r0
+	cmp	$'\n,r0
 	bne	2b
-	cmpb	-1(r2),$&#39;.
+	cmpb	-1(r2),$'.
 	bne	1f
 	inc	spaceflg
 1:
@@ -378,13 +378,13 @@ copyb:
 	mov	$1,-(sp)
 1:
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	2f
 	mov	$1,(sp)
 	clr	nlflg
 	br	4f
 2:
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	bne	9f
 	cmp	(sp),$1
 	bgt	3f
@@ -448,13 +448,13 @@ rbf:
 alph:
 	movb	(r0),r2
 alph2:
-	cmp	r2,$&#39;A
+	cmp	r2,$'A
 	blo	1f
-	cmp	r2,$&#39;Z
+	cmp	r2,$'Z
 	blos	2f
-	cmp	r2,$&#39;a
+	cmp	r2,$'a
 	blo	1f
-	cmp	r2,$&#39;z
+	cmp	r2,$'z
 	bhi	1f
 2:
 	sez

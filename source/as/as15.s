@@ -49,10 +49,10 @@ escp:
 	rts	pc
 
 esctab:
-	.byte &#39;/, &#39;/
-	.byte &#39;\&lt;, 035
-	.byte &#39;&gt;, 036
-	.byte &#39;%, 037
+	.byte '/, '/
+	.byte '\<, 035
+	.byte '>, 036
+	.byte '%, 037
 	.byte 0, 0
 
 fixor:
@@ -62,9 +62,9 @@ retread:
 
 rdname:
 	movb	r0,ch
-	cmp	r1,$&#39;0
+	cmp	r1,$'0
 	blo	1f
-	cmp	r1,$&#39;9
+	cmp	r1,$'9
 	blos	rdnum
 1:
 	jmp	rname
@@ -96,19 +96,19 @@ dquote:
 skip:
 	jsr	pc,rch
 	mov	r0,r4
-	cmp	r0,$&#39;\e
+	cmp	r0,$'\e
 	beq	1f
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	skip
 1:
 	rts	pc
 
 garb:
-	jsr	r5,error; &#39;g
+	jsr	r5,error; 'g
 	br	8b
 
 string:
-	mov	$&#39;&lt;,r4
+	mov	$'<,r4
 	jsr	pc,putw
 	clr	numval
 1:
@@ -123,18 +123,18 @@ string:
 1:
 	mov	$-1,r4
 	jsr	pc,putw
-	mov	$&#39;&lt;,r4
+	mov	$'<,r4
 	tst	(sp)+
 	rts	pc
 
 rsch:
 	jsr	pc,rch
-	cmp	r0,$&#39;\e
+	cmp	r0,$'\e
 	beq	4f
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	4f
 	clr	r1
-	cmp	r0,$&#39;\\
+	cmp	r0,$'\\
 	bne	3f
 	jsr	pc,rch
 	mov	$schar,r2
@@ -149,22 +149,22 @@ rsch:
 	clr	r1
 	rts	pc
 3:
-	cmp	r0,$&#39;&gt;
+	cmp	r0,$'>
 	bne	1f
 	inc	r1
 1:
 	rts	pc
 4:
-	jsr	r5,error; &#39;&lt;
+	jsr	r5,error; '<
 	jmp	aexit
 
 schar:
-	.byte &#39;n, 012
-	.byte &#39;t, 011
-	.byte &#39;e, 004
-	.byte &#39;0, 000
-	.byte &#39;r, 015
-	.byte &#39;a, 006
-	.byte &#39;p, 033
+	.byte 'n, 012
+	.byte 't, 011
+	.byte 'e, 004
+	.byte '0, 000
+	.byte 'r, 015
+	.byte 'a, 006
+	.byte 'p, 033
 	.byte 0,  -1
 

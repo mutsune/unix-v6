@@ -15,17 +15,17 @@ text:
 	jsr	pc,getchar
 2:
 	mov	r0,ch
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	2f
 	jsr	pc,rbreak
 1:
 	jsr	pc,getchar
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	2b
 	inc	un
 	br	1b
 2:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	2f
 	jsr	pc,rbreak
 	clr	ch
@@ -52,7 +52,7 @@ nofill:
 	jsr	pc,rbreak
 1:
 	jsr	pc,gettchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	jsr	pc,width
 	add	r1,ne
@@ -75,7 +75,7 @@ nofill:
 	clr	fac
 	clr	fmq
 	mov	$1000,nwd
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,storeline
 	jsr	pc,rbreak
 	dec	ul
@@ -110,7 +110,7 @@ fill:
 1:
 	inc	r0
 	dec	nc
-	cmpb	(r2)+,$&#39; 
+	cmpb	(r2)+,$' 
 	beq	1b
 	dec	r2
 	bit	$1,totout
@@ -137,7 +137,7 @@ movword:
 	bne	2f
 1:
 	movb	(r4)+,r0
-	cmp	r0,$&#39; 
+	cmp	r0,$' 
 	bne	1f
 	dec	wch
 	jsr	pc,width
@@ -166,7 +166,7 @@ movword:
 	mov	wch,-(sp)
 1:
 	movb	(r4)+,r0
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	bne	2f
 	movb	(r4),r2
 	jsr	pc,alph2
@@ -224,9 +224,9 @@ movword:
 	tst	nel
 	ble	2f
 6:
-	cmpb	-1(r3),$&#39;-
+	cmpb	-1(r3),$'-
 	beq	3f
-	movb	$&#39;-,(r3)
+	movb	$'-,(r3)
 	dec	nel
 	inc	ne
 	br	3f
@@ -295,7 +295,7 @@ width:
 	mov	$-1,r1
 	rts	pc
 1:
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bgt	2f
 	mov	$1,r1
 	rts	pc
@@ -308,12 +308,12 @@ headin:
 	mov	nextb,r1
 	mov	r1,*(r5)+
 	jsr	pc,gettchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	2f
 	mov	r0,r2
 1:
 	jsr	pc,gettchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	2f
 	cmp	r0,r2
 	bne	3f
@@ -385,7 +385,7 @@ headseg:
 	mov	(sp)+,r1
 	tstb	r0
 	beq	1f
-	cmp	r0,$&#39;%
+	cmp	r0,$'%
 	beq	2f
 	jsr	pc,*(r5)
 	add	r1,(sp)
@@ -418,7 +418,7 @@ nlines:
 1:
 	dec	(sp)
 	blt	1f
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,*(r5)
 	br	1b
 1:
@@ -450,7 +450,7 @@ decml1:
 	mov	r1,2(sp)
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,*(r5)
 	add	(sp)+,r1
 	rts	pc

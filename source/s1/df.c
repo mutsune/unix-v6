@@ -1,8 +1,8 @@
 char	*dargv[]
 {
 	0,
-	&quot;/dev/rk2&quot;,
-	&quot;/dev/rp0&quot;,
+	"/dev/rk2",
+	"/dev/rp0",
 	0
 };
 struct
@@ -27,14 +27,14 @@ char **argv;
 {
 	int i;
 
-	if(argc &lt;= 1) {
+	if(argc <= 1) {
 		for(argc = 1; dargv[argc]; argc++);
 		argv = dargv;
 	}
 
-	for(i=1; i&lt;argc; i++) {
-		if(argc &gt; 1)
-			printf(&quot;%s &quot;, argv[i]);
+	for(i=1; i<argc; i++) {
+		if(argc > 1)
+			printf("%s ", argv[i]);
 		dfree(argv[i]);
 	}
 }
@@ -45,16 +45,16 @@ char *file;
 	int i;
 
 	fi = open(file, 0);
-	if(fi &lt; 0) {
-		printf(&quot;cannot open %s\n&quot;, file);
+	if(fi < 0) {
+		printf("cannot open %s\n", file);
 		return;
 	}
 	sync();
-	bread(1, &amp;sblock);
+	bread(1, &sblock);
 	i = 0;
 	while(alloc())
 		i++;
-	printf(&quot;%l\n&quot;, i);
+	printf("%l\n", i);
 	close(fi);
 }
 
@@ -63,21 +63,21 @@ alloc()
 	int b, i, buf[256];
 
 	i = --sblock.s_nfree;
-	if(i&lt;0 || i&gt;=100) {
-		printf(&quot;bad free count\n&quot;);
+	if(i<0 || i>=100) {
+		printf("bad free count\n");
 		return(0);
 	}
 	b = sblock.s_free[i];
 	if(b == 0)
 		return(0);
-	if(b&lt;sblock.s_isize+2 || b&gt;=sblock.s_fsize) {
-		printf(&quot;bad free block (%l)\n&quot;, b);
+	if(b<sblock.s_isize+2 || b>=sblock.s_fsize) {
+		printf("bad free block (%l)\n", b);
 		return(0);
 	}
-	if(sblock.s_nfree &lt;= 0) {
+	if(sblock.s_nfree <= 0) {
 		bread(b, buf);
 		sblock.s_nfree = buf[0];
-		for(i=0; i&lt;100; i++)
+		for(i=0; i<100; i++)
 			sblock.s_free[i] = buf[i+1];
 	}
 	return(b);
@@ -90,8 +90,8 @@ bread(bno, buf)
 
 	seek(fi, bno, 3);
 	if((n=read(fi, buf, 512)) != 512) {
-		printf(&quot;read error %d\n&quot;, bno);
-		printf(&quot;count = %d; errno = %d\n&quot;, n, errno);
+		printf("read error %d\n", bno);
+		printf("count = %d; errno = %d\n", n, errno);
 		exit();
 	}
 }

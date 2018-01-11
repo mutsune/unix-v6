@@ -7,7 +7,7 @@
  */
 
 char *code[] {
-	&quot;-lp&quot;,	&quot;/lib/lpr&quot;,	/* line printer */
+	"-lp",	"/lib/lpr",	/* line printer */
 	0
 };
 
@@ -18,10 +18,10 @@ char **argv;
 
 	argv[argc] = 0;
 	for(i=0; code[i]; i=+2)
-	if(argc &gt; 1)
+	if(argc > 1)
 		for(j=0; code[i][j]==argv[1][j]; j++)
 			if(code[i][j] == 0)
-					execv(code[i+1], &amp;argv[1]);
+					execv(code[i+1], &argv[1]);
 	execv(code[i-1], argv);
-	write(2, &quot;can&#39;t start daemon\n&quot;, 19);
+	write(2, "can't start daemon\n", 19);
 }

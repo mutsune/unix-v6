@@ -19,13 +19,13 @@ The simplest of these formatters is
 which
 in fact is simple enough that if you type almost any text
 into a file and
-``roff&#39;&#39; 
+``roff'' 
 it,
 you will get plausibly formatted output.
 You can do better with a little knowledge,
-but basically it&#39;s 
+but basically it's 
 easy to learn and use.
-We&#39;ll get back to 
+We'll get back to 
 .C roff
 shortly.
 .PP
@@ -44,7 +44,7 @@ are designed to produce output on terminals,
 line-printers, and the like.
 The third formatter,
 .C troff
-(pronounced ``tee-roff&#39;&#39;),
+(pronounced ``tee-roff''),
 instead drives a Graphic Systems phototypesetter,
 which produces very high quality output on photographic paper.
 This 
@@ -59,7 +59,7 @@ and
 .C troff
 are relatively hard to learn to use effectively,
 several
-``packages&#39;&#39; of canned formatting requests are available
+``packages'' of canned formatting requests are available
 which let you do things
 like paragraphs, running titles, multi-column output,
 and so on, with little effort.
@@ -75,19 +75,19 @@ and
 .C troff ,
 for that matter)
 is that the text to be formatted
-contains within it ``formatting commands&#39;&#39;
+contains within it ``formatting commands''
 that indicate in detail how the formatted text is to look.
 For example, there might be commands that specify how long lines are,
 whether to use single or double spacing,
 and what running titles to use on each page.
-In general, you don&#39;t have to spell
+In general, you don't have to spell
 out all of the possible formatting details.
 Most of them have
-``default values&#39;&#39;,
+``default values'',
 which you will get if you say nothing at all.
 For example,
 unless you take special precautions,
-you&#39;ll get single-spaced output, 65-character lines,
+you'll get single-spaced output, 65-character lines,
 justified right margins, and 58 text lines per page
 when you 
 .C roff
@@ -104,7 +104,7 @@ broken into paragraphs, you have to tell
 .C roff
 where to add the extra blank lines.
 This is done with the
-``.sp&#39;&#39; command:
+``.sp'' command:
 .B1
 .ne 3
 this is the end of one paragraph.
@@ -119,24 +119,24 @@ and
 .C troff ),
 formatting commands consist of a period followed by two letters,
 and they must appear at the beginning of a line, all by themselves.
-The ``.sp&#39;&#39; command tells
+The ``.sp'' command tells
 .C roff
 to finish printing any of the previous
 line
 that might be still unprinted,
 then print a blank line before continuing.
 You can have more space if you wish;
-``.sp 2&#39;&#39; asks for 2 spaces, and so on.
+``.sp 2'' asks for 2 spaces, and so on.
 .PP
 If you simply want to
 ensure that subsequent text appears on a fresh output line,
-you can use the command ``.br&#39;&#39; (for ``break&#39;&#39;)
-instead of ``.sp&#39;&#39;.
+you can use the command ``.br'' (for ``break'')
+instead of ``.sp''.
 .PP
 Most of the other commonly-used
 .C roff
 commands are equally simple.
-For example you can center one or more lines with the ``.ce&#39;&#39; command.
+For example you can center one or more lines with the ``.ce'' command.
 .B1
 .ne 3
 ^ce
@@ -145,10 +145,10 @@ Title of Paper
 .B2
 causes the title to be centered,
 then followed by two blank lines.
-As with ``.sp&#39;&#39;, ``.ce&#39;&#39; can be followed by a number;
+As with ``.sp'', ``.ce'' can be followed by a number;
 in that case, that many input lines are centered.
 .PP
-``.ul&#39;&#39; underlines lines, and can also be followed by a number:
+``.ul'' underlines lines, and can also be followed by a number:
 .B1
 .ne 5
 ^ce 2
@@ -158,22 +158,22 @@ An Earth-shaking Paper
 John Q. Scientist
 .B2
 will center and underline the two text lines.
-Notice that the ``.sp&#39;&#39; between them
+Notice that the ``.sp'' between them
 is not part of the line count.
 .PP
 You can get multiple-line spacing instead of the default single-spacing
-with the ``.ls&#39;&#39; command:
+with the ``.ls'' command:
 .B1
 ^ls 2
 .B2
 causes double spacing.
 .PP
-If you&#39;re typing things like tables,
+If you're typing things like tables,
 you will not want the automatic filling-up and justification
 of output lines that is done by default.
 You can turn this off with the command
-``.nf&#39;&#39; (no-fill),
-and then back on again with ``.fi&#39;&#39; (fill).
+``.nf'' (no-fill),
+and then back on again with ``.fi'' (fill).
 Thus
 .B1
 .ne 7
@@ -186,8 +186,8 @@ no extra spaces, no moving of words.
 Now go back to filling up output lines.
 .B2
 .PP
-You can change the line-length with ``.ll&#39;&#39;,
-and the left margin (the indent) by ``.in&#39;&#39;.
+You can change the line-length with ``.ll'',
+and the left margin (the indent) by ``.in''.
 These are often used together to make offset blocks of text:
 .B1
 ^ll \-10
@@ -196,7 +196,7 @@ These are often used together to make offset blocks of text:
 .ll -5
 this text will be moved 10 spaces to the right
 and the lines will also be shortened 10 characters from the right.
-The ``+&#39;&#39; and ``\-&#39;&#39; mean to 
+The ``+'' and ``\-'' mean to 
 .ul
 change
 the previous value by that much.
@@ -206,13 +206,13 @@ Now revert:
 ^ll +10
 ^in \-10
 .B2
-Notice that ``.ll +10&#39;&#39; adds ten characters to the line length,
-while ``.ll 10&#39;&#39; makes the line ten characters
+Notice that ``.ll +10'' adds ten characters to the line length,
+while ``.ll 10'' makes the line ten characters
 .ul
 long.
 .PP
-The ``.ti&#39;&#39; command
-indents (in either direction) just like ``.in&#39;&#39;, except for only one line.
+The ``.ti'' command
+indents (in either direction) just like ``.in'', except for only one line.
 Thus to make a new paragraph with a 10-character indent,
 you would say
 .B1
@@ -226,25 +226,25 @@ You can put running titles on both top and bottom of each page,
 like this:
 .B1
 .ne 2
-^he &quot;left top&quot;center top&quot;right top&quot;
-^fo &quot;left bottom&quot;center bottom&quot;right bottom&quot;
+^he "left top"center top"right top"
+^fo "left bottom"center bottom"right bottom"
 .B2
 The header or footer is divided into three parts,
 which are marked off by any character you like.
 (We used a double quote.)
-If there&#39;s nothing between the markers, that part
+If there's nothing between the markers, that part
 of the title will be blank.
-If you use a percent sign anywhere in ``.he&#39;&#39; or ``.fo&#39;&#39;,
+If you use a percent sign anywhere in ``.he'' or ``.fo'',
 the current page number will be inserted.
 So to get centered page numbers with dashes around them,
 at the top,
 use
 .B1
-^he &quot;&quot;\- % \-&quot;&quot;
+^he ""\- % \-""
 .B2
 You can skip to the top of a new page at any time
-with the ``.bp&#39;&#39; command;
-if ``.bp&#39;&#39; is followed by a number,
+with the ``.bp'' command;
+if ``.bp'' is followed by a number,
 that will be the new page number.
 .PP
 The foregoing is probably enough about 
@@ -286,7 +286,7 @@ you might type, before each,
 But what happens when later you decide that it would have
 been better to have
 no space and an indent of only 5 characters?
-It&#39;s tedious indeed to go back and patch this up.
+It's tedious indeed to go back and patch this up.
 .PP
 Fortunately, all of the formatters let
 you delay decisions until the actual moment of running.
@@ -308,7 +308,7 @@ You can say, in all three formatters,
 This
 .ul
 defines
-``.PP&#39;&#39;
+``.PP''
 as a new
 .C roff
 (or
@@ -321,8 +321,8 @@ whose meaning is exactly
 ^sp
 ^ti +10
 .B2
-(The ``..&#39;&#39; marks the end of the definition.)
-Whenever ``.PP&#39;&#39; is encountered in the text,
+(The ``..'' marks the end of the definition.)
+Whenever ``.PP'' is encountered in the text,
 it is as if you had typed 
 the two lines of the definition
 in place of it.
@@ -331,12 +331,12 @@ The beauty of this scheme is that now, if you change your mind
 about what a paragraph should look like,
 you can change the formatted output
 merely by changing the definition of
-``.PP&#39;&#39;
+``.PP''
 and re-running the formatter.
 .PP
 As a rule of thumb, for all but the most trivial jobs,
 you should type a document in terms of a set of macros
-like ``.PP&#39;&#39;,
+like ``.PP'',
 and then define them appropriately.
 As long as you have entered the text in some systematic way,
 it can always be cleaned up and re-formatted
@@ -359,7 +359,7 @@ and
 macros may have arguments,
 so they can have different effects
 depending on how they are called
-(in exactly the same way that the ``.sp&#39;&#39; command
+(in exactly the same way that the ``.sp'' command
 has an argument, the number of spaces you want).
 .SH
 Miscellany
@@ -382,16 +382,16 @@ detect possible spelling mistakes in a document.
 .C grep
 looks for lines
 containing a particular text pattern 
-(rather like the editor&#39;s context search does,
+(rather like the editor's context search does,
 but on a whole series of files).
 For example,
 .B1
-grep  &quot;ing$&quot;  chap*
+grep  "ing$"  chap*
 .B2
 will find all lines ending
-in the letters ``ing&#39;&#39; in the series of files ``chap*&#39;&#39;.
+in the letters ``ing'' in the series of files ``chap*''.
 (It is almost always a good practice to put quotes around
-the pattern you&#39;re searching for,
+the pattern you're searching for,
 in case it contains characters that have a special meaning for the shell.)
 .PP
 .C wc
@@ -401,7 +401,7 @@ translates characters into other characters;
 for example it will convert upper to lower case and vice versa.
 This translates upper into lower:
 .B1
-tr  &quot;[A-Z]&quot;  &quot;[a-z]&quot;
+tr  "[A-Z]"  "[a-z]"
 .B2
 .PP
 .C diff
@@ -427,5 +427,5 @@ or are sufficiently simple that the description in
 the
 .ul 2
 .UC UNIX
-Programmer&#39;s Manual
+Programmer's Manual
 is adequate explanation.

@@ -22,7 +22,7 @@
 	beq	3f
 	tst	dbuf
 	beq	1b
-	cmp	dbuf+2,$&quot;df
+	cmp	dbuf+2,$"df
 	bne	1b
 	sys	fork
 		br  retry
@@ -71,7 +71,7 @@ loop:
 	tst	dbuf
 	beq	1b
 	mov	$dbuf+2,r0
-	cmp	(r0),$&quot;df		/ look for daemon file
+	cmp	(r0),$"df		/ look for daemon file
 	bne	1b
 
 / found prototype file
@@ -86,13 +86,13 @@ loop1:
 	jsr	r5,getc; proto
 	bes	eloop1
 	movb	r0,(r1)
-	cmp	r0,$&#39;\t
+	cmp	r0,$'\t
 	beq	2f
-	cmpb	(r1)+,$&#39;\n
+	cmpb	(r1)+,$'\n
 	bne	1b
 	br	1f
 2:
-	movb	$&#39; ,(r1)+
+	movb	$' ,(r1)+
 	cmp	r1,$buf+8.
 	beq	1b
 	cmp	r1,$buf+16.
@@ -103,7 +103,7 @@ loop1:
 	jsr	r5,switch; sptab
 
 / done with a prototype file
-/ look for U&#39;s in second pass
+/ look for U's in second pass
 eloop1:
 	mov	proto,r0
 	sys	seek; 0; 0
@@ -112,19 +112,19 @@ eloop1:
 	jsr	r5,getc; proto
 	bes	1f
 3:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1b
 2:
 	jsr	r5,getc; proto
 	bes	1f
-	cmp	r0,$&#39;U
+	cmp	r0,$'U
 	bne	3b
 	mov	$buf,r1
 3:
 	jsr	r5,getc; proto
 	bes	1f
 	movb	r0,(r1)+
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	3b
 	clrb	-(r1)
 	sys	unlink; buf
@@ -138,10 +138,10 @@ eloop1:
 / list of special characters
 / switchout
 sptab:
-	&#39;L; literal
-	&#39;B; binary
-	&#39;F; form
-	&#39;U; loop1		/ unlink on second pass
+	'L; literal
+	'B; binary
+	'F; form
+	'U; loop1		/ unlink on second pass
 	 0; 0
 
 
@@ -184,11 +184,11 @@ aclose:
 	rts	r5
 
 lpr:
-	&lt;/dev/lp\0&gt;
+	</dev/lp\0>
 lock:
-	&lt;/usr/lpd/lock\0&gt;
+	</usr/lpd/lock\0>
 lpd:
-	&lt;/usr/lpd\0&gt;
+	</usr/lpd\0>
 	.even
 .bss
 

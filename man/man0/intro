@@ -4,22 +4,22 @@
 .ps 10
 .vs 12p
 .de he
-.tl &#39;-&#39;&#39;&#39;
-&#39;sp .5i
-&#39;ft R
+.tl '-'''
+'sp .5i
+'ft R
 .CH
-&#39;ft
-&#39;ps
-&#39;sp .5i
+'ft
+'ps
+'sp .5i
 ..
 .de fo
-&#39;ft R
-&#39;ps 10
-&#39;sp .5i
+'ft R
+'ps 10
+'sp .5i
 .CF
-&#39;ft
-&#39;ps
-&#39;bp
+'ft
+'ps
+'bp
 ..
 .wh 0 he
 .wh -1i fo
@@ -32,7 +32,7 @@
 .ps 18
 .ft B
 .ce
-UNIX PROGRAMMER&#39;S MANUAL
+UNIX PROGRAMMER'S MANUAL
 .ps 12
 .vs 14p
 .sp 2
@@ -75,7 +75,7 @@ to the Sixth Edition
 .sp
 .de CF
 .ro
-.tl &#39;&#39;%&#39;&#39;
+.tl ''%''
 .ar
 ..
 .sp 2
@@ -113,7 +113,7 @@ INTRODUCTION TO THIS MANUAL
 This manual gives descriptions of the publicly available
 features of \s8UNIX\s10.
 It provides neither a general
-overview \- see ``The \s8UNIX\s10 Time-sharing System&#39;&#39;
+overview \- see ``The \s8UNIX\s10 Time-sharing System''
 (Comm. ACM \fB17\fR 7, July 1974, pp. 365-375)
 for that \-
 nor details of the implementation of the system, which
@@ -148,7 +148,7 @@ eight sections:
 .fi
 Commands are programs intended to be invoked directly by
 the user, in contradistinction to subroutines, which are
-intended to be called by the user&#39;s programs.
+intended to be called by the user's programs.
 Commands generally reside in directory
 .ft I
 /bin
@@ -184,7 +184,7 @@ and
 respectively.
 .pg
 The special files section IV discusses the characteristics of
-each system ``file&#39;&#39; which actually refers to an I/O device.
+each system ``file'' which actually refers to an I/O device.
 The names in this
 section refer to the DEC device names for the
 hardware,
@@ -194,7 +194,7 @@ the special files themselves.
 The file formats and conventions section V documents the structure of particular
 kinds of files; for example, the form of the output of the loader and
 assembler is given.  Excluded are files used by only one command,
-for example the assembler&#39;s intermediate files.
+for example the assembler's intermediate files.
 .pg
 User-maintained programs and subroutines (sections VI and VII) are not considered part
 of the \s8UNIX\s10 system, and the principal reason for
@@ -242,18 +242,18 @@ are typed just as they appear.
 .pg
 Square brackets ( [ ] ) around an argument
 indicate that the argument is optional.
-When an argument is given as ``name&#39;&#39;, it always
+When an argument is given as ``name'', it always
 refers to a file name.
 .pg
-Ellipses ``.\|.\|.&#39;&#39; are used to show that the previous argument-prototype
+Ellipses ``.\|.\|.'' are used to show that the previous argument-prototype
 may be repeated.
 .pg
 A final convention is used by the commands themselves.
-An argument beginning with a minus sign ``_&#39;&#39;
+An argument beginning with a minus sign ``_''
 is often taken to mean some sort of flag argument
 even if it appears in a position where a file name
 could appear.  Therefore, it is unwise to have files
-whose names begin with ``_&#39;&#39;.
+whose names begin with ``_''.
 .pg
 .in .5i
 The \fIdescription\fR section discusses in detail the subject at hand.

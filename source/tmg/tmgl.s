@@ -24,7 +24,7 @@ putcharcl
 1 parse
 last
 .3=.
-&lt;1 \0&gt;;.even
+<1 \0>;.even
 .2=.
 .tx;.3
 .tp;.byte 1,0;
@@ -34,7 +34,7 @@ fref
 1 trans;1 .2
 .4=.
 .tp;.byte 2,0;
-.txs;&#39;:
+.txs;':
 1 .tp;.byte 1,0;
 first:
 
@@ -48,9 +48,9 @@ line
 .2=.
 2
 .3=.
-1 .txs;&#39;;
+1 .txs;';
 .5=.
-&lt;??? \0&gt;;.even
+<??? \0>;.even
 .4=.
 .tn
 .tx;.5
@@ -67,7 +67,7 @@ any
 string
 .2
 scopy
-.pxs;&#39;;
+.pxs;';
 alt;..3
 trans;1 .3
 goto;..2
@@ -84,14 +84,14 @@ line:
 labels
 charcl
 alt;..7
-.pxs;&#39;;
+.pxs;';
 goto;..4
 ..7:statement
 salt;..5
 numbers
 salt;..6
 trule
-.pxs;&#39;;
+.pxs;';
 ..6:
 ..5:
 ..4:
@@ -103,7 +103,7 @@ trule
 numbers:
 
 number
-.pxs;&#39;;
+.pxs;';
 numbers
 alt;done
 1 trans;1 .1
@@ -119,16 +119,16 @@ alt;done
 1 trans;1 .1
 .1=.
 .tp;.byte 1,0;
-1 .txs;&#39;:
+1 .txs;':
 label:
 
 name
-.pxs;&#39;:
+.pxs;':
 1 trans;1 .1
 .2=.
-&lt;.pn:1 .pxs;12\0&gt;;.even
+<.pn:1 .pxs;12\0>;.even
 .3=.
-&lt;.tn:1 .txs;12\0&gt;;.even
+<.tn:1 .txs;12\0>;.even
 .1=.
 .tx;.2
 .tn
@@ -138,7 +138,7 @@ last:
 
 1 trans;1 .1
 .1=.
-&lt;/*\0&gt;;.even
+</*\0>;.even
 .2=.
 4
 comment:
@@ -147,10 +147,10 @@ comment:
 co1:
 ignore
 .2
-.pxs;&#39;*
+.pxs;'*
 ignore
 none
-.pxs;&#39;/
+.pxs;'/
 1 alt;co1
 .1=.
 0
@@ -169,7 +169,7 @@ gpar;1
 .5=.
 1 .tp;.byte 1,0;xbit
 .7=.
-&lt;1 succ\0&gt;;.even
+<1 succ\0>;.even
 .6=.
 .tp;.byte 1,0;nil
 .tn
@@ -188,7 +188,7 @@ proc
 alt;..11
 plst
 tlst
-.pxs;&#39;)
+.pxs;')
 trans;1 .2
 goto;..10
 ..11:trans;1 .3
@@ -201,7 +201,7 @@ alt;..15
 trans;1 .4
 salt;stt1
 goto;..12
-..15:.pxs;&#39;;
+..15:.pxs;';
 ifelem
 alt;..14
 trans;1 .5
@@ -211,7 +211,7 @@ goto;..13
 ..12:
 1 succ
 .1=.
-&lt;proc(\0&gt;;.even
+<proc(\0>;.even
 proc:
 
 smark
@@ -222,7 +222,7 @@ none
 1 octal
 npa
 .3=.
-&lt;params;\0&gt;;.even
+<params;\0>;.even
 .2=.
 .tx;.3
 .tp;.byte 1,0;
@@ -252,7 +252,7 @@ name
 1 octal
 i
 .5=.
-&lt;push;\0&gt;;.even
+<push;\0>;.even
 .4=.
 .tx;.5
 .tp;.byte 1,0;
@@ -261,7 +261,7 @@ i
 1 .tn
 tlst:
 
-.pxs;&#39;;
+.pxs;';
 alt;null
 .l;i
 .l;.1
@@ -291,7 +291,7 @@ trans;1 .2
 ..16:
 1 succ
 .2=.
-&lt;salt;\0&gt;;.even
+<salt;\0>;.even
 .1=.
 gpar;2
 .tp;.byte 3,0;nil
@@ -304,15 +304,15 @@ nil
 q1
 .tn
 .tp;.byte 2,0;
-1 .txs;&#39;:
+1 .txs;':
 .5=.
-&lt;alt;\0&gt;;.even
+<alt;\0>;.even
 .4=.
 .tn
 .tx;.5
 1 .tp;.byte 1,0;
 .6=.
-&lt;goto;\0&gt;;.even
+<goto;\0>;.even
 .3=.
 gpar;2
 .tp;.byte 4,0;.4
@@ -322,12 +322,12 @@ q1
 .tp;.byte 3,0;
 .tn
 .tp;.byte 1,0;
-.txs;&#39;:
+.txs;':
 .tp;.byte 2,0;q2
 q1
 .tn
 .tp;.byte 3,0;
-1 .txs;&#39;:
+1 .txs;':
 prule:
 
 .l;sndt
@@ -335,7 +335,7 @@ prule:
 .st
 .p
 disj
-.pxs;&#39;|
+.pxs;'|
 alt;..23
 .l;ndt
 .l;sndt
@@ -393,15 +393,15 @@ alt;..31
 trans;1 .1
 iseasy
 goto;..26
-..31:.pxs;&#39;(
+..31:.pxs;'(
 push
 .2
 sndt
 prule
 alt;..30
-.pxs;&#39;)
+.pxs;')
 goto;..27
-..30:.pxs;&#39;)
+..30:.pxs;')
 trans;1 .3
 noelem
 ..27:
@@ -418,13 +418,13 @@ gpar;1
 .tq;1
 1 .tp;.byte 1,0;
 .4=.
-&lt;alt;\0&gt;;.even
+<alt;\0>;.even
 .3=.
 1 .tx;.4
 .5=.
-&lt;\\\0&gt;;.even
+<\\\0>;.even
 .7=.
-&lt;salt;\0&gt;;.even
+<salt;\0>;.even
 .6=.
 1 .tx;.7
 .10=.
@@ -439,7 +439,7 @@ pprim:
 special
 salt;..32
 rname
-.pxs;&#39;:
+.pxs;':
 alt;..37
 fail
 goto;..33
@@ -449,20 +449,20 @@ salt;..34
 ..34:
 ignore
 none
-.pxs;&#39;(
+.pxs;'(
 alt;..36
 ignore
 blanks
 list
 parg
-.pxs;&#39;)
+.pxs;')
 trans;1 .1
 goto;..35
 ..36:trans;1 .2
 ..35:
 ..33:
 ..32:
-.pxs;&#39;/
+.pxs;'/
 alt;..41
 trans;1 .3
 goto;..40
@@ -480,7 +480,7 @@ goto;..42
 0
 pdot:
 
-.pxs;&#39;.
+.pxs;'.
 alt;done
 ignore
 none
@@ -504,7 +504,7 @@ dtt
 letter
 spdot:
 
-.pxs;&#39;.
+.pxs;'.
 ignore
 none
 not
@@ -522,11 +522,11 @@ specparg
 ..45:
 1 succ
 .2=.
-&lt;\\n\\0\0&gt;;.even
+<\\n\\0\0>;.even
 .1=.
 1 .tx;.2
 .4=.
-&lt;1 succ\0&gt;;.even
+<1 succ\0>;.even
 .3=.
 1 .tx;.4
 .5=.
@@ -537,7 +537,7 @@ specparg
 1 .tp;.byte 1,0;nil
 xbit
 .11=.
-&lt;1 succ\0&gt;;.even
+<1 succ\0>;.even
 .10=.
 .tp;.byte 1,0;nil
 nil
@@ -549,16 +549,16 @@ number
 salt;..46
 charcl
 salt;..47
-.pxs;&#39;&lt;
+.pxs;'<
 alt;..57
 longlit
 goto;..50
-..57:.pxs;&#39;*
+..57:.pxs;'*
 alt;..56
 trans;1 .1
 goto;..51
-..56:.pxs;&#39;(
-.pxs;&#39;)
+..56:.pxs;'(
+.pxs;')
 alt;..55
 trans;1 .3
 goto;..52
@@ -572,7 +572,7 @@ sndt
 .st
 .p
 prule
-.pxs;&#39;)
+.pxs;')
 oldtab
 dtt
 ifelem
@@ -628,31 +628,31 @@ ifeasy:
 .eq
 1 .t
 .2=.
-&lt;trans;1 \0&gt;;.even
+<trans;1 \0>;.even
 .1=.
 gpar;1
 .tq;1
 .tx;.2
 1 .tp;.byte 1,0;
 .4=.
-&lt;.px\0&gt;;.even
+<.px\0>;.even
 .3=.
 gpar;1
 .tq;1
 .tx;.4
 1 .tp;.byte 1,0;
 .6=.
-&lt;.pn\0&gt;;.even
+<.pn\0>;.even
 .5=.
 gpar;1
 .tq;1
 1 .tx;.6
 .10=.
-&lt;.t\0&gt;;.even
+<.t\0>;.even
 .7=.
 1 .tx;.10
 .12=.
-&lt;.p\0&gt;;.even
+<.p\0>;.even
 .11=.
 1 .tx;.12
 .13=.
@@ -663,7 +663,7 @@ gpar;1
 1 .tp;.byte 1,0;
 special:
 
-.pxs;&#39;=
+.pxs;'=
 alt;..70
 rname
 salt;..60
@@ -672,33 +672,33 @@ trule
 ..60:
 trans;1 .1
 goto;..61
-..70:.pxs;&#39;&lt;
+..70:.pxs;'<
 alt;..67
 literal
 trans;1 .3
 goto;..62
-..67:.pxs;&#39;*
+..67:.pxs;'*
 alt;..66
 trans;1 .5
 goto;..63
-..66:.pxs;&#39;[
+..66:.pxs;'[
 expr
-.pxs;&#39;?
+.pxs;'?
 alt;..65
 trans;1 .7
 goto;..64
 ..65:trans;1 .11
 ..64:
-.pxs;&#39;]
+.pxs;']
 trans;1 .13
 ..63:
 ..62:
 ..61:
 1 succ
 .2=.
-&lt;[-\0&gt;;.even
+<[-\0>;.even
 .3=.
-&lt;\\&lt;1]\0&gt;;.even
+<\\<1]\0>;.even
 .1=.
 .tx;.2
 .tp;.byte 1,0;
@@ -712,12 +712,12 @@ pat
 npa
 alt;done
 goto;..71
-..72:.pxs;&#39;$
+..72:.pxs;'$
 number
 ..71:
 1 trans;1 .1
 .2=.
-&lt;gpar;\0&gt;;.even
+<gpar;\0>;.even
 .1=.
 .tx;.2
 .tp;.byte 2,0;
@@ -729,12 +729,12 @@ oldtab
 ptt
 tbody
 salt;..73
-.pxs;&#39;(
+.pxs;'(
 number
 salt;..74
 tra
 ..74:
-.pxs;&#39;)
+.pxs;')
 tbody
 trans;1 .1
 ..73:
@@ -752,13 +752,13 @@ ident
 ptt
 npt
 .2=.
-&lt;1 generate\0&gt;;.even
+<1 generate\0>;.even
 .1=.
 1 .tx;.2
 tbody:
 
-.pxs;&#39;{
-.pxs;&#39;}
+.pxs;'{
+.pxs;'}
 alt;..76
 trans;1 .1
 goto;..75
@@ -775,7 +775,7 @@ xbit
 trb:
 
 telem
-.pxs;&#39;}
+.pxs;'}
 alt;..100
 trans;1 .1
 goto;..77
@@ -784,31 +784,31 @@ trans;1 .2
 ..77:
 1 succ
 .2=.
-&lt;.tx\0&gt;;.even
+<.tx\0>;.even
 .1=.
 .tx;.2
 1 .tp;.byte 1,0;
 .4=.
-&lt;.tn\0&gt;;.even
+<.tn\0>;.even
 .3=.
 1 .tx;.4
 .6=.
-&lt;.tq;\0&gt;;.even
+<.tq;\0>;.even
 .5=.
 .tx;.6
 1 .tp;.byte 1,0;
 telem:
 
-.pxs;&#39;&lt;
+.pxs;'<
 alt;..110
 literal
 trans;1 .1
 goto;..101
-..110:.pxs;&#39;*
+..110:.pxs;'*
 alt;..107
 trans;1 .3
 goto;..102
-..107:.pxs;&#39;$
+..107:.pxs;'$
 alt;..106
 number
 trans;1 .5
@@ -836,7 +836,7 @@ ndt
 tdot
 1 trans;1 tpt
 .2=.
-&lt;.tq;\0&gt;;.even
+<.tq;\0>;.even
 .1=.
 .tx;.2
 1 .tp;.byte 1,0;
@@ -847,24 +847,24 @@ ptt
 npt
 1 trans;1 .1
 .1=.
-1 .txs;&#39;0
+1 .txs;'0
 .2=.
 .tp;.byte 2,0;
-.txs;&#39;;
+.txs;';
 1 .tp;.byte 1,0;
 tdot:
 
-.pxs;&#39;.
+.pxs;'.
 alt;..112
 number
 goto;..111
 ..112:trans;1 .1
 ..111:
-.pxs;&#39;(
+.pxs;'(
 alt;..114
 list
 targ
-.pxs;&#39;)
+.pxs;')
 goto;..113
 ..114:null
 ..113:
@@ -878,14 +878,14 @@ tbody
 ..115:
 1 succ
 .1=.
-&lt;.tp;.byte \0&gt;;.even
+<.tp;.byte \0>;.even
 tpt:
 .tx;.1
 .tp;.byte 2,0;
-.txs;&#39;,
+.txs;',
 1 .tp;.byte 1,0;
 .1=.
-.txs;&#39;;
+.txs;';
 1 .tp;.byte 1,0;
 literal:
 
@@ -897,9 +897,9 @@ trans;1 .1
 ..116:
 1 succ
 .1=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .3=.
-&lt;s;&#39;\0&gt;;.even
+<s;'\0>;.even
 .2=.
 .tx;.3
 1 .tp;.byte 1,0;
@@ -914,22 +914,22 @@ litch
 scopy
 1 trans;1 .2
 .1=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .3=.
-&lt;\\\0&gt;;.even
+<\\\0>;.even
 .4=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .2=.
 .tx;.3
 1 .tx;.4
 .5=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .7=.
-&lt;\\0\0&gt;;.even
+<\\0\0>;.even
 .10=.
-&lt;\&gt;;.even\0&gt;;.even
+<\>;.even\0>;.even
 .6=.
-.txs;&#39;&lt;
+.txs;'<
 .tp;.byte 2,0;
 .tp;.byte 1,0;
 .tx;.7
@@ -948,9 +948,9 @@ litb
 .px;.5
 1 trans;1 .6
 .1=.
-&lt;\\\0&gt;;.even
+<\\\0>;.even
 .3=.
-&lt;\\\\\0&gt;;.even
+<\\\\\0>;.even
 .2=.
 .tp;.byte 2,0;
 .tx;.3
@@ -1014,9 +1014,9 @@ goto;..123
 ..122:
 1 succ
 .2=.
-&lt;.t;alt;\0&gt;;.even
+<.t;alt;\0>;.even
 .3=.
-&lt;salt;\0&gt;;.even
+<salt;\0>;.even
 .1=.
 .tx;.2
 .tp;.byte 2,0;
@@ -1027,16 +1027,16 @@ goto;..123
 .tp;.byte 1,0;
 .tn
 .tp;.byte 2,0;
-.txs;&#39;:
+.txs;':
 .tp;.byte 3,0;
 .tn
 .tp;.byte 1,0;
-1 .txs;&#39;:
+1 .txs;':
 rva:
 
-.pxs;&#39;?
+.pxs;'?
 rv
-.pxs;&#39;:
+.pxs;':
 rv
 fref
 fref
@@ -1054,7 +1054,7 @@ fref
 .tn
 1 .tp;.byte 2,0;
 .5=.
-&lt;.l;\0&gt;;.even
+<.l;\0>;.even
 .4=.
 .tx;.5
 1 .tp;.byte 1,0;
@@ -1071,10 +1071,10 @@ alt;..134
 lv
 trans;1 .2
 goto;..127
-..134:.pxs;&#39;(
+..134:.pxs;'(
 alt;..133
 expr
-.pxs;&#39;)
+.pxs;')
 goto;..130
 ..133:unary
 alt;..132
@@ -1090,18 +1090,18 @@ trans;1 .4
 ..126:
 1 succ
 .2=.
-&lt;.l;\0&gt;;.even
+<.l;\0>;.even
 .1=.
 .tx;.2
 1 .tp;.byte 1,0;
 .4=.
-&lt;.rv\0&gt;;.even
+<.rv\0>;.even
 .3=.
 .tp;.byte 1,0;
 .tn
 1 .tx;.4
 .6=.
-&lt;.f\0&gt;;.even
+<.f\0>;.even
 .5=.
 .tp;.byte 2,0;
 .tn
@@ -1114,37 +1114,37 @@ rname
 alt;..141
 trans;1 .1
 goto;..136
-..141:.pxs;&#39;(
+..141:.pxs;'(
 alt;..140
 lv
-.pxs;&#39;)
+.pxs;')
 goto;..137
-..140:.pxs;&#39;*
+..140:.pxs;'*
 prime
 trans;1 .3
 ..137:
 ..136:
 lv1:
-.pxs;&#39;[
+.pxs;'[
 alt;done
 bundle
 expr
-.pxs;&#39;]
+.pxs;']
 trans;1 .5
 1 salt;lv1
 .2=.
-&lt;.u\0&gt;;.even
+<.u\0>;.even
 .1=.
 .tp;.byte 1,0;
 .tn
 1 .tx;.2
 .4=.
-&lt;.st\0&gt;;.even
+<.st\0>;.even
 .3=.
 1 .tx;.4
 assign:
 
-.pxs;&#39;=
+.pxs;'=
 ignore
 none
 infix
@@ -1155,87 +1155,87 @@ goto;..142
 ..142:
 1 succ
 .2=.
-1 .pxs;&#39;+
+1 .pxs;'+
 .1=.
-.pxs;&#39;+
+.pxs;'+
 1 not
 .2
 .4=.
-&lt;.a\0&gt;;.even
+<.a\0>;.even
 .3=.
 1 .tx;.4
 .6=.
-&lt;.s\0&gt;;.even
+<.s\0>;.even
 .5=.
 1 .tx;.6
 .10=.
-&lt;.m\0&gt;;.even
+<.m\0>;.even
 .7=.
 1 .tx;.10
 .12=.
-&lt;.q\0&gt;;.even
+<.q\0>;.even
 .11=.
 1 .tx;.12
 .14=.
-&lt;.r\0&gt;;.even
+<.r\0>;.even
 .13=.
 1 .tx;.14
 .16=.
-&lt;.o\0&gt;;.even
+<.o\0>;.even
 .15=.
 1 .tx;.16
 .20=.
-&lt;.x\0&gt;;.even
+<.x\0>;.even
 .17=.
 1 .tx;.20
 .22=.
-&lt;.n\0&gt;;.even
+<.n\0>;.even
 .21=.
 1 .tx;.22
 .23=.
-&lt;==\0&gt;;.even
+<==\0>;.even
 .25=.
-&lt;.eq\0&gt;;.even
+<.eq\0>;.even
 .24=.
 1 .tx;.25
 .26=.
-&lt;!=\0&gt;;.even
+<!=\0>;.even
 .30=.
-&lt;.ne\0&gt;;.even
+<.ne\0>;.even
 .27=.
 1 .tx;.30
 .31=.
-&lt;&lt;=\0&gt;;.even
+<<=\0>;.even
 .33=.
-&lt;.le\0&gt;;.even
+<.le\0>;.even
 .32=.
 1 .tx;.33
 .34=.
-&lt;\&gt;=\0&gt;;.even
+<\>=\0>;.even
 .36=.
-&lt;.ge\0&gt;;.even
+<.ge\0>;.even
 .35=.
 1 .tx;.36
 .37=.
-&lt;&lt;&lt;\0&gt;;.even
+<<<\0>;.even
 .41=.
-&lt;.sl\0&gt;;.even
+<.sl\0>;.even
 .40=.
 1 .tx;.41
 .43=.
-&lt;.lt\0&gt;;.even
+<.lt\0>;.even
 .42=.
 1 .tx;.43
 .44=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .45=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .47=.
-&lt;.sr\0&gt;;.even
+<.sr\0>;.even
 .46=.
 1 .tx;.47
 .51=.
-&lt;.gt\0&gt;;.even
+<.gt\0>;.even
 .50=.
 1 .tx;.51
 infix:
@@ -1243,37 +1243,37 @@ infix:
 smark
 ignore
 none
-.pxs;&#39;+
+.pxs;'+
 alt;..201
 not
 .1
 trans;1 .3
 goto;..144
-..201:.pxs;&#39;-
+..201:.pxs;'-
 alt;..200
 trans;1 .5
 goto;..145
-..200:.pxs;&#39;*
+..200:.pxs;'*
 alt;..177
 trans;1 .7
 goto;..146
-..177:.pxs;&#39;/
+..177:.pxs;'/
 alt;..176
 trans;1 .11
 goto;..147
-..176:.pxs;&#39;%
+..176:.pxs;'%
 alt;..175
 trans;1 .13
 goto;..150
-..175:.pxs;&#39;|
+..175:.pxs;'|
 alt;..174
 trans;1 .15
 goto;..151
-..174:.pxs;&#39;^
+..174:.pxs;'^
 alt;..173
 trans;1 .17
 goto;..152
-..173:.pxs;&#39;&amp;
+..173:.pxs;'&
 alt;..172
 trans;1 .21
 goto;..153
@@ -1297,7 +1297,7 @@ goto;..157
 alt;..165
 trans;1 .40
 goto;..160
-..165:.pxs;&#39;&lt;
+..165:.pxs;'<
 alt;..164
 trans;1 .42
 goto;..161
@@ -1324,19 +1324,19 @@ goto;..162
 ..144:
 1 succ
 .2=.
-&lt;.lv\0&gt;;.even
+<.lv\0>;.even
 .1=.
 1 .tx;.2
 .3=.
-&lt;++\0&gt;;.even
+<++\0>;.even
 .5=.
-&lt;.ib\0&gt;;.even
+<.ib\0>;.even
 .4=.
 1 .tx;.5
 .6=.
-&lt;--\0&gt;;.even
+<--\0>;.even
 .10=.
-&lt;.db\0&gt;;.even
+<.db\0>;.even
 .7=.
 1 .tx;.10
 prefix:
@@ -1344,7 +1344,7 @@ prefix:
 smark
 ignore
 none
-.pxs;&#39;&amp;
+.pxs;'&
 alt;..205
 trans;1 .1
 goto;..202
@@ -1358,15 +1358,15 @@ trans;1 .7
 ..202:
 1 succ
 .1=.
-&lt;++\0&gt;;.even
+<++\0>;.even
 .3=.
-&lt;.ia\0&gt;;.even
+<.ia\0>;.even
 .2=.
 1 .tx;.3
 .4=.
-&lt;--\0&gt;;.even
+<--\0>;.even
 .6=.
-&lt;.da\0&gt;;.even
+<.da\0>;.even
 .5=.
 1 .tx;.6
 suffix:
@@ -1383,35 +1383,35 @@ trans;1 .5
 ..206:
 1 succ
 .2=.
-&lt;.nt\0&gt;;.even
+<.nt\0>;.even
 .1=.
 1 .tx;.2
 .4=.
-&lt;.ng\0&gt;;.even
+<.ng\0>;.even
 .3=.
 1 .tx;.4
 .6=.
-&lt;.cm\0&gt;;.even
+<.cm\0>;.even
 .5=.
 1 .tx;.6
 unary:
 
-.pxs;&#39;!
+.pxs;'!
 alt;..213
 trans;1 .1
 goto;..210
-..213:.pxs;&#39;-
+..213:.pxs;'-
 alt;..212
 trans;1 .3
 goto;..211
-..212:.pxs;&#39;~
+..212:.pxs;'~
 trans;1 .5
 ..211:
 ..210:
 1 succ
 charcl:
 
-.pxs;&#39;!
+.pxs;'!
 alt;..215
 ccla
 cclb
@@ -1421,11 +1421,11 @@ goto;..214
 1 octal
 classmask
 .1=.
-&lt;&lt;&lt;\0&gt;;.even
+<<<\0>;.even
 .2=.
 1
 .4=.
-&lt;&lt;&lt;\0&gt;;.even
+<<<\0>;.even
 ccla:
 
 .px;.1
@@ -1444,7 +1444,7 @@ cclc
 .px;.4
 1 salt;ccl1
 .1=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 cclc:
 
 ignore
@@ -1455,9 +1455,9 @@ salt;ccl4
 ccle
 1 salt;ccl3
 .1=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .3=.
-&lt;\&gt;\0&gt;;.even
+<\>\0>;.even
 .2=.
 1 .px;.3
 ccl4:
@@ -1525,7 +1525,7 @@ ccl6:
 testn
 1 salt;ccl6
 .3=.
-&lt;too many char classes\0&gt;;.even
+<too many char classes\0>;.even
 .2=.
 1 .tx;.3
 .1=.
@@ -1558,9 +1558,9 @@ testn:
 .1=.
 0
 .4=.
-&lt;.globl classtab\0&gt;;.even
+<.globl classtab\0>;.even
 .5=.
-&lt;classtab:\0&gt;;.even
+<classtab:\0>;.even
 .3=.
 .tn
 .tx;.4
@@ -1744,7 +1744,7 @@ done:
 
 1 succ
 .1=.
-.txs;&#39;.
+.txs;'.
 1 .tp;.byte 1,0;
 create:
 
@@ -1756,7 +1756,7 @@ octal
 csym
 1 trans;1 .1
 .2=.
-&lt;..\0&gt;;.even
+<..\0>;.even
 .1=.
 .tx;.2
 1 .tp;.byte 1,0;
@@ -1775,7 +1775,7 @@ not:
 
 params
 .1
-[-1\&lt;1]
+[-1\<1]
 alt;done
 1 fail
 .1=.
@@ -1788,12 +1788,12 @@ list:
 
 params
 .1
-[-1\&lt;1]
+[-1\<1]
 list1:
 bundle
-.pxs;&#39;,
+.pxs;',
 alt;done
-[-1\&lt;1]
+[-1\<1]
 trans;1 .2
 1 salt;list1
 .1=.
@@ -1805,11 +1805,11 @@ params
 create
 1 parse
 rem1
-[-1\&lt;1]
+[-1\<1]
 .1=.
 1
 .3=.
-&lt;=.\0&gt;;.even
+<=.\0>;.even
 .2=.
 .tp;.byte 2,0;
 .tx;.3
@@ -1821,7 +1821,7 @@ rem1:
 params
 .1
 getcsym
-[-1\&lt;1]
+[-1\<1]
 1 trans;1 .2
 number:
 
@@ -1854,12 +1854,12 @@ oldtab:
 
 params
 .1
-.l;[-1\&lt;1]
+.l;[-1\<1]
 .t
 alt;done
 discard
-[-1\&lt;1]
-.l;[-1\&lt;1]
+[-1\<1]
+.l;[-1\<1]
 .l;.3
 .st
 1 .p
@@ -1871,23 +1871,23 @@ newtab:
 
 params
 .1
-.l;[-2\&lt;1]
+.l;[-2\<1]
 .t
 salt;..220
 table
-[-2\&lt;1]
-.l;[-1\&lt;1]
+[-2\<1]
+.l;[-1\<1]
 .l;.3
 .st
 .p
 ..220:
 enter
-[-2\&lt;1]
+[-2\<1]
 i
-.l;[-2\&lt;1]
+.l;[-2\<1]
 .l;i
 .f
-.l;[-1\&lt;1]
+.l;[-1\<1]
 .ia
 .st
 1 .p
@@ -1897,14 +1897,14 @@ tabval:
 
 params
 .1
-.l;[-2\&lt;1]
+.l;[-2\<1]
 .t
 find
-[-2\&lt;1]
+[-2\<1]
 i
 .l;i
-.l;[-1\&lt;1]
-.l;[-2\&lt;1]
+.l;[-1\<1]
+.l;[-2\<1]
 .l;i
 .f
 .s
@@ -1916,7 +1916,7 @@ null:
 
 1 trans;1 nil
 .1=.
-&lt;1 \0&gt;;.even
+<1 \0>;.even
 xbit:
 1 .tx;.1
 q1:

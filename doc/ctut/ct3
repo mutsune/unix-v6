@@ -2,20 +2,20 @@
 Increment and Decrement Operators
 .PP
 In addition to the usual
-`\(mi&#39;,
+`\(mi',
 C also has two other interesting
 unary
-operators, `++&#39; (increment) and `\(mi\(mi&#39; (decrement).
+operators, `++' (increment) and `\(mi\(mi' (decrement).
 Suppose we want to count the lines
 in a file.
 .E1
 main( ) {
 	int c,n;
 	n = 0;
-	while( (c=getchar( )) != &#39;\\0&#39; )
-		if( c \*= &#39;\\n&#39; )
+	while( (c=getchar( )) != '\\0' )
+		if( c \*= '\\n' )
 			\*+n;
-	printf(&quot;%d lines\\n&quot;, n);
+	printf("%d lines\\n", n);
 }
 .E2
 .UL \*+n 
@@ -25,15 +25,15 @@ but clearer,
 particularly when
 .UL n
 is a complicated expression.
-`++&#39; and `\(mi\(mi&#39; can be applied only to
-.UL int&#39;s
+`++' and `\(mi\(mi' can be applied only to
+.UL int's
 and
-.UL char&#39;s
+.UL char's
 (and
 .UL pointers
-which we haven&#39;t got to yet).
+which we haven't got to yet).
 .PP
-The unusual feature of `++&#39; and `\(mi\(mi&#39; is that they
+The unusual feature of `++' and `\(mi\(mi' is that they
 can be used either before or after a variable.
 The value of
 .UL \*+k
@@ -136,12 +136,12 @@ main( ) {
 	int n, c;
 	char line[100];
 	n = 0;
-	while( (c=getchar( )) != &#39;\\n&#39; ) {
-		if( n &lt; 100 )
+	while( (c=getchar( )) != '\\n' ) {
+		if( n < 100 )
 			line[n] = c;
 		n\*+;
 	}
-	printf(&quot;length = %d\\n&quot;, n);
+	printf("length = %d\\n", n);
 }
 .E2
 .PP
@@ -153,13 +153,13 @@ Try it as an exercise before looking at the solution:
 main( ) {
 	int n, c; char line[100];
 	n = 0;
-	while( (c=getchar( )) != &#39;\\0&#39; ) 
-		if( c \*= &#39;\\n&#39; ) {
-			printf(&quot;%d\n&quot;, n);
+	while( (c=getchar( )) != '\\0' ) 
+		if( c \*= '\\n' ) {
+			printf("%d\n", n);
 			n = 0;
 		}
 		else {
-			if( n &lt; 100 ) line[n] = c;
+			if( n < 100 ) line[n] = c;
 			n\*+;
 		}
 }
@@ -173,13 +173,13 @@ as we did with
 .UL ]
 in the example above.
 By convention in C,
-the last character in a character array should be a `\\0&#39;
+the last character in a character array should be a `\\0'
 because most programs that manipulate character arrays
 expect it.
 For example,
 .UL printf
-uses the `\\0&#39; to detect the end of a character array
-when printing it out with a `%s&#39;.
+uses the `\\0' to detect the end of a character array
+when printing it out with a `%s'.
 .PP
 We can copy a character array
 .UL s
@@ -188,23 +188,23 @@ into another
 like this:
 .E1
 	i = 0;
-	while( (t[i]=s[i]) != &#39;\\0&#39; )
+	while( (t[i]=s[i]) != '\\0' )
 		i\*+;
 .E2
 .PP
-Most of the time we have to put in our own `\\0&#39; at the end of a string;
+Most of the time we have to put in our own `\\0' at the end of a string;
 if we want to print the line with
 .UL printf,
-it&#39;s necessary.
+it's necessary.
 This code prints the character count before the line:
 .E1
 main( ) {
 	int n;
 	char line[100];
 	n = 0;
-	while( (line[n\*+]=getchar( )) != &#39;\\n&#39; );
-	line[n] = &#39;\\0&#39;;
-	printf(&quot;%d:\\t%s&quot;, n, line);
+	while( (line[n\*+]=getchar( )) != '\\n' );
+	line[n] = '\\0';
+	printf("%d:\\t%s", n, line);
 }
 .E2
 Here we increment 
@@ -218,12 +218,12 @@ and only then
 is incremented.
 .PP
 There is one place and one place only
-where C puts in the `\\0&#39; at the end of a character array for you,
+where C puts in the `\\0' at the end of a character array for you,
 and that is in the construction
 .E1
-&quot;stuff between double quotes&quot;
+"stuff between double quotes"
 .E2
-The compiler puts a `\\0&#39; at the end automatically.
+The compiler puts a `\\0' at the end automatically.
 Text enclosed in double quotes is called a
 .ul
 string;
@@ -254,13 +254,13 @@ The meaning is exactly
 .E2
 Thus, the following code does the same array copy as the example in the previous section:
 .E1
-	for( i=0; (t[i]=s[i]) != &#39;\\0&#39;; i\*+ );
+	for( i=0; (t[i]=s[i]) != '\\0'; i\*+ );
 .E2
 This slightly more
 ornate example adds up the elements of an array:
 .E1
 	sum = 0;
-	for( i=0; i&lt;n; i\*+)
+	for( i=0; i<n; i\*+)
 		sum = sum + array[i];
 .E2
 .PP
@@ -299,19 +299,19 @@ are both infinite loops.
 .PP
 You might ask why we use a
 .UL for
-since it&#39;s so much like a
+since it's so much like a
 .UL while\*.
 (You might also ask why we use a
 .UL while
 because...)
 The
 .UL for 
-is usually preferable because it keeps the code where it&#39;s used
+is usually preferable because it keeps the code where it's used
 and sometimes eliminates the need for compound statements,
 as in this code that zeros a two-dimensional array:
 .E1
-for( i=0; i&lt;n; i\*+ )
-	for( j=0; j&lt;m; j\*+ )
+for( i=0; i<n; i\*+ )
+	for( j=0; j<m; j\*+ )
 		array[i][j] = 0;
 .E2
 .NH
@@ -322,7 +322,7 @@ as part of a larger program,
 to count the occurrences of the ascii
 characters in some input text.
 Let us also map illegal characters
-(those with value&gt;127 or &lt;0) into one pile.
+(those with value>127 or <0) into one pile.
 Since this is presumably an isolated part of the program,
 good practice dictates making it a separate function.
 Here is one way:
@@ -339,10 +339,10 @@ main(~) {
 count(buf, size)
    int size, buf[ ]; {
 	int i, c;
-	for( i=0; i&lt;=size; i\*+ )
+	for( i=0; i<=size; i\*+ )
 		buf[i] = 0;			/\** set buf to zero \**/
-	while( (c=getchar(~)) != &#39;\\0&#39; ) {	/\** read til eof \**/
-		if( c &gt; size \*| c &lt; 0 )
+	while( (c=getchar(~)) != '\\0' ) {	/\** read til eof \**/
+		if( c > size \*| c < 0 )
 			c = size;		/\** fix illegal input \**/
 		buf[c]\*+;
 	}
@@ -366,7 +366,7 @@ The declarations of arguments go
 .ul
 between
 the argument list
-and the opening `{&#39;.
+and the opening `{'.
 There is no need to specify the size of the array 
 .UL buf,
 for it is defined outside of
@@ -388,8 +388,8 @@ statement allows for this too:
 	int i, c, nchar;
 	nchar = 0;
 	\*.\*.\*.
-	while( (c=getchar(~)) != &#39;\\0&#39; ) {
-		if( c &gt; size \*| c &lt; 0 )
+	while( (c=getchar(~)) != '\\0' ) {
+		if( c > size \*| c < 0 )
 			c = size;
 		buf[c]\*+;
 		nchar\*+;
@@ -402,7 +402,7 @@ Here is a function to compute the minimum of two integers:
 .ne 4
 min(a, b)
    int a, b; {
-	return( a &lt; b ? a : b );
+	return( a < b ? a : b );
 }
 .E2
 .PP
@@ -414,7 +414,7 @@ we could write the function
 strcopy(s1, s2)		/\** copies s1 to s2 \**/
    char s1[ ], s2[ ]; {
 	int i;
-	for( i = 0; (s2[i] = s1[i]) != &#39;\\0&#39;; i\*+ );
+	for( i = 0; (s2[i] = s1[i]) != '\\0'; i\*+ );
 }
 .E2
 As is often the case, all the work is done by the assignment statement
@@ -424,7 +424,7 @@ Again, the declarations of the arguments
 .UL s1 
 and
 .UL s2
-omit the sizes, because they don&#39;t matter to
+omit the sizes, because they don't matter to
 .UL strcopy\*.
 (In the section on pointers, we will see a more efficient
 way to do a string copy.)
@@ -432,10 +432,10 @@ way to do a string copy.)
 There is a subtlety
 in function usage which can trap the unsuspecting Fortran programmer.
 Simple variables (not arrays) are passed in C by
-``call by value&#39;&#39;,
+``call by value'',
 which means that the called function is given
 a copy of its arguments,
-and doesn&#39;t know their addresses.
+and doesn't know their addresses.
 This makes it impossible to change the value of one of the actual input arguments.
 .a
 .PP
@@ -473,7 +473,7 @@ is unrelated to the
 .UL x
 in
 .UL g\*.
-(Local variables are also called ``automatic&#39;&#39;.)
+(Local variables are also called ``automatic''.)
 Furthermore each local variable in a routine appears only when
 the function is called, and
 .ul
@@ -484,7 +484,7 @@ and must be explicitly initialized upon each entry.
 (There is a
 .UL static
 storage class for making local variables with memory;
-we won&#39;t discuss it.)
+we won't discuss it.)
 .PP
 As opposed to local variables,
 .ul
@@ -540,7 +540,7 @@ In its simplest form,
 initialization is done by putting the value (which must be a constant) after the definition:
 .E1
 int	nchar	0;
-char	flag	&#39;f&#39;;
+char	flag	'f';
 .ft R
   etc\*.
 .E2

@@ -37,7 +37,7 @@ and if it is non-zero, the first substatement
 is executed.
 In the second case the second substatement is executed
 if the expression is 0.
-As usual the ``else&#39;&#39; ambiguity is resolved by connecting
+As usual the ``else'' ambiguity is resolved by connecting
 an \fGelse\fR with the last encountered elseless \fGif\fR.
 .ms
 9.4  While statement
@@ -93,7 +93,7 @@ A missing
 expression-2
 .ft R
 makes the
-implied \fGwhile\fR clause equivalent to ``while(^1^)&#39;&#39;;
+implied \fGwhile\fR clause equivalent to ``while(^1^)'';
 other missing expressions are simply
 dropped from the expansion above.
 .ms
@@ -176,7 +176,7 @@ More precisely, in each of the statements
 .ed
 .eG
 .ta .5i 1i 1.5i 2i 2.5i 3i
-a \fGcontinue\fR is equivalent to ``goto contin&#39;&#39;.
+a \fGcontinue\fR is equivalent to ``goto contin''.
 .ms
 9.10  Return statement
 .et
@@ -207,7 +207,7 @@ the statement
 	goto \fIexpression \fG;
 .ed
 The expression should be a label (\(sc\(sc9.12, 14.4)
-or an expression of type ``pointer to \fGint\fR&#39;&#39;
+or an expression of type ``pointer to \fGint\fR''
 which evaluates to a label.
 It is illegal to transfer to a label
 not located in the current function
@@ -233,6 +233,6 @@ The null statement has the form
 .dp 1
 	\fG;
 .ed
-A null statement is useful to carry a label just before the ``}&#39;&#39;
+A null statement is useful to carry a label just before the ``}''
 of a compound statement or to supply a null
 body to a looping statement such as \fGwhile\fR.

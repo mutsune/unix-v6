@@ -34,7 +34,7 @@ The sc-specifiers are:
 		register
 .ed
 The
-.bd &quot;auto, static,&quot;
+.bd "auto, static,"
 and
 .bd register
 declarations also serve as definitions
@@ -57,7 +57,7 @@ or pointer (not
 structure, function, or array).
 Also the address-of
 operator
-.bd &amp;
+.bd &
 cannot be applied to such identifiers.
 .a
 Except for these restrictions
@@ -133,8 +133,8 @@ If a declarator has the form
 	\** D
 .sp .7
 for D a declarator, then the
-contained identifier has the type ``pointer to .^.^.&#39;&#39;, where
-``^.^.^.^&#39;&#39; is the type which the identifier would have had
+contained identifier has the type ``pointer to .^.^.'', where
+``^.^.^.^'' is the type which the identifier would have had
 if the declarator had been simply D.
 .pg
 If a declarator has the form
@@ -142,7 +142,7 @@ If a declarator has the form
 	D^(^^)
 .sp .7
 then the contained identifier has the type
-``function returning ...&#39;&#39;, where ``^.^.^.^&#39;&#39; is the
+``function returning ...'', where ``^.^.^.^'' is the
 type which the identifier would have
 had if the declarator had been simply D.
 .pg
@@ -165,20 +165,20 @@ int.
 in the second the constant 1 is used.
 (Constant expressions are defined precisely in \(sc15.)^^
 Such a declarator makes the contained identifier have
-type ``array.&#39;&#39;
+type ``array.''
 If the unadorned declarator D would
-specify a non-array of type ``.^.^.&#39;&#39;,
+specify a non-array of type ``.^.^.'',
 then the declarator
-``D[^i^]&#39;&#39;
+``D[^i^]''
 yields a 1-dimensional array with rank \fIi\fR of objects
-of type ``.^.^.&#39;&#39;.
+of type ``.^.^.''.
 If the unadorned declarator D would
 specify an \fIn^\fR-dimensional array
 with rank
 .ft I
 i\s6\d1\u\s10^\(mu^i\s6\d2\u\s10^\(mu^.^.^.^\(mu^i\s6\dn\u\s10,
 .ft R
-then the declarator ``D[^i\s6\dn+1\u\s10^]&#39;&#39;
+then the declarator ``D[^i\s6\dn+1\u\s10^]''
 yields an (\fIn^\fR+1^)\fR^-dimensional
 array with rank
 .ft I
@@ -238,9 +238,9 @@ In complete detail, \fIx3d\fR is an array of three items:
 each item is an array of five arrays;
 each of the latter arrays is an array of seven
 integers.
-Any of the expressions ``x3d&#39;&#39;, ``x3d[^i^]&#39;&#39;, ``x3d[^i^][^j^]&#39;&#39;, ``x3d[^i^][^j^][^k^]&#39;&#39;
+Any of the expressions ``x3d'', ``x3d[^i^]'', ``x3d[^i^][^j^]'', ``x3d[^i^][^j^][^k^]''
 may reasonably appear in an expression.
-The first three have type ``array&#39;&#39;,
+The first three have type ``array'',
 the last has type \fGint\fR.
 .ms
 8.5  Structure declarations
@@ -262,7 +262,7 @@ is a sequence of type declarations for the members of the structure:
 .ed
 A type declaration is just a declaration which does not
 mention a storage class (the storage class ``member of
-structure&#39;&#39; here being understood by context).
+structure'' here being understood by context).
 .dp 2
 	type-declaration:
 		type-specifier declarator-list  \fG;

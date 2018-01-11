@@ -8,7 +8,7 @@ you need to get started on \s8UNIX\s10:
 how to log in and log out,
 how to communicate through your terminal,
 and how to run a program.
-See ``U\s8NIX\s10 for Beginners&#39;&#39;
+See ``U\s8NIX\s10 for Beginners''
 by Brian W. Kernighan for a more complete introduction
 to the system.
 .pg
@@ -34,38 +34,38 @@ Such terminals include the GE Terminet 300, most display terminals,
 Execuport, TI, GSI, and certain
 Anderson-Jacobson terminals.
 These terminals generally have a speed
-switch which should be set at ``300&#39;&#39; (or ``30&#39;&#39; for
+switch which should be set at ``300'' (or ``30'' for
 30 characters per second)
 and a half/full duplex switch which should be set at
 full-duplex.
 (This switch will often have to be changed
 since many other systems require half-duplex).
 When a connection is established, the system
-types ``login:&#39;&#39;; you type your
-user name, followed by the ``return&#39;&#39; key.
+types ``login:''; you type your
+user name, followed by the ``return'' key.
 If you have a password, the system asks for it
 and turns off the printer on the terminal
 so the password will not appear.
 After you have logged in,
-the ``return&#39;&#39;, ``new line&#39;&#39;, or ``linefeed&#39;&#39; keys
+the ``return'', ``new line'', or ``linefeed'' keys
 will give exactly the same results.
 .pg
 .ul
 \s8TTY\s10 37 terminal:||
 When you have established a data connection,
 the system types out a few garbage characters
-(the ``login:&#39;&#39; message at the wrong speed).
-Depress the ``break&#39;&#39; (or ``interrupt&#39;&#39;)
+(the ``login:'' message at the wrong speed).
+Depress the ``break'' (or ``interrupt'')
 key; this is a speed-independent signal
 to \s8UNIX\s10 that a 150-baud terminal
 is in use.
-The system then will type ``login:,&#39;&#39; this time at the correct
+The system then will type ``login:,'' this time at the correct
 speed;
 you respond with your user name.
-From the \s8TTY\s10 37 terminal, and any other which has the ``new-line&#39;&#39;
+From the \s8TTY\s10 37 terminal, and any other which has the ``new-line''
 function (combined carriage return and linefeed), terminate each line you type with the
-``new-line&#39;&#39; key
-(\fInot\fR the ``return&#39;&#39; key).
+``new-line'' key
+(\fInot\fR the ``return'' key).
 .pg
 .in 0
 For all these terminals, it is important
@@ -77,9 +77,9 @@ letters to lower case.
 .pg
 The evidence that you have successfully
 logged in is that the Shell program
-will type a ``%&#39;&#39; to you.
+will type a ``%'' to you.
 (The Shell is described below under
-``How to run a program.&#39;&#39;)
+``How to run a program.'')
 .pg
 For more information, consult
 \fIgetty\fR (VIII), which discusses the login sequence in more
@@ -93,8 +93,8 @@ There are three ways to log out:
 You can simply hang up the phone.
 .pg
 You can log out by typing an end-of-file indication
-(EOT character, control ``d&#39;&#39;) to the Shell.
-The Shell will terminate and the ``login: &#39;&#39; message
+(EOT character, control ``d'') to the Shell.
+The Shell will terminate and the ``login: '' message
 will appear again.
 .pg
 You can also log in directly as another user
@@ -128,17 +128,17 @@ the system is in trouble.
 When the read-ahead limit is exceeded, the system
 throws away all the saved characters.
 .pg
-On a typewriter input line, the character ``@&#39;&#39;
+On a typewriter input line, the character ``@''
 kills all the characters typed before it, so typing mistakes
 can be repaired on a single line.
-Also, the character ``#&#39;&#39; erases the last character typed.
-Successive uses of ``#&#39;&#39; erase characters back to, but
+Also, the character ``#'' erases the last character typed.
+Successive uses of ``#'' erase characters back to, but
 not beyond, the beginning of the line.
-``@&#39;&#39; and ``#&#39;&#39; can be transmitted to a program
-by preceding them with ``\\&#39;&#39;.
-(So, to erase ``\\&#39;&#39;, you need two ``#&#39;&#39;s).
+``@'' and ``#'' can be transmitted to a program
+by preceding them with ``\\''.
+(So, to erase ``\\'', you need two ``#''s).
 .pg
-The \s8ASCII\s10 ``delete&#39;&#39; (a.k.a. ``rubout&#39;&#39;) character is not passed to programs
+The \s8ASCII\s10 ``delete'' (a.k.a. ``rubout'') character is not passed to programs
 but instead generates
 an
 .ul
@@ -147,7 +147,7 @@ This signal
 generally causes whatever program
 you are running to terminate.
 It is typically used to stop a long printout that
-you don&#39;t want.
+you don't want.
 However, programs can arrange either to ignore
 this signal altogether,
 or to be notified when it happens (instead
@@ -214,7 +214,7 @@ it and its arguments are separated from one another by
 spaces.
 .pg
 When a program terminates, the Shell will ordinarily regain control and type 
-a ``%&#39;&#39; at you to indicate that it is ready for another command.
+a ``%'' at you to indicate that it is ready for another command.
 .pg
 The Shell has many other capabilities, which are described in detail in section
 \fIsh\fR\|(I).
@@ -246,10 +246,10 @@ were endowed with at login) use \fIchdir\fR (I).
 Path names.||
 To refer to files not in the current directory, you must
 use a path name.
-Full path names begin with ``/&#39;&#39;, the name of the root directory of the
+Full path names begin with ``/'', the name of the root directory of the
 whole file system.
 After the slash comes the name of each directory containing the next
-sub-directory (followed by a ``/&#39;&#39;) until finally the
+sub-directory (followed by a ``/'') until finally the
 file name is reached.
 E.g.:
 .ul
@@ -267,7 +267,7 @@ springs directly from the root directory.
 .pg
 If your current directory has subdirectories,
 the path names of files therein begin with
-the name of the subdirectory (no prefixed ``/&#39;&#39;).
+the name of the subdirectory (no prefixed ``/'').
 .pg
 Without important exception,
 a path name may be used anywhere a file name is
@@ -280,11 +280,11 @@ To find out the status of files or directories, use \fIls\fR (I).
 See \fImkdir\fR (I) for making directories; \fIrmdir\fR (I) for destroying them.
 .pg
 For a fuller discussion of the file system, see
-``The \s8UNIX\s10 Time-Sharing System,&#39;&#39;
+``The \s8UNIX\s10 Time-Sharing System,''
 by the present authors.
 It may also be useful to glance through
 section II of this manual, which discusses
-system calls, even if you don&#39;t intend
+system calls, even if you don't intend
 to deal with the system at that level.
 .pg
 .ul
@@ -298,7 +298,7 @@ the editor
 and written on a file, you can give the file
 to the appropriate language processor as an argument.
 The output of the language processor
-will be left on a file in the current directory named ``a.out&#39;&#39;.
+will be left on a file in the current directory named ``a.out''.
 (If the output is precious, use \fImv\fR to move it to a less
 exposed name soon.)|
 If you wrote in assembly language, you will probably
@@ -309,7 +309,7 @@ the loader automatically.
 When you have finally gone through this entire process
 without provoking any diagnostics, the resulting program
 can be run by giving its name to the Shell
-in response to the ``%&#39;&#39; prompt.
+in response to the ``%'' prompt.
 .pg
 Next, you will need \fIcdb\fR (I) or \fIdb\fR (I) to
 examine the remains of your program.
@@ -379,4 +379,4 @@ The write-ups in the manual also suggest how to respond to
 the two commands if you are a target.
 .pg
 When you log in, a message-of-the-day may greet you
-before the first ``%&#39;&#39;.
+before the first ``%''.

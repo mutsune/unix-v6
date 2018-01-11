@@ -14,7 +14,7 @@ stfps = 170200^tst
 /
 /	there are no error exits
 /
-/	coefficients are #5076 from Hart &amp; Cheney.
+/	coefficients are #5076 from Hart & Cheney.
 /
 /
 

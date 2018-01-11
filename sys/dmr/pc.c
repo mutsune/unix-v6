@@ -6,9 +6,9 @@
  * PC-11 Paper tape reader/punch driver
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../user.h"
 
 #define	PCADDR	0177550
 
@@ -59,11 +59,11 @@ pcopen(dev, flag)
 		}
 		pc11.pcstate = WAITING;
 		while(pc11.pcstate==WAITING) {
-			PCADDR-&gt;pcrcsr = IENABLE|RDRENB;
-			sleep(&amp;lbolt, PCIPRI);
+			PCADDR->pcrcsr = IENABLE|RDRENB;
+			sleep(&lbolt, PCIPRI);
 		}
 	} else {
-		PCADDR-&gt;pcpcsr =| IENABLE;
+		PCADDR->pcpcsr =| IENABLE;
 		pcleader();
 	}
 }
@@ -72,8 +72,8 @@ pcclose(dev, flag)
 {
 	if (flag==0) {
 		spl4();
-		while (getc(&amp;pc11.pcin) &gt;= 0);
-		PCADDR-&gt;pcrcsr = 0;
+		while (getc(&pc11.pcin) >= 0);
+		PCADDR->pcrcsr = 0;
 		pc11.pcstate = CLOSED;
 		spl0();
 	} else
@@ -86,14 +86,14 @@ pcread()
 
 	spl4();
 	do {
-		while ((c = getc(&amp;pc11.pcin)) &lt; 0) {
+		while ((c = getc(&pc11.pcin)) < 0) {
 			if (pc11.pcstate==EOF)
 				goto out;
-			if ((PCADDR-&gt;pcrcsr&amp;(ERROR|BUSY|DONE))==0)
-				PCADDR-&gt;pcrcsr =| IENABLE|RDRENB;
-			sleep(&amp;pc11.pcin, PCIPRI);
+			if ((PCADDR->pcrcsr&(ERROR|BUSY|DONE))==0)
+				PCADDR->pcrcsr =| IENABLE|RDRENB;
+			sleep(&pc11.pcin, PCIPRI);
 		}
-	} while (passc(c)&gt;=0);
+	} while (passc(c)>=0);
 out:
 	spl0();
 }
@@ -102,7 +102,7 @@ pcwrite()
 {
 	register int c;
 
-	while ((c=cpass())&gt;=0)
+	while ((c=cpass())>=0)
 		pcoutput(c);
 }
 
@@ -110,26 +110,26 @@ pcstart()
 {
 	register int c;
 
-	if (PCADDR-&gt;pcpcsr&amp;DONE &amp;&amp; (c = getc(&amp;pc11.pcout)) &gt;= 0)
-		PCADDR-&gt;pcpbuf = c;
+	if (PCADDR->pcpcsr&DONE && (c = getc(&pc11.pcout)) >= 0)
+		PCADDR->pcpbuf = c;
 }
 
 pcrint()
 {
 	if (pc11.pcstate==WAITING) {
-		if (PCADDR-&gt;pcrcsr&amp;ERROR)
+		if (PCADDR->pcrcsr&ERROR)
 			return;
 		pc11.pcstate = READING;
 	}
 	if (pc11.pcstate==READING) {
-		if (PCADDR-&gt;pcrcsr&amp;ERROR)
+		if (PCADDR->pcrcsr&ERROR)
 			pc11.pcstate = EOF;
 		else {
-			putc(PCADDR-&gt;pcrbuf, &amp;pc11.pcin);
-			if (pc11.pcin.cc &lt; PCIHWAT)
-				PCADDR-&gt;pcrcsr =| IENABLE|RDRENB;
+			putc(PCADDR->pcrbuf, &pc11.pcin);
+			if (pc11.pcin.cc < PCIHWAT)
+				PCADDR->pcrcsr =| IENABLE|RDRENB;
 		}
-		wakeup(&amp;pc11.pcin);
+		wakeup(&pc11.pcin);
 	}
 }
 
@@ -137,19 +137,19 @@ pcpint()
 {
 
 	pcstart();
-	if (pc11.pcout.cc &lt;= PCOLWAT)
-		wakeup(&amp;pc11.pcout);
+	if (pc11.pcout.cc <= PCOLWAT)
+		wakeup(&pc11.pcout);
 }
 
 pcoutput(c)
 {
-	if (PCADDR-&gt;pcpcsr&amp;ERROR) {
+	if (PCADDR->pcpcsr&ERROR) {
 		u.u_error = EIO;
 		return;
 	}
-	if (pc11.pcout.cc &gt;= PCOHWAT)
-		sleep(&amp;pc11.pcout, PCOPRI);
-	putc(c, &amp;pc11.pcout);
+	if (pc11.pcout.cc >= PCOHWAT)
+		sleep(&pc11.pcout, PCOPRI);
+	putc(c, &pc11.pcout);
 	spl4();
 	pcstart();
 	spl0();

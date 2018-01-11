@@ -65,15 +65,15 @@ pass1:
 	mov	$errb,errp
 	mov	$esymtab,esymp
 	mov	$namebuf,namep
-	movb	$&#39;_,symbuf-1
+	movb	$'_,symbuf-1
 	jsr	r5,lookid; blankc
 	bis	$40,symtab(r3)
 	mov	$imptab,r3
 1:
 	mov	$realcon,r0		/ real*4
-	cmp	r3,$imptab+[2*[&#39;i-&#39;a]]
+	cmp	r3,$imptab+[2*['i-'a]]
 	blo	2f
-	cmp	r3,$imptab+[2*[&#39;n-&#39;a]]
+	cmp	r3,$imptab+[2*['n-'a]]
 	bhi	2f
 	mov	$intcon,r0		/ integer*4
 2:
@@ -110,7 +110,7 @@ scan1:
 	mov	pc,funok
 	br	scan1
 2:
-	jsr	r5,ptemp; &#39;l; efno; line
+	jsr	r5,ptemp; 'l; efno; line
 	jsr	r5,flush; tbuf
 	jsr	r5,signoff; 1
 
@@ -127,24 +127,24 @@ sublst:
 	simpl
 
 stmtab:
-	&lt;subroutine\0&gt;
-	&lt;function\0&gt;
-	&lt;blockdata\0&gt;
-	&lt;external\0&gt;
-	&lt;dimension\0&gt;
-	&lt;common\0&gt;
-	&lt;equivalence\0&gt;
-	&lt;data\0&gt;
-	&lt;format\0&gt;
-	&lt;implicit\0&gt;
-	&lt;\0&gt;
+	<subroutine\0>
+	<function\0>
+	<blockdata\0>
+	<external\0>
+	<dimension\0>
+	<common\0>
+	<equivalence\0>
+	<data\0>
+	<format\0>
+	<implicit\0>
+	<\0>
 	.even
 
 
 mes2:
-	&lt;Input file?\n&gt;
+	<Input file?\n>
 emes2:
 blankc:
-	&lt;_\n\0&gt;
+	<_\n\0>
 	.even
 

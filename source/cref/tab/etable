@@ -59,7 +59,7 @@ skip/W/coll;
 skip/X/coll;
 skip/Y/coll;
 skip/Z/coll;
-collect/&#39;/cont;
+collect/'/cont;
 collect/-/hyphen;
 collect/
 /out;

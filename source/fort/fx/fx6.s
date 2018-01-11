@@ -22,7 +22,7 @@ td:
 	jsr	r5,td
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 
 tput:
 	movb	r0,ch+1

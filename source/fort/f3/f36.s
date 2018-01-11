@@ -27,7 +27,7 @@ lvalue:
 	bne	1f
 	mov	2(r2),r3
 	jsr	r5,code
-		&lt;	lval&gt;; .even
+		<	lval>; .even
 	br	name
 1:
 	mov	r2,-(sp)
@@ -38,11 +38,11 @@ lvalue:
 	bne	2f			/ dim =| 1
 	tstb	symtab(r3)
 	blt	2f			/ p-bit, not simple
-	mov	$&quot;al,r0
+	mov	$"al,r0
 	br	simpary
 2:
 	jsr	r5,code
-		&lt;	alval\0&gt;; .even
+		<	alval\0>; .even
 
 arydope:
 	jsr	r5,pbit
@@ -52,7 +52,7 @@ arydope:
 	add	r0,r2
 	mov	(r2),r0
 	jsr	r5,code
-		&lt;; d%d\0&gt;; .even
+		<; d%d\0>; .even
 		r0
 	br	2f
 1:
@@ -68,7 +68,7 @@ simpary:
 	mov	(sp)+,r3
 	jsr	r5,size
 	jsr	r5,code
-		&lt;; %d.\0&gt;; .even
+		<; %d.\0>; .even
 		r0
 	br	2f
 
@@ -77,12 +77,12 @@ name:
 	jsr	r5,pbit
 2:
 	jsr	r5,code
-		&lt;; \0&gt;; .even
+		<; \0>; .even
 	bit	$100,symtab(r3)		/ common
 	beq	1f
 	mov	symtab+4(r3),r2
 	jsr	r5,code
-		&lt;%n+\0&gt;; .even
+		<%n+\0>; .even
 		r2
 1:
 	movb	symtab(r3),r2
@@ -90,12 +90,12 @@ name:
 	cmp	r2,$30			/ external
 	bne	1f
 	jsr	r5,code
-		&lt;%n.\n\0&gt;; .even
+		<%n.\n\0>; .even
 		r3
 	br	2f
 1:
 	jsr	r5,code
-		&lt;%n_\n\0&gt;; .even
+		<%n_\n\0>; .even
 		r3
 2:
 	mov	symtab(r3),r3
@@ -111,7 +111,7 @@ rvalue:
 	mov	2(r2),r3
 	movb	symtab+1(r3),r2
 	jsr	r5,code
-		&lt;	rval%d&gt;; .even
+		<	rval%d>; .even
 		r2
 	mov	(sp)+,r2
 	br	name
@@ -123,11 +123,11 @@ rvalue:
 	bne	3f
 	tstb	symtab(r3)
 	blt	3f
-	mov	$&quot;ar,r0
+	mov	$"ar,r0
 	br	simpary
 3:
 	jsr	r5,code
-		&lt;	arval\0&gt;; .even
+		<	arval\0>; .even
 	br	arydope
 1:
 	cmp	(r2),$34.		/ array appl
@@ -137,7 +137,7 @@ rvalue:
 	mov	2(r2),r3
 	movb	symtab+1(r3),r0
 	jsr	r5,code
-		&lt;%d.\n\0&gt;; .even
+		<%d.\n\0>; .even
 		r0
 	mov	symtab(r3),r3
 	rts	r5
@@ -147,7 +147,7 @@ rvalue:
 	movb	3(r2),r3
 	mov	4(r2),r2
 	jsr	r5,code
-		&lt;	rval%d; c%d\n\0&gt;; .even
+		<	rval%d; c%d\n\0>; .even
 		r3
 		r2
 	mov	(sp)+,r2
@@ -159,7 +159,7 @@ rvalue:
 	mov	2(r2),r2
 	bne	3f
 	mov	(sp),r2
-	sub	$10.,(r2)		/ - bin -&gt; - unary
+	sub	$10.,(r2)		/ - bin -> - unary
 	mov	4(r2),r2
 	jsr	r5,rvalue
 	br	2f
@@ -176,7 +176,7 @@ rvalue:
 	cmp	r2,$1		/ ** integer
 	bne	3f
 	mov	2(sp),r2
-	sub	$2,(r2)		/ pr -&gt; pi
+	sub	$2,(r2)		/ pr -> pi
 	mov	4(r2),r2
 	jsr	r5,rvalue
 	mov	$intcon,r2
@@ -237,7 +237,7 @@ pbit:
 	tstb	symtab(r3)
 	bge	1f
 	jsr	r5,code
-		&lt;p\0&gt;
+		<p\0>
 1:
 	rts	r5
 
@@ -245,7 +245,7 @@ funcappl:
 	mov	r2,-(sp)
 	mov	functn,r3
 	jsr	r5,code
-		&lt;	stsp; ft+%d.\n\0&gt;; .even
+		<	stsp; ft+%d.\n\0>; .even
 		r3
 	mov	r3,-(sp)
 	add	$2,r3
@@ -272,10 +272,10 @@ funcappl:
 	mov	(sp)+,r3
 	mov	2(r3),r3
 	jsr	r5,code
-		&lt;	call\0&gt;; .even
+		<	call\0>; .even
 	jsr	r5,pbit
 	jsr	r5,code
-		&lt;; %n.; ft+%d.; %d.; \0&gt;; .even
+		<; %n.; ft+%d.; %d.; \0>; .even
 		r3
 		r2
 		r0
@@ -300,7 +300,7 @@ fapp1:
 	bne	2f
 	mov	4(r2),r3
 	jsr	r5,code
-		&lt;	lval; c%d\n\0&gt;
+		<	lval; c%d\n\0>
 		r3
 	br	3f
 2:
@@ -312,7 +312,7 @@ fapp1:
 2:
 	mov	functn,r3
 	jsr	r5,code
-		&lt;	stsp; ft+%d.\n\0&gt;; .even
+		<	stsp; ft+%d.\n\0>; .even
 		r3
 	add	$2,functn
 	rts	r5
@@ -323,7 +323,7 @@ fapp1:
 3:
 	mov	functn,r3
 	jsr	r5,code
-		&lt;	stst; ft+%d.\n\0&gt;; .even
+		<	stst; ft+%d.\n\0>; .even
 		r3
 	add	$2,functn
 	rts	r5
@@ -360,17 +360,17 @@ aryappl:
 convrt:
 	mov	r2,-(sp)
 	mov	r3,-(sp)
-	bic	$![377\&lt;8+7],r2
-	bic	$![377\&lt;8+7],r3
+	bic	$![377\<8+7],r2
+	bic	$![377\<8+7],r3
 	cmp	r2,r3
 	beq	1f
 	jsr	r5,code
-		&lt;	\0&gt;; .even
+		<	\0>; .even
 	jsr	pc,2f
 	mov	r2,r3
 	jsr	pc,2f
 	jsr	r5,code
-		&lt;\n\0&gt;; .even
+		<\n\0>; .even
 1:
 	mov	(sp)+,r3
 	mov	(sp)+,r2
@@ -383,7 +383,7 @@ convrt:
 	bic	$!7,r2
 	movb	typ(r2),r2
 	jsr	r5,code
-		&lt;%c%d\0&gt;; .even
+		<%c%d\0>; .even
 		r2
 		r3
 	mov	(sp)+,r2
@@ -448,20 +448,20 @@ maxtyp:
 	rts	pc
 
 optab:
-	&lt;ng&gt;
-	&lt;pi&gt;
-	&lt;pr&gt;
-	&lt;dv&gt;
-	&lt;mp&gt;
-	&lt;sb&gt;
-	&lt;ad&gt;
-	&lt;lt&gt;
-	&lt;le&gt;
-	&lt;eq&gt;
-	&lt;ne&gt;
-	&lt;gt&gt;
-	&lt;ge&gt;
-	&lt;nt&gt;
-	&lt;an&gt;
-	&lt;or&gt;
+	<ng>
+	<pi>
+	<pr>
+	<dv>
+	<mp>
+	<sb>
+	<ad>
+	<lt>
+	<le>
+	<eq>
+	<ne>
+	<gt>
+	<ge>
+	<nt>
+	<an>
+	<or>
 

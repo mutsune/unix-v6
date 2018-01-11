@@ -8,14 +8,14 @@ The user is likely to work considerably harder doing this
 than he might if he were to use C.
 .PP
 When the user inputs a specification to Yacc, and specifies the Ratfor option (see Appendix B), the
-output is a file of Ratfor programs called ``y.tab.r&#39;&#39;.
+output is a file of Ratfor programs called ``y.tab.r''.
 These programs are then compiled,
 and provide the desired subroutine.
 .PP
 The subroutine produced by Yacc which does the input process is an integer function
-called ``yypars&#39;&#39;.
+called ``yypars''.
 When it is called,
-it in turn repeatedly calls ``yylex&#39;&#39;, the lexical analyzer supplied by the user
+it in turn repeatedly calls ``yylex'', the lexical analyzer supplied by the user
 (see Section 3).
 Eventually, either an error is detected, in which case (if no error recovery is possible)
 yypars returns the value 1, or the lexical analyzer returns the

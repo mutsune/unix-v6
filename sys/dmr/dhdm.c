@@ -5,9 +5,9 @@
 /*
  *	DM-BB driver
  */
-#include &quot;../param.h&quot;
-#include &quot;../tty.h&quot;
-#include &quot;../conf.h&quot;
+#include "../param.h"
+#include "../tty.h"
+#include "../conf.h"
 
 #define	DMADDR	0170500
 
@@ -33,15 +33,15 @@ dmopen(dev)
 {
 	register struct tty *tp;
 
-	tp = &amp;dh11[dev.d_minor];
-	DMADDR-&gt;dmcsr = dev.d_minor;
-	DMADDR-&gt;dmlstat = TURNON;
-	if (DMADDR-&gt;dmlstat&amp;CARRIER)
-		tp-&gt;t_state =| CARR_ON;
-	DMADDR-&gt;dmcsr = IENABLE|SCENABL;
+	tp = &dh11[dev.d_minor];
+	DMADDR->dmcsr = dev.d_minor;
+	DMADDR->dmlstat = TURNON;
+	if (DMADDR->dmlstat&CARRIER)
+		tp->t_state =| CARR_ON;
+	DMADDR->dmcsr = IENABLE|SCENABL;
 	spl5();
-	while ((tp-&gt;t_state&amp;CARR_ON)==0)
-		sleep(&amp;tp-&gt;t_rawq, TTIPRI);
+	while ((tp->t_state&CARR_ON)==0)
+		sleep(&tp->t_rawq, TTIPRI);
 	spl0();
 }
 
@@ -53,11 +53,11 @@ dmclose(dev)
 {
 	register struct tty *tp;
 
-	tp = &amp;dh11[dev.d_minor];
-	if (tp-&gt;t_flags&amp;HUPCL) {
-		DMADDR-&gt;dmcsr = dev.d_minor;
-		DMADDR-&gt;dmlstat = TURNOFF;
-		DMADDR-&gt;dmcsr = IENABLE|SCENABL;
+	tp = &dh11[dev.d_minor];
+	if (tp->t_flags&HUPCL) {
+		DMADDR->dmcsr = dev.d_minor;
+		DMADDR->dmlstat = TURNOFF;
+		DMADDR->dmcsr = IENABLE|SCENABL;
 	}
 }
 
@@ -69,20 +69,20 @@ dmint()
 {
 	register struct tty *tp;
 
-	if (DMADDR-&gt;dmcsr&amp;DONE) {
-		tp = &amp;dh11[DMADDR-&gt;dmcsr&amp;017];
-		if (tp &lt; &amp;dh11[ndh11]) {
+	if (DMADDR->dmcsr&DONE) {
+		tp = &dh11[DMADDR->dmcsr&017];
+		if (tp < &dh11[ndh11]) {
 			wakeup(tp);
-			if ((DMADDR-&gt;dmlstat&amp;CARRIER)==0) {
-				if ((tp-&gt;t_state&amp;WOPEN)==0) {
+			if ((DMADDR->dmlstat&CARRIER)==0) {
+				if ((tp->t_state&WOPEN)==0) {
 					signal(tp, SIGHUP);
-					DMADDR-&gt;dmlstat = 0;
+					DMADDR->dmlstat = 0;
 					flushtty(tp);
 				}
-				tp-&gt;t_state =&amp; ~CARR_ON;
+				tp->t_state =& ~CARR_ON;
 			} else
-				tp-&gt;t_state =| CARR_ON;
+				tp->t_state =| CARR_ON;
 		}
-		DMADDR-&gt;dmcsr = IENABLE|SCENABL;
+		DMADDR->dmcsr = IENABLE|SCENABL;
 	}
 }

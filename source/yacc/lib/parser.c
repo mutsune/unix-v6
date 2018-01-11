@@ -24,31 +24,31 @@ yyparse() {
    yychar = -1;
    yynerrs = 0;
    yyerrflag = 0;
-   ps= &amp;s[0]-1;
-   yypv= &amp;yyv[0]-1;
+   ps= &s[0]-1;
+   yypv= &yyv[0]-1;
 
  stack:    /* put a state and value onto the stack */
 
-   if( yydebug  ) printf( &quot;state %d, value %d, char %d\n&quot;,yystate,yyval,yychar );
+   if( yydebug  ) printf( "state %d, value %d, char %d\n",yystate,yyval,yychar );
    *++ps = yystate;
    *++yypv = yyval;
 
  newstate:      /* set ap to point to the parsing actions for the new state */
 
-   p = &amp;yyact[ yypact[yystate+1] ]; 
+   p = &yyact[ yypact[yystate+1] ]; 
 
  actn:       /* get the next action, and perform it */
 
-   n = ( ac = *p++ ) &amp; 07777;  /* n is the &quot;address&quot; of the action */
+   n = ( ac = *p++ ) & 07777;  /* n is the "address" of the action */
 
-   switch( ac&gt;&gt;12 ) { /* switch on operation */
+   switch( ac>>12 ) { /* switch on operation */
 
    case 1:		/* skip on test */
-      if( yydebug &amp;&amp; (yychar&lt;0) ){
+      if( yydebug && (yychar<0) ){
         yychar = yylex();
-        printf( &quot;character %d read\n&quot;, yychar );
+        printf( "character %d read\n", yychar );
         }
-      if( n != ( (yychar&lt;0) ? ( yychar=yylex() ) : yychar ) ) ++p;
+      if( n != ( (yychar<0) ? ( yychar=yylex() ) : yychar ) ) ++p;
       goto actn;  /* get next action */
 
    case 2:		/* shift */
@@ -61,13 +61,13 @@ yyparse() {
 
    case 3:		/* reduce */
 
-      if( yydebug ) printf(&quot;reduce %d\n&quot;,n);
+      if( yydebug ) printf("reduce %d\n",n);
       ps =- yyr2[n];
       yypv =- yyr2[n];
       yyval=yypv[1];
       yyactr(n);
          /* consult goto table to find next state */
-      for( p= &amp;yygo[yypgo[yyr1[n]]]; *p != *ps &amp;&amp; *p &gt;= 0 ; p =+ 2 ) ;
+      for( p= &yygo[yypgo[yyr1[n]]]; *p != *ps && *p >= 0 ; p =+ 2 ) ;
       yystate = p[1];
       goto stack;  /* stack new state and value */
 
@@ -81,22 +81,22 @@ yyparse() {
       case 0:   /* brand new error */
 
          ++yynerrs;
-         yyerror( &quot;syntax error&quot; );
+         yyerror( "syntax error" );
 
       case 1:
       case 2: /* incompletely recovered error ... try again */
 
          yyerrflag = 3;
 
-         /* find a state where &quot;error&quot; is a legal shift action */
+         /* find a state where "error" is a legal shift action */
 
-         while ( ps &gt;= s ) {
-            for( p= &amp;yyact[ yypact[*ps+1] ] ; (*p&gt;&gt;12) == 1 ; p =+ 2 ) /* search ps actions */
+         while ( ps >= s ) {
+            for( p= &yyact[ yypact[*ps+1] ] ; (*p>>12) == 1 ; p =+ 2 ) /* search ps actions */
                 if( *p == 4352 ) goto found;
 
-            /* the current ps has no shift onn &quot;error&quot;, pop stack */
+            /* the current ps has no shift onn "error", pop stack */
 
-            if( yydebug ) printf( &quot;error recovery pops state %d, uncovers %d\n&quot;, *ps, ps[-1] );
+            if( yydebug ) printf( "error recovery pops state %d, uncovers %d\n", *ps, ps[-1] );
             --ps;
             --yypv;
             }
@@ -106,16 +106,16 @@ yyparse() {
     abort:
          return(1);
 
-      found:   /* we have a state with a shift on &quot;error&quot;, resume parsing */
+      found:   /* we have a state with a shift on "error", resume parsing */
 
-         yystate = p[1] &amp; 07777;
+         yystate = p[1] & 07777;
          goto stack;
 
       case 3:  /* no shift yet; clobber input char */
 
-         if( yydebug ) printf( &quot;error recovery discards char %d\n&quot;, yychar );
+         if( yydebug ) printf( "error recovery discards char %d\n", yychar );
 
-         if( yychar == 0 ) goto abort; /* don&#39;t discard EOF, quit */
+         if( yychar == 0 ) goto abort; /* don't discard EOF, quit */
          yychar = -1;
          goto newstate;   /* try again in the same state */
 

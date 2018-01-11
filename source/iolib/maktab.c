@@ -7,11 +7,11 @@ int i, normal;
 char ch;
 /* normally all characters end string except those listed */
 normal = 1;
-if (**formatp == &#39;^&#39;)
+if (**formatp == '^')
 	{normal = 0; (*formatp)++;}
-for (i= 0; i &lt; 128; i++)
+for (i= 0; i < 128; i++)
 	IEH3endm[i] = normal;
-while ((ch = *((*formatp)++)) != &#39;]&#39;)
+while ((ch = *((*formatp)++)) != ']')
 	IEH3endm[ch] = !IEH3endm[ch];
 
 }

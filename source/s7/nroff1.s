@@ -17,7 +17,7 @@ ibuf: /init code in ibuf+obuf
 1:
 	clr	r0
 	jsr	pc,ttyn
-	cmpb	r0,$&#39;x
+	cmpb	r0,$'x
 	bne	0f
 	inc	iflg
 	mov	$1,r0
@@ -41,14 +41,14 @@ ibuf: /init code in ibuf+obuf
 	sys	signal; 3; 1	/no quits
 	sys	signal; 1; 1	/allow hangup
 0:
-	mov	$&#39;%,rlist
-	mov	$&quot;nl,rlist+2
-	mov	$&quot;dn,rlist+4
-	mov	$&quot;yr,rlist+6
-	mov	$&quot;mo,rlist+8.
-	mov	$&quot;dy,rlist+10.
-	mov	$&quot;dw,rlist+12.
-	mov	$&quot;hp,rlist+14.
+	mov	$'%,rlist
+	mov	$"nl,rlist+2
+	mov	$"dn,rlist+4
+	mov	$"yr,rlist+6
+	mov	$"mo,rlist+8.
+	mov	$"dy,rlist+10.
+	mov	$"dw,rlist+12.
+	mov	$"hp,rlist+14.
 	mov	sp,r0
 	jsr	pc,makebf
 	sys	open; suffil; 0
@@ -66,16 +66,16 @@ ibuf: /init code in ibuf+obuf
 1:
 	tst	(sp)+
 	mov	(sp),r4
-	cmpb	(r4)+,$&#39;+
+	cmpb	(r4)+,$'+
 	bne	2f
 	jsr	r5,pnum; pfrom
 	br	3f
 2:
-	cmpb	-1(r4),$&#39;-
+	cmpb	-1(r4),$'-
 	bne	2f
 	tstb	(r4)
 	beq	4f
-	cmpb	(r4),$&#39;m
+	cmpb	(r4),$'m
 	bne	0f
 	mov	$nextf1,r0
 	tstb	(r4)+
@@ -86,7 +86,7 @@ ibuf: /init code in ibuf+obuf
 	inc	mflg
 	br	3f
 0:
-	cmpb	(r4),$&#39;r
+	cmpb	(r4),$'r
 	bne	0f
 	tstb	(r4)+
 	movb	(r4)+,r0
@@ -101,32 +101,32 @@ ibuf: /init code in ibuf+obuf
 	clr	ch
 	br	3f
 0:
-	cmpb	(r4),$&#39;s
+	cmpb	(r4),$'s
 	bne	0f
 	inc	stop
 	br	3f
 0:
-	cmpb	(r4),$&#39;o
+	cmpb	(r4),$'o
 	bne	0f
 	inc	old
 	br	3f
 0:
-	cmpb	(r4),$&#39;i
+	cmpb	(r4),$'i
 	bne	0f
 	inc	stdi
 	br	3f
 0:
-	cmpb	(r4),$&#39;q
+	cmpb	(r4),$'q
 	bne	0f
 	inc	quiet
 	br	3f
 0:
-	cmpb	(r4),$&#39;h
+	cmpb	(r4),$'h
 	bne	0f
 	clr	slow
 	br	3f
 0:
-	cmpb	(r4),$&#39;n
+	cmpb	(r4),$'n
 	bne	0f
 	inc	r4
 	jsr	r5,pnum; npn
@@ -165,7 +165,7 @@ ibuf: /init code in ibuf+obuf
 makebf:
 	tst	(r0)+
 	mov	(r0),r0
-	cmpb	(r0),$&#39;a
+	cmpb	(r0),$'a
 	bne	0f
 	mov	$bfn1,r0
 	mov	r0,7f
@@ -179,7 +179,7 @@ makebf:
 	bec	1f
 2:
 	incb	bfn1+3
-	cmpb	bfn1+3,$&#39;z
+	cmpb	bfn1+3,$'z
 	blos	0b
 	jmp	place
 1:
@@ -262,7 +262,7 @@ pnum:
 	clr	r3
 1:
 	movb	(r4)+,r0
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9
 	bhi	1f
 	inc	(sp)
@@ -280,7 +280,7 @@ pnum:
 	tst	(r5)+
 	br	1b
 
-emes1: &lt;Too many files.\n\0&gt;
+emes1: <Too many files.\n\0>
 .even
 obuf=ibuf+512.
 .=ibuf+1024.
@@ -332,7 +332,7 @@ loop:
 	jsr	pc,getchar
 	mov	r0,r5
 	jsr	pc,putchar
-	cmp	r5,$&#39;\n
+	cmp	r5,$'\n
 	bne	0b
 	clr	tflg
 	clr	copyf
@@ -446,7 +446,7 @@ gettchar:
 	rts	pc
 2:
 	dec	ulc
-	mov	$&#39;_,r0
+	mov	$'_,r0
 	rts	pc
 3:
 	jsr	pc,getchar
@@ -454,17 +454,17 @@ gettchar:
 	beq	4f
 	cmp	r0,$017
 	beq	4f
-	cmp	r0,$&#39;0
+	cmp	r0,$'0
 	blt	1f
-	cmp	r0,$&#39;9
+	cmp	r0,$'9
 	ble	2f
-	cmp	r0,$&#39;A
+	cmp	r0,$'A
 	blt	1f
-	cmp	r0,$&#39;Z
+	cmp	r0,$'Z
 	ble	2f
-	cmp	r0,$&#39;a
+	cmp	r0,$'a
 	blt	1f
-	cmp	r0,$&#39;z
+	cmp	r0,$'z
 	ble	2f
 1:
 	tst	ulc
@@ -527,7 +527,7 @@ getch0:
 1:
 	tst	nlflg
 	beq	1f
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	rts	pc
 1:
 	mov	r1,-(sp)
@@ -537,7 +537,7 @@ getch0:
 	bne	2f
 	jsr	pc,get1
 	jsr	r5,switch; esctab
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	3f
 /	clr	column
 	br	1b
@@ -604,7 +604,7 @@ getch0:
 	jsr	pc,setrpt
 	br	1b
 2:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	3f
 	inc	nlflg
 	clr	column
@@ -618,11 +618,11 @@ getch0:
 
 eatps:
 	jsr	pc,get1
-	cmpb	r0,$&#39;+
+	cmpb	r0,$'+
 	beq	0f
-	cmpb	r0,$&#39;-
+	cmpb	r0,$'-
 	beq	0f
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	ble	1f
 	cmp	r0,$3
 	bgt	1f
@@ -633,42 +633,42 @@ eatps:
 
 .data
 esctab:
-.byte &#39;*, 025  /text string
-.byte &#39;n, 034  /number char
-.byte &#39;$, 020  /dollar char
+.byte '*, 025  /text string
+.byte 'n, 034  /number char
+.byte '$, 020  /dollar char
 eschar:
-.byte &#39;\\, 134 /backslash
-.byte &#39;e,  013 /printable escape char
-.byte &#39;f, 026  /font indicator
-.byte &#39;s, 027  /point size
-.byte &#39;&amp;, 037 /filler
-.byte &#39;t, 011  /hor tab
-.byte &#39;!, 024  /transparent char
-.byte &#39;p, 021  /spread line
-.byte &#39;c, 005 /interrupted text
-.byte &#39;k, 372 /mk hor
+.byte '\\, 134 /backslash
+.byte 'e,  013 /printable escape char
+.byte 'f, 026  /font indicator
+.byte 's, 027  /point size
+.byte '&, 037 /filler
+.byte 't, 011  /hor tab
+.byte '!, 024  /transparent char
+.byte 'p, 021  /spread line
+.byte 'c, 005 /interrupted text
+.byte 'k, 372 /mk hor
 / 014 hidden tab replacement character
-.byte &#39; , 014 /\(space)
-.byte &#39;x, 016  /SO (extra chars)
-.byte &#39;y, 017  /SI (normal characters)
-.byte &#39;l, 0177 /delete
-.byte &#39;d, 032  /hlf (down)
-.byte &#39;u, 035  /hlr (up)
-.byte &#39;r, 036  /flr (reverse)
-.byte &#39;a, 001  /leader char
-.byte &#39;:, 003 /lem char
-.byte &#39;?, 002 /raw trans
-.byte &#39;&quot;, 376 /comment
-.byte &#39;w, 030  /width size char
+.byte ' , 014 /\(space)
+.byte 'x, 016  /SO (extra chars)
+.byte 'y, 017  /SI (normal characters)
+.byte 'l, 0177 /delete
+.byte 'd, 032  /hlf (down)
+.byte 'u, 035  /hlr (up)
+.byte 'r, 036  /flr (reverse)
+.byte 'a, 001  /leader char
+.byte ':, 003 /lem char
+.byte '?, 002 /raw trans
+.byte '", 376 /comment
+.byte 'w, 030  /width size char
 .byte 0, 0
 .text
 
 pfxtab:
-   .byte &#39;7, 036  /flr
-   .byte &#39;8, 035  /hlr
-   .byte &#39;9, 032  /hlf
-   .byte &#39;1, 026  /set hor tabs
-   .byte &#39;2, 027  /clr hor tabs
+   .byte '7, 036  /flr
+   .byte '8, 035  /hlr
+   .byte '9, 032  /hlf
+   .byte '1, 026  /set hor tabs
+   .byte '2, 027  /clr hor tabs
    .byte 0,0
 pfxtab1:
 
@@ -912,7 +912,7 @@ nextfile:
 	add	$2,argp
 3:
 	mov	r0,5f
-	cmpb	(r0)+,$&#39;-
+	cmpb	(r0)+,$'-
 	bne	0f
 	tstb	(r0)
 	bne	0f
@@ -955,8 +955,8 @@ nextfile:
 	clr	ifile
 	clr	ioff
 	rts	pc
-omes: &lt;Cannot open: \0&gt;
-9: &lt;\n\0&gt;
+omes: <Cannot open: \0>
+9: <\n\0>
 .even
 
 popf:
@@ -985,7 +985,7 @@ popf:
 	mov	$ibuf,ibufp
 	mov	ifile,r0
 	jsr	pc,ttyn
-	cmpb	r0,$&#39;x
+	cmpb	r0,$'x
 	bne	1f
 	sub	0b,ibufp
 	cmp	ibufp,eibuf
@@ -1034,13 +1034,13 @@ putchar:
 	br	putchar
 0:
 	movb	trtab(r0),r0
-	cmp	r0,$&#39; 
+	cmp	r0,$' 
 	bne	1f
 	inc	nsp
 2:
 	rts	pc
 1:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	clr	nsp
 	clr	ocol
@@ -1074,7 +1074,7 @@ putchar:
 	br	1b
 4:
 	mov	r0,-(sp)
-	mov	$&#39; ,r0
+	mov	$' ,r0
 	jsr	pc,pchar1
 	mov	(sp)+,r0
 	dec	nsp
@@ -1139,13 +1139,13 @@ dsp:
 	rts	pc
 
 unpfx:
-   .byte 032, &#39;9
-   .byte 035, &#39;8
-   .byte 036, &#39;7
-   .byte 031, &#39;3
-   .byte 030, &#39;4
-   .byte 026, &#39;1
-   .byte 027, &#39;2
+   .byte 032, '9
+   .byte 035, '8
+   .byte 036, '7
+   .byte 031, '3
+   .byte 030, '4
+   .byte 026, '1
+   .byte 027, '2
    .byte 0,0
 
 flush:
@@ -1186,7 +1186,7 @@ rdtty2:
 	rts pc
 2:
 	mov	char,r0
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	beq	3f
 	mov	$1,tty
 	br	1b
@@ -1198,7 +1198,7 @@ rdtty2:
 
 ttyn:
 	mov	r1,-(sp)
-	mov	$&#39;x,-(sp)
+	mov	$'x,-(sp)
 	clr	-(sp)
 	sys	fstat; ybuf
 	bes	3f
@@ -1215,13 +1215,13 @@ ttyn:
 	mov	$ybuf,r0
 	cmp	(r0)+,(sp)
 	bne	1b
-	cmp	(r0)+,$&quot;tt
+	cmp	(r0)+,$"tt
 	bne	1b
-	cmpb	(r0)+,$&#39;y
+	cmpb	(r0)+,$'y
 	bne	1b
 	tstb	(r0)+
 	beq	1b
-	cmpb	(r0),$&#39;\0
+	cmpb	(r0),$'\0
 	bne	1b
 	movb	-(r0),2(sp)
 2:
@@ -1232,7 +1232,7 @@ ttyn:
 	movb	(sp)+,r0
 	mov	(sp)+,r1
 	rts	pc
-dev:	&lt;/dev\0&gt;
+dev:	</dev\0>
 .even
 
 cont1:
@@ -1243,9 +1243,9 @@ control:
 	jsr	pc,getchar
 	mov	r0,-(sp)
 	jsr	pc,getchar
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	beq	8f
-	cmpb	r0,$&#39; /
+	cmpb	r0,$' /
 	bne	9f
 8:
 	mov	r0,ch
@@ -1285,78 +1285,78 @@ control:
 
 .data
 contab:
-&lt;ad&gt;; casead
-&lt;bp&gt;; casebp
-&lt;pn&gt;; casepn
-&lt;br&gt;; casebr
-&lt;cc&gt;; casecc
-&lt;c2&gt;; casec2
-&lt;ce&gt;; casece
-&lt;fi&gt;; casefi
-&lt;in&gt;; casein
-&lt;li&gt;; caseli
-&lt;ll&gt;; casell
-&lt;ls&gt;; casels
-&lt;ns&gt;; casens
-&lt;rs&gt;; casers
-&lt;na&gt;; casena
-&lt;ne&gt;; casene
-&lt;nf&gt;; casenf
-&lt;pl&gt;; casepl
-&lt;sp&gt;; casesp
-&lt;lv&gt;; casesv
-&lt;sv&gt;; casesv
-&lt;os&gt;; caseos
-&lt;ta&gt;; caseta
-&lt;ti&gt;; caseti
-&lt;tr&gt;; casetr
-&lt;ul&gt;; caseul
-&lt;tl&gt;; casetl
-&lt;lt&gt;; caselt
-&lt;hc&gt;; casehc
-&lt;hy&gt;; casehy
-&lt;nh&gt;; casenh
-&lt;nm&gt;; casenm
-&lt;np&gt;; casenp
-&lt;nn&gt;; casenn
-&lt;ar&gt;; casear
-&lt;ro&gt;; casero
-&lt;RO&gt;; caseroc
-&lt;nx&gt;; casenx
-&lt;so&gt;; caseso
-&lt;po&gt;; casepo
-&lt;de&gt;; casede
-&lt;ds&gt;; caseds
-&lt;am&gt;; caseam
-&lt;as&gt;; caseas
-&lt;da&gt;; caseda
-&lt;di&gt;; casedi
-&lt;rm&gt;; caserm
-&lt;rn&gt;; casern
-&lt;ig&gt;; caseig
-&lt;tc&gt;; casetc
-&lt;ec&gt;; caseec
-&lt;eo&gt;; caseeo
-&lt;lc&gt;; caselc
-&lt;nc&gt;; casenc
-&lt;ev&gt;; caseev
-&lt;if&gt;; caseif
-&lt;wh&gt;; casewh
-&lt;ch&gt;; casech
-&lt;rd&gt;; caserd
-&lt;tm&gt;; casetm
-&lt;nr&gt;; casenr
-&lt;mk&gt;; casemk
-&lt;rt&gt;; casert
-&lt;ab&gt;; casest
-&lt;fl&gt;; casefl
-&lt;ex&gt;; done
-&lt;xh&gt;; casexh
-&lt;em&gt;; caseem
-&lt;fc&gt;; casefc
-&lt;af&gt;; caseaf
-&lt;pi&gt;; casepi
-&lt;hw&gt;; casehw
+<ad>; casead
+<bp>; casebp
+<pn>; casepn
+<br>; casebr
+<cc>; casecc
+<c2>; casec2
+<ce>; casece
+<fi>; casefi
+<in>; casein
+<li>; caseli
+<ll>; casell
+<ls>; casels
+<ns>; casens
+<rs>; casers
+<na>; casena
+<ne>; casene
+<nf>; casenf
+<pl>; casepl
+<sp>; casesp
+<lv>; casesv
+<sv>; casesv
+<os>; caseos
+<ta>; caseta
+<ti>; caseti
+<tr>; casetr
+<ul>; caseul
+<tl>; casetl
+<lt>; caselt
+<hc>; casehc
+<hy>; casehy
+<nh>; casenh
+<nm>; casenm
+<np>; casenp
+<nn>; casenn
+<ar>; casear
+<ro>; casero
+<RO>; caseroc
+<nx>; casenx
+<so>; caseso
+<po>; casepo
+<de>; casede
+<ds>; caseds
+<am>; caseam
+<as>; caseas
+<da>; caseda
+<di>; casedi
+<rm>; caserm
+<rn>; casern
+<ig>; caseig
+<tc>; casetc
+<ec>; caseec
+<eo>; caseeo
+<lc>; caselc
+<nc>; casenc
+<ev>; caseev
+<if>; caseif
+<wh>; casewh
+<ch>; casech
+<rd>; caserd
+<tm>; casetm
+<nr>; casenr
+<mk>; casemk
+<rt>; casert
+<ab>; casest
+<fl>; casefl
+<ex>; done
+<xh>; casexh
+<em>; caseem
+<fc>; casefc
+<af>; caseaf
+<pi>; casepi
+<hw>; casehw
 bnames: .=.+512.
 -1; -1
 .text

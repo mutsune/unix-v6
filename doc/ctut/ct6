@@ -7,24 +7,24 @@ when it is defined.
 The initializing value has to be something whose value is known at compile time,
 like a constant.
 .E1
-int	x	0;	/\** &quot;0&quot; could be any constant \**/
-int	a	&#39;a&#39;;
+int	x	0;	/\** "0" could be any constant \**/
+int	a	'a';
 char	flag	0177;
-int	\**p	&amp;y[1];	/\** p now points to y[1] \**/
+int	\**p	&y[1];	/\** p now points to y[1] \**/
 .E2
 An external array can be initialized by following its name with
 a list of initializations enclosed in braces:
 .E1
 int	x[4]	{0,1,2,3};		/\** makes x[i] = i \**/
 int	y[ ]	{0,1,2,3};		/\** makes y big enough for 4 values \**/
-char	\**msg	&quot;syntax error\\n&quot;;	/\** braces unnecessary here \**/
+char	\**msg	"syntax error\\n";	/\** braces unnecessary here \**/
 char \**keyword[ ]{
-	&quot;if&quot;,
-	&quot;else&quot;,
-	&quot;for&quot;,
-	&quot;while&quot;,
-	&quot;break&quot;,
-	&quot;continue&quot;,
+	"if",
+	"else",
+	"for",
+	"while",
+	"break",
+	"continue",
 	0
 };
 .E2
@@ -41,7 +41,7 @@ lookup(str)		/\** search for str in keyword[ ] \**/
    char \**str; {
 	int i,j,r;
 	for( i=0; keyword[i] != 0; i\*+) {
-		for( j=0; (r=keyword[i][j]) \*= str[j] &amp;&amp; r != &#39;\\0&#39;; j\*+ );
+		for( j=0; (r=keyword[i][j]) \*= str[j] && r != '\\0'; j\*+ );
 		if( r \*= str[j] )
 			return(i);
 	}

@@ -1,7 +1,7 @@
 /
 /
 
-/ exp &amp; dexp fortran functions
+/ exp & dexp fortran functions
 
 .globl	exp.
 .globl	dexp.

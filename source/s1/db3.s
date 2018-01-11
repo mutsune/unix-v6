@@ -22,98 +22,98 @@ prints:
 	br	1b
 
 optab:
-	107777; 010000; double; &lt;mov\0\0\0&gt;
-	107777; 020000; double; &lt;cmp\0\0\0&gt;
-	107777; 030000; double; &lt;bit\0\0\0&gt;
-	107777; 040000; double; &lt;bic\0\0\0&gt;
-	107777; 050000; double; &lt;bis\0\0\0&gt;
-	007777; 060000; double; &lt;add\0\0\0&gt;
-	007777; 160000; double; &lt;su\0\0\0\0&gt;
+	107777; 010000; double; <mov\0\0\0>
+	107777; 020000; double; <cmp\0\0\0>
+	107777; 030000; double; <bit\0\0\0>
+	107777; 040000; double; <bic\0\0\0>
+	107777; 050000; double; <bis\0\0\0>
+	007777; 060000; double; <add\0\0\0>
+	007777; 160000; double; <su\0\0\0\0>
 
-	100077; 005000; single; &lt;clr\0\0\0&gt;
-	100077; 005100; single; &lt;com\0\0\0&gt;
-	100077; 005200; single; &lt;inc\0\0\0&gt;
-	100077; 005300; single; &lt;dec\0\0\0&gt;
-	100077; 005400; single; &lt;neg\0\0\0&gt;
-	100077; 005500; single; &lt;adc\0\0\0&gt;
-	100077; 005600; single; &lt;sbc\0\0\0&gt;
-	100077; 005700; single; &lt;tst\0\0\0&gt;
-	100077; 006000; single; &lt;ror\0\0\0&gt;
-	100077; 006100; single; &lt;rol\0\0\0&gt;
-	100077; 006200; single; &lt;asr\0\0\0&gt;
-	100077; 006300; single; &lt;asl\0\0\0&gt;
-	000077; 000100; single; &lt;jmp\0\0\0&gt;
-	000077; 000300; single; &lt;swab\0\0&gt;
-	000077; 170100; singlw; &lt;ldfps\0&gt;
-	000077; 170200; singlw; &lt;stfps\0&gt;
-	000077; 170300; singlw; &lt;stst\0\0&gt;
-	000077; 170400; singlw; &lt;clrf\0\0&gt;
-	000077; 170500; singlw; &lt;tstf\0\0&gt;
-	000077; 170600; singlw; &lt;absf\0\0&gt;
-	000077; 170700; singlw; &lt;negf\0\0&gt;
-	000077; 006700; singlw; &lt;sxt\0\0\0&gt;
-	000077; 006600; singlw; &lt;mtpi\0\0&gt;
-	000077; 106600; singlw; &lt;mtpd\0\0&gt;
-	000077; 006500; singlw; &lt;mfpi\0\0&gt;
-	000077; 106500; singlw; &lt;mfpd\0\0&gt;
-	000777; 070000; muldiv; &lt;mul\0\0\0&gt;
-	000777; 071000; muldiv; &lt;div\0\0\0&gt;
-	000777; 072000; muldiv; &lt;ash\0\0\0&gt;
-	000777; 073000; muldiv; &lt;ashc\0\0&gt;
+	100077; 005000; single; <clr\0\0\0>
+	100077; 005100; single; <com\0\0\0>
+	100077; 005200; single; <inc\0\0\0>
+	100077; 005300; single; <dec\0\0\0>
+	100077; 005400; single; <neg\0\0\0>
+	100077; 005500; single; <adc\0\0\0>
+	100077; 005600; single; <sbc\0\0\0>
+	100077; 005700; single; <tst\0\0\0>
+	100077; 006000; single; <ror\0\0\0>
+	100077; 006100; single; <rol\0\0\0>
+	100077; 006200; single; <asr\0\0\0>
+	100077; 006300; single; <asl\0\0\0>
+	000077; 000100; single; <jmp\0\0\0>
+	000077; 000300; single; <swab\0\0>
+	000077; 170100; singlw; <ldfps\0>
+	000077; 170200; singlw; <stfps\0>
+	000077; 170300; singlw; <stst\0\0>
+	000077; 170400; singlw; <clrf\0\0>
+	000077; 170500; singlw; <tstf\0\0>
+	000077; 170600; singlw; <absf\0\0>
+	000077; 170700; singlw; <negf\0\0>
+	000077; 006700; singlw; <sxt\0\0\0>
+	000077; 006600; singlw; <mtpi\0\0>
+	000077; 106600; singlw; <mtpd\0\0>
+	000077; 006500; singlw; <mfpi\0\0>
+	000077; 106500; singlw; <mfpd\0\0>
+	000777; 070000; muldiv; <mul\0\0\0>
+	000777; 071000; muldiv; <div\0\0\0>
+	000777; 072000; muldiv; <ash\0\0\0>
+	000777; 073000; muldiv; <ashc\0\0>
 
-	000377; 000400; branch; &lt;br\0\0\0\0&gt;
-	000377; 001000; branch; &lt;bne\0\0\0&gt;
-	000377; 001400; branch; &lt;beq\0\0\0&gt;
-	000377; 002000; branch; &lt;bge\0\0\0&gt;
-	000377; 002400; branch; &lt;blt\0\0\0&gt;
-	000377; 003000; branch; &lt;bgt\0\0\0&gt;
-	000377; 003400; branch; &lt;ble\0\0\0&gt;
-	000377; 100000; branch; &lt;bpl\0\0\0&gt;
-	000377; 100400; branch; &lt;bmi\0\0\0&gt;
-	000377; 101000; branch; &lt;bhi\0\0\0&gt;
-	000377; 101400; branch; &lt;blos\0\0&gt;
-	000377; 102000; branch; &lt;bvc\0\0\0&gt;
-	000377; 102400; branch; &lt;bvs\0\0\0&gt;
-	000377; 103000; branch; &lt;bhis\0\0&gt;
-	000377; 103400; branch; &lt;blo\0\0\0&gt;
+	000377; 000400; branch; <br\0\0\0\0>
+	000377; 001000; branch; <bne\0\0\0>
+	000377; 001400; branch; <beq\0\0\0>
+	000377; 002000; branch; <bge\0\0\0>
+	000377; 002400; branch; <blt\0\0\0>
+	000377; 003000; branch; <bgt\0\0\0>
+	000377; 003400; branch; <ble\0\0\0>
+	000377; 100000; branch; <bpl\0\0\0>
+	000377; 100400; branch; <bmi\0\0\0>
+	000377; 101000; branch; <bhi\0\0\0>
+	000377; 101400; branch; <blos\0\0>
+	000377; 102000; branch; <bvc\0\0\0>
+	000377; 102400; branch; <bvs\0\0\0>
+	000377; 103000; branch; <bhis\0\0>
+	000377; 103400; branch; <blo\0\0\0>
 
-	000000; 000000; noaddr; &lt;halt\0\0&gt;
-	000000; 000001; noaddr; &lt;wait\0\0&gt;
-	000000; 000002; noaddr; &lt;rti\0\0\0&gt;
-	000000; 000004; noaddr; &lt;iot\0\0\0&gt;
-	000000; 000005; noaddr; &lt;reset\0&gt;
+	000000; 000000; noaddr; <halt\0\0>
+	000000; 000001; noaddr; <wait\0\0>
+	000000; 000002; noaddr; <rti\0\0\0>
+	000000; 000004; noaddr; <iot\0\0\0>
+	000000; 000005; noaddr; <reset\0>
 
-	000377; 171000; fltrev; &lt;mulf\0\0&gt;
-	000377; 171400; fltrev; &lt;modf\0\0&gt;
-	000377; 172000; fltrev; &lt;addf\0\0&gt;
-	000377; 172400; fltrev; &lt;movf\0\0&gt;
-	000377; 173000; fltrev; &lt;subf\0\0&gt;
-	000377; 173400; fltrev; &lt;cmpf\0\0&gt;
-	000377; 174000; fltnor; &lt;movf\0\0&gt;
-	000377; 174400; fltrev; &lt;divf\0\0&gt;
-	000377; 175000; fltnor; &lt;movei\0&gt;
-	000377; 175400; fltnor; &lt;movfi\0&gt;
-	000377; 176000; fltnor; &lt;movfo\0&gt;
-	000377; 176400; fltrev; &lt;movie\0&gt;
-	000377; 177000; fltrev; &lt;movif\0&gt;
-	000377; 177400; fltrev; &lt;movof\0&gt;
-	000000; 170000; noaddr; &lt;cfcc\0\0&gt;
-	000000; 170001; noaddr; &lt;setf\0\0&gt;
-	000000; 170002; noaddr; &lt;seti\0\0&gt;
-	000000; 170011; noaddr; &lt;setd\0\0&gt;
-	000000; 170012; noaddr; &lt;setl\0\0&gt;
+	000377; 171000; fltrev; <mulf\0\0>
+	000377; 171400; fltrev; <modf\0\0>
+	000377; 172000; fltrev; <addf\0\0>
+	000377; 172400; fltrev; <movf\0\0>
+	000377; 173000; fltrev; <subf\0\0>
+	000377; 173400; fltrev; <cmpf\0\0>
+	000377; 174000; fltnor; <movf\0\0>
+	000377; 174400; fltrev; <divf\0\0>
+	000377; 175000; fltnor; <movei\0>
+	000377; 175400; fltnor; <movfi\0>
+	000377; 176000; fltnor; <movfo\0>
+	000377; 176400; fltrev; <movie\0>
+	000377; 177000; fltrev; <movif\0>
+	000377; 177400; fltrev; <movof\0>
+	000000; 170000; noaddr; <cfcc\0\0>
+	000000; 170001; noaddr; <setf\0\0>
+	000000; 170002; noaddr; <seti\0\0>
+	000000; 170011; noaddr; <setd\0\0>
+	000000; 170012; noaddr; <setl\0\0>
 
-	000777; 004000; specl1; &lt;jsr\0\0\0&gt;
-	000777; 074000; specl1; &lt;xor\0\0\0&gt;
-	000007; 000200; specl2; &lt;rts\0\0\0&gt;
-	000017; 000240; specl3; &lt;cflg\0\0&gt;
-	000017; 000260; specl3; &lt;sflg\0\0&gt;
-	000377; 104000; specl4; &lt;emt\0\0\0&gt;
-	000377; 104400; specl5; &lt;sys\0\0\0&gt;
-	000077; 006400; specl7; &lt;mark\0\0&gt;
-	000777; 077000; specl8; &lt;sob\0\0\0&gt;
-	000007; 000230; specl9; &lt;spl\0\0\0&gt;
-	177777; 000000; specl6; &lt;oct\0\0\0&gt;
+	000777; 004000; specl1; <jsr\0\0\0>
+	000777; 074000; specl1; <xor\0\0\0>
+	000007; 000200; specl2; <rts\0\0\0>
+	000017; 000240; specl3; <cflg\0\0>
+	000017; 000260; specl3; <sflg\0\0>
+	000377; 104000; specl4; <emt\0\0\0>
+	000377; 104400; specl5; <sys\0\0\0>
+	000077; 006400; specl7; <mark\0\0>
+	000777; 077000; specl8; <sob\0\0\0>
+	000007; 000230; specl9; <spl\0\0\0>
+	177777; 000000; specl6; <oct\0\0\0>
 
 fltrev:
 	bic	$!377,(sp)
@@ -233,7 +233,7 @@ specl3: / opr
 1:
 	rts	pc
 3:
-	&lt;nzvc&gt;
+	<nzvc>
 
 specl7: / mark
 	bic	$!77,(sp)
@@ -270,7 +270,7 @@ specl5: / sys
 	tst	(sp)+
 	rts	pc
 2:
-	jsr	r5,mesg; &lt;;\0&gt;
+	jsr	r5,mesg; <;\0>
 	add	$2,temp1
 	add	$2,incdot
 	jsr	r5,get; temp1
@@ -278,46 +278,46 @@ specl5: / sys
 	br	1b
 
 systab:
-	1f; 0; .data; 1:&lt;rele\0&gt;; .text
-	1f; 0; .data; 1:&lt;exit\0&gt;; .text
-	1f; 0; .data; 1:&lt;fork\0&gt;; .text
-	1f; 2; .data; 1:&lt;read\0&gt;; .text
-	1f; 2; .data; 1:&lt;write\0&gt;; .text
-	1f; 2; .data; 1:&lt;open\0&gt;; .text
-	1f; 0; .data; 1:&lt;close\0&gt;; .text
-	1f; 0; .data; 1:&lt;wait\0&gt;; .text
-	1f; 2; .data; 1:&lt;creat\0&gt;; .text
-	1f; 2; .data; 1:&lt;link\0&gt;; .text
-	1f; 1; .data; 1:&lt;unlink\0&gt;; .text
-	1f; 2; .data; 1:&lt;exec\0&gt;; .text
-	1f; 1; .data; 1:&lt;chdir\0&gt;; .text
-	1f; 0; .data; 1:&lt;time\0&gt;; .text
-	1f; 1; .data; 1:&lt;makdir\0&gt;; .text
-	1f; 2; .data; 1:&lt;chmod\0&gt;; .text
-	1f; 2; .data; 1:&lt;chown\0&gt;; .text
-	1f; 1; .data; 1:&lt;break\0&gt;; .text
-	1f; 2; .data; 1:&lt;stat\0&gt;; .text
-	1f; 2; .data; 1:&lt;seek\0&gt;; .text
-	1f; 2; .data; 1:&lt;tell\0&gt;; .text
-	1f; 2; .data; 1:&lt;mount\0&gt;; .text
-	1f; 1; .data; 1:&lt;umount\0&gt;; .text
-	1f; 0; .data; 1:&lt;setuid\0&gt;; .text
-	1f; 0; .data; 1:&lt;getuid\0&gt;; .text
-	1f; 0; .data; 1:&lt;stime\0&gt;; .text
-	1f; 1; .data; 1:&lt;quit\0&gt;; .text
-	1f; 1; .data; 1:&lt;intr\0&gt;; .text
-	1f; 1; .data; 1:&lt;fstat\0&gt;; .text
-	1f; 1; .data; 1:&lt;emt\0&gt;; .text
-	1f; 1; .data; 1:&lt;smdate\0&gt;; .text
-	1f; 1; .data; 1:&lt;stty\0&gt;; .text
-	1f; 1; .data; 1:&lt;gtty\0&gt;; .text
-	1f; 1; .data; 1:&lt;ilgins\0&gt;; .text
-	1f; 0; .data; 1:&lt;hog\0&gt;; .text
-	1f; 0; .data; 1:&lt;sleep\0&gt;; .text
-	1f; 0; .data; 1:&lt;sync\0&gt;; .text
-	1f; 0; .data; 1:&lt;kill\0&gt;; .text
-	1f; 0; .data; 1:&lt;switches\0&gt;; .text
-	1f; 0; .data; 1:&lt;boot\0&gt;; .text
+	1f; 0; .data; 1:<rele\0>; .text
+	1f; 0; .data; 1:<exit\0>; .text
+	1f; 0; .data; 1:<fork\0>; .text
+	1f; 2; .data; 1:<read\0>; .text
+	1f; 2; .data; 1:<write\0>; .text
+	1f; 2; .data; 1:<open\0>; .text
+	1f; 0; .data; 1:<close\0>; .text
+	1f; 0; .data; 1:<wait\0>; .text
+	1f; 2; .data; 1:<creat\0>; .text
+	1f; 2; .data; 1:<link\0>; .text
+	1f; 1; .data; 1:<unlink\0>; .text
+	1f; 2; .data; 1:<exec\0>; .text
+	1f; 1; .data; 1:<chdir\0>; .text
+	1f; 0; .data; 1:<time\0>; .text
+	1f; 1; .data; 1:<makdir\0>; .text
+	1f; 2; .data; 1:<chmod\0>; .text
+	1f; 2; .data; 1:<chown\0>; .text
+	1f; 1; .data; 1:<break\0>; .text
+	1f; 2; .data; 1:<stat\0>; .text
+	1f; 2; .data; 1:<seek\0>; .text
+	1f; 2; .data; 1:<tell\0>; .text
+	1f; 2; .data; 1:<mount\0>; .text
+	1f; 1; .data; 1:<umount\0>; .text
+	1f; 0; .data; 1:<setuid\0>; .text
+	1f; 0; .data; 1:<getuid\0>; .text
+	1f; 0; .data; 1:<stime\0>; .text
+	1f; 1; .data; 1:<quit\0>; .text
+	1f; 1; .data; 1:<intr\0>; .text
+	1f; 1; .data; 1:<fstat\0>; .text
+	1f; 1; .data; 1:<emt\0>; .text
+	1f; 1; .data; 1:<smdate\0>; .text
+	1f; 1; .data; 1:<stty\0>; .text
+	1f; 1; .data; 1:<gtty\0>; .text
+	1f; 1; .data; 1:<ilgins\0>; .text
+	1f; 0; .data; 1:<hog\0>; .text
+	1f; 0; .data; 1:<sleep\0>; .text
+	1f; 0; .data; 1:<sync\0>; .text
+	1f; 0; .data; 1:<kill\0>; .text
+	1f; 0; .data; 1:<switches\0>; .text
+	1f; 0; .data; 1:<boot\0>; .text
 esystab:
 .data
 .even

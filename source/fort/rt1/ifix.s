@@ -1,7 +1,7 @@
 /
 /
 
-/ ifix &amp; int fortran functions
+/ ifix & int fortran functions
 
 .globl	ifix.
 .globl	int.

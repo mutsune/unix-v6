@@ -13,6 +13,6 @@ putoct:	mov	r0,-(sp)
 	jsr	pc,putoct
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putch
 	rts	pc

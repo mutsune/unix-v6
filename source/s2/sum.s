@@ -13,7 +13,7 @@ loop:	dec	r3
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	br	loop
-1:	&lt;oprd\n&gt;
+1:	<oprd\n>
 2:	.even
 3:	mov	r0,r1
 	clr	r5
@@ -47,9 +47,9 @@ print:
 	mov	r1,r0
 	sys	close
 	br	loop
-1:	&lt;? &gt;
-nl:	&lt;\n&gt;
-bl:	&lt; &gt;
+1:	<? >
+nl:	<\n>
+bl:	< >
 	.even
 
 decml:
@@ -70,7 +70,7 @@ decml:
 	jsr	pc,1b
 1:
 	mov	(sp)+,ch
-	add	$&#39;0,ch
+	add	$'0,ch
 	mov	$1,r0
 	sys	write; ch; 1
 	rts	pc

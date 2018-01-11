@@ -684,7 +684,7 @@ dump:
 	mov	KISA6,(r0)+
 
 / dump all of core (ie to first mt error)
-/ onto mag tape. (9 track or 7 track &#39;binary&#39;)
+/ onto mag tape. (9 track or 7 track 'binary')
 
 	mov	$MTC,r0
 	mov	$60004,(r0)+
@@ -729,7 +729,7 @@ start:
 	ash	$-6,r2
 	bic	$!1777,r2
 	mov	r2,(r0)+		/ ksr6 = sysu
-	mov	$usize-1\&lt;8|6,(r1)+
+	mov	$usize-1\<8|6,(r1)+
 
 / initialize io segment
 / set up counts on supervisor segments

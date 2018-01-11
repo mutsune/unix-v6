@@ -71,7 +71,7 @@ int	ichanged;
 int	nleft;
 int	errfunc();
 int	*errlab	errfunc;
-char	TMPERR[] &quot;TMP&quot;;
+char	TMPERR[] "TMP";
 int	names[26];
 char	*braslist[NBRA];
 char	*braelist[NBRA];
@@ -85,25 +85,25 @@ char **argv;
 	onquit = signal(SIGQUIT, 1);
 	onhup = signal(SIGHUP, 1);
 	argv++;
-	if (argc &gt; 1 &amp;&amp; **argv==&#39;-&#39;) {
+	if (argc > 1 && **argv=='-') {
 		vflag = 0;
 		/* allow debugging quits? */
-		if ((*argv)[1]==&#39;q&#39;) {
+		if ((*argv)[1]=='q') {
 			signal(SIGQUIT, 0);
 			vflag++;
 		}
 		argv++;
 		argc--;
 	}
-	if (argc&gt;1) {
+	if (argc>1) {
 		p1 = *argv;
 		p2 = savedfile;
 		while (*p2++ = *p1++);
-		globp = &quot;r&quot;;
+		globp = "r";
 	}
 	fendcore = sbrk(0);
 	init();
-	if ((signal(SIGINTR, 1) &amp; 01) == 0)
+	if ((signal(SIGINTR, 1) & 01) == 0)
 		signal(SIGINTR, onintr);
 	setexit();
 	commands();
@@ -132,42 +132,42 @@ commands()
 			break;
 		}
 		addr2 = a1;
-		if ((c=getchar()) == &#39;;&#39;) {
-			c = &#39;,&#39;;
+		if ((c=getchar()) == ';') {
+			c = ',';
 			dot = a1;
 		}
-	} while (c==&#39;,&#39;);
+	} while (c==',');
 	if (addr1==0)
 		addr1 = addr2;
 	switch(c) {
 
-	case &#39;a&#39;:
+	case 'a':
 		setdot();
 		newline();
 		append(gettty, addr2);
 		continue;
 
-	case &#39;c&#39;:
+	case 'c':
 		delete();
 		append(gettty, addr1-1);
 		continue;
 
-	case &#39;d&#39;:
+	case 'd':
 		delete();
 		continue;
 
-	case &#39;e&#39;:
+	case 'e':
 		setnoaddr();
-		if ((peekc = getchar()) != &#39; &#39;)
+		if ((peekc = getchar()) != ' ')
 			error;
 		savedfile[0] = 0;
 		init();
 		addr2 = zero;
 		goto caseread;
 
-	case &#39;f&#39;:
+	case 'f':
 		setnoaddr();
-		if ((c = getchar()) != &#39;\n&#39;) {
+		if ((c = getchar()) != '\n') {
 			peekc = c;
 			savedfile[0] = 0;
 			filename();
@@ -175,39 +175,39 @@ commands()
 		puts(savedfile);
 		continue;
 
-	case &#39;g&#39;:
+	case 'g':
 		global(1);
 		continue;
 
-	case &#39;i&#39;:
+	case 'i':
 		setdot();
 		nonzero();
 		newline();
 		append(gettty, addr2-1);
 		continue;
 
-	case &#39;k&#39;:
-		if ((c = getchar()) &lt; &#39;a&#39; || c &gt; &#39;z&#39;)
+	case 'k':
+		if ((c = getchar()) < 'a' || c > 'z')
 			error;
 		newline();
 		setdot();
 		nonzero();
-		names[c-&#39;a&#39;] = *addr2 | 01;
+		names[c-'a'] = *addr2 | 01;
 		continue;
 
-	case &#39;m&#39;:
+	case 'm':
 		move(0);
 		continue;
 
-	case &#39;\n&#39;:
+	case '\n':
 		if (addr2==0)
 			addr2 = dot+1;
 		addr1 = addr2;
 		goto print;
 
-	case &#39;l&#39;:
+	case 'l':
 		listf++;
-	case &#39;p&#39;:
+	case 'p':
 		newline();
 	print:
 		setdot();
@@ -215,22 +215,22 @@ commands()
 		a1 = addr1;
 		do
 			puts(getline(*a1++));
-		while (a1 &lt;= addr2);
+		while (a1 <= addr2);
 		dot = addr2;
 		listf = 0;
 		continue;
 
-	case &#39;q&#39;:
+	case 'q':
 		setnoaddr();
 		newline();
 		unlink(tfname);
 		exit();
 
-	case &#39;r&#39;:
+	case 'r':
 	caseread:
 		filename();
-		if ((io = open(file, 0)) &lt; 0) {
-			lastc = &#39;\n&#39;;
+		if ((io = open(file, 0)) < 0) {
+			lastc = '\n';
 			error;
 		}
 		setall();
@@ -239,39 +239,39 @@ commands()
 		exfile();
 		continue;
 
-	case &#39;s&#39;:
+	case 's':
 		setdot();
 		nonzero();
 		substitute(globp);
 		continue;
 
-	case &#39;t&#39;:
+	case 't':
 		move(1);
 		continue;
 
-	case &#39;v&#39;:
+	case 'v':
 		global(0);
 		continue;
 
-	case &#39;w&#39;:
+	case 'w':
 		setall();
 		nonzero();
 		filename();
-		if ((io = creat(file, 0666)) &lt; 0)
+		if ((io = creat(file, 0666)) < 0)
 			error;
 		putfile();
 		exfile();
 		continue;
 
-	case &#39;=&#39;:
+	case '=':
 		setall();
 		newline();
-		count[1] = (addr2-zero)&amp;077777;
+		count[1] = (addr2-zero)&077777;
 		putd();
-		putchar(&#39;\n&#39;);
+		putchar('\n');
 		continue;
 
-	case &#39;!&#39;:
+	case '!':
 		unix();
 		continue;
 
@@ -292,16 +292,16 @@ address()
 	a1 = 0;
 	for (;;) {
 		c = getchar();
-		if (&#39;0&#39;&lt;=c &amp;&amp; c&lt;=&#39;9&#39;) {
+		if ('0'<=c && c<='9') {
 			n = 0;
 			do {
 				n =* 10;
-				n =+ c - &#39;0&#39;;
-			} while ((c = getchar())&gt;=&#39;0&#39; &amp;&amp; c&lt;=&#39;9&#39;);
+				n =+ c - '0';
+			} while ((c = getchar())>='0' && c<='9');
 			peekc = c;
 			if (a1==0)
 				a1 = zero;
-			if (minus&lt;0)
+			if (minus<0)
 				n = -n;
 			a1 =+ n;
 			minus = 0;
@@ -311,35 +311,35 @@ address()
 		if (a1 || minus)
 			relerr++;
 		switch(c) {
-		case &#39; &#39;:
-		case &#39;\t&#39;:
+		case ' ':
+		case '\t':
 			continue;
 	
-		case &#39;+&#39;:
+		case '+':
 			minus++;
 			if (a1==0)
 				a1 = dot;
 			continue;
 
-		case &#39;-&#39;:
-		case &#39;^&#39;:
+		case '-':
+		case '^':
 			minus--;
 			if (a1==0)
 				a1 = dot;
 			continue;
 	
-		case &#39;?&#39;:
-		case &#39;/&#39;:
+		case '?':
+		case '/':
 			compile(c);
 			a1 = dot;
 			for (;;) {
-				if (c==&#39;/&#39;) {
+				if (c=='/') {
 					a1++;
-					if (a1 &gt; dol)
+					if (a1 > dol)
 						a1 = zero;
 				} else {
 					a1--;
-					if (a1 &lt; zero)
+					if (a1 < zero)
 						a1 = dol;
 				}
 				if (execute(0, a1))
@@ -349,19 +349,19 @@ address()
 			}
 			break;
 	
-		case &#39;$&#39;:
+		case '$':
 			a1 = dol;
 			break;
 	
-		case &#39;.&#39;:
+		case '.':
 			a1 = dot;
 			break;
 
-		case &#39;\&#39;&#39;:
-			if ((c = getchar()) &lt; &#39;a&#39; || c &gt; &#39;z&#39;)
+		case '\'':
+			if ((c = getchar()) < 'a' || c > 'z')
 				error;
-			for (a1=zero; a1&lt;=dol; a1++)
-				if (names[c-&#39;a&#39;] == (*a1|01))
+			for (a1=zero; a1<=dol; a1++)
+				if (names[c-'a'] == (*a1|01))
 					break;
 			break;
 	
@@ -370,7 +370,7 @@ address()
 			if (a1==0)
 				return(0);
 			a1 =+ minus;
-			if (a1&lt;zero || a1&gt;dol)
+			if (a1<zero || a1>dol)
 				error;
 			return(a1);
 		}
@@ -383,7 +383,7 @@ setdot()
 {
 	if (addr2 == 0)
 		addr1 = addr2 = dot;
-	if (addr1 &gt; addr2)
+	if (addr1 > addr2)
 		error;
 }
 
@@ -406,7 +406,7 @@ setnoaddr()
 
 nonzero()
 {
-	if (addr1&lt;=zero || addr2&gt;dol)
+	if (addr1<=zero || addr2>dol)
 		error;
 }
 
@@ -414,13 +414,13 @@ newline()
 {
 	register c;
 
-	if ((c = getchar()) == &#39;\n&#39;)
+	if ((c = getchar()) == '\n')
 		return;
-	if (c==&#39;p&#39; || c==&#39;l&#39;) {
+	if (c=='p' || c=='l') {
 		pflag++;
-		if (c==&#39;l&#39;)
+		if (c=='l')
 			listf++;
-		if (getchar() == &#39;\n&#39;)
+		if (getchar() == '\n')
 			return;
 	}
 	error;
@@ -433,7 +433,7 @@ filename()
 
 	count[1] = 0;
 	c = getchar();
-	if (c==&#39;\n&#39; || c==EOF) {
+	if (c=='\n' || c==EOF) {
 		p1 = savedfile;
 		if (*p1==0)
 			error;
@@ -441,15 +441,15 @@ filename()
 		while (*p2++ = *p1++);
 		return;
 	}
-	if (c!=&#39; &#39;)
+	if (c!=' ')
 		error;
-	while ((c = getchar()) == &#39; &#39;);
-	if (c==&#39;\n&#39;)
+	while ((c = getchar()) == ' ');
+	if (c=='\n')
 		error;
 	p1 = file;
 	do {
 		*p1++ = c;
-	} while ((c = getchar()) != &#39;\n&#39;);
+	} while ((c = getchar()) != '\n');
 	*p1++ = 0;
 	if (savedfile[0]==0) {
 		p1 = savedfile;
@@ -464,15 +464,15 @@ exfile()
 	io = -1;
 	if (vflag) {
 		putd();
-		putchar(&#39;\n&#39;);
+		putchar('\n');
 	}
 }
 
 onintr()
 {
 	signal(SIGINTR, onintr);
-	putchar(&#39;\n&#39;);
-	lastc = &#39;\n&#39;;
+	putchar('\n');
+	lastc = '\n';
 	error;
 }
 
@@ -481,16 +481,16 @@ errfunc()
 	register c;
 
 	listf = 0;
-	puts(&quot;?&quot;);
+	puts("?");
 	count[0] = 0;
 	seek(0, 0, 2);
 	pflag = 0;
 	if (globp)
-		lastc = &#39;\n&#39;;
+		lastc = '\n';
 	globp = 0;
 	peekc = lastc;
-	while ((c = getchar()) != &#39;\n&#39; &amp;&amp; c != EOF);
-	if (io &gt; 0) {
+	while ((c = getchar()) != '\n' && c != EOF);
+	if (io > 0) {
 		close(io);
 		io = -1;
 	}
@@ -509,9 +509,9 @@ getchar()
 		globp = 0;
 		return(EOF);
 	}
-	if (read(0, &amp;lastc, 1) &lt;= 0)
+	if (read(0, &lastc, 1) <= 0)
 		return(lastc = EOF);
-	lastc =&amp; 0177;
+	lastc =& 0177;
 	return(lastc);
 }
 
@@ -522,20 +522,20 @@ gettty()
 
 	p = linebuf;
 	gf = globp;
-	while ((c = getchar()) != &#39;\n&#39;) {
+	while ((c = getchar()) != '\n') {
 		if (c==EOF) {
 			if (gf)
 				peekc = c;
 			return(c);
 		}
-		if ((c =&amp; 0177) == 0)
+		if ((c =& 0177) == 0)
 			continue;
 		*p++ = c;
-		if (p &gt;= &amp;linebuf[LBSIZE-2])
+		if (p >= &linebuf[LBSIZE-2])
 			error;
 	}
 	*p++ = 0;
-	if (linebuf[0]==&#39;.&#39; &amp;&amp; linebuf[1]==0)
+	if (linebuf[0]=='.' && linebuf[1]==0)
 		return(EOF);
 	return(0);
 }
@@ -548,20 +548,20 @@ getfile()
 	lp = linebuf;
 	fp = nextip;
 	do {
-		if (--ninbuf &lt; 0) {
-			if ((ninbuf = read(io, genbuf, LBSIZE)-1) &lt; 0)
+		if (--ninbuf < 0) {
+			if ((ninbuf = read(io, genbuf, LBSIZE)-1) < 0)
 				return(EOF);
 			fp = genbuf;
 		}
-		if (lp &gt;= &amp;linebuf[LBSIZE])
+		if (lp >= &linebuf[LBSIZE])
 			error;
-		if ((*lp++ = c = *fp++ &amp; 0177) == 0) {
+		if ((*lp++ = c = *fp++ & 0177) == 0) {
 			lp--;
 			continue;
 		}
 		if (++count[1] == 0)
 			++count[0];
-	} while (c != &#39;\n&#39;);
+	} while (c != '\n');
 	*--lp = 0;
 	nextip = fp;
 	return(0);
@@ -579,7 +579,7 @@ putfile()
 	do {
 		lp = getline(*a1++);
 		for (;;) {
-			if (--nib &lt; 0) {
+			if (--nib < 0) {
 				write(io, genbuf, fp-genbuf);
 				nib = 511;
 				fp = genbuf;
@@ -587,11 +587,11 @@ putfile()
 			if (++count[1] == 0)
 				++count[0];
 			if ((*fp++ = *lp++) == 0) {
-				fp[-1] = &#39;\n&#39;;
+				fp[-1] = '\n';
 				break;
 			}
 		}
-	} while (a1 &lt;= addr2);
+	} while (a1 <= addr2);
 	write(io, genbuf, fp-genbuf);
 }
 
@@ -605,7 +605,7 @@ int (*f)();
 	nline = 0;
 	dot = a;
 	while ((*f)() == 0) {
-		if (dol &gt;= endcore) {
+		if (dol >= endcore) {
 			if (sbrk(1024) == -1)
 				error;
 			endcore.integer =+ 1024;
@@ -615,7 +615,7 @@ int (*f)();
 		a1 = ++dol;
 		a2 = a1+1;
 		rdot = ++dot;
-		while (a1 &gt; rdot)
+		while (a1 > rdot)
 			*--a2 = *--a1;
 		*rdot = tl;
 	}
@@ -631,13 +631,13 @@ unix()
 	if ((pid = fork()) == 0) {
 		signal(SIGHUP, onhup);
 		signal(SIGQUIT, onquit);
-		execl(&quot;/bin/sh&quot;, &quot;sh&quot;, &quot;-t&quot;, 0);
+		execl("/bin/sh", "sh", "-t", 0);
 		exit();
 	}
 	savint = signal(SIGINTR, 1);
-	while ((rpid = wait(&amp;retcode)) != pid &amp;&amp; rpid != -1);
+	while ((rpid = wait(&retcode)) != pid && rpid != -1);
 	signal(SIGINTR, savint);
-	puts(&quot;!&quot;);
+	puts("!");
 }
 
 delete()
@@ -653,9 +653,9 @@ delete()
 	dol =- a2 - a1;
 	do
 		*a1++ = *a2++;
-	while (a2 &lt;= a3);
+	while (a2 <= a3);
 	a1 = addr1;
-	if (a1 &gt; dol)
+	if (a1 > dol)
 		a1 = dol;
 	dot = a1;
 }
@@ -668,7 +668,7 @@ getline(tl)
 	lp = linebuf;
 	bp = getblock(tl, READ);
 	nl = nleft;
-	tl =&amp; ~0377;
+	tl =& ~0377;
 	while (*lp++ = *bp++)
 		if (--nl == 0) {
 			bp = getblock(tl=+0400, READ);
@@ -687,9 +687,9 @@ putline()
 	tl = tline;
 	bp = getblock(tl, WRITE);
 	nl = nleft;
-	tl =&amp; ~0377;
+	tl =& ~0377;
 	while (*bp = *lp++) {
-		if (*bp++ == &#39;\n&#39;) {
+		if (*bp++ == '\n') {
 			*--bp = 0;
 			linebp = lp;
 			break;
@@ -700,7 +700,7 @@ putline()
 		}
 	}
 	nl = tline;
-	tline =+ (((lp-linebuf)+03)&gt;&gt;1)&amp;077776;
+	tline =+ (((lp-linebuf)+03)>>1)&077776;
 	return(nl);
 }
 
@@ -709,9 +709,9 @@ getblock(atl, iof)
 	extern read(), write();
 	register bno, off;
 	
-	bno = (atl&gt;&gt;8)&amp;0377;
-	off = (atl&lt;&lt;1)&amp;0774;
-	if (bno &gt;= 255) {
+	bno = (atl>>8)&0377;
+	off = (atl<<1)&0774;
+	if (bno >= 255) {
 		puts(TMPERR);
 		error;
 	}
@@ -730,7 +730,7 @@ getblock(atl, iof)
 		blkio(bno, ibuff, read);
 		return(ibuff+off);
 	}
-	if (oblock&gt;=0)
+	if (oblock>=0)
 		blkio(oblock, obuff, write);
 	oblock = bno;
 	return(obuff+off);
@@ -755,12 +755,12 @@ init()
 	tline = 0;
 	iblock = -1;
 	oblock = -1;
-	tfname = &quot;/tmp/exxxxx&quot;;
+	tfname = "/tmp/exxxxx";
 	ichanged = 0;
 	pid = getpid();
-	for (p = &amp;tfname[11]; p &gt; &amp;tfname[6];) {
-		*--p = (pid&amp;07) + &#39;0&#39;;
-		pid =&gt;&gt; 3;
+	for (p = &tfname[11]; p > &tfname[6];) {
+		*--p = (pid&07) + '0';
+		pid =>> 3;
 	}
 	close(creat(tfname, 0600));
 	tfile = open(tfname, 2);
@@ -780,32 +780,32 @@ global(k)
 		error;
 	setall();
 	nonzero();
-	if ((c=getchar())==&#39;\n&#39;)
+	if ((c=getchar())=='\n')
 		error;
 	compile(c);
 	gp = globuf;
-	while ((c = getchar()) != &#39;\n&#39;) {
+	while ((c = getchar()) != '\n') {
 		if (c==EOF)
 			error;
-		if (c==&#39;\\&#39;) {
+		if (c=='\\') {
 			c = getchar();
-			if (c!=&#39;\n&#39;)
-				*gp++ = &#39;\\&#39;;
+			if (c!='\n')
+				*gp++ = '\\';
 		}
 		*gp++ = c;
-		if (gp &gt;= &amp;globuf[GBSIZE-2])
+		if (gp >= &globuf[GBSIZE-2])
 			error;
 	}
-	*gp++ = &#39;\n&#39;;
+	*gp++ = '\n';
 	*gp++ = 0;
-	for (a1=zero; a1&lt;=dol; a1++) {
-		*a1 =&amp; ~01;
-		if (a1&gt;=addr1 &amp;&amp; a1&lt;=addr2 &amp;&amp; execute(0, a1)==k)
+	for (a1=zero; a1<=dol; a1++) {
+		*a1 =& ~01;
+		if (a1>=addr1 && a1<=addr2 && execute(0, a1)==k)
 			*a1 =| 01;
 	}
-	for (a1=zero; a1&lt;=dol; a1++) {
-		if (*a1 &amp; 01) {
-			*a1 =&amp; ~01;
+	for (a1=zero; a1<=dol; a1++) {
+		if (*a1 & 01) {
+			*a1 =& ~01;
 			dot = a1;
 			globp = globuf;
 			commands();
@@ -820,7 +820,7 @@ substitute(inglob)
 	int getsub();
 
 	gsubf = compsub();
-	for (a1 = addr1; a1 &lt;= addr2; a1++) {
+	for (a1 = addr1; a1 <= addr2; a1++) {
 		if (execute(0, a1)==0)
 			continue;
 		inglob =| 01;
@@ -847,24 +847,24 @@ compsub()
 	register char *p;
 	int gsubf;
 
-	if ((seof = getchar()) == &#39;\n&#39;)
+	if ((seof = getchar()) == '\n')
 		error;
 	compile(seof);
 	p = rhsbuf;
 	for (;;) {
 		c = getchar();
-		if (c==&#39;\\&#39;)
+		if (c=='\\')
 			c = getchar() | 0200;
-		if (c==&#39;\n&#39;)
+		if (c=='\n')
 			error;
 		if (c==seof)
 			break;
 		*p++ = c;
-		if (p &gt;= &amp;rhsbuf[LBSIZE/2])
+		if (p >= &rhsbuf[LBSIZE/2])
 			error;
 	}
 	*p++ = 0;
-	if ((peekc = getchar()) == &#39;g&#39;) {
+	if ((peekc = getchar()) == 'g') {
 		peekc = 0;
 		newline();
 		return(1);
@@ -893,24 +893,24 @@ dosub()
 	lp = linebuf;
 	sp = genbuf;
 	rp = rhsbuf;
-	while (lp &lt; loc1)
+	while (lp < loc1)
 		*sp++ = *lp++;
 	while (c = *rp++) {
-		if (c==&#39;&amp;&#39;) {
+		if (c=='&') {
 			sp = place(sp, loc1, loc2);
 			continue;
-		} else if (c&lt;0 &amp;&amp; (c =&amp; 0177) &gt;=&#39;1&#39; &amp;&amp; c &lt; NBRA+&#39;1&#39;) {
-			sp = place(sp, braslist[c-&#39;1&#39;], braelist[c-&#39;1&#39;]);
+		} else if (c<0 && (c =& 0177) >='1' && c < NBRA+'1') {
+			sp = place(sp, braslist[c-'1'], braelist[c-'1']);
 			continue;
 		}
-		*sp++ = c&amp;0177;
-		if (sp &gt;= &amp;genbuf[LBSIZE])
+		*sp++ = c&0177;
+		if (sp >= &genbuf[LBSIZE])
 			error;
 	}
 	lp = loc2;
 	loc2 = sp + linebuf - genbuf;
 	while (*sp++ = *lp++)
-		if (sp &gt;= &amp;genbuf[LBSIZE])
+		if (sp >= &genbuf[LBSIZE])
 			error;
 	lp = linebuf;
 	sp = genbuf;
@@ -924,9 +924,9 @@ place(asp, al1, al2)
 	sp = asp;
 	l1 = al1;
 	l2 = al2;
-	while (l1 &lt; l2) {
+	while (l1 < l2) {
 		*sp++ = *l1++;
-		if (sp &gt;= &amp;genbuf[LBSIZE])
+		if (sp >= &genbuf[LBSIZE])
 			error;
 	}
 	return(sp);
@@ -950,14 +950,14 @@ move(cflag)
 		ad2 = dol;
 	}
 	ad2++;
-	if (adt&lt;ad1) {
+	if (adt<ad1) {
 		dot = adt + (ad2-ad1);
 		if ((++adt)==ad1)
 			return;
 		reverse(adt, ad1);
 		reverse(ad1, ad2);
 		reverse(adt, ad2);
-	} else if (adt &gt;= ad2) {
+	} else if (adt >= ad2) {
 		dot = adt++;
 		reverse(ad1, ad2);
 		reverse(ad2, adt);
@@ -974,7 +974,7 @@ reverse(aa1, aa2)
 	a2 = aa2;
 	for (;;) {
 		t = *--a2;
-		if (a2 &lt;= a1)
+		if (a2 <= a1)
 			return;
 		*a2 = *a1;
 		*a1++ = t;
@@ -983,7 +983,7 @@ reverse(aa1, aa2)
 
 getcopy()
 {
-	if (addr1 &gt; addr2)
+	if (addr1 > addr2)
 		return(EOF);
 	getline(*addr1++);
 	return(0);
@@ -1008,82 +1008,82 @@ compile(aeof)
 		return;
 	}
 	circfl = 0;
-	if (c==&#39;^&#39;) {
+	if (c=='^') {
 		c = getchar();
 		circfl++;
 	}
-	if (c==&#39;*&#39;)
+	if (c=='*')
 		goto cerror;
 	peekc = c;
 	for (;;) {
-		if (ep &gt;= &amp;expbuf[ESIZE])
+		if (ep >= &expbuf[ESIZE])
 			goto cerror;
 		c = getchar();
 		if (c==eof) {
 			*ep++ = CEOF;
 			return;
 		}
-		if (c!=&#39;*&#39;)
+		if (c!='*')
 			lastep = ep;
 		switch (c) {
 
-		case &#39;\\&#39;:
-			if ((c = getchar())==&#39;(&#39;) {
-				if (nbra &gt;= NBRA)
+		case '\\':
+			if ((c = getchar())=='(') {
+				if (nbra >= NBRA)
 					goto cerror;
 				*bracketp++ = nbra;
 				*ep++ = CBRA;
 				*ep++ = nbra++;
 				continue;
 			}
-			if (c == &#39;)&#39;) {
-				if (bracketp &lt;= bracket)
+			if (c == ')') {
+				if (bracketp <= bracket)
 					goto cerror;
 				*ep++ = CKET;
 				*ep++ = *--bracketp;
 				continue;
 			}
 			*ep++ = CCHR;
-			if (c==&#39;\n&#39;)
+			if (c=='\n')
 				goto cerror;
 			*ep++ = c;
 			continue;
 
-		case &#39;.&#39;:
+		case '.':
 			*ep++ = CDOT;
 			continue;
 
-		case &#39;\n&#39;:
+		case '\n':
 			goto cerror;
 
-		case &#39;*&#39;:
+		case '*':
 			if (*lastep==CBRA || *lastep==CKET)
 				error;
 			*lastep =| STAR;
 			continue;
 
-		case &#39;$&#39;:
+		case '$':
 			if ((peekc=getchar()) != eof)
 				goto defchar;
 			*ep++ = CDOL;
 			continue;
 
-		case &#39;[&#39;:
+		case '[':
 			*ep++ = CCL;
 			*ep++ = 0;
 			cclcnt = 1;
-			if ((c=getchar()) == &#39;^&#39;) {
+			if ((c=getchar()) == '^') {
 				c = getchar();
 				ep[-2] = NCCL;
 			}
 			do {
-				if (c==&#39;\n&#39;)
+				if (c=='\n')
 					goto cerror;
 				*ep++ = c;
 				cclcnt++;
-				if (ep &gt;= &amp;expbuf[ESIZE])
+				if (ep >= &expbuf[ESIZE])
 					goto cerror;
-			} while ((c = getchar()) != &#39;]&#39;);
+			} while ((c = getchar()) != ']');
 			lastep[1] = cclcnt;
 			continue;
 
@@ -1219,7 +1219,7 @@ advance(alp, aep)
 				break;
 			if (advance(lp, ep))
 				return(1);
-		} while (lp &gt; curlp);
+		} while (lp > curlp);
 		return(0);
 
 	default:
@@ -1252,7 +1252,7 @@ putd()
 	r = ldivr;
 	if (count[1])
 		putd();
-	putchar(r + &#39;0&#39;);
+	putchar(r + '0');
 }
 
 puts(as)
@@ -1263,7 +1263,7 @@ puts(as)
 	col = 0;
 	while (*sp)
 		putchar(*sp++);
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 }
 
 char	line[70];
@@ -1278,34 +1278,34 @@ putchar(ac)
 	c = ac;
 	if (listf) {
 		col++;
-		if (col &gt;= 72) {
+		if (col >= 72) {
 			col = 0;
-			*lp++ = &#39;\\&#39;;
-			*lp++ = &#39;\n&#39;;
+			*lp++ = '\\';
+			*lp++ = '\n';
 		}
-		if (c==&#39;\t&#39;) {
-			c = &#39;&gt;&#39;;
+		if (c=='\t') {
+			c = '>';
 			goto esc;
 		}
-		if (c==&#39;\b&#39;) {
-			c = &#39;&lt;&#39;;
+		if (c=='\b') {
+			c = '<';
 		esc:
-			*lp++ = &#39;-&#39;;
-			*lp++ = &#39;\b&#39;;
+			*lp++ = '-';
+			*lp++ = '\b';
 			*lp++ = c;
 			goto out;
 		}
-		if (c&lt;&#39; &#39; &amp;&amp; c!= &#39;\n&#39;) {
-			*lp++ = &#39;\\&#39;;
-			*lp++ = (c&gt;&gt;3)+&#39;0&#39;;
-			*lp++ = (c&amp;07)+&#39;0&#39;;
+		if (c<' ' && c!= '\n') {
+			*lp++ = '\\';
+			*lp++ = (c>>3)+'0';
+			*lp++ = (c&07)+'0';
 			col =+ 2;
 			goto out;
 		}
 	}
 	*lp++ = c;
 out:
-	if(c == &#39;\n&#39; || lp &gt;= &amp;line[64]) {
+	if(c == '\n' || lp >= &line[64]) {
 		linp = line;
 		write(1, line, lp-line);
 		return;
@@ -1320,8 +1320,8 @@ getpid()
 	register f;
 	int b[1];
 
-	f = open(&quot;/dev/kmem&quot;, 0);
-	if(f &lt; 0)
+	f = open("/dev/kmem", 0);
+	if(f < 0)
 		return(-1);
 	seek(f, 0140074, 0);
 	read(f, b, 2);

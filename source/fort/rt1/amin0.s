@@ -1,7 +1,7 @@
 /
 /
 
-/ min0 &amp; amin0 fortran functions
+/ min0 & amin0 fortran functions
 
 .globl	amin0.
 .globl	min0.

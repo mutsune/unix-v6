@@ -10,9 +10,9 @@ TABLE OF CONTENTS
 .nr x \nxm/36u
 .tc .
 .de xx
-.nr y \\w&#39;\\$2&#39;u/\\nxu*\\nxu+\\nxu
+.nr y \\w'\\$2'u/\\nxu*\\nxu+\\nxu
 .ta 4.7i-\\nyu
-\\$1\fB \t \fR\\h&quot;\\nyu-\\w&#39;\\$2&#39;u&quot;\\$2
+\\$1\fB \t \fR\\h"\\nyu-\\w'\\$2'u"\\$2
 ..
 I. COMMANDS
 .sp .5

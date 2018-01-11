@@ -17,7 +17,7 @@ a header, the program and data text, a symbol table, and relocation bits
 (in that order).
 The last two may be empty
 if the program was loaded
-with the ``\*-s&#39;&#39; option
+with the ``\*-s'' option
 of
 .it ld
 or if the symbols and relocation have been
@@ -125,7 +125,7 @@ occur if the user has defined some of his own instructions.
 .s3
 The last word of a symbol table entry contains the value of the symbol.
 .s3
-If the symbol&#39;s type is undefined external,
+If the symbol's type is undefined external,
 and the value field is non-zero,
 the symbol is interpreted by the loader
 .it ld
@@ -152,7 +152,7 @@ be added into the word in the file.
 If relocation
 information is present, it amounts to one word per
 word of program text or initialized data.
-There is no relocation information if the ``suppress relocation&#39;&#39;
+There is no relocation information if the ``suppress relocation''
 flag in the header is on.
 .s3
 Bits 3-1 of a relocation word indicate the segment referred
@@ -174,16 +174,16 @@ word:
 Bit 0 of the relocation word indicates if
 .it on
 that the
-reference is relative to the pc (e.g. ``clr x&#39;&#39;);
+reference is relative to the pc (e.g. ``clr x'');
 if
 .it off,
 that
 the reference is to the actual symbol (e.g.,
-``clr *$x&#39;&#39;).
+``clr *$x'').
 .s3
 The remainder of the relocation word (bits 15-4)
 contains a symbol number in the case of external
 references, and is unused otherwise.
 The first symbol is numbered 0, the second 1, etc.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 as (I), ld (I), strip (I), nm (I)

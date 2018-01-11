@@ -6,10 +6,10 @@
  * RF disk driver
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../buf.h"
+#include "../conf.h"
+#include "../user.h"
 
 struct {
 	int	rfcs;
@@ -37,19 +37,19 @@ struct buf *abp;
 	register struct buf *bp;
 
 	bp = abp;
-	if(bp-&gt;b_flags&amp;B_PHYS)
+	if(bp->b_flags&B_PHYS)
 		mapalloc(bp);
-	if (bp-&gt;b_blkno &gt;= NRFBLK*(bp-&gt;b_dev.d_minor+1)) {
-		bp-&gt;b_flags =| B_ERROR;
+	if (bp->b_blkno >= NRFBLK*(bp->b_dev.d_minor+1)) {
+		bp->b_flags =| B_ERROR;
 		iodone(bp);
 		return;
 	}
-	bp-&gt;av_forw = 0;
+	bp->av_forw = 0;
 	spl5();
 	if (rftab.d_actf==0)
 		rftab.d_actf = bp;
 	else
-		rftab.d_actl-&gt;av_forw = bp;
+		rftab.d_actl->av_forw = bp;
 	rftab.d_actl = bp;
 	if (rftab.d_active==0)
 		rfstart();
@@ -63,8 +63,8 @@ rfstart()
 	if ((bp = rftab.d_actf) == 0)
 		return;
 	rftab.d_active++;
-	RFADDR-&gt;rfdae = bp-&gt;b_blkno.hibyte;
-	devstart(bp, &amp;RFADDR-&gt;rfda, bp-&gt;b_blkno&lt;&lt;8, 0);
+	RFADDR->rfdae = bp->b_blkno.hibyte;
+	devstart(bp, &RFADDR->rfda, bp->b_blkno<<8, 0);
 }
 
 rfintr()
@@ -75,17 +75,17 @@ rfintr()
 		return;
 	bp = rftab.d_actf;
 	rftab.d_active = 0;
-	if (RFADDR-&gt;rfcs &lt; 0) {		/* error bit */
-		deverror(bp, RFADDR-&gt;rfcs, RFADDR-&gt;rfdae);
-		RFADDR-&gt;rfcs = CTLCLR;
-		if (++rftab.d_errcnt &lt;= 10) {
+	if (RFADDR->rfcs < 0) {		/* error bit */
+		deverror(bp, RFADDR->rfcs, RFADDR->rfdae);
+		RFADDR->rfcs = CTLCLR;
+		if (++rftab.d_errcnt <= 10) {
 			rfstart();
 			return;
 		}
-		bp-&gt;b_flags =| B_ERROR;
+		bp->b_flags =| B_ERROR;
 	}
 	rftab.d_errcnt = 0;
-	rftab.d_actf = bp-&gt;av_forw;
+	rftab.d_actf = bp->av_forw;
 	iodone(bp);
 	rfstart();
 }
@@ -93,11 +93,11 @@ rfintr()
 rfread(dev)
 {
 
-	physio(rfstrategy, &amp;rrfbuf, dev, B_READ);
+	physio(rfstrategy, &rrfbuf, dev, B_READ);
 }
 
 rfwrite(dev)
 {
 
-	physio(rfstrategy, &amp;rrfbuf, dev, B_WRITE);
+	physio(rfstrategy, &rrfbuf, dev, B_WRITE);
 }

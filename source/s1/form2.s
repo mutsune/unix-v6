@@ -11,21 +11,21 @@ scan:
 	mov	(sp),r1
 	jsr	pc,getchar
 	bes	5f
-	cmpb	r0,$&#39;\\
+	cmpb	r0,$'\\
 	beq	3f
-	cmpb	r0,$&#39;\[
+	cmpb	r0,$'\[
 	beq	4f
-	cmpb	r0,$&#39;\{
+	cmpb	r0,$'\{
 	beq	4f
-	cmpb	r0,$&#39;\]
+	cmpb	r0,$'\]
 	beq	1f
-	cmpb	r0,$&#39;\}
+	cmpb	r0,$'\}
 	beq	7f
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	6f
 	jsr	pc,lookchar
 	bes	5f
-	movb	$&#39;\n,r0
+	movb	$'\n,r0
 6:
 	tst	switch
 	beq	2f
@@ -43,14 +43,14 @@ scan:
 	mov	r(r1),-(sp)
 	jsr	pc,getchar
 	bes	1f
-	cmpb	r0,$&#39;0
+	cmpb	r0,$'0
 	blt	4f
-	cmpb	r0,$&#39;9
+	cmpb	r0,$'9
 	bgt	4f
 	jsr	pc,getchar
-	cmpb	r0,$&#39;\]
+	cmpb	r0,$'\]
 	beq	3f
-	cmpb	r0,$&#39;\}
+	cmpb	r0,$'\}
 	beq	3f
 
 4:

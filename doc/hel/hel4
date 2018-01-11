@@ -1,10 +1,10 @@
-.h0 &quot;\n+a Novelties&quot;
+.h0 "\n+a Novelties"
 .in0
 .sp
 Source code for game-playing programs is not distributed.
 .nr b 0 1
 .sh SPEAK
-Driver for Vocal Interface&#39;s V\s8OTRAX\s10 speech synthesizer.
+Driver for Vocal Interface's V\s8OTRAX\s10 speech synthesizer.
 Reads input text and utters it.
 .op
 Associative memory allows pronunciation rules

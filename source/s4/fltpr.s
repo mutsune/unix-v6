@@ -19,11 +19,11 @@ pfloat:
 	jsr	pc,fcvt
 	tst	r1
 	beq	1f
-	movb	$&#39;-,(r3)+
+	movb	$'-,(r3)+
 1:
 	tst	r2
 	bgt	1f
-	movb	$&#39;0,(r3)+
+	movb	$'0,(r3)+
 1:
 	mov	r2,r1
 	ble	1f
@@ -33,14 +33,14 @@ pfloat:
 1:
 	mov	_ndigit,r1
 	beq	1f
-	movb	$&#39;.,(r3)+
+	movb	$'.,(r3)+
 1:
 	neg	r2
 	ble	1f
 2:
 	dec	r1
 	blt	1f
-	movb	$&#39;0,(r3)+
+	movb	$'0,(r3)+
 	sob	r2,2b
 1:
 	tst	r1
@@ -61,10 +61,10 @@ pscien:
 	jsr	pc,ecvt
 	tst	r1
 	beq	1f
-	movb	$&#39;-,(r3)+
+	movb	$'-,(r3)+
 1:
 	movb	(r0)+,(r3)+
-	movb	$&#39;.,(r3)+
+	movb	$'.,(r3)+
 	mov	_ndigit,r1
 	dec	r1
 	ble	1f
@@ -72,20 +72,20 @@ pscien:
 	movb	(r0)+,(r3)+
 	sob	r1,2b
 1:
-	movb	$&#39;e,(r3)+
+	movb	$'e,(r3)+
 	dec	r2
 	mov	r2,r1
 	bge	1f
-	movb	$&#39;-,(r3)+
+	movb	$'-,(r3)+
 	neg	r1
 	br	2f
 1:
-	movb	$&#39;+,(r3)+
+	movb	$'+,(r3)+
 2:
 	clr	r0
 	div	$10.,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,(r3)+
-	add	$&#39;0,r1
+	add	$'0,r1
 	movb	r1,(r3)+
 	rts	pc

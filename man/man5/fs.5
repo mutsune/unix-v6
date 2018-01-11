@@ -1,4 +1,4 @@
-.th &quot;FILE SYSTEM&quot; V 2/9/75
+.th "FILE SYSTEM" V 2/9/75
 .sh NAME
 fs \*- format of file system volume
 .sh DESCRIPTION
@@ -12,7 +12,7 @@ Block 0 is unused and is available to contain
 a bootstrap program, pack label, or other information.
 .s3
 Block 1 is the
-.it &quot;super block.&quot;
+.it "super block."
 Starting from its first word, the format of a super-block is
 .s3
 .nf
@@ -38,7 +38,7 @@ is the first block not potentially available for allocation
 to a file.
 These numbers are used by the system to
 check for bad block numbers;
-if an ``impossible&#39;&#39; block number is allocated from the free list
+if an ``impossible'' block number is allocated from the free list
 or is freed,
 a diagnostic is written on the on-line console.
 Moreover, the free array is cleared, so as to prevent further
@@ -49,7 +49,7 @@ follows.
 The
 .it free
 array contains, in
-.it &quot;free[1], ... , free[nfree\*-1],&quot;
+.it "free[1], ... , free[nfree\*-1],"
 up to 99 numbers of free blocks.
 .it Free[0]
 is the block number of the head
@@ -89,7 +89,7 @@ write it out, and set
 to 0.
 In any event set
 .it free[nfree]
-to the freed block&#39;s number and
+to the freed block's number and
 increment
 .it nfree.
 .s3
@@ -119,7 +119,7 @@ and increment
 .it ninode.
 If
 .it ninode
-is already 100, don&#39;t bother to enter the freed i-node into any table.
+is already 100, don't bother to enter the freed i-node into any table.
 This list of i-nodes is only to speed
 up the allocation process; the information
 as to whether the inode is really free
@@ -149,7 +149,7 @@ since
 During a reboot, the
 .it time
 of the super-block for the root file system
-is used to set the system&#39;s idea of the time.
+is used to set the system's idea of the time.
 .s3
 I-numbers begin at 1, and the storage for i-nodes
 begins in block 2.
@@ -293,5 +293,5 @@ A zero block number either in the address words of
 the i-node or in an indirect block indicates that the
 corresponding block has never been allocated.
 Such a missing block reads as if it contained all zero words.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 icheck, dcheck (VIII)

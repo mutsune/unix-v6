@@ -177,14 +177,14 @@ e11:
 	add	$6,blockp
 	mov	r0,(r2)
 	mov	r3,2(r2)
-	cmpb	2(r2),$5		/ const-&gt;int
+	cmpb	2(r2),$5		/ const->int
 	bne	4f
 	movb	$1,2(r2)
 4:
 	mov	r3,temp
 	mov	conu,4(r2)
 	inc	conu
-	jsr	r5,ptemp; &#39;c; temp; symbuf
+	jsr	r5,ptemp; 'c; temp; symbuf
 	jsr	r5,getsym
 	rts	r5
 

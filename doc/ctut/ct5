@@ -62,13 +62,13 @@ as in
 .E2
 Although the names of structure members never stand alone,
 they still have to be unique _
-there can&#39;t be another
+there can't be another
 .UL id
 or
 .UL usage
 in some other structure.
 .PP
-So far we haven&#39;t gained much.
+So far we haven't gained much.
 The advantages of structures start to come
 when we have arrays of structures,
 or when we want to pass complicated data layouts
@@ -101,16 +101,16 @@ each array element has the specified shape.
 Now we can refer to members as
 .E1
 	sym[i]\*.usage\*+;	/\** increment usage of i\(hyth identifier \**/
-	for( j=0; sym[i]\*.id[j\*+] != &#39;\\0&#39;; ) \*.\*.\*.
+	for( j=0; sym[i]\*.id[j\*+] != '\\0'; ) \*.\*.\*.
 .ft R
 	   etc\*.
 .E2
-Thus to print a list of all identifiers that haven&#39;t been used,
+Thus to print a list of all identifiers that haven't been used,
 together with their line number,
 .E1
-	for( i=0; i&lt;nsym; i\*+ )
+	for( i=0; i<nsym; i\*+ )
 		if( sym[i]\*.usage \*= 0 )
-			printf(&quot;%d\\t%s\\n&quot;, sym[i]\*.line, sym[i]\*.id);
+			printf("%d\\t%s\\n", sym[i]\*.line, sym[i]\*.id);
 .E2
 .PP
 Suppose we now want to write a function
@@ -119,13 +119,13 @@ which will tell us if
 .UL name
 already exists in 
 .UL sym,
-by giving its index, or that it doesn&#39;t,
+by giving its index, or that it doesn't,
 by returning a \(mi1.
-We can&#39;t pass a structure to a function
+We can't pass a structure to a function
 directly _
 we have to either define it externally, or
 pass a pointer to it.
-Let&#39;s try the first way first.
+Let's try the first way first.
 .E1
 int	nsym	0;	/\** current length of symbol table \**/
 .SP
@@ -138,7 +138,7 @@ struct {
 .SP
 main( ) {
 	\*.\*.\*.
-	if( (index = lookup(newname)) &gt;= 0 )
+	if( (index = lookup(newname)) >= 0 )
 		sym[index]\*.usage\*+;		/\** already there \*.\*.\*. \**/
 	else
 		install(newname, newline, newtype);
@@ -155,8 +155,8 @@ lookup(s)
 		int	usage;
 	} sym[ ];
 .SP
-	for( i=0; i&lt;nsym; i\*+ )
-		if( compar(s, sym[i]\*.id) &gt; 0 )
+	for( i=0; i<nsym; i\*+ )
+		if( compar(s, sym[i]\*.id) > 0 )
 			return(i);
 	return(-1);
 }
@@ -164,14 +164,14 @@ lookup(s)
 compar(s1,s2)		/\**  return 1 if s1\*=s2, 0 otherwise \**/
    char \**s1, \**s2; {
 	while( \**s1\*+ \*= \**s2 )
-		if( \**s2\*+ \*= &#39;\\0&#39; )
+		if( \**s2\*+ \*= '\\0' )
 			return(1);
 	return(0);
 }
 .E2
 The declaration of the structure in 
 .UL lookup
-isn&#39;t needed if the external definition precedes its use in the same source file,
+isn't needed if the external definition precedes its use in the same source file,
 as we shall see in a moment.
 .PP
 Now what if we want to use pointers?
@@ -183,7 +183,7 @@ struct  symtag {
 	int	usage;
 } sym[100], \**psym;
 
-	psym = &amp;sym[0];	/\** or p = sym; \**/
+	psym = &sym[0];	/\** or p = sym; \**/
 .E2
 This makes
 .UL psym
@@ -194,18 +194,18 @@ then initializes it to point to the first element of
 .PP
 Notice that we added something after the word
 .UL struct:
-a ``tag&#39;&#39; called 
+a ``tag'' called 
 .UL symtag\*.
 This puts a name on our structure definition so we can
 refer to it later without repeating the definition.
-It&#39;s not necessary but useful.
+It's not necessary but useful.
 In fact we could have said
 .E1
 struct	symtag {
 	\*.\*.\*. structure definition
 };
 .E2
-which wouldn&#39;t have assigned any storage at all,
+which wouldn't have assigned any storage at all,
 and then said
 .E1
 struct	symtag	sym[100];
@@ -220,49 +220,49 @@ struct	symtag	sym[100], \**psym;
 The way we actually refer to an member of a structure by a pointer
 is like this:
 .E1
-	ptr -&gt; structure\(hymember
+	ptr -> structure\(hymember
 .E2
-The symbol `\(mi&gt;&#39;
-means we&#39;re pointing at a member of a structure;
-`\(mi&gt;&#39; is only used in that context.
+The symbol `\(mi>'
+means we're pointing at a member of a structure;
+`\(mi>' is only used in that context.
 .UL ptr
 is a pointer to the (base of) a structure
 that contains the structure member.
 The expression
-.UL &quot;ptr\(mi&gt;structure\(hymember&quot;
+.UL "ptr\(mi>structure\(hymember"
 refers to the indicated member of the pointed-to structure.
 Thus we have constructions like:
 .E1
-psym-&gt;type = 1;
-psym-&gt;id[0] = &#39;a&#39;;
+psym->type = 1;
+psym->id[0] = 'a';
 .E2
 and so on.
 .PP
 For more complicated pointer expressions,
-it&#39;s wise to use parentheses to make it clear
+it's wise to use parentheses to make it clear
 who goes with what.
 For example,
 .E1
 struct { int x, \**y; } \**p;
-p-&gt;x\*+	increments x
-\*+p-&gt;x	so does this!
-(\*+p)-&gt;x	increments p before getting x
-\**p-&gt;y\*+	uses y as a pointer, then increments it
-\**(p-&gt;y)\*+	so does this
-\**(p\*+)-&gt;y	uses y as a pointer, then increments p
+p->x\*+	increments x
+\*+p->x	so does this!
+(\*+p)->x	increments p before getting x
+\**p->y\*+	uses y as a pointer, then increments it
+\**(p->y)\*+	so does this
+\**(p\*+)->y	uses y as a pointer, then increments p
 .E2
 .tr |.
 The way to remember these is that
-.UL \(mi&gt;,
+.UL \(mi>,
 .UL |
 (dot),
-.UL &quot;( )&quot;
+.UL "( )"
 and
-.UL &quot;[ ]&quot;
+.UL "[ ]"
 bind very tightly.
 An expression involving one of these is treated as a unit.
 .tr ||
-.UL p\(mi&gt;x,
+.UL p\(mi>x,
 .UL a[i],
 .UL y\*.x
 and
@@ -283,10 +283,10 @@ For instance,
 increments
 .UL p
 by the correct amount to get the next element of the array of structures.
-But don&#39;t assume that the size of a structure is the sum
+But don't assume that the size of a structure is the sum
 of the sizes of its members _
 because of alignments of different sized objects,
-there may be ``holes&#39;&#39; in a structure.
+there may be ``holes'' in a structure.
 .PP
 Enough theory. Here is the lookup example, this time with pointers.
 .E1
@@ -302,7 +302,7 @@ main( ) {
 	struct symtag \**psym;
 	\*.\*.\*.
 	if( (psym = lookup(newname)) )	/\** non-zero pointer \**/
-		psym -&gt; usage\*+;		/\** means already there \**/
+		psym -> usage\*+;		/\** means already there \**/
 	else
 		install(newname, newline, newtype);
 	\*.\*.\*.
@@ -311,16 +311,16 @@ main( ) {
 struct symtag \**lookup(s)
    char \**s; {
 	struct symtag \**p;
-	for( p=sym; p &lt; &amp;sym[nsym]; p\*+ )
-		if( compar(s, p-&gt;id) &gt; 0)
+	for( p=sym; p < &sym[nsym]; p\*+ )
+		if( compar(s, p->id) > 0)
 			return(p);
 	return(0);
 }
 .E2
 The function
 .UL compar
-doesn&#39;t change:
-.UL `p\(mi&gt;id&#39;
+doesn't change:
+.UL `p\(mi>id'
 refers to
 a string.
 .PP
@@ -345,7 +345,7 @@ So far, all of our functions have returned integers
 What do we do when the function returns something else,
 like a pointer to a structure?
 The rule is that
-any function that doesn&#39;t return an
+any function that doesn't return an
 .UL int
 has to say explicitly what it does return.
 The type information goes before the function name
@@ -370,7 +370,7 @@ and
 .UL lookup
 returns a pointer to a structure that looks like
 .UL symtag\*.
-And if we&#39;re going to use one of these functions,
+And if we're going to use one of these functions,
 we have to make a declaration
 where we use it,
 as we did in

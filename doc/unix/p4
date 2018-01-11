@@ -17,7 +17,7 @@ command arg\*t\d1\u\*n arg\*t\d2\u\*n .\|.\|. arg\*t\dn\u\*n
 The Shell splits up the command name and the arguments into
 separate strings.
 Then a file with name \fIcommand\fR is sought;
-\fIcommand\fR may be a path name including the ``/&#39;&#39; character to
+\fIcommand\fR may be a path name including the ``/'' character to
 specify any file in the system.
 If \fIcommand\fR is found, it is brought into
 core and executed.
@@ -45,7 +45,7 @@ two open files which have file descriptors
 As such a program begins execution, file 1 is open for writing,
 and is best understood as the standard output file.
 Except under circumstances indicated below, this file
-is the user&#39;s typewriter.
+is the user's typewriter.
 Thus programs which wish to write informative or diagnostic
 information ordinarily use file descriptor 1.
 Conversely, file 0 starts off open for reading, and programs which
@@ -54,11 +54,11 @@ read this file.
 .pg
 The Shell is able to change the standard assignments of
 these file descriptors from the
-user&#39;s typewriter printer and keyboard.
+user's typewriter printer and keyboard.
 If one of the
-arguments to a command is prefixed by ``&gt;&#39;&#39;, file descriptor
+arguments to a command is prefixed by ``>'', file descriptor
 1 will, for the duration of the command, refer to the
-file named after the ``&gt;&#39;&#39;.
+file named after the ``>''.
 For example,
 .dc
 ls
@@ -67,10 +67,10 @@ ordinarily lists, on the typewriter, the names of the files in the current
 directory.
 The command
 .dc
-ls &gt;there
+ls >there
 .ec
 creates a file called \fIthere\fR and places the listing there.
-Thus the argument ``&gt;there&#39;&#39; means, ``place output on \fIthere\fR.&#39;&#39;
+Thus the argument ``>there'' means, ``place output on \fIthere\fR.''
 On the other hand,
 .dc
 ed
@@ -79,12 +79,12 @@ ordinarily enters the editor, which takes requests from the
 user via his typewriter.
 The command
 .dc
-ed &lt;script
+ed <script
 .ec
 interprets \fIscript\fR as a file of editor commands;
-thus ``&lt;script&#39;&#39; means, ``take input from \fIscript\fR.&#39;&#39;
+thus ``<script'' means, ``take input from \fIscript\fR.''
 .pg
-Although the file name following ``&lt;&#39;&#39; or ``&gt;&#39;&#39; appears
+Although the file name following ``<'' or ``>'' appears
 to be an argument to the command, in fact it is interpreted
 completely by the Shell and is not passed to the
 command at all.
@@ -112,7 +112,7 @@ lists the names of the files in the current directory;
 its output is passed to \fIpr\fR,
 which
 paginates its input with dated headings.
-The argument ``\(mi2&#39;&#39; means
+The argument ``\(mi2'' means
 double column.
 Likewise the output from \fIpr\fR is input to \fIopr\fR.
 This command spools its input onto a file for off-line
@@ -121,11 +121,11 @@ printing.
 This procedure could have been carried out
 more clumsily by
 .dc
-ls &gt;temp1
+ls >temp1
 .ti 1i
-pr \(mi2 &lt;temp1 &gt;temp2
+pr \(mi2 <temp1 >temp2
 .ti 1i
-opr &lt;temp2
+opr <temp2
 .ec
 followed by removal of the temporary files.
 In the absence of the ability
@@ -168,12 +168,12 @@ the editor.
 .pg
 A related feature is more interesting.
 If a command is followed
-by ``&amp;&#39;&#39;, the Shell will not wait for the command to finish before
+by ``&'', the Shell will not wait for the command to finish before
 prompting again; instead, it is ready immediately
 to accept a new command.
 For example,
 .dc
-as source &gt;output &amp;
+as source >output &
 .ec
 causes \fIsource\fR to be assembled, with diagnostic
 output going to \fIoutput;\fR no matter how long the
@@ -185,13 +185,13 @@ process running that command is printed.
 This identification may be used to
 wait for the completion of the command or to
 terminate it.
-The ``&amp;&#39;&#39; may be used
+The ``&'' may be used
 several times in a line:
 .dc
-as source &gt;output &amp; ls &gt;files &amp;
+as source >output & ls >files &
 .ec
 does both the assembly and the listing in the background.
-In the examples above using ``&amp;&#39;&#39;, an output file
+In the examples above using ``&'', an output file
 other than the typewriter was provided; if this had not been
 done, the outputs of the various commands would have been
 intermingled.
@@ -199,7 +199,7 @@ intermingled.
 The Shell also allows parentheses in the above operations.
 For example
 .dc
-(\|date; ls\|) &gt;x &amp;
+(\|date; ls\|) >x &
 .ec
 prints the current date and time followed by
 a list of the current directory onto the file \fIx.\fR
@@ -223,7 +223,7 @@ Thus if the three lines above were typed on the console,
 and \fItestprog\fR executed.
 When the lines are in \fItryout\fR, the command
 .dc
-sh &lt;tryout
+sh <tryout
 .ec
 would cause the Shell \fIsh\fR to execute the commands
 sequentially.
@@ -246,7 +246,7 @@ Most of the time, the Shell
 is waiting for the user to type a command.
 When the
 new-line character ending the line
-is typed, the Shell&#39;s \fIread\fR call returns.
+is typed, the Shell's \fIread\fR call returns.
 The Shell analyzes the command line, putting the
 arguments in a form appropriate for \fIexecute\fR.
 Then \fIfork\fR is called.
@@ -262,7 +262,7 @@ it types its prompt and reads the typewriter to obtain another
 command.
 .pg
 Given this framework, the implementation of background processes
-is trivial; whenever a command line contains ``&amp;&#39;&#39;,
+is trivial; whenever a command line contains ``&'',
 the Shell merely refrains from waiting for the process
 which it created
 to execute the command.
@@ -276,7 +276,7 @@ including those with file descriptors 0 and 1.
 The Shell, of course, uses these files to read command
 lines and to write its prompts and diagnostics, and in the ordinary case
 its children_the command programs_inherit them automatically.
-When an argument with ``&lt;&#39;&#39; or ``&gt;&#39;&#39; is given however, the
+When an argument with ``<'' or ``>'' is given however, the
 offspring process, just before it performs \fIexecute,\fR
 makes the standard I/O
 file descriptor 0 or 1 respectively refer to the named file.
@@ -289,7 +289,7 @@ it is only necessary to close file 0 (or 1)
 and open the named file.
 Because the process in which the command program runs simply terminates
 when it is through, the association between a file
-specified after ``&lt;&#39;&#39; or ``&gt;&#39;&#39; and file descriptor 0 or 1 is ended
+specified after ``<'' or ``>'' and file descriptor 0 or 1 is ended
 automatically when the process dies.
 Therefore
 the Shell need not know the actual names of the files
@@ -311,7 +311,7 @@ discovering an end-of-file condition on its input file.
 Thus, when the Shell is executed as a command with
 a given input file, as in
 .dc
-sh &lt;comfile
+sh <comfile
 .ec
 the commands in \fIcomfile\fR will be executed until
 the end of \fIcomfile\fR is reached; then the instance of the Shell
@@ -344,8 +344,8 @@ The appropriate instance of \fIinit\fR wakes up, receives the log-in
 line, and reads a password file.
 If the user name is found, and if
 he is able to supply the correct password, \fIinit\fR
-changes to the user&#39;s default current directory, sets
-the process&#39;s user \*sID\*n to that of the person logging in, and performs
+changes to the user's default current directory, sets
+the process's user \*sID\*n to that of the person logging in, and performs
 an \fIexecute\fR of the Shell.
 At this point the Shell is ready to receive commands
 and the logging-in protocol is complete.
@@ -373,10 +373,10 @@ is desirable, and this feature is easily arranged.
 Recall that after a user has successfully logged in by supplying
 his name and password, \fIinit\fR ordinarily invokes the Shell
 to interpret command lines.
-The user&#39;s entry
+The user's entry
 in the password file may contain the name
 of a program to be invoked after login instead of the Shell.
-This program is free to interpret the user&#39;s messages
+This program is free to interpret the user's messages
 in any way it wishes.
 .pg
 For example, the password file entries

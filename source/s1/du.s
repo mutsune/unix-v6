@@ -17,14 +17,14 @@
 2:
 	mov	(sp)+,r0
 3:
-	cmpb	(r0),$&#39;-
+	cmpb	(r0),$'-
 	bne	2f
-	cmpb	1(r0),$&#39;a
+	cmpb	1(r0),$'a
 	bne	3f
 	inc	aflg
 	br	1b
 3:
-	cmpb	1(r0),$&#39;s
+	cmpb	1(r0),$'s
 	bne	1b
 	dec	aflg
 	br	1b
@@ -94,17 +94,17 @@ tree:
 	beq	1f
 	tst	buf3
 	beq	1b
-	cmp	buf3+2,$&quot;.\0
+	cmp	buf3+2,$".\0
 	beq	1b
-	cmp	buf3+2,$&quot;..
+	cmp	buf3+2,$"..
 	bne	2f
 	tst	buf3+4
 	beq	1b
 2:
 	mov	$buf3+2,r2
 	mov	(sp),r1
-	movb	$&#39;/,(r1)+
-	cmpb	-2(r1),$&#39;/
+	movb	$'/,(r1)+
+	cmpb	-2(r1),$'/
 	bne	2f
 	dec	r1
 2:
@@ -144,7 +144,7 @@ name:
 	jsr	pc,pchar
 	br	1b
 1:
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	pc,pchar
 	rts	r5
 
@@ -183,7 +183,7 @@ pnum:
 	jsr	pc,1b
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,pchar
 	rts	pc
 
@@ -191,7 +191,7 @@ pchar:
 	jsr	r5,putc; obuf
 	rts	pc
 
-dot:	&lt;.\0&gt;
+dot:	<.\0>
 
 	.bss
 

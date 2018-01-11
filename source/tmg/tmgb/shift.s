@@ -1,11 +1,11 @@
 .globl .p,sprv
 .globl .sr,.sl
 
-/ &gt;&gt;
+/ >>
 .sr:
 	neg	(sp)
 
-/ &lt;&lt;
+/ <<
 .sl:
 	mov	4(sp),r1
 	clr	r0

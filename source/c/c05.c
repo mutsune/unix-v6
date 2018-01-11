@@ -1,5 +1,5 @@
 #
-#include &quot;c0h.c&quot;
+#include "c0h.c"
 /*
  *  info on operators:
  *   01-- is binary operator
@@ -49,7 +49,7 @@ int opdope[] {
 	034203,	/* ++post */
 	034203,	/* --post */
 	034220,	/* !un */
-	034202,	/* &amp;un */
+	034202,	/* &un */
 	034220,	/* *un */
 	034200,	/* -un */
 	034220,	/* ~un */
@@ -59,39 +59,39 @@ int opdope[] {
 	032101,	/* * */
 	032001,	/* / */
 	032001,	/* % */
-	026061,	/* &gt;&gt; */
-	026061,	/* &lt;&lt; */
-	020161,	/* &amp; */
+	026061,	/* >> */
+	026061,	/* << */
+	020161,	/* & */
 	017161,	/* | */
 	017161,	/* ^ */
-	036001,	/* -&gt; */
-	000000, /* int -&gt; double */
-	000000, /* double -&gt; int */
-	016001, /* &amp;&amp; */
+	036001,	/* -> */
+	000000, /* int -> double */
+	000000, /* double -> int */
+	016001, /* && */
 	015001, /* || */
-	030001, /* &amp;~ */
+	030001, /* &~ */
 	000000, /* 56 */
 	000000, /* 57 */
 	000000, /* 58 */
 	000000,	/* 59 */
 	022005,	/* == */
 	022005,	/* != */
-	024005,	/* &lt;= */
-	024005,	/* &lt; */
-	024005,	/* &gt;= */
-	024005,	/* &gt; */
-	024005,	/* &lt;p */
-	024005,	/* &lt;=p */
-	024005,	/* &gt;p */
-	024005,	/* &gt;=p */
+	024005,	/* <= */
+	024005,	/* < */
+	024005,	/* >= */
+	024005,	/* > */
+	024005,	/* <p */
+	024005,	/* <=p */
+	024005,	/* >p */
+	024005,	/* >=p */
 	012213,	/* =+ */
 	012213,	/* =- */
 	012213,	/* =* */
 	012213,	/* =/ */
 	012213,	/* =% */
-	012253,	/* =&gt;&gt; */
-	012253,	/* =&lt;&lt; */
-	012253,	/* =&amp; */
+	012253,	/* =>> */
+	012253,	/* =<< */
+	012253,	/* =& */
 	012253,	/* =| */
 	012253,	/* =^ */
 	012213,	/* = */
@@ -142,14 +142,14 @@ int opdope[] {
  * that it is the left operand that should be converted.
  * For + this is done and the conversion is turned back into
  * ITF, ITL, LTF.
- * For = however the left operand can&#39;t be converted
+ * For = however the left operand can't be converted
  * and the specified conversion is applied to the rhs.
  */
 char cvtab[4][4] {
 /*		int	double		long		ptr */
-/* int */	0,	(FTI&lt;&lt;4)+ITF,	(LTI&lt;&lt;4)+ITL,	(ITP&lt;&lt;4)+ITP,	
+/* int */	0,	(FTI<<4)+ITF,	(LTI<<4)+ITL,	(ITP<<4)+ITP,	
 /* double */	ITF,	0,		LTF,		XX,
-/* long */	ITL,	(FTL&lt;&lt;4)+LTF,	0,		XX,
+/* long */	ITL,	(FTL<<4)+LTF,	0,		XX,
 /* ptr */	ITP,	XX,		XX,		PTI
 };
 

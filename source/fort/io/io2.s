@@ -38,7 +38,7 @@ iorf:
 	mov	$-1,llpcnt
 	jsr	r5,fmtchr
 	mov	formp,llp
-	cmp	r0,$&#39;(
+	cmp	r0,$'(
 	beq	crack
 	jsr	r5,rerr; 106.
 	sys	exit
@@ -47,42 +47,42 @@ crack:
 	mov	$1,rep
 item:
 	jsr	r5,fmtchr
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	beq	item
-	cmp	$&#39;\t,r0
+	cmp	$'\t,r0
 	beq	item
 	jsr	r5,switch; mswitch
 	jsr	r5,rerr; 105.
 	sys	exit
 
 mswitch:
-	&#39;a; afmt
-	&#39;f; ffmt
-	&#39;e; efmt
-	&#39;g; gfmt
-	&#39;d; dfmt
-	&#39;i; ifmt
-	&#39;l; lfmt
-	&#39;h; hfmt
-	&#39;x; xfmt
-	&#39;p; scal
-	&#39;-; minus
-	&#39;0; numb
-	&#39;1; numb
-	&#39;2; numb
-	&#39;3; numb
-	&#39;4; numb
-	&#39;5; numb
-	&#39;6; numb
-	&#39;7; numb
-	&#39;8; numb
-	&#39;9; numb
-	&#39;,; crack
-	&#39;/; slash
-	&#39;(; lpar
-	&#39;); rpar
-	&#39;&quot;; quote
-	&#39; ; item
+	'a; afmt
+	'f; ffmt
+	'e; efmt
+	'g; gfmt
+	'd; dfmt
+	'i; ifmt
+	'l; lfmt
+	'h; hfmt
+	'x; xfmt
+	'p; scal
+	'-; minus
+	'0; numb
+	'1; numb
+	'2; numb
+	'3; numb
+	'4; numb
+	'5; numb
+	'6; numb
+	'7; numb
+	'8; numb
+	'9; numb
+	',; crack
+	'/; slash
+	'(; lpar
+	'); rpar
+	'"; quote
+	' ; item
 	0; 0
 
 minus:
@@ -216,9 +216,9 @@ efmt:
 	mov	r0,width
 4:
 	jsr	r5,fmtchr
-	cmp	r0,$&#39; /
+	cmp	r0,$' /
 	beq	4b
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	bne	err1
 	jsr	r5,gnum
 	mov	r0,ndig

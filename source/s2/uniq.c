@@ -13,33 +13,33 @@ char *argv[];
 	static char b1[1000], b2[1000];
 
 loop:
-	if(argc &gt; 1) {
-		if(*argv[1] == &#39;-&#39;) {
-			if(argv[1][1] &lt;= &#39;9&#39;)
-				fields = conv(&amp;argv[1][1]);
+	if(argc > 1) {
+		if(*argv[1] == '-') {
+			if(argv[1][1] <= '9')
+				fields = conv(&argv[1][1]);
 			else mode = argv[1][1];
 			argc--;
 			argv++;
 			goto loop;
 		}
-		if(*argv[1] == &#39;+&#39;) {
-			letters = conv(&amp;argv[1][1]);
+		if(*argv[1] == '+') {
+			letters = conv(&argv[1][1]);
 			argc--;
 			argv++;
 			goto loop;
 		}
 		f = open(argv[1], 0);
-		if(f &lt; 0) {
-			printf(&quot;cannot open %s\n&quot;, argv[1]);
+		if(f < 0) {
+			printf("cannot open %s\n", argv[1]);
 			exit();
 		}
 		fin = f;
 	} else
 		fin = dup(0);
-	if(argc &gt; 2) {
+	if(argc > 2) {
 		f = creat(argv[2], 0666);
-		if(f &lt; 0) {
-			printf(&quot;cannot create %s\n&quot;, argv[2]);
+		if(f < 0) {
+			printf("cannot create %s\n", argv[2]);
 			exit();
 		}
 		fout = f;
@@ -76,8 +76,8 @@ char buf[];
 {
 	int c;
 
-	while((c = getchar()) != &#39;\n&#39;) {
-		if(c == &#39;\0&#39;)
+	while((c = getchar()) != '\n') {
+		if(c == '\0')
 			return(1);
 		*buf++ = c;
 	}
@@ -92,24 +92,24 @@ char buf[];
 
 	switch(mode) {
 
-	case &#39;u&#39;:
+	case 'u':
 		if(uniq) {;
 			uniq = 0;
 			return;
 		}
 		break;
 
-	case &#39;d&#39;:
+	case 'd':
 		if(uniq) break;
 		return;
 
-	case &#39;c&#39;:
-		printf(&quot;%4d &quot;, linec);
+	case 'c':
+		printf("%4d ", linec);
 	}
 	uniq = 0;
 	while((c = *buf++) != 0)
 		putchar(c);
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 }
 
 equal(b1, b2)
@@ -134,14 +134,14 @@ char *s;
 	int nf, nl;
 
 	nf = nl = 0;
-	while(nf++ &lt; fields) {
-		while(*s==&#39; &#39; || *s==&#39;\t&#39;)
+	while(nf++ < fields) {
+		while(*s==' ' || *s=='\t')
 			s++;
-		while( !(*s==&#39; &#39; || *s==&#39;\t&#39;) ) 
+		while( !(*s==' ' || *s=='\t') ) 
 			if(*s == 0) return(s);
 			else s++;
 	}
-	while(nl++ &lt; letters) 
+	while(nl++ < letters) 
 			if(*s == 0) return(s);
 			else s++;
 	return(s);
@@ -154,8 +154,8 @@ char *s;
 
 	n = 0;
 	for(;;) {
-		d = *s++ - &#39;0&#39;;
-		if(0&gt;d || d&gt;9) break;
+		d = *s++ - '0';
+		if(0>d || d>9) break;
 		n = n*10 + d;
 	}
 	return(n);

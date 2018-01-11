@@ -27,23 +27,23 @@ readline()
 loop:
 	for(t=line;(*t=getc(buf))!=-1;t++) {
 		nc++;
-		if(*t==&#39; &#39;&amp;&amp;(t==line||t[-1]==&#39; &#39;))
+		if(*t==' '&&(t==line||t[-1]==' '))
 			t--;
-		if(*t==&#39;\n&#39;) {
-			if(t[-1]==&#39;\\&#39;)		/*inexact test*/
+		if(*t=='\n') {
+			if(t[-1]=='\\')		/*inexact test*/
 				continue;
-			while(t&gt;line&amp;&amp;t[-1]==&#39; &#39;)
-				*--t = &#39;\n&#39;;
+			while(t>line&&t[-1]==' ')
+				*--t = '\n';
 			*++t = 0;
 			return(1);
 		}
-		if(t-line&gt;=NC) {
-			printf(&quot;Too hard for me\n&quot;);
+		if(t-line>=NC) {
+			printf("Too hard for me\n");
 			do {
 				*line = getc(buf);
 				if(*line==0377)
 					return(0);
-			} while(*line!=&#39;\n&#39;);
+			} while(*line!='\n');
 			goto loop;
 		}
 	}
@@ -71,29 +71,29 @@ disj(s)
 	t = 0;
 	for(;;) {
 		x = string(s);
-		if(x&gt;1)
+		if(x>1)
 			return(x);
 		switch(*ev) {
 		case 0:
-		case &#39;]&#39;:
-		case &#39;}&#39;:
-			return(t|x&amp;s);
-		case &#39;|&#39;:
+		case ']':
+		case '}':
+			return(t|x&s);
+		case '|':
 			ev++;
 			t =| s;
 			s = 0;
 			continue;
 		}
 		if(s) eu = u;
-		if(string(0)&gt;1)
+		if(string(0)>1)
 			return(2);
 		switch(*ev) {
 		case 0:
-		case &#39;]&#39;:
+		case ']':
 			return(0);
-		case &#39;}&#39;:
+		case '}':
 			return(1);
-		case &#39;|&#39;:
+		case '|':
 			ev++;
 			continue;
 		default:
@@ -108,15 +108,15 @@ string(s)
 	for(;;) {
 		switch(*ev) {
 		case 0:
-		case &#39;|&#39;:
-		case &#39;]&#39;:
-		case &#39;}&#39;:
+		case '|':
+		case ']':
+		case '}':
 			return(1);
-		case &#39;\\&#39;:
+		case '\\':
 			ev++;
 			if(*ev==0)
 				return(2);
-			if(*ev==&#39;\n&#39;) {
+			if(*ev=='\n') {
 				ev++;
 				continue;
 			}
@@ -124,10 +124,10 @@ string(s)
 			if(eat(s,*ev)==1)
 				continue;
 			return(0);
-		case &#39;[&#39;:
+		case '[':
 			ev++;
 			x = disj(s);
-			if(*ev!=&#39;]&#39; || x&gt;1)
+			if(*ev!=']' || x>1)
 				return(2);
 			ev++;
 			if(s==0)
@@ -135,10 +135,10 @@ string(s)
 			if(x==0)
 				return(0);
 			continue;
-		case &#39;{&#39;:
+		case '{':
 			ev++;
 			x = disj(s);
-			if(*ev!=&#39;}&#39;||x&gt;1)
+			if(*ev!='}'||x>1)
 				return(2);
 			ev++;
 			continue;
@@ -165,7 +165,7 @@ char c;
 fold(c)
 char c;
 {
-	if(c&lt;&#39;A&#39;||c&gt;&#39;Z&#39;)
+	if(c<'A'||c>'Z')
 		return(c);
 	return(c|040);
 }
@@ -181,22 +181,22 @@ pub1(s)
 {
 	for(;;ev++){
 		switch(*ev) {
-		case &#39;|&#39;:
+		case '|':
 			s = 0;
 			ev;
 			continue;
-		case &#39;]&#39;:
-		case &#39;}&#39;:
+		case ']':
+		case '}':
 		case 0:
 			return;
-		case &#39;[&#39;:
-		case &#39;{&#39;:
+		case '[':
+		case '{':
 			ev++;
 			pub1(s);
 			ev;
 			continue;
-		case &#39;\\&#39;:
-			if(*++ev==&#39;\n&#39;)
+		case '\\':
+			if(*++ev=='\n')
 				continue;
 		default:
 			if(s)
@@ -212,12 +212,12 @@ char *u, *w[];
 	int i;
 	char *t;
 	s = u;
-	for(i=0;i&lt;NF;i++) {
+	for(i=0;i<NF;i++) {
 		u = s;
 		t = w[i];
-		while(*s!=&#39;:&#39;&amp;&amp;*s!=&#39;\n&#39;&amp;&amp;s-u&lt;SL) {
-			if(*s==&#39;\\&#39;)  {
-				if(s[1] == &#39;\n&#39;) {
+		while(*s!=':'&&*s!='\n'&&s-u<SL) {
+			if(*s=='\\')  {
+				if(s[1] == '\n') {
 					s =+ 2;
 					continue;
 				}
@@ -226,14 +226,14 @@ char *u, *w[];
 			*t++ = *s++;
 		}
 
-		while(*s!=&#39;:&#39;&amp;&amp;*s!=&#39;\n&#39;)
+		while(*s!=':'&&*s!='\n')
 			s++;
 		*t = 0;
-		if(*s++==&#39;\n&#39;) {
+		if(*s++=='\n') {
 			return(i+1);
 		}
 	}
-	printf(&quot;Too many facts about one thing\n&quot;);
+	printf("Too many facts about one thing\n");
 }
 
 perm(u,m,v,n,p)
@@ -242,10 +242,10 @@ char *u[], *v[];
 {
 	int i, j;
 	int x;
-	for(i=0;i&lt;m;i++) {
-		for(j=0;j&lt;n;j++) {
+	for(i=0;i<m;i++) {
+		for(j=0;j<n;j++) {
 			x = cmp(u[i],v[j]);
-			if(x&gt;1) badinfo();
+			if(x>1) badinfo();
 			if(x==0)
 				continue;
 			p[i] = j;
@@ -274,8 +274,8 @@ readindex()
 	xx[0] = nc = 0;
 	while(readline()) {
 		xx[++nl] = nc;
-		if(nl&gt;=NL) {
-			printf(&quot;I&#39;ve forgotten some of it\n&quot;);
+		if(nl>=NL) {
+			printf("I've forgotten some of it\n");
 			break;
 		}
 	}
@@ -284,7 +284,7 @@ readindex()
 talloc()
 {
 	int i;
-	for(i=0;i&lt;NF;i++)
+	for(i=0;i<NF;i++)
 		tmp[i] = alloc(SL);
 }
 
@@ -298,19 +298,19 @@ char *argv[];
 	char *t;
 	extern done();
 	int count;
-	info = &quot;/usr/lib/quiz/index&quot;;
+	info = "/usr/lib/quiz/index";
 	time(tvec);
-	inc = tvec[1]&amp;077774|01;
+	inc = tvec[1]&077774|01;
 loop:
-	if(argc&gt;1&amp;&amp;*argv[1]==&#39;-&#39;) {
+	if(argc>1&&*argv[1]=='-') {
 		switch(argv[1][1]) {
-		case &#39;i&#39;:
-			if(argc&gt;2) 
+		case 'i':
+			if(argc>2) 
 				info = argv[2];
 			argc =- 2;
 			argv =+ 2;
 			goto loop;
-		case &#39;t&#39;:
+		case 't':
 			tflag = 1;
 			argc--;
 			argv++;
@@ -318,51 +318,51 @@ loop:
 		}
 	}
 	if(fopen(info,buf)== -1) {
-		printf(&quot;No info\n&quot;);
+		printf("No info\n");
 		exit();
 	}
 	talloc();
-	if(argc&lt;=2)
+	if(argc<=2)
 		instruct(info);
 	signal(2,done);
 	argv[argc] = 0;
-	if(find(&amp;argv[1],argc-1)==0)
+	if(find(&argv[1],argc-1)==0)
 		dunno();
 	close(buf[0]);
 	if(fopen(tmp[0],buf)== -1) 
 		dunno();
 	readindex();
-	if(!tflag || na&gt;nl)
+	if(!tflag || na>nl)
 		na = nl;
 	for(;;) {
 		i = next();
 		seek(buf[0],xx[i],0);
 		read(buf[0],line,xx[i+1]-xx[i]);
 		segment(line,tmp);
-		if(*tmp[select[0]] == &#39;\0&#39; || *tmp[select[1]] == &#39;\0&#39;) {
+		if(*tmp[select[0]] == '\0' || *tmp[select[1]] == '\0') {
 			score[i] = 1;
 			continue;
 		}
 		publish(tmp[select[0]]);
-		printf(&quot;\n&quot;);
+		printf("\n");
 		for(count=0;;count++) {
 			if(query(response)==0) {
 				publish(tmp[select[1]]);
-				printf(&quot;\n&quot;);
+				printf("\n");
 				if(count==0) wrongs++;
 				score[i] = tflag?-1:1;
 				break;
 			}
 			x = cmp(response,tmp[select[1]]);
-			if(x&gt;1) badinfo();
+			if(x>1) badinfo();
 			if(x==1) {
-				printf(&quot;Right!\n&quot;);
+				printf("Right!\n");
 				if(count==0) rights++;
-				if(++score[i]&gt;=1 &amp;&amp; na&lt;nl)
+				if(++score[i]>=1 && na<nl)
 					na++;
 				break;
 			}
-			printf(&quot;What?\n&quot;);
+			printf("What?\n");
 			if(count==0) wrongs++;
 			score[i] = tflag?-1:1;
 		}
@@ -377,11 +377,11 @@ char *r;
 	for(t=r;;t++) {
 		if(read(0,t,1)==0)
 			done();
-		if(*t==&#39; &#39;&amp;&amp;(t==r||t[-1]==&#39; &#39;))
+		if(*t==' '&&(t==r||t[-1]==' '))
 			t--;
-		if(*t==&#39;\n&#39;) {
-			while(t&gt;r&amp;&amp;t[-1]==&#39; &#39;)
-				*--t = &#39;\n&#39;;
+		if(*t=='\n') {
+			while(t>r&&t[-1]==' ')
+				*--t = '\n';
 			break;
 		}
 	}
@@ -392,11 +392,11 @@ char *r;
 next()
 {
 	int flag;
-	inc = inc*3125&amp;077777;
-	ptr = (inc&gt;&gt;2)%na;
+	inc = inc*3125&077777;
+	ptr = (inc>>2)%na;
 	flag = 0;
-	while(score[ptr]&gt;0)
-		if(++ptr&gt;=na) {
+	while(score[ptr]>0)
+		if(++ptr>=na) {
 			ptr = 0;
 			if(flag) done();
 			flag = 1;
@@ -406,55 +406,55 @@ next()
 
 done()
 {
-	printf(&quot;\nRights %d, wrongs %d, &quot;, rights, wrongs);
+	printf("\nRights %d, wrongs %d, ", rights, wrongs);
 	if(guesses)
-		printf(&quot;extra guesses %d, &quot;, guesses);
-	printf(&quot;score %d%%\n&quot;,100*rights/(rights+wrongs));
+		printf("extra guesses %d, ", guesses);
+	printf("score %d%%\n",100*rights/(rights+wrongs));
 	exit();
 }
 instruct(info)
 {
 	char *t;
 	int i, n;
-	printf(&quot;Subjects:\n\n&quot;);
+	printf("Subjects:\n\n");
 	while(readline()) {
-		printf(&quot;-&quot;);
+		printf("-");
 		n = segment(line,tmp);
-		for(i=1;i&lt;n;i++) {
-			printf(&quot; &quot;);
+		for(i=1;i<n;i++) {
+			printf(" ");
 			publish(tmp[i]);
 		}
-		printf(&quot;\n&quot;);
+		printf("\n");
 	}
-	printf(&quot;\n&quot;);
+	printf("\n");
 	if(fopen(info,buf)== -1)
 		abort();
 	readline();
 	segment(line,tmp);
-	printf(&quot;For example,\n&quot;);
-	printf(&quot;    quiz &quot;);
+	printf("For example,\n");
+	printf("    quiz ");
 	publish(tmp[1]);
-	printf(&quot; &quot;);
+	printf(" ");
 	publish(tmp[2]);
-	printf(&quot;\nasks you a &quot;);
+	printf("\nasks you a ");
 	publish(tmp[1]);
-	printf(&quot; and you answer the &quot;);
+	printf(" and you answer the ");
 	publish(tmp[2]);
-	printf(&quot;\n    quiz &quot;);
+	printf("\n    quiz ");
 	publish(tmp[2]);
-	printf(&quot; &quot;);
+	printf(" ");
 	publish(tmp[1]);
-	printf(&quot;\nworks the other way around\n&quot;);
-	printf(&quot;\nType empty line to get correct answer.\n&quot;);
+	printf("\nworks the other way around\n");
+	printf("\nType empty line to get correct answer.\n");
 	exit();
 }
 
 badinfo(){
-	printf(&quot;Bad info %s\n&quot;,line);
+	printf("Bad info %s\n",line);
 }
 
 dunno()
 {
-	printf(&quot;I don&#39;t know about that\n&quot;);
+	printf("I don't know about that\n");
 	exit();
 }

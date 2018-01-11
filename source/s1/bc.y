@@ -1,7 +1,7 @@
-%right &#39;=&#39;
-%left &#39;+&#39; &#39;-&#39;
-%left &#39;*&#39; &#39;/&#39; &#39;%&#39;
-%right &#39;^&#39;
+%right '='
+%left '+' '-'
+%left '*' '/' '%'
+%right '^'
 %left UMINUS
 
 %term LETTER DIGIT SQRT _IF  FFF EQ
@@ -14,26 +14,26 @@
 %{
 char cary[1000], *cp { cary };
 char string[1000], *str {string};
-int crs &#39;0&#39;;
-int rcrs &#39;0&#39;;  /* reset crs */
+int crs '0';
+int rcrs '0';  /* reset crs */
 int bindx 0;
 int lev 0;
 int bstack[10] { 0 };
 char *numb[15] {
-  &quot; 0&quot;, &quot; 1&quot;, &quot; 2&quot;, &quot; 3&quot;, &quot; 4&quot;, &quot; 5&quot;,
-  &quot; 6&quot;, &quot; 7&quot;, &quot; 8&quot;, &quot; 9&quot;, &quot; 10&quot;, &quot; 11&quot;,
-  &quot; 12&quot;, &quot; 13&quot;, &quot; 14&quot; };
+  " 0", " 1", " 2", " 3", " 4", " 5",
+  " 6", " 7", " 8", " 9", " 10", " 11",
+  " 12", " 13", " 14" };
 int *pre, *post;
 %}
 %%
 start	: 
 	|  start stat tail
 		= output( $2 );
-	|  start def dargs &#39;)&#39; &#39;{&#39; dlist slist &#39;}&#39;
+	|  start def dargs ')' '{' dlist slist '}'
 		={	bundle( pre, $7, post );
 			conout( $$, $2 );
 			rcrs = crs;
-			output( &quot;&quot; );
+			output( "" );
 			lev = bindx = 0;
 			}
 	;
@@ -43,82 +43,82 @@ dlist	:  tail
 	;
 
 stat	:  e 
-		={ bundle( $1, &quot;ps.&quot; ); }
+		={ bundle( $1, "ps." ); }
 	| 
-		={ bundle( &quot;&quot; ); }
+		={ bundle( "" ); }
 	|  QSTR
-		={ bundle(&quot;[&quot;,$1,&quot;]P&quot;);}
-	|  LETTER &#39;=&#39; e
-		={ bundle( $3, &quot;s&quot;, $1 ); }
-	|  LETTER &#39;[&#39; e &#39;]&#39; &#39;=&#39; e
-		={ bundle( $6, $3, &quot;:&quot;, geta($1)); }
+		={ bundle("[",$1,"]P");}
+	|  LETTER '=' e
+		={ bundle( $3, "s", $1 ); }
+	|  LETTER '[' e ']' '=' e
+		={ bundle( $6, $3, ":", geta($1)); }
 	|  LETTER EQOP e
-		={ bundle( &quot;l&quot;, $1, $3, $2, &quot;s&quot;, $1 ); }
-	|  LETTER &#39;[&#39; e &#39;]&#39; EQOP e
-		={ bundle($3, &quot;;&quot;, geta($1), $6, $5, $3, &quot;:&quot;, geta($1));}
+		={ bundle( "l", $1, $3, $2, "s", $1 ); }
+	|  LETTER '[' e ']' EQOP e
+		={ bundle($3, ";", geta($1), $6, $5, $3, ":", geta($1));}
 	|  _BREAK
-		={ bundle( numb[lev-bstack[bindx-1]], &quot;Q&quot; ); }
-	|  _RETURN &#39;(&#39; e &#39;)&#39;
-		= bundle( $3, post, numb[lev], &quot;Q&quot; );
-	|  _RETURN &#39;(&#39; &#39;)&#39;
-		= bundle( &quot;0&quot;, post, numb[lev], &quot;Q&quot; );
+		={ bundle( numb[lev-bstack[bindx-1]], "Q" ); }
+	|  _RETURN '(' e ')'
+		= bundle( $3, post, numb[lev], "Q" );
+	|  _RETURN '(' ')'
+		= bundle( "0", post, numb[lev], "Q" );
 	| SCALE e
-		= bundle( $2, &quot;k&quot; );
-	| SCALE &#39;=&#39; e
-		= bundle( $3, &quot;k&quot;);
+		= bundle( $2, "k" );
+	| SCALE '=' e
+		= bundle( $3, "k");
 	| SCALE EQOP e
-		= bundle(&quot;K&quot;,$3,$2,&quot;k&quot;);
+		= bundle("K",$3,$2,"k");
 	| BASE e
-		= bundle( $2, &quot;i&quot; );
-	| BASE &#39;=&#39; e
-		= bundle($3, &quot;i&quot;);
+		= bundle( $2, "i" );
+	| BASE '=' e
+		= bundle($3, "i");
 	| BASE EQOP e
-		= bundle(&quot;I&quot;,$3,$2,&quot;i&quot;);
+		= bundle("I",$3,$2,"i");
 	| OBASE e
-		= bundle( $2, &quot;o&quot; );
-	| OBASE &#39;=&#39; e
-		= bundle($3,&quot;o&quot;);
+		= bundle( $2, "o" );
+	| OBASE '=' e
+		= bundle($3,"o");
 	| OBASE EQOP e
-		= bundle(&quot;O&quot;,$3,$2,&quot;o&quot;);
-	|  &#39;{&#39; slist &#39;}&#39;
+		= bundle("O",$3,$2,"o");
+	|  '{' slist '}'
 		={ $$ = $2; }
 	|  FFF
-		={ bundle(&quot;f&quot;); }
+		={ bundle("f"); }
 	|  error
-		={ bundle(&quot;c&quot;); }
-	|  _IF CRS BLEV &#39;(&#39; re &#39;)&#39; stat
+		={ bundle("c"); }
+	|  _IF CRS BLEV '(' re ')' stat
 		={	conout( $7, $2 );
-			bundle( $5, $2, &quot; &quot; );
+			bundle( $5, $2, " " );
 			}
-	|  _WHILE CRS &#39;(&#39; re &#39;)&#39; stat BLEV
+	|  _WHILE CRS '(' re ')' stat BLEV
 		={	bundle( $6, $4, $2 );
 			conout( $$, $2 );
-			bundle( $4, $2, &quot; &quot; );
+			bundle( $4, $2, " " );
 			}
-	|  fprefix CRS re &#39;;&#39; e &#39;)&#39; stat BLEV
-		={	bundle( $7, $5, &quot;s.&quot;, $3, $2 );
+	|  fprefix CRS re ';' e ')' stat BLEV
+		={	bundle( $7, $5, "s.", $3, $2 );
 			conout( $$, $2 );
-			bundle( $1, &quot;s.&quot;, $3, $2, &quot; &quot; );
+			bundle( $1, "s.", $3, $2, " " );
 			}
-	|  &#39;~&#39; LETTER &#39;=&#39; e
-		={	bundle($4,&quot;S&quot;,$2); }
+	|  '~' LETTER '=' e
+		={	bundle($4,"S",$2); }
 	;
 
 EQOP	:  EQPL
-		={ $$ = &quot;+&quot;; }
+		={ $$ = "+"; }
 	|  EQMI
-		={ $$ = &quot;-&quot;; }
+		={ $$ = "-"; }
 	|  EQMUL
-		={ $$ = &quot;*&quot;; }
+		={ $$ = "*"; }
 	|  EQDIV
-		={ $$ = &quot;/&quot;; }
+		={ $$ = "/"; }
 	|  EQREM
-		={ $$ = &quot;%%&quot;; }
+		={ $$ = "%%"; }
 	|  EQEXP
-		={ $$ = &quot;^&quot;; }
+		={ $$ = "^"; }
 	;
 
-fprefix	:  _FOR &#39;(&#39; e &#39;;&#39;
+fprefix	:  _FOR '(' e ';'
 		={ $$ = $3; }
 	;
 
@@ -131,151 +131,151 @@ slist	:  stat
 		={ bundle( $1, $3 ); }
 	;
 
-tail	:  &#39;\n&#39;
-	|  &#39;;&#39;
+tail	:  '\n'
+	|  ';'
 	;
 
 re	:  e EQ e
-		= bundle( $1, $3, &quot;=&quot; );
-	|  e &#39;&lt;&#39; e
-		= bundle( $1, $3, &quot;&gt;&quot; );
-	|  e &#39;&gt;&#39; e
-		= bundle( $1, $3, &quot;&lt;&quot; );
+		= bundle( $1, $3, "=" );
+	|  e '<' e
+		= bundle( $1, $3, ">" );
+	|  e '>' e
+		= bundle( $1, $3, "<" );
 	|  e NE e
-		= bundle( $1, $3, &quot;!=&quot; );
+		= bundle( $1, $3, "!=" );
 	|  e GE e
-		= bundle( $1, $3, &quot;!&gt;&quot; );
+		= bundle( $1, $3, "!>" );
 	|  e LE e
-		= bundle( $1, $3, &quot;!&lt;&quot; );
+		= bundle( $1, $3, "!<" );
 	|  e
-		= bundle( $1, &quot; 0!=&quot; );
+		= bundle( $1, " 0!=" );
 	;
 
-e	:  e &#39;+&#39; e
-		= bundle( $1, $3, &quot;+&quot; );
-	|  e &#39;-&#39; e
-		= bundle( $1, $3, &quot;-&quot; );
-	| &#39;-&#39; e		%prec UMINUS
-		= bundle( &quot; 0&quot;, $2, &quot;-&quot; );
-	|  e &#39;*&#39; e
-		= bundle( $1, $3, &quot;*&quot; );
-	|  e &#39;/&#39; e
-		= bundle( $1, $3, &quot;/&quot; );
-	|  e &#39;%&#39; e
-		= bundle( $1, $3, &quot;%%&quot; );
-	|  e &#39;^&#39; e
-		= bundle( $1, $3, &quot;^&quot; );
-	|  LETTER &#39;[&#39; e &#39;]&#39;
-		={ bundle($3, &quot;;&quot;, geta($1)); }
+e	:  e '+' e
+		= bundle( $1, $3, "+" );
+	|  e '-' e
+		= bundle( $1, $3, "-" );
+	| '-' e		%prec UMINUS
+		= bundle( " 0", $2, "-" );
+	|  e '*' e
+		= bundle( $1, $3, "*" );
+	|  e '/' e
+		= bundle( $1, $3, "/" );
+	|  e '%' e
+		= bundle( $1, $3, "%%" );
+	|  e '^' e
+		= bundle( $1, $3, "^" );
+	|  LETTER '[' e ']'
+		={ bundle($3, ";", geta($1)); }
 	|  LETTER INCR
-		= bundle( &quot;l&quot;, $1, &quot;d1+s&quot;, $1 );
+		= bundle( "l", $1, "d1+s", $1 );
 	|  INCR LETTER
-		= bundle( &quot;l&quot;, $2, &quot;1+ds&quot;, $2 );
+		= bundle( "l", $2, "1+ds", $2 );
 	|  DECR LETTER
-		= bundle( &quot;l&quot;, $2, &quot;1-ds&quot;, $2 );
+		= bundle( "l", $2, "1-ds", $2 );
 	|  LETTER DECR
-		= bundle( &quot;l&quot;, $1, &quot;d1-s&quot;, $1 );
-	| LETTER &#39;[&#39; e &#39;]&#39; INCR
-		= bundle($3,&quot;;&quot;,geta($1),&quot;d1+&quot;,$3,&quot;:&quot;,geta($1));
-	| INCR LETTER &#39;[&#39; e &#39;]&#39;
-		= bundle($4,&quot;;&quot;,geta($2),&quot;1+d&quot;,$4,&quot;:&quot;,geta($2));
-	| LETTER &#39;[&#39; e &#39;]&#39; DECR
-		= bundle($3,&quot;;&quot;,geta($1),&quot;d1-&quot;,$3,&quot;:&quot;,geta($1));
-	| DECR LETTER &#39;[&#39; e &#39;]&#39;
-		= bundle($4,&quot;;&quot;,geta($2),&quot;1-d&quot;,$4,&quot;:&quot;,geta($2));
+		= bundle( "l", $1, "d1-s", $1 );
+	| LETTER '[' e ']' INCR
+		= bundle($3,";",geta($1),"d1+",$3,":",geta($1));
+	| INCR LETTER '[' e ']'
+		= bundle($4,";",geta($2),"1+d",$4,":",geta($2));
+	| LETTER '[' e ']' DECR
+		= bundle($3,";",geta($1),"d1-",$3,":",geta($1));
+	| DECR LETTER '[' e ']'
+		= bundle($4,";",geta($2),"1-d",$4,":",geta($2));
 	| SCALE INCR
-		= bundle(&quot;Kd1+k&quot;);
+		= bundle("Kd1+k");
 	| INCR SCALE
-		= bundle(&quot;K1+dk&quot;);
+		= bundle("K1+dk");
 	| SCALE DECR
-		= bundle(&quot;Kd1-k&quot;);
+		= bundle("Kd1-k");
 	| DECR SCALE
-		= bundle(&quot;K1-dk&quot;);
+		= bundle("K1-dk");
 	| BASE INCR
-		= bundle(&quot;Id1+i&quot;);
+		= bundle("Id1+i");
 	| INCR BASE
-		= bundle(&quot;I1+di&quot;);
+		= bundle("I1+di");
 	| BASE DECR
-		= bundle(&quot;Id1-i&quot;);
+		= bundle("Id1-i");
 	| DECR BASE
-		= bundle(&quot;I1-di&quot;);
+		= bundle("I1-di");
 	| OBASE INCR
-		= bundle(&quot;Od1+o&quot;);
+		= bundle("Od1+o");
 	| INCR OBASE
-		= bundle(&quot;O1+do&quot;);
+		= bundle("O1+do");
 	| OBASE DECR
-		= bundle(&quot;Od1-o&quot;);
+		= bundle("Od1-o");
 	| DECR OBASE
-		= bundle(&quot;O1-do&quot;);
-	|  LETTER &#39;(&#39; cargs &#39;)&#39;
-		= bundle( $3, &quot;l&quot;, getf($1), &quot;x&quot; );
-	|  LETTER &#39;(&#39; &#39;)&#39;
-		= bundle( &quot;l&quot;, getf($1), &quot;x&quot; );
+		= bundle("O1-do");
+	|  LETTER '(' cargs ')'
+		= bundle( $3, "l", getf($1), "x" );
+	|  LETTER '(' ')'
+		= bundle( "l", getf($1), "x" );
 	|  cons
-		={ bundle( &quot; &quot;, $1 ); }
+		={ bundle( " ", $1 ); }
 	|  DOT cons
-		={ bundle( &quot; .&quot;, $2 ); }
+		={ bundle( " .", $2 ); }
 	|  cons DOT cons
-		={ bundle( &quot; &quot;, $1, &quot;.&quot;, $3 ); }
+		={ bundle( " ", $1, ".", $3 ); }
 	|  cons DOT
-		={ bundle( &quot; &quot;, $1, &quot;.&quot; ); }
+		={ bundle( " ", $1, "." ); }
 	|  DOT
-		={ $$ = &quot;l.&quot;; }
+		={ $$ = "l."; }
 	|  LETTER
-		= { bundle( &quot;l&quot;, $1 ); }
-	|  LETTER &#39;=&#39; e
-		={ bundle( $3, &quot;ds&quot;, $1 ); }
-	|  LETTER EQOP e	%prec &#39;=&#39;
-		={ bundle( &quot;l&quot;, $1, $3, $2, &quot;ds&quot;, $1 ); }
-	|  &#39;(&#39; e &#39;)&#39;
+		= { bundle( "l", $1 ); }
+	|  LETTER '=' e
+		={ bundle( $3, "ds", $1 ); }
+	|  LETTER EQOP e	%prec '='
+		={ bundle( "l", $1, $3, $2, "ds", $1 ); }
+	|  '(' e ')'
 		= { $$ = $2; }
-	|  &#39;?&#39;
-		={ bundle( &quot;?&quot; ); }
-	|  SQRT &#39;(&#39; e &#39;)&#39;
-		={ bundle( $3, &quot;v&quot; ); }
-		| &#39;~&#39; LETTER
-		={ bundle(&quot;L&quot;,$2); }
+	|  '?'
+		={ bundle( "?" ); }
+	|  SQRT '(' e ')'
+		={ bundle( $3, "v" ); }
+		| '~' LETTER
+		={ bundle("L",$2); }
 	| SCALE e
-		= bundle($2,&quot;dk&quot;);
-	| SCALE &#39;=&#39; e
-		= bundle($3,&quot;dk&quot;);
-	| SCALE EQOP e		%prec &#39;=&#39;
-		= bundle(&quot;K&quot;,$3,$2,&quot;dk&quot;);
+		= bundle($2,"dk");
+	| SCALE '=' e
+		= bundle($3,"dk");
+	| SCALE EQOP e		%prec '='
+		= bundle("K",$3,$2,"dk");
 	| BASE e
-		= bundle($2,&quot;di&quot;);
-	| BASE &#39;=&#39; e
-		= bundle($3,&quot;di&quot;);
-	| BASE EQOP e		%prec &#39;=&#39;
-		= bundle(&quot;I&quot;,$3,$2,&quot;di&quot;);
+		= bundle($2,"di");
+	| BASE '=' e
+		= bundle($3,"di");
+	| BASE EQOP e		%prec '='
+		= bundle("I",$3,$2,"di");
 	| OBASE e
-		= bundle($2,&quot;do&quot;);
-	| OBASE &#39;=&#39; e
-		= bundle($3,&quot;do&quot;);
-	| OBASE EQOP e		%prec &#39;=&#39;
-		= bundle(&quot;O&quot;,$3,$2,&quot;do&quot;);
+		= bundle($2,"do");
+	| OBASE '=' e
+		= bundle($3,"do");
+	| OBASE EQOP e		%prec '='
+		= bundle("O",$3,$2,"do");
 	| SCALE
-		= bundle(&quot;K&quot;);
+		= bundle("K");
 	| BASE
-		= bundle(&quot;I&quot;);
+		= bundle("I");
 	| OBASE
-		= bundle(&quot;O&quot;);
+		= bundle("O");
 	;
 
 cargs	:  eora
-	|  cargs &#39;,&#39; eora
+	|  cargs ',' eora
 		= bundle( $1, $3 );
 	;
 eora:	  e
-	| LETTER &#39;[&#39; &#39;]&#39;
-		=bundle(&quot;l&quot;,geta($1));
+	| LETTER '[' ']'
+		=bundle("l",geta($1));
 	;
 
 cons	:  constant
-		={ *cp++ = &#39;\0&#39;; }
+		={ *cp++ = '\0'; }
 
 constant:
-	  &#39;_&#39;
-		={ $$ = cp; *cp++ = &#39;_&#39;; }
+	  '_'
+		={ $$ = cp; *cp++ = '_'; }
 	|  DIGIT
 		={ $$ = cp; *cp++ = $1; }
 	|  constant DIGIT
@@ -283,13 +283,13 @@ constant:
 	;
 
 CRS	:
-		={ $$ = cp; *cp++ = crs++; *cp++ = &#39;\0&#39;; bstack[bindx++] = lev++; }
+		={ $$ = cp; *cp++ = crs++; *cp++ = '\0'; bstack[bindx++] = lev++; }
 	;
 
-def	:  _DEFINE LETTER &#39;(&#39;
+def	:  _DEFINE LETTER '('
 		={	$$ = getf($2);
-			pre = &quot;&quot;;
-			post = &quot;&quot;;
+			pre = "";
+			post = "";
 			lev = 1;
 			bstack[bindx=0] = 0;
 			}
@@ -298,17 +298,17 @@ def	:  _DEFINE LETTER &#39;(&#39;
 dargs	:
 	|  lora
 		={ pp( $1 ); }
-	|  dargs &#39;,&#39; lora
+	|  dargs ',' lora
 		={ pp( $3 ); }
 	;
 
 dlets	:  lora
 		={ tp($1); }
-	|  dlets &#39;,&#39; lora
+	|  dlets ',' lora
 		={ tp($3); }
 	;
 lora	:  LETTER
-	|  LETTER &#39;[&#39; &#39;]&#39;
+	|  LETTER '[' ']'
 		={ $$ = geta($1); }
 	;
 
@@ -329,82 +329,82 @@ char *atab[26]{
 	0254,0255,0256,0257,0260,0261,0262,0263,0264,0265,0266,
 	0267,0270,0271,0272};
 char *letr[26] {
-  &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;,&quot;g&quot;,&quot;h&quot;,&quot;i&quot;,&quot;j&quot;,
-  &quot;k&quot;,&quot;l&quot;,&quot;m&quot;,&quot;n&quot;,&quot;o&quot;,&quot;p&quot;,&quot;q&quot;,&quot;r&quot;,&quot;s&quot;,&quot;t&quot;,
-  &quot;u&quot;,&quot;v&quot;,&quot;w&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot; } ;
-char *dot { &quot;.&quot; };
+  "a","b","c","d","e","f","g","h","i","j",
+  "k","l","m","n","o","p","q","r","s","t",
+  "u","v","w","x","y","z" } ;
+char *dot { "." };
 yylex(){
   int c,ch;
 restart:
   c = getc();
   peekc = -1;
-  while( c == &#39; &#39; || c == &#39;\t&#39; ) c = getc();
-  if( c&lt;= &#39;z&#39; &amp;&amp; c &gt;= &#39;a&#39; ) {
+  while( c == ' ' || c == '\t' ) c = getc();
+  if( c<= 'z' && c >= 'a' ) {
     /* look ahead to look for reserved words */
     peekc = getc();
-    if( peekc &gt;= &#39;a&#39; &amp;&amp; peekc &lt;= &#39;z&#39; ){ /* must be reserved word */
-      if( c==&#39;i&#39; &amp;&amp; peekc==&#39;f&#39; ){ c=_IF; goto skip; }
-      if( c==&#39;w&#39; &amp;&amp; peekc==&#39;h&#39; ){ c=_WHILE; goto skip; }
-      if( c==&#39;f&#39; &amp;&amp; peekc==&#39;o&#39; ){ c=_FOR; goto skip; }
-      if( c==&#39;s&#39; &amp;&amp; peekc==&#39;q&#39; ){ c=SQRT; goto skip; }
-      if( c==&#39;r&#39; &amp;&amp; peekc==&#39;e&#39; ){ c=_RETURN; goto skip; }
-      if( c==&#39;b&#39; &amp;&amp; peekc==&#39;r&#39; ){ c=_BREAK; goto skip; }
-      if( c==&#39;d&#39; &amp;&amp; peekc==&#39;e&#39; ){ c=_DEFINE; goto skip; }
-      if( c==&#39;s&#39; &amp;&amp; peekc==&#39;c&#39; ){ c= SCALE; goto skip; }
-      if( c==&#39;b&#39; &amp;&amp; peekc==&#39;a&#39; ){ c=BASE; goto skip; }
-      if( c==&#39;o&#39; &amp;&amp; peekc==&#39;b&#39; ){ c=OBASE; goto skip; }
-      if( c==&#39;d&#39; &amp;&amp; peekc==&#39;i&#39; ){ c=FFF; goto skip; }
-      if( c==&#39;a&#39; &amp;&amp; peekc==&#39;u&#39; ){ c=_AUTO; goto skip; }
-      if( c == &#39;q&#39; &amp;&amp; peekc == &#39;u&#39;)getout();
+    if( peekc >= 'a' && peekc <= 'z' ){ /* must be reserved word */
+      if( c=='i' && peekc=='f' ){ c=_IF; goto skip; }
+      if( c=='w' && peekc=='h' ){ c=_WHILE; goto skip; }
+      if( c=='f' && peekc=='o' ){ c=_FOR; goto skip; }
+      if( c=='s' && peekc=='q' ){ c=SQRT; goto skip; }
+      if( c=='r' && peekc=='e' ){ c=_RETURN; goto skip; }
+      if( c=='b' && peekc=='r' ){ c=_BREAK; goto skip; }
+      if( c=='d' && peekc=='e' ){ c=_DEFINE; goto skip; }
+      if( c=='s' && peekc=='c' ){ c= SCALE; goto skip; }
+      if( c=='b' && peekc=='a' ){ c=BASE; goto skip; }
+      if( c=='o' && peekc=='b' ){ c=OBASE; goto skip; }
+      if( c=='d' && peekc=='i' ){ c=FFF; goto skip; }
+      if( c=='a' && peekc=='u' ){ c=_AUTO; goto skip; }
+      if( c == 'q' && peekc == 'u')getout();
       /* could not be found */
       return( error );
     skip:  /* skip over rest of word */
 	peekc = -1;
-      while( (ch = getc()) &gt;= &#39;a&#39; &amp;&amp; ch &lt;= &#39;z&#39; );
+      while( (ch = getc()) >= 'a' && ch <= 'z' );
 	peekc = ch;
       return( c );
       }
 
     /* usual case; just one single letter */
 
-    yylval = letr[c-&#39;a&#39;];
+    yylval = letr[c-'a'];
     return( LETTER );
     }
-  if( c&gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39; || c&gt;= &#39;A&#39; &amp;&amp; c&lt;= &#39;F&#39; ){
+  if( c>= '0' && c <= '9' || c>= 'A' && c<= 'F' ){
     yylval = c;
     return( DIGIT );
     }
   switch( c ){
-    case &#39;.&#39;:  return( DOT );
-    case &#39;=&#39;:
+    case '.':  return( DOT );
+    case '=':
       switch( peekc = getc() ){
-        case &#39;=&#39;: c=EQ; goto gotit;
-        case &#39;+&#39;: c=EQPL; goto gotit;
-        case &#39;-&#39;: c=EQMI; goto gotit;
-        case &#39;*&#39;: c=EQMUL; goto gotit;
-        case &#39;/&#39;: c=EQDIV; goto gotit;
-        case &#39;%&#39;: c=EQREM; goto gotit;
-        case &#39;^&#39;: c=EQEXP; goto gotit;
-        default:   return( &#39;=&#39; );
+        case '=': c=EQ; goto gotit;
+        case '+': c=EQPL; goto gotit;
+        case '-': c=EQMI; goto gotit;
+        case '*': c=EQMUL; goto gotit;
+        case '/': c=EQDIV; goto gotit;
+        case '%': c=EQREM; goto gotit;
+        case '^': c=EQEXP; goto gotit;
+        default:   return( '=' );
         gotit:     peekc = -1; return(c);
         }
-    case &#39;+&#39;:  return( cpeek( &#39;+&#39;, INCR, &#39;+&#39; ) );
-    case &#39;-&#39;:  return( cpeek( &#39;-&#39;, DECR, &#39;-&#39; ) );
-    case &#39;&lt;&#39;:  return( cpeek( &#39;=&#39;, LE, &#39;&lt;&#39; ) );
-    case &#39;&gt;&#39;:  return( cpeek( &#39;=&#39;, GE, &#39;&gt;&#39; ) );
-    case &#39;!&#39;:  return( cpeek( &#39;=&#39;, NE, &#39;!&#39; ) );
-    case &#39;/&#39;:
-	if((peekc = getc()) == &#39;*&#39;){
+    case '+':  return( cpeek( '+', INCR, '+' ) );
+    case '-':  return( cpeek( '-', DECR, '-' ) );
+    case '<':  return( cpeek( '=', LE, '<' ) );
+    case '>':  return( cpeek( '=', GE, '>' ) );
+    case '!':  return( cpeek( '=', NE, '!' ) );
+    case '/':
+	if((peekc = getc()) == '*'){
 		peekc = -1;
-		while((getc() != &#39;*&#39;) || ((peekc = getc()) != &#39;/&#39;));
+		while((getc() != '*') || ((peekc = getc()) != '/'));
 		peekc = -1;
 		goto restart;
 	}
 	else return(c);
-    case &#39;&quot;&#39;:  
+    case '"':  
 	       yylval = str;
-	       while((c=getc()) != &#39;&quot;&#39;)*str++ = c;
-	       *str++ = &#39;\0&#39;;
+	       while((c=getc()) != '"')*str++ = c;
+	       *str++ = '\0';
 	       return(QSTR);
     default:   return( c );
     }
@@ -421,17 +421,17 @@ cpeek( c, yes, no ){
 getc(){
   int ch;
 loop:
-  ch = (peekc &lt; 0) ? getchar() : peekc;
+  ch = (peekc < 0) ? getchar() : peekc;
   peekc = -1;
-  if(ch != &#39;\0&#39;)return(ch);
-  if(++ifile &gt; sargc){
-	if(ifile &gt;= sargc+2)getout();
+  if(ch != '\0')return(ch);
+  if(++ifile > sargc){
+	if(ifile >= sargc+2)getout();
 	fin = dup(0);
 	goto loop;
   }
 close(fin);
-  if((fin = open(sargv[ifile],0)) &gt;= 0)goto loop;
-  yyerror(&quot;cannot open input file&quot;);
+  if((fin = open(sargv[ifile],0)) >= 0)goto loop;
+  yyerror("cannot open input file");
 }
 # define b_sp_max 1500
 int b_space [ b_sp_max ];
@@ -444,11 +444,11 @@ bundle(a){
   i = nargs();
   q = b_sp_nxt;
 
-  if( bdebug ) printf(&quot;bundle %d elements at %o\n&quot;, i, q );
+  if( bdebug ) printf("bundle %d elements at %o\n", i, q );
 
-  for( p = &amp;a; i--&gt;0; ++p ){
+  for( p = &a; i-->0; ++p ){
 
-    if( b_sp_nxt &gt;= &amp; b_space[b_sp_max] ) yyerror( &quot;bundling space exceeded&quot; );
+    if( b_sp_nxt >= & b_space[b_sp_max] ) yyerror( "bundling space exceeded" );
 
     * b_sp_nxt++ = *p;
     }
@@ -458,8 +458,8 @@ bundle(a){
   }
 
 routput(p) int *p; {
-  if( bdebug ) printf(&quot;routput(%o)\n&quot;, p );
-  if( p &gt;= &amp;b_space[0] &amp;&amp; p &lt; &amp;b_space[b_sp_max]){
+  if( bdebug ) printf("routput(%o)\n", p );
+  if( p >= &b_space[0] && p < &b_space[b_sp_max]){
     /* part of a bundle */
     while( *p != 0 ) routput( *p++ );
     }
@@ -468,44 +468,44 @@ routput(p) int *p; {
 
 output( p ) int *p; {
   routput( p );
-  b_sp_nxt = &amp; b_space[0];
-  printf( &quot;\n&quot; );
+  b_sp_nxt = & b_space[0];
+  printf( "\n" );
   cp = cary;
   str = string;
   crs = rcrs;
   }
 
 conout( p, s ) int *p; char *s; {
-  printf(&quot;[&quot;);
+  printf("[");
   routput( p );
-  printf(&quot;]s%s\n&quot;, s );
+  printf("]s%s\n", s );
   lev--;
   str = string;
   }
 
 yyerror( s ) char *s; {
-  printf(&quot;c[%s]pc\n&quot;, s );
+  printf("c[%s]pc\n", s );
   cp = cary;
   crs = rcrs;
   bindx = 0;
   lev = 0;
-  b_sp_nxt = &amp;b_space[0];
+  b_sp_nxt = &b_space[0];
  str = string;
   }
 
 pp( s ) char *s; {
   /* puts the relevant stuff on pre and post for the letter s */
 
-  bundle( &quot;S&quot;, s, pre );
+  bundle( "S", s, pre );
   pre = yyval;
-  bundle( post, &quot;L&quot;, s, &quot;s.&quot; );
+  bundle( post, "L", s, "s." );
   post = yyval;
   }
 
 tp( s ) char *s; { /* same as pp, but for temps */
-  bundle( &quot;0S&quot;, s, pre );
+  bundle( "0S", s, pre );
   pre = yyval;
-  bundle( post, &quot;L&quot;, s, &quot;s.&quot; );
+  bundle( post, "L", s, "s." );
   post = yyval;
   }
 
@@ -515,20 +515,20 @@ yyinit(argc,argv) int argc; char *argv[];{
   sargv=argv;
   sargc= -- argc;
   if(sargc == 0)fin=dup(0);
-   else if((fin = open(sargv[1],0)) &lt; 0)
-	yyerror(&quot;cannot open input file&quot;);
+   else if((fin = open(sargv[1],0)) < 0)
+	yyerror("cannot open input file");
   ifile = 1;
   }
 getout(){
-printf(&quot;q&quot;);
+printf("q");
 exit();
 }
 
 getf(p) char *p;{
-return(&amp;funtab[*p -0141]);
+return(&funtab[*p -0141]);
 }
 geta(p) char *p;{
-	return(&amp;atab[*p - 0141]);
+	return(&atab[*p - 0141]);
 }
 
 main(argc, argv)
@@ -537,17 +537,17 @@ char **argv;
 	int p[2];
 
 
-	if (argc &gt; 1 &amp;&amp; *argv[1] == &#39;-&#39;) {
-		if(argv[1][1] == &#39;d&#39;){
+	if (argc > 1 && *argv[1] == '-') {
+		if(argv[1][1] == 'd'){
 			yyinit(--argc, ++argv);
 			yyparse();
 			exit();
 		}
-		if(argv[1][1] != &#39;l&#39;){
-			printf(&quot;unrecognizable argument\n&quot;);
+		if(argv[1][1] != 'l'){
+			printf("unrecognizable argument\n");
 			exit();
 		}
-		argv[1] = &quot;/usr/lib/lib.b&quot;;
+		argv[1] = "/usr/lib/lib.b";
 	}
 	pipe(p);
 	if (fork()==0) {
@@ -563,5 +563,5 @@ char **argv;
 	dup(p[0]);
 	close(p[0]);
 	close(p[1]);
-	execl(&quot;/bin/dc&quot;, &quot;dc&quot;, &quot;-&quot;, 0);
+	execl("/bin/dc", "dc", "-", 0);
 }

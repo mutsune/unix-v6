@@ -106,7 +106,7 @@ out:
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	jmp	reset
-1:	&lt;Out of space.\n&gt;
+1:	<Out of space.\n>
 2:	.even
 /
 /	split larger block into two smaller pieces and
@@ -267,7 +267,7 @@ advance:
 	sys	write; 4f; 5f-4f
 	jmp	reset
 /
-4:	&lt;Out of space - too big a block.\n&gt;
+4:	<Out of space - too big a block.\n>
 5:	.even
 /
 /
@@ -367,7 +367,7 @@ rout:
 	sys	write; 4f; 5f-4f
 	jmp	reset
 /
-4:	&lt;out of space - no more block storage\n&gt;
+4:	<out of space - no more block storage\n>
 5:	.even
 /
 /	routine to find integer part of log2(x)
@@ -389,7 +389,7 @@ log2:
 	tst	(sp)+
 	rts	pc
 /
-	0		/Don&#39;t move me, I&#39;m exp(-1)
+	0		/Don't move me, I'm exp(-1)
 exp2:
 	1;2;4;10;20;40;100;200;400;1000;2000;4000;
 	10000;20000;40000;100000

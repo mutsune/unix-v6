@@ -7,8 +7,8 @@ is the
 statement:
 .E1
 c = getchar( );
-if( c \*= &#39;?&#39; )
-	printf(&quot;why did you type a question mark?\\n&quot;);
+if( c \*= '?' )
+	printf("why did you type a question mark?\\n");
 .E2
 The simplest form of
 .UL if
@@ -21,49 +21,49 @@ The condition to be tested is any expression enclosed in parentheses.
 It is followed by a statement.
 The expression is evaluated, and if its value is non-zero,
 the statement is executed.
-There&#39;s an
+There's an
 optional
 .UL else
 clause, to be described soon.
 .PP
-The character sequence `==&#39;  is one of the relational operators in C;
+The character sequence `=='  is one of the relational operators in C;
 here is the complete set:
 .E1
 \*=	equal to (\*.EQ\*. to Fortraners)
 !=	not equal to
-&gt;	greater than
-&lt;	less than
-&gt;=	greater than or equal to
-&lt;=	less than or equal to
+>	greater than
+<	less than
+>=	greater than or equal to
+<=	less than or equal to
 .E2
 .PP
 The value of
 .UL ``expression
 .UL relation
-.UL expression&#39;&#39;
+.UL expression''
 is 1 if the relation is true,
 and 0 if false.
-Don&#39;t forget that the equality test is `==&#39;;
-a single `=&#39; causes an assignment, not a test,
+Don't forget that the equality test is `==';
+a single `=' causes an assignment, not a test,
 and invariably leads to disaster.
 .PP
 Tests can be combined with the operators 
-.UL `&amp;&amp;&#39;
+.UL `&&'
 .UC (AND),
-.UL `\*|&#39;
+.UL `\*|'
 .UC (OR),
 and
-.UL `!&#39;
+.UL `!'
 .UC (NOT).
 For example, we can test whether a character is blank or tab or newline
 with
 .E1
-if( c\*=&#39; &#39; \*| c\*=&#39;\\t&#39; \*| c\*=&#39;\\n&#39; ) \*.\*.\*.
+if( c\*=' ' \*| c\*='\\t' \*| c\*='\\n' ) \*.\*.\*.
 .E2
 C guarantees that
-.UL `&amp;&amp;&#39;
+.UL `&&'
 and
-.UL `\*|&#39;
+.UL `\*|'
 are evaluated left to right _
 we shall soon see cases where this matters.
 .PP
@@ -88,7 +88,7 @@ takes three statements in C,
 grouped together by {}:
 .E1
 .ne 5
-if (a &lt; b) {
+if (a < b) {
 	t = a;
 	a = b;
 	b = t;
@@ -106,7 +106,7 @@ a semicolon after the last non-compound statement inside the {}.
 .PP
 The ability to replace single statements by complex ones at will
 is one feature that makes C much more pleasant to use than Fortran.
-Logic (like the exchange in the previous example) which would require several GOTO&#39;s and labels in Fortran can
+Logic (like the exchange in the previous example) which would require several GOTO's and labels in Fortran can
 and should
 be
 done in C without any, using compound statements.
@@ -116,13 +116,13 @@ While Statement; Assignment within an Expression; Null Statement
 The basic looping mechanism in C is the
 .UL while
 statement.
-Here&#39;s a program that copies its input to its output
+Here's a program that copies its input to its output
 a character at a time.
-Remember that `\\0&#39; marks the end of file.
+Remember that `\\0' marks the end of file.
 .E1
 main(~) {
 	char c;
-	while( (c=getchar(~)) != &#39;\\0&#39; )
+	while( (c=getchar(~)) != '\\0' )
 		putchar(c);
 }
 .E2
@@ -146,12 +146,12 @@ which is often desirable.
 As in the
 .UL if
 statement, the expression and the statement can both be
-arbitrarily complicated, although we haven&#39;t seen that yet.
+arbitrarily complicated, although we haven't seen that yet.
 Our example gets the character,
 assigns it to
 .UL c,
-and then tests if it&#39;s a `\\0&#39;&#39;.
-If it is not a `\\0&#39;,
+and then tests if it's a `\\0''.
+If it is not a `\\0',
 the statement part of the 
 .UL while 
 is executed,
@@ -159,7 +159,7 @@ printing the character.
 The
 .UL while
 then repeats.
-When the input character is finally a `\\0&#39;,
+When the input character is finally a `\\0',
 the
 .UL while
 terminates,
@@ -188,13 +188,13 @@ By the way, the extra parentheses in the assignment statement
 within the conditional were really necessary:
 if we had said
 .E1
-c = getchar(~) != &#39;\\0&#39;
+c = getchar(~) != '\\0'
 .E2
 .UL c
 would be set to 0 or 1 depending on whether the character fetched
 was an end of file or not.
-This is because in the absence of parentheses the assignment operator `=&#39;
-is evaluated after the relational operator `!=&#39;.
+This is because in the absence of parentheses the assignment operator `='
+is evaluated after the relational operator `!='.
 When in doubt, or even if not,
 parenthesize.
 .PP
@@ -209,7 +209,7 @@ and
 .UL putchar:
 .E1
 main(~) {
-	while( putchar(getchar(~)) != &#39;\\0&#39; ) ;
+	while( putchar(getchar(~)) != '\\0' ) ;
 }
 .E2
 What statement is being repeated?~
@@ -220,16 +220,16 @@ statement,
 because all the work is really done within the test part of the
 .UL while\*.
 This version is slightly different from the previous one,
-because the final `\\0&#39; is copied to the output
+because the final `\\0' is copied to the output
 before we decide to stop.
 .NH
 Arithmetic
 .PP
-The arithmetic operators are the usual `+&#39;, `\(mi&#39;, `*&#39;, and `/&#39;
+The arithmetic operators are the usual `+', `\(mi', `*', and `/'
 (truncating integer division if the operands are
 both
 .UL int),
-and the remainder or mod operator `%&#39;:
+and the remainder or mod operator `%':
 .E1
 x = a%b;
 .E2
@@ -257,7 +257,7 @@ variables.
 Arithmetic on characters
 is quite legal, and often makes sense:
 .E1
-c = c + &#39;A&#39; - &#39;a&#39;;
+c = c + 'A' - 'a';
 .E2
 converts a single lower case ascii character stored in
 .UL c
@@ -272,21 +272,21 @@ before the arithmetic is done.
 Beware that conversion may involve sign-extension _
 if the leftmost bit of a character is 1,
 the resulting integer might be negative.
-(This doesn&#39;t happen with genuine characters on any current machine.)
+(This doesn't happen with genuine characters on any current machine.)
 .PP
 So to convert a file into lower case:
 .E1
 main( ) {
 	char c;
-	while( (c=getchar( )) != &#39;\\0&#39; )
-		if( &#39;A&#39;&lt;=c &amp;&amp; c&lt;=&#39;Z&#39; )
-			putchar(c+&#39;a&#39;-&#39;A&#39;);
+	while( (c=getchar( )) != '\\0' )
+		if( 'A'<=c && c<='Z' )
+			putchar(c+'a'-'A');
 		else
 			putchar(c);
 }
 .E2
 Characters have different sizes on different machines.
-Further, this code won&#39;t work
+Further, this code won't work
 on an IBM machine,
 because the letters
 in the ebcdic alphabet are not contiguous.
@@ -315,22 +315,22 @@ and
 .UL b:
 .E1
 .ne 4
-if (a &lt; b)
+if (a < b)
 	x = a;
 else
 	x = b;
 .E2
-Observe that there&#39;s a semicolon after
+Observe that there's a semicolon after
 .UL x=a\*.
 .PP
 C provides an alternate form of conditional which is often more
 concise.
-It is called the ``conditional expression&#39;&#39; because it is a conditional
+It is called the ``conditional expression'' because it is a conditional
 which actually has a value
 and can be used anywhere an expression can.
 The value of
 .E1
-a&lt;b ? a : b;
+a<b ? a : b;
 .E2
 is
 .UL a
@@ -351,7 +351,7 @@ means
 If it is not zero, the value of the whole thing is
 .UL expr2;
 otherwise the value is
-.UL expr3\*.&#39;&#39;
+.UL expr3\*.''
 .PP
 To set
 .UL x
@@ -361,23 +361,23 @@ and
 .UL b,
 then:
 .E1
-x = (a&lt;b ? a : b);
+x = (a<b ? a : b);
 .E2
-The parentheses aren&#39;t necessary because 
-.UL `?:&#39;
-is evaluated before `=&#39;,
+The parentheses aren't necessary because 
+.UL `?:'
+is evaluated before `=',
 but safety first.
 .PP
 Going a step further,
 we could write the loop in the lower-case program as
 .E1
-while( (c=getchar( )) != &#39;\\0&#39; )
-	putchar( (&#39;A&#39;&lt;=c &amp;&amp; c&lt;=&#39;Z&#39;) ? c-&#39;A&#39;+&#39;a&#39; : c );
+while( (c=getchar( )) != '\\0' )
+	putchar( ('A'<=c && c<='Z') ? c-'A'+'a' : c );
 .E2
 .PP
-.UL If&#39;s
+.UL If's
 and
-.UL else&#39;s
+.UL else's
 can be used to construct logic that
 branches one of several ways and then rejoins, a common
 programming structure, in this way:
@@ -400,7 +400,7 @@ or the one for the last
 When this block is finished,
 the next statement executed is the one after the last
 .UL else\*.
-If no action is to be taken for the ``default&#39;&#39; case,
+If no action is to be taken for the ``default'' case,
 omit
 the last
 .UL else\*.
@@ -412,15 +412,15 @@ we could write
 main( ) {
 	int let, dig, other, c;
 	let = dig = other = 0;
-	while( (c=getchar( )) != &#39;\\0&#39; )
-		if( (&#39;A&#39;&lt;=c &amp;&amp; c&lt;=&#39;Z&#39;) \*| (&#39;a&#39;&lt;=c &amp;&amp; c&lt;=&#39;z&#39;) )  \*+let;
-		else if( &#39;0&#39;&lt;=c &amp;&amp; c&lt;=&#39;9&#39; )  \*+dig;
+	while( (c=getchar( )) != '\\0' )
+		if( ('A'<=c && c<='Z') \*| ('a'<=c && c<='z') )  \*+let;
+		else if( '0'<=c && c<='9' )  \*+dig;
 		else  \*+other;
-	printf(&quot;%d letters, %d digits, %d others\\n&quot;, let, dig, other);
+	printf("%d letters, %d digits, %d others\\n", let, dig, other);
 }
 .E2
 The
-`++&#39; operator means
+`++' operator means
 ``increment
-by 1&#39;&#39;;
+by 1'';
 we will get to it in the next section.

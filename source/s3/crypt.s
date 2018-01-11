@@ -127,13 +127,13 @@ wheelcode: .=.+256.
 	mov	r4,-(sp)
 	clr	r4
 	div	$26.+26.+10.,r4
-	add	$&#39;0,r5
-	cmp	r5,$&#39;9
+	add	$'0,r5
+	cmp	r5,$'9
 	blos	1f
-	add	$&#39;A-&#39;9-1,r5
-	cmp	r5,$&#39;Z
+	add	$'A-'9-1,r5
+	cmp	r5,$'Z
 	blos	1f
-	add	$&#39;a-&#39;Z-1,r5
+	add	$'a-'Z-1,r5
 1:
 	mov	(sp)+,r4
 	movb	r5,(r4)+

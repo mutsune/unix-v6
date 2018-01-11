@@ -7,7 +7,7 @@ assem:
 	jsr	pc,readop
 	cmp	r4,$5
 	beq	2f
-	cmp	r4,$&#39;&lt;
+	cmp	r4,$'<
 	beq	2f
 	jsr	pc,checkeos
 		br eal1
@@ -19,9 +19,9 @@ assem:
 	mov	r4,numval
 1:
 	jsr	pc,readop
-	cmp	r4,$&#39;=
+	cmp	r4,$'=
 	beq	4f
-	cmp	r4,$&#39;:
+	cmp	r4,$':
 	beq	1f
 	mov	r4,savop
 	mov	(sp)+,r4
@@ -43,7 +43,7 @@ eal1:
 	bhis	1f
 	cmp	r4,$2
 	beq	3f
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 	br	assem
 1:
 	tstb	passno
@@ -56,7 +56,7 @@ eal1:
 	cmp	r0,$34
 	ble	5f
 6:
-	jsr	r5,error; &#39;m
+	jsr	r5,error; 'm
 5:
 	bic	$37,(r4)
 	bis	dotrel,(r4)
@@ -67,7 +67,7 @@ eal1:
 2:
 	cmp	dot,2(r4)
 	beq	assem
-	jsr	r5,error; &#39;p
+	jsr	r5,error; 'p
 	br	assem
 3:
 	mov	numval,r4
@@ -86,7 +86,7 @@ eal1:
 	cmp	r1,$symtab	/test for dot
 	bne	1f
 	bic	$40,r3
-	cmp	r3,dotrel	/ can&#39;t change relocation
+	cmp	r3,dotrel	/ can't change relocation
 	bne	2f
 	cmp	r3,$4		/ bss
 	bne	3f
@@ -107,12 +107,12 @@ eal1:
 	tst	(sp)+
 	br	dotmax
 2:
-	jsr	r5,error; &#39;.
+	jsr	r5,error; '.
 	br	ealoop
 1:
 	cmp	r3,$40
 	bne	1f
-	jsr	r5,error; &#39;r
+	jsr	r5,error; 'r
 1:
 	bic	$37,(r1)
 	bic	$!37,r3
@@ -123,9 +123,9 @@ eal1:
 	mov	r2,2(r1)
 
 ealoop:
-	cmp	r4,$&#39;\n
+	cmp	r4,$'\n
 	beq	1f
-	cmp	r4,$&#39;\e
+	cmp	r4,$'\e
 	bne	9f
 	rts	pc
 1:
@@ -134,11 +134,11 @@ ealoop:
 	jmp	assem
 
 checkeos:
-	cmp	r4,$&#39;\n
+	cmp	r4,$'\n
 	beq	1f
-	cmp	r4,$&#39;;
+	cmp	r4,$';
 	beq	1f
-	cmp	r4,$&#39;\e
+	cmp	r4,$'\e
 	beq	1f
 	add	$2,(sp)
 1:

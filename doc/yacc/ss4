@@ -7,7 +7,7 @@ ambiguous
 if there is some input string which can be structured in two or more different ways.
 For example, the grammar rule
 .DS
-expr :  expr \&#39;\-\&#39; expr ;
+expr :  expr \'\-\' expr ;
 .DE
 is a natural way of expressing the fact that one way of forming an arithmetic expression
 is to put two other expressions together with a minus sign between them.
@@ -128,10 +128,10 @@ and produces slower parsers; thus, Yacc will produce parsers even in the presenc
 .PP
 As an example of the power of disambiguating rules, consider a fragment from a programming
 language involving an
-``if-then-else&#39;&#39; construction:
+``if-then-else'' construction:
 .DS
-stat :	IF \&#39;(\&#39; cond \&#39;)\&#39; stat |
-	IF \&#39;(\&#39; cond \&#39;)\&#39; stat ELSE stat ;
+stat :	IF \'(\' cond \')\' stat |
+	IF \'(\' cond \')\' stat ELSE stat ;
 .DE
 Here, we consider IF and ELSE to be tokens, cond to be a nonterminal symbol describing
 conditional (logical) expressions, and
@@ -164,7 +164,7 @@ IF ( C1 ) {
 .DE
 The second interpretation is the one given in most programming languages
 which have this construct.
-Each ELSE is associated with the last preceding ``un-ELSE&#39;d&#39;&#39; IF.
+Each ELSE is associated with the last preceding ``un-ELSE'd'' IF.
 In this example, consider the situation where the parser has seen
 .DS
 IF ( C1 ) IF ( C2 ) S1
@@ -243,7 +243,7 @@ State 23
 The first line describes the conflict, giving the state and the input symbol.
 The state title follows, and a brief description of the grammar
 rules which are active in this state.
-The underline ``\_&#39;&#39; describes the
+The underline ``\_'' describes the
 portions of the grammar rules which have been seen.
 Thus in the example, in state 23 we have seen input which corresponds
 to
@@ -258,15 +258,15 @@ In this state, we should find as part of the description a line of the form
 stat : IF ( cond ) stat ELSE\_stat
 .DE
 because in this state we will have read and shifted the ELSE.
-Back in state 23, the alternative action, described by ``.&#39;&#39;,
+Back in state 23, the alternative action, described by ``.'',
 is to be done if the input symbol is not mentioned explicitly in the above actions; thus,
 in this case, if the input symbol is not ELSE, we should reduce by grammar rule 18,
 which is presumably
 .DS
-stat : IF \&#39;(\&#39; cond \&#39;)\&#39; stat
+stat : IF \'(\' cond \')\' stat
 .DE
-Notice that the numbers following ``shift&#39;&#39; commands refer to other states,
-while the numbers following ``reduce&#39;&#39; commands refer to grammar
+Notice that the numbers following ``shift'' commands refer to other states,
+while the numbers following ``reduce'' commands refer to grammar
 rule numbers.
 In most states, there will be only one reduce action possible in the
 state, and this will always be the default command.
@@ -315,8 +315,8 @@ and associativity; the lines are listed in
 order of increasing precedence or binding strength.
 Thus,
 .DS
-%left \&#39;+\&#39; \&#39;\-\&#39;
-%left \&#39;*\&#39; \&#39;/\&#39;
+%left \'+\' \'\-\'
+%left \'*\' \'/\'
 .DE
 describes the precedence and associativity of the four arithmetic operators.
 Plus and minus are left associative, and have lower precedence than
@@ -331,18 +331,18 @@ is illegal in Fortran, and such an operator would be described with the keyword
 %nonassoc in Yacc.
 As an example of the behavior of these declarations, the description
 .DS
-%right \&#39;=\&#39;
-%left \&#39;+\&#39; \&#39;\-\&#39;
-%left \&#39;*\&#39; \&#39;/\&#39;
+%right \'=\'
+%left \'+\' \'\-\'
+%left \'*\' \'/\'
 
 %%
 
 expr :
-	expr \&#39;=\&#39; expr |
-	expr \&#39;+\&#39; expr |
-	expr \&#39;\-\&#39; expr |
-	expr \&#39;*\&#39; expr |
-	expr \&#39;/\&#39; expr |
+	expr \'=\' expr |
+	expr \'+\' expr |
+	expr \'\-\' expr |
+	expr \'*\' expr |
+	expr \'/\' expr |
 	NAME ;
 .DE
 might be used to structure the input
@@ -357,7 +357,7 @@ When this mechanism is used,
 unary operators must, in general, be given a precedence.
 An interesting situation arises when we have a unary operator and a binary operator
 which have the same symbolic representation, but different precedences.
-An example is unary and binary \&#39;\-\&#39;; frequently, unary minus is given the same
+An example is unary and binary \'\-\'; frequently, unary minus is given the same
 strength as multiplication, or even higher, while binary minus has a lower strength than
 multiplication.
 We can indicate this situation by use of
@@ -367,17 +367,17 @@ and is followed by a token name or literal; it
 causes the precedence of the grammar rule to become that of the token name or literal.
 Thus, to make unary minus have the same precedence as multiplication, we might write:
 .DS
-%left \&#39;+\&#39; \&#39;\-\&#39;
-%left \&#39;*\&#39; \&#39;/\&#39;
+%left \'+\' \'\-\'
+%left \'*\' \'/\'
 
 %%
 
 expr :
-	expr \&#39;+\&#39; expr |
-	expr \&#39;\-\&#39; expr |
-	expr \&#39;*\&#39; expr |
-	expr \&#39;/\&#39; expr |
-	\&#39;\-\&#39; expr %prec \&#39;*\&#39; |
+	expr \'+\' expr |
+	expr \'\-\' expr |
+	expr \'*\' expr |
+	expr \'/\' expr |
+	\'\-\' expr %prec \'*\' |
 	NAME ;
 .DE
 .PP
@@ -421,7 +421,7 @@ and these conflicts are not counted in the number of shift/reduce and reduce/red
 conflicts found in the grammar.
 This means that occasionally mistakes in the specification of precedences
 disguise errors in the input grammar; it is a good idea to be sparing
-with precedences, and use them in an essentially ``cookbook&#39;&#39; fashion,
+with precedences, and use them in an essentially ``cookbook'' fashion,
 until some experience has been gained.
 Frequently, not enough operators or precedences have been specified;
 this leads to a number of messages about shift/reduce or reduce/reduce conflicts.

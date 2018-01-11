@@ -6,8 +6,8 @@ char *argv[];
 	extern fin;
 	char line[64];
 
-	if (argc&lt;2 || ttyn(0)!=&#39;x&#39;) {
-		write(1, &quot;goto error\n&quot;, 11);
+	if (argc<2 || ttyn(0)!='x') {
+		write(1, "goto error\n", 11);
 		seek(0, 0, 2);
 		return;
 	}
@@ -16,7 +16,7 @@ char *argv[];
 
 loop:
 	if (getlin(line)) {
-		write(1, &quot;label not found\n&quot;, 16);
+		write(1, "label not found\n", 16);
 		return;
 		}
 	if (compar(line, argv[1])) goto loop;
@@ -30,20 +30,20 @@ char s[];
 
 	i = 0;
 l:
-	if ((ch=getc())==&#39;\0&#39;) return(1);
-	if (ch!=&#39;:&#39;) {
-		while(ch!=&#39;\n&#39; &amp;&amp; ch!=&#39;\0&#39;)
+	if ((ch=getc())=='\0') return(1);
+	if (ch!=':') {
+		while(ch!='\n' && ch!='\0')
 			ch = getc();
 		goto l;
 		}
-	while ((ch=getc())==&#39; &#39;);
-	while (ch!=&#39; &#39; &amp;&amp; ch!=&#39;\n&#39; &amp;&amp; ch!=&#39;\0&#39;) {
+	while ((ch=getc())==' ');
+	while (ch!=' ' && ch!='\n' && ch!='\0') {
 		s[i++] = ch;
 		ch = getc();
 		}
-	while(ch != &#39;\n&#39;)
+	while(ch != '\n')
 		ch = getc();
-	s[i] = &#39;\0&#39;;
+	s[i] = '\0';
 	return(0);
 }
 
@@ -55,7 +55,7 @@ char s1[], s2[];
 	i = 0;
 l:
 	if(s1[i] != s2[i]) return(1);
-	if (s1[i++] == &#39;\0&#39;) return(0);
+	if (s1[i++] == '\0') return(0);
 	goto l;
 }
 

@@ -9,12 +9,12 @@ General:
 .R
 .if t .sp 5p
 .UC UNIX
-Programmer&#39;s Manual
+Programmer's Manual
 (Ken Thompson, Dennis Ritchie, and a cast of thousands).
 Lists commands,
 system routines and interfaces, file formats,
 and some of the maintenance procedures.
-You can&#39;t live without this,
+You can't live without this,
 although you will probably only read section I.
 .if t .sp 5p
 The
@@ -47,7 +47,7 @@ Typing Documents on
 Bell Laboratories internal memorandum.
 A macro package to isolate the novice
 from the vagaries of the formatting programs.
-If this specific package isn&#39;t available on your system,
+If this specific package isn't available on your system,
 something similar probably is.
 This one works with both
 .C nroff
@@ -62,7 +62,7 @@ Programming in C: A Tutorial
 (Brian Kernighan).
 Bell Laboratories internal memorandum.
 The easiest way to start learning C,
-but it&#39;s no help at all with the interface to the system
+but it's no help at all with the interface to the system
 beyond the simplest IO.
 Should be read in conjunction with
 .if t .sp 5p
@@ -103,7 +103,7 @@ The M6 Macro Processor,
 Computing Science Tech. Rep. 2.
 .sp 2p
 J. F. Ossanna,
-NROFF User&#39;s Manual _ Second Edition,
+NROFF User's Manual _ Second Edition,
 Bell Laboratories internal memorandum.
 .sp 2p
 D. M. Ritchie and K. Thompson,
@@ -121,7 +121,7 @@ M. D. McIlroy,
 Bell Laboratories internal memorandum.
 .sp 2p
 J. F. Ossanna,
-TROFF Users&#39; Manual,
+TROFF Users' Manual,
 Bell Laboratories internal memorandum.
 .sp 2p
 B. W. Kernighan,

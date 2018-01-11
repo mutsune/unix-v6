@@ -5,17 +5,17 @@ char **argv;
 	char *s;
 
 	n = 0;
-	if(argc &lt; 2) {
-		printf(&quot;arg count\n&quot;);
+	if(argc < 2) {
+		printf("arg count\n");
 		exit();
 	}
 	s = argv[1];
 	while(c = *s++) {
-		if(c&lt;&#39;0&#39; || c&gt;&#39;9&#39;) {
-			printf(&quot;bad character\n&quot;);
+		if(c<'0' || c>'9') {
+			printf("bad character\n");
 			exit();
 		}
-		n = n*10 + c - &#39;0&#39;;
+		n = n*10 + c - '0';
 	}
 	sleep(n);
 }

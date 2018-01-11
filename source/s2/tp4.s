@@ -1,12 +1,12 @@
 / tap4 -- dec-tape lod/dmp
 
 .data
-tc:	&lt;/dev/tap&gt;
-tcx:	&lt;x\0&gt;
-mt:	&lt;/dev/mt&gt;
-mtx:	&lt;0\0&gt;
-tboot:	&lt;/usr/mdec/tboot\0&gt;
-mboot:	&lt;/usr/mdec/mboot\0&gt;
+tc:	</dev/tap>
+tcx:	<x\0>
+mt:	</dev/mt>
+mtx:	<0\0>
+tboot:	</usr/mdec/tboot\0>
+mboot:	</usr/mdec/mboot\0>
 .even
 .bss
 dir:	. = .+[mdirent*dirsiz]

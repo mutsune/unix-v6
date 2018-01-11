@@ -23,35 +23,35 @@ char *a, *l;
 	es = qses;
 
 start:
-	if((n=l-a) &lt;= es)
+	if((n=l-a) <= es)
 		return;
 
 
-	n = ((n/(2*es))*es) &amp; 077777;
+	n = ((n/(2*es))*es) & 077777;
 	hp = lp = a+n;
 	i = a;
 	j = l-es;
 
 
 	for(;;) {
-		if(i &lt; lp) {
+		if(i < lp) {
 			if((c = (*qscmp)(i, lp)) == 0) {
 				qsexc(i, lp =- es);
 				continue;
 			}
-			if(c &lt; 0) {
+			if(c < 0) {
 				i =+ es;
 				continue;
 			}
 		}
 
 loop:
-		if(j &gt; hp) {
+		if(j > hp) {
 			if((c = (*qscmp)(hp, j)) == 0) {
 				qsexc(hp =+ es, j);
 				goto loop;
 			}
-			if(c &gt; 0) {
+			if(c > 0) {
 				if(i == lp) {
 					qstexc(i, hp =+ es, j);
 					i = lp =+ es;
@@ -68,7 +68,7 @@ loop:
 
 
 		if(i == lp) {
-			if(lp-a &gt;= l-hp) {
+			if(lp-a >= l-hp) {
 				qs1(hp+es, l);
 				l = lp;
 			} else {

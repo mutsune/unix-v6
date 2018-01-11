@@ -24,24 +24,24 @@ char **argv;
 	static struct ibuf statb;
 	register char *np;
 
-	if (argc&lt;2) {
-		write(1, &quot;Usage: ln target [ newname ]\n&quot;, 29);
+	if (argc<2) {
+		write(1, "Usage: ln target [ newname ]\n", 29);
 		exit(1);
 	}
 	if (argc==2) {
 		np = argv[1];
 		while(*np++);
-		while (*--np!=&#39;/&#39; &amp;&amp; np&gt;argv[1]);
+		while (*--np!='/' && np>argv[1]);
 		np++;
 		argv[2] = np;
 	}
-	stat(argv[1], &amp;statb);
-	if ((statb.iflags&amp;FMT) == DIR) {
-		write(1, &quot;No directory link\n&quot;, 18);
+	stat(argv[1], &statb);
+	if ((statb.iflags&FMT) == DIR) {
+		write(1, "No directory link\n", 18);
 		exit(1);
 	}
-	if (link(argv[1], argv[2])&lt;0) {
-		write(1, &quot;Can&#39;t link\n&quot;, 11);
+	if (link(argv[1], argv[2])<0) {
+		write(1, "Can't link\n", 11);
 		exit(1);
 	}
 	exit(0);

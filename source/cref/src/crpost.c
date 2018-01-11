@@ -20,23 +20,23 @@ main(argc, argv)
 {
 	auto	f,fct,file,i;
 
-	if(argc &lt; 2) {
-		printf(&quot;Usage: crpost [-d] file1 file2 ...\n&quot;);
+	if(argc < 2) {
+		printf("Usage: crpost [-d] file1 file2 ...\n");
 		exit();
 	}
 
-	if(*argv[1] == &#39;-&#39;) {
-		if(argv[1][1] == &#39;E&#39;) {
+	if(*argv[1] == '-') {
+		if(argv[1][1] == 'E') {
 			fct = 3;
 			esw = 1;
 			goto on;
 		}
-		fct = argv[1][1] - &#39;0&#39;;
-		if((fct &lt; 1) || (fct &gt; 9)) {
-			printf(&quot;-d: 0 &lt; d &lt; 10\n&quot;);
+		fct = argv[1][1] - '0';
+		if((fct < 1) || (fct > 9)) {
+			printf("-d: 0 < d < 10\n");
 			exit();
 		}
-		if(argv[1][2] == &#39;x&#39;) {
+		if(argv[1][2] == 'x') {
 			ig = fct-1;
 		}
 on:
@@ -47,7 +47,7 @@ on:
 	}
 
 	f = 0;
-	while(++f &lt; argc) {
+	while(++f < argc) {
 		file = open(argv[f], 0);
 
 		edf(file, fct);
@@ -68,14 +68,14 @@ edf(file, fct)
 	char	brk,*buf,bufsp[150],line[150];
 	char extern	*sym[];
 
-/*	monitor(&amp;main,&amp;etext,&amp;mbuf,1024);	/*INSTR*/
-	for(i = 0; i &lt; fct; i++)
+/*	monitor(&main,&etext,&mbuf,1024);	/*INSTR*/
+	for(i = 0; i < fct; i++)
 		*sym[i] = 0200;
 fields:
 	l = -1;
-	buf = &amp;bufsp;
+	buf = &bufsp;
 
-	for(i = 0; i &lt; fct; ++i) {
+	for(i = 0; i < fct; ++i) {
 		buf--;
 
 swt:
@@ -83,68 +83,68 @@ swt:
 		switch(*++buf = get(file)) {
 
 			default:
-				if(esw &amp;&amp; *buf &gt;= &#39;A&#39; &amp;&amp; *buf &lt;= &#39;Z&#39;
-					&amp;&amp; i == 0)
+				if(esw && *buf >= 'A' && *buf <= 'Z'
+					&& i == 0)
 					*buf =| 040;
 				goto swt;
 
 			case -1:
-				*buf = &#39; &#39;;
-			case &#39;\t&#39;:
+				*buf = ' ';
+			case '\t':
 				if(i == ig)	continue;
 				brk = *buf;
-				*buf = &#39;\0&#39;;
-				buf = &amp;bufsp;
+				*buf = '\0';
+				buf = &bufsp;
 				if(comp(buf, sym[i])) {
-					if(esw &amp;&amp; i == 0) {
-						line[0] = line[1] = &#39;\t&#39;;
+					if(esw && i == 0) {
+						line[0] = line[1] = '\t';
 						l = 1;
 						goto rest;
 					}
-					line[++l] = &#39;\t&#39;;
+					line[++l] = '\t';
 					continue;
 				} else {
 					copy(buf, sym[i]);
-					l =+ copy(buf, &amp;line[++l]);
+					l =+ copy(buf, &line[++l]);
 					line[--l] = brk;
-					if(l &lt; 8 &amp;&amp; esw &amp;&amp; i == 0)
-						line[++l] = &#39;\t&#39;;
+					if(l < 8 && esw && i == 0)
+						line[++l] = '\t';
 					j = i;
-					while(++j &lt; fct)
+					while(++j < fct)
 						*sym[j] = 0200;
 					continue;
 				}
 
-			case &#39;\n&#39;:
+			case '\n':
 				lno++;
 				brk = *buf;
-				*buf = &#39;\0&#39;;
-				buf = &amp;bufsp;
+				*buf = '\0';
+				buf = &bufsp;
 				if(comp(buf, sym[i])) {
 					goto fields;
 				} else {
 					copy(buf, sym[i]);
-					l =+ copy(buf, &amp;line[++l]);
-					line[--l] = &#39;\n&#39;;
+					l =+ copy(buf, &line[++l]);
+					line[--l] = '\n';
 					j = i;
-					while(++j &lt; fct)
+					while(++j < fct)
 						*sym[j] = 0;
 					goto out;
 				}
 
-			case &#39;\0&#39;:
+			case '\0':
 				goto fexit;
 		}
 	}
 
 rest:
-	while((line[++l] = get(file)) != &#39;\n&#39;)
-		if(line[l] == &#39;\0&#39;)	goto fexit;
+	while((line[++l] = get(file)) != '\n')
+		if(line[l] == '\0')	goto fexit;
 
 	lno++;
 out:
-	if(*line != &#39;\t&#39;) {
-		put(0,&quot;\n&quot;,1);
+	if(*line != '\t') {
+		put(0,"\n",1);
 		lno++;
 	}
 
@@ -173,11 +173,11 @@ copy(a, b)
 comp(a, b)
 	char	*a, *b;
 {
-/*	printf(&quot;comp: %s %s\n&quot;,a,b); /*DEBUG*/
+/*	printf("comp: %s %s\n",a,b); /*DEBUG*/
 	a--;
 	b--;
 	while(*++a == *++b) {
-		if(*a == &#39;\0&#39;)	return(1);
+		if(*a == '\0')	return(1);
 	}
 	return(0);
 }
@@ -196,7 +196,7 @@ get(ifile) int ifile;
 	}
 
 	if(nread = read(ifile,buf,512)){
-		if(nread &lt; 0)goto err;
+		if(nread < 0)goto err;
 
 		ibuf = buf;
 		return(*ibuf++);
@@ -207,7 +207,7 @@ get(ifile) int ifile;
 
 err:
 	nread = 1;
-	printf(&quot;read error\n&quot;);
+	printf("read error\n");
 	return(0);
 
 }
@@ -227,24 +227,24 @@ put(fil,string,n)
 	int	i;
 	char	*o;
 
-/*printf(&quot;%d %c %d\n&quot;,fil,*string,n);/*DEBUG*/
+/*printf("%d %c %d\n",fil,*string,n);/*DEBUG*/
 
 	string--;
 
-	if((i = optr[fil] + n - 512) &gt;= 0) {
+	if((i = optr[fil] + n - 512) >= 0) {
 		n =- i;
-		o = &amp;obuf[fil][optr[fil]] -1;
-		while(--n &gt;= 0)
+		o = &obuf[fil][optr[fil]] -1;
+		while(--n >= 0)
 			*++o = *++string;
 		optr[fil] = 512;
 		flsh(fil);
 		n = i;
 	}
 
-	o = &amp;obuf[fil][optr[fil]] - 1;
+	o = &obuf[fil][optr[fil]] - 1;
 	optr[fil] =+ n;
 
-	while(--n &gt;= 0) {
+	while(--n >= 0) {
 		*++o = *++string;
 	}
 	return(0);
@@ -254,7 +254,7 @@ flsh(fil)
 {
 	extern	tp[];
 
-	if(optr[fil] &lt;= 0)	return(optr[fil]);
+	if(optr[fil] <= 0)	return(optr[fil]);
 
 	nflush++;
 	if(write(tp[fil],obuf[fil],optr[fil]) != optr[fil])

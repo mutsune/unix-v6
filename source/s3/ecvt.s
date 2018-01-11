@@ -76,7 +76,7 @@ gtr:
 	addf	$epsilon,fr2
 	modf	$ten,fr2
 	movfi	fr3,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,-(r3)
 	inc	r2
 	tstf	fr0
@@ -118,7 +118,7 @@ digit:
 
 digit1:
 	movfi	fr1,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,(r1)+
 1:
 	rts	pc
@@ -136,15 +136,15 @@ out:
 	add	$5,r3
 	movb	r3,(r0)
 1:
-	cmpb	(r0),$&#39;9
+	cmpb	(r0),$'9
 	ble	1f
-	movb	$&#39;0,(r0)
+	movb	$'0,(r0)
 	cmp	r0,$buf
 	blos	2f
 	incb	-(r0)
 	br	1b
 2:
-	movb	$&#39;1,(r0)
+	movb	$'1,(r0)
 	inc	r2
 1:
 outout:

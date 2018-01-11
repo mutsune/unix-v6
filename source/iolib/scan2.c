@@ -8,11 +8,11 @@ _Iint (iptr, length, numbase)
 n = minus = numdig = 0;
 switch ((c=_Inxch()))
 	{
-	case &#39;-&#39;: minus = 1;
-	case &#39;+&#39;: break;
+	case '-': minus = 1;
+	case '+': break;
 	default: (*_Iungc)(c,_Isfil);
 	}
-while ((dval=_Idigt(c=((*_Igetc)(_Isfil)), numbase ) ) &gt;= 0 &amp;&amp; numdig++ &lt; length)
+while ((dval=_Idigt(c=((*_Igetc)(_Isfil)), numbase ) ) >= 0 && numdig++ < length)
 	n = n*numbase + dval;
 (*_Iungc)(c,_Isfil);
 if (numdig == 0)
@@ -27,35 +27,35 @@ _Idigt (x, base)
 {
 switch (x)
 	{
-	case &#39;0&#39;:
-	case &#39;1&#39;:
-	case &#39;2&#39;:
-	case &#39;3&#39;:
-	case &#39;4&#39;:
-	case &#39;5&#39;:
-	case &#39;6&#39;:
-	case &#39;7&#39;:
-		return(x-&#39;0&#39;);
-	case &#39;8&#39;:
-	case &#39;9&#39;:
-		if (base &gt; 8)
-			return(x - &#39;0&#39;);
-	case &#39;a&#39;:
-	case &#39;b&#39;:
-	case &#39;c&#39;:
-	case &#39;d&#39;:
-	case &#39;e&#39;:
-	case &#39;f&#39;:
-		if (base &gt;10)
-			return(x - &#39;a&#39; + 10);
-	case &#39;A&#39;:
-	case &#39;B&#39;:
-	case &#39;C&#39;:
-	case &#39;D&#39;:
-	case &#39;E&#39;:
-	case &#39;F&#39;:
-		if (base &gt; 10)
-			return(x-&#39;A&#39; + 10);
+	case '0':
+	case '1':
+	case '2':
+	case '3':
+	case '4':
+	case '5':
+	case '6':
+	case '7':
+		return(x-'0');
+	case '8':
+	case '9':
+		if (base > 8)
+			return(x - '0');
+	case 'a':
+	case 'b':
+	case 'c':
+	case 'd':
+	case 'e':
+	case 'f':
+		if (base >10)
+			return(x - 'a' + 10);
+	case 'A':
+	case 'B':
+	case 'C':
+	case 'D':
+	case 'E':
+	case 'F':
+		if (base > 10)
+			return(x-'A' + 10);
 	}
 return(-1);
 }
@@ -69,7 +69,7 @@ _Ilong (dptr, length)
 	double x;
 	double atof();
 
-if (_Isstr(temp, length, _Inodg) &lt; 0)
+if (_Isstr(temp, length, _Inodg) < 0)
 	return (-1);
 x = atof(temp);
 if (dptr == 0)
@@ -86,19 +86,19 @@ _Isstr (sptr, length, stopf)
 	extern int _Isfil, (*_Igetc)(), (*_Iungc)();
 
 initlen = length;
-if ((ch=_Inxch()) &lt; 0)
+if ((ch=_Inxch()) < 0)
 	return (-1);
 (*_Iungc)(ch,_Isfil);
-while (!((*stopf)(ch=(*_Igetc)(_Isfil))) &amp;&amp; length-- &gt; 0)
+while (!((*stopf)(ch=(*_Igetc)(_Isfil))) && length-- > 0)
 	if (sptr != 0)
 		*(sptr++) = ch;
-if (ch &gt;= 0)
+if (ch >= 0)
 	(*_Iungc)(ch,_Isfil);
 if (length == initlen)
 	return (-1);
 if (sptr == 0)
 	return (0);
-*sptr = &#39;\0&#39;;
+*sptr = '\0';
 return (1);
 }
 
@@ -106,6 +106,6 @@ _Iestr (c)
 char c;
 {
 if (_Ispce(c)) return (1);
-if (c == &#39;\0&#39;) return (1);
+if (c == '\0') return (1);
 return (0);
 }

@@ -34,7 +34,7 @@ into file
 .it name2.
 The numbers after the letters pertain to file
 .it name2.
-In fact, by exchanging `a&#39; for `d&#39; and reading backward
+In fact, by exchanging `a' for `d' and reading backward
 one may ascertain equally how to convert file 
 .it name2
 into
@@ -52,15 +52,15 @@ or
 are abbreviated as a single number.
 .s3
 Following each of these lines come all the lines that are
-affected in the first file flagged by `*&#39;, 
+affected in the first file flagged by `*', 
 then all the lines that are affected in the second file
-flagged by `\fB.\fR&#39;.
+flagged by `\fB.\fR'.
 .s3
 Under the \fB\*-\fR option,
 the output of
 .it diff
 is a script of
-.it &quot;a, c&quot;
+.it "a, c"
 and 
 .it d
 commands for the editor
@@ -75,22 +75,22 @@ version-to-version
 scripts ($2,$3,...) made by
 .it diff
 need be on hand.
-A `latest version&#39; appears on
+A `latest version' appears on
 the standard output.
 .s3
 .lp +5 0
 .tr ||
-(cat $2 ... $9; echo &quot;1,$p&quot;) \*v ed \*- $1
+(cat $2 ... $9; echo "1,$p") \*v ed \*- $1
 .s3
 .i0
-Except for occasional `jackpots&#39;,
+Except for occasional `jackpots',
 .it diff
 finds a smallest sufficient set of file
 differences.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 cmp (I), comm (I), ed (I)
 .sh DIAGNOSTICS
-`jackpot&#39; \*- To speed things up, the program uses hashing.
+`jackpot' \*- To speed things up, the program uses hashing.
 You have stumbled on a case where there is a chance that
 this has resulted in
 a difference being called where none actually existed.
@@ -99,4 +99,4 @@ jackpot go away.
 .sh BUGS
 Editing scripts produced under the
 \fB\*-\fR option are naive about
-creating lines consisting of a single `\fB.\fR&#39;.
+creating lines consisting of a single `\fB.\fR'.

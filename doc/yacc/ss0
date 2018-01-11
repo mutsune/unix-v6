@@ -40,11 +40,11 @@ The heart of the input specification is a collection of grammar rules.
 Each rule describes an allowable structure and gives it a name.
 For example, one grammar rule might be
 .DS
-date  :  month\_name  day  \&#39;,\&#39;  year   ;
+date  :  month\_name  day  \',\'  year   ;
 .DE
 Here, date, month\_name, day, and year represent structures of interest in the input process;
 presumably, month\_name, day, and year are defined elsewhere.
-The comma ``,&#39;&#39; is quoted by single quotes; this implies that the
+The comma ``,'' is quoted by single quotes; this implies that the
 comma is to appear literally in the input.
 The colon and semicolon merely serve as punctuation in the rule, and have
 no significance in controlling the input.
@@ -79,12 +79,12 @@ There is considerable leeway in deciding whether to recognize structures by the 
 analyzer or by a grammar rule.
 Thus, in the above example it would be possible to have other rules of the form
 .DS
-month\_name  :  \&#39;J\&#39; \&#39;a\&#39; \&#39;n\&#39;   ;
-month\_name  :  \&#39;F\&#39; \&#39;e\&#39; \&#39;b\&#39;   ;
+month\_name  :  \'J\' \'a\' \'n\'   ;
+month\_name  :  \'F\' \'e\' \'b\'   ;
 
          . . .
 
-month\_name  :  \&#39;D\&#39; \&#39;e\&#39; \&#39;c\&#39;   ;
+month\_name  :  \'D\' \'e\' \'c\'   ;
 .DE
 Here, the lexical analyzer would only need to recognize individual letters, and
 month\_name would be a nonterminal symbol.
@@ -96,13 +96,13 @@ recognize the month names,
 and return an indication that a
 month\_name was seen; in this case, month\_name would be a token.
 .PP
-Literal characters, such as ``,&#39;&#39;, must also be passed through the lexical
+Literal characters, such as ``,'', must also be passed through the lexical
 analyzer, and are considered tokens.
 .PP
 As an example of the flexibility of the grammar rule approach, we might add to the above
 specifications the rule
 .DS
-date  :  month \&#39;/\&#39; day \&#39;/\&#39; year   ;
+date  :  month \'/\' day \'/\' year   ;
 .DE
 and thus optionally allow the form
 .DS
@@ -112,7 +112,7 @@ as a synonym for
 .DS
 July 4, 1776
 .DE
-In most cases, this new rule could be ``slipped in&#39;&#39; to a working system with minimal effort,
+In most cases, this new rule could be ``slipped in'' to a working system with minimal effort,
 and a very small chance of disrupting existing input.
 .PP
 Frequently, the input being read does not conform to the

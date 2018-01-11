@@ -6,10 +6,10 @@
  * RS03/04 disk driver
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../buf.h"
+#include "../conf.h"
+#include "../user.h"
 
 
 struct {
@@ -47,18 +47,18 @@ struct buf *abp;
 
 	bp = abp;
 	mblks = 1024; /* RJS03 */
-	if(bp-&gt;b_dev.d_minor &gt;= 8)
+	if(bp->b_dev.d_minor >= 8)
 		mblks = 2048; /* RJS04 */
-	if(bp-&gt;b_blkno &gt;= mblks) {
-		bp-&gt;b_flags =| B_ERROR;
+	if(bp->b_blkno >= mblks) {
+		bp->b_flags =| B_ERROR;
 		iodone(bp);
 		return;
 	}
-	bp-&gt;av_forw = 0;
+	bp->av_forw = 0;
 	spl5();
 	if (hstab.d_actf==0)
 		hstab.d_actf = bp; else
-		hstab.d_actl-&gt;av_forw = bp;
+		hstab.d_actl->av_forw = bp;
 	hstab.d_actl = bp;
 	if (hstab.d_active==0)
 		hsstart();
@@ -73,11 +73,11 @@ hsstart()
 	if ((bp = hstab.d_actf) == 0)
 		return;
 	hstab.d_active++;
-	addr = bp-&gt;b_blkno;
-	if(bp-&gt;b_dev.d_minor &lt; 8)
-		addr =&lt;&lt; 1; /* RJS03 */
-	HSADDR-&gt;hscs2 = bp-&gt;b_dev.d_minor &amp; 07;
-	rhstart(bp, &amp;HSADDR-&gt;hsda, addr&lt;&lt;1, &amp;HSADDR-&gt;hsbae);
+	addr = bp->b_blkno;
+	if(bp->b_dev.d_minor < 8)
+		addr =<< 1; /* RJS03 */
+	HSADDR->hscs2 = bp->b_dev.d_minor & 07;
+	rhstart(bp, &HSADDR->hsda, addr<<1, &HSADDR->hsbae);
 }
 
 hsintr()
@@ -88,17 +88,17 @@ hsintr()
 		return;
 	bp = hstab.d_actf;
 	hstab.d_active = 0;
-	if(HSADDR-&gt;hscs1 &amp; ERR){	/* error bit */
-		deverror(bp, HSADDR-&gt;hscs2, 0);
-		HSADDR-&gt;hscs1 = RCLR|GO;
-		if (++hstab.d_errcnt &lt;= 10) {
+	if(HSADDR->hscs1 & ERR){	/* error bit */
+		deverror(bp, HSADDR->hscs2, 0);
+		HSADDR->hscs1 = RCLR|GO;
+		if (++hstab.d_errcnt <= 10) {
 			hsstart();
 			return;
 		}
-		bp-&gt;b_flags =| B_ERROR;
+		bp->b_flags =| B_ERROR;
 	}
 	hstab.d_errcnt = 0;
-	hstab.d_actf = bp-&gt;av_forw;
+	hstab.d_actf = bp->av_forw;
 	iodone(bp);
 	hsstart();
 }
@@ -106,11 +106,11 @@ hsintr()
 hsread(dev)
 {
 
-	physio(hsstrategy, &amp;rhsbuf, dev, B_READ);
+	physio(hsstrategy, &rhsbuf, dev, B_READ);
 }
 
 hswrite(dev)
 {
 
-	physio(hsstrategy, &amp;rhsbuf, dev, B_WRITE);
+	physio(hsstrategy, &rhsbuf, dev, B_WRITE);
 }

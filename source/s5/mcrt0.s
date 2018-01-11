@@ -47,7 +47,7 @@ start:
 	mov	$2,r0
 	sys	write; 8f; 9f-8f
 
-.data; 8: &lt;No space for monitor buffer\n&gt;; 9:.even; .text
+.data; 8: <No space for monitor buffer\n>; 9:.even; .text
 
 _exit:
 	mov	r5,-(sp)

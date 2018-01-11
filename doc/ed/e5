@@ -1,5 +1,5 @@
 .H1
-Change and Insert \(mi ``c&#39;&#39; and ``i&#39;&#39;
+Change and Insert \(mi ``c'' and ``i''
 .H2
 .PG
 This section discusses the
@@ -20,36 +20,36 @@ i
 .X2
 which is used for inserting a group of one or more lines.
 .PG
-``Change&#39;&#39;, written as
+``Change'', written as
 .X1
 c
 .X2
 is used to replace a number of lines with different lines, which
 are typed in at the terminal.
 For example,
-to change lines ``\*.+1&#39;&#39; through ``$&#39;&#39; to something else, type
+to change lines ``\*.+1'' through ``$'' to something else, type
 .X1
  .+1,$c
  . . . \fItype the lines of text you want here\fP . . .
  \fB.\fR
 .X2
-The lines you type between the ``c&#39;&#39; command and
-the ``\*.&#39;&#39; will take the place of the original lines between
+The lines you type between the ``c'' command and
+the ``\*.'' will take the place of the original lines between
 start line and end line.
 This is most useful in replacing a line
 or several lines which have errors in them.
 .PG
-If only one line is specified in the ``c&#39;&#39; command, then just
+If only one line is specified in the ``c'' command, then just
 that line is replaced.
 (You can type in as many replacement lines as you like.)
 Notice
-the use of ``\*.&#39;&#39; to end the
-input \(mi this works just like the ``\*.&#39;&#39; in the append command
+the use of ``\*.'' to end the
+input \(mi this works just like the ``\*.'' in the append command
 and must appear by itself on a new line.
 If no line number is given, line dot is replaced.
 The value of dot is set to the last line you typed in.
 .PG
-``Insert&#39;&#39; is similar to append \(mi for instance
+``Insert'' is similar to append \(mi for instance
 .X1
 /string/i
 .li
@@ -60,8 +60,8 @@ The value of dot is set to the last line you typed in.
 will insert the given text
 .ul
 before
-the next line that contains ``string&#39;&#39;.
-The text between ``i&#39;&#39; and ``\*.&#39;&#39; is
+the next line that contains ``string''.
+The text between ``i'' and ``\*.'' is
 .ul
 inserted before
 the specified line.
@@ -71,7 +71,7 @@ Dot is set to the last line inserted.
 Exercise 7:
 .H2
 .PG
-``Change&#39;&#39; is rather like a combination of
+``Change'' is rather like a combination of
 delete followed by insert.
 Experiment to verify that
 .X1
@@ -94,11 +94,11 @@ These are not
 .ul
 precisely
 the same
-if line ``$&#39;&#39; gets deleted.
+if line ``$'' gets deleted.
 Check this out.
 What is dot?
 .PG
-Experiment with ``a&#39;&#39; and ``i&#39;&#39;, to see that they are
+Experiment with ``a'' and ``i'', to see that they are
 similar, but not the same.
 You will observe that
 .X1
@@ -124,13 +124,13 @@ inserts
 before
 it.
 Observe that if no line number is given,
-``i&#39;&#39; inserts before line dot, while ``a&#39;&#39; appends
+``i'' inserts before line dot, while ``a'' appends
 after line dot.
 .H1
-Moving text around: the ``m&#39;&#39; command
+Moving text around: the ``m'' command
 .H2
 .PG
-The move command ``m&#39;&#39; is used for cutting and pasting \(mi
+The move command ``m'' is used for cutting and pasting \(mi
 it lets you move a group of lines
 from one place to another in the buffer.
 Suppose we want to put the first three lines of the buffer at the end instead.
@@ -141,7 +141,7 @@ $r temp
 1,3d
 .X2
 (Do you see why?)
-but we can do it a lot easier with the ``m&#39;&#39; command:
+but we can do it a lot easier with the ``m'' command:
 .X1
 1,3m$
 .X2
@@ -168,20 +168,20 @@ we could reverse the two paragraphs like this:
 .X1
 /Second/,/second/m/First/\(mi1
 .X2
-Notice the ``\(mi1&#39;&#39; \(mi
+Notice the ``\(mi1'' \(mi
 the moved text goes
 .ul
 after
 the line mentioned.
 Dot gets set to the last line moved.
 .H1
-The global commands ``g&#39;&#39; and ``v&#39;&#39;
+The global commands ``g'' and ``v''
 .H2
 .PG
 The
 .ul
 global
-command ``g&#39;&#39; is used to execute one or more 
+command ``g'' is used to execute one or more 
 .ul
 ed
 commands on all those lines in the buffer
@@ -190,7 +190,7 @@ For example
 .X1
 g/peling/p
 .X2
-prints all lines that contain ``peling&#39;&#39;.
+prints all lines that contain ``peling''.
 More usefully,
 .X1
 g/peling/s//pelling/gp
@@ -203,14 +203,14 @@ Compare this to
 .X2
 which only prints the last line substituted.
 Another subtle difference is that
-the ``g&#39;&#39; command
-does not give a ``?&#39;&#39; if ``peling&#39;&#39; is not found
-where the ``s&#39;&#39; command will.
+the ``g'' command
+does not give a ``?'' if ``peling'' is not found
+where the ``s'' command will.
 .PG
 There may be several commands
-(including ``a&#39;&#39;, ``c&#39;&#39; ``i&#39;&#39; ``r&#39;&#39;, ``w&#39;&#39;, but not ``g&#39;&#39;);
+(including ``a'', ``c'' ``i'' ``r'', ``w'', but not ``g'');
 in that case,
-every line except the last must end with a backslash ``\\&#39;&#39;:
+every line except the last must end with a backslash ``\\'':
 .X1
 g/xxx/\*.-1s/abc/def/\\
 .li
@@ -219,15 +219,15 @@ g/xxx/\*.-1s/abc/def/\\
 \fB.\fR-2,\fB.\fRp
 .X2
 makes changes in the lines before and after each line
-that contains ``xxx&#39;&#39;,
+that contains ``xxx'',
 then prints all three lines.
 .PG
-The ``v&#39;&#39; command is the same as ``g&#39;&#39;,
+The ``v'' command is the same as ``g'',
 except that the commands are executed on every line
 that does
 .ul
 not
-match the string following ``v&#39;&#39;:
+match the string following ``v'':
 .X1
 v/ /d
 .X2

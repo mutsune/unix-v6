@@ -5,11 +5,11 @@ crash \*- what to do when the system crashes
 .sh DESCRIPTION
 This section gives at least a few clues about how to proceed if the
 system crashes.
-It can&#39;t pretend to be complete.
+It can't pretend to be complete.
 .s3
-.it &quot;How to bring it back up.||&quot;
+.it "How to bring it back up.||"
 If the reason for the crash is not evident
-(see below for guidance on `evident&#39;)
+(see below for guidance on `evident')
 you may want to try to dump the system if you feel up to
 debugging.
 At the moment a dump can be taken only on magtape.
@@ -28,11 +28,11 @@ See below for what to do with the tape.
 In restarting after a crash,
 always bring up the system single-user.
 This is accomplished by following the directions in
-.it &quot;boot procedures&quot;
+.it "boot procedures"
 (VIII)
 as modified for your particular installation;
 a single-user system is indicated by having a particular value
-in the switches (173030 unless you&#39;ve changed
+in the switches (173030 unless you've changed
 .it init)
 as the system starts executing.
 When it is running,
@@ -88,10 +88,10 @@ it is probably prudent to go to a
 backup system to avoid working on a
 mounted file system.
 .s3
-.it &quot;Repairing disks.||&quot;
+.it "Repairing disks.||"
 The first rule to keep in mind is that an addled disk
 should be treated gently;
-it shouldn&#39;t be mounted unless necessary,
+it shouldn't be mounted unless necessary,
 and if it is very valuable yet
 in quite bad shape, perhaps it should be dumped before
 trying surgery on it.
@@ -104,7 +104,7 @@ There can be
 problems with the free list:
 duplicates in the free list, or free blocks also in files.
 These can be cured easily with an
-.it &quot;icheck \*-s.&quot;
+.it "icheck \*-s."
 If the same block appears in more than one file
 or if a file contains bad blocks,
 the files should be deleted, and the free list reconstructed.
@@ -142,17 +142,17 @@ stops with files that have been deleted while still open.
 A
 .it clri
 will free the inode, and an
-.it &quot;icheck -s&quot;
+.it "icheck -s"
 will
 recover any missing blocks.
 .s3
-.it &quot;Why did it crash?||&quot;
+.it "Why did it crash?||"
 UNIX types a message
 on the console typewriter when it voluntarily crashes.
 Here is the current list of such messages,
 with enough information to provide
 a hope at least of the remedy.
-The message has the form `panic: ...&#39;,
+The message has the form `panic: ...',
 possibly accompanied by other information.
 Left unstated in all cases
 is the possibility that hardware or software
@@ -183,7 +183,7 @@ during initialization.
 out of inodes
 .br
 A mounted file system has no more i-nodes when creating a file.
-Sorry, the device isn&#39;t available;
+Sorry, the device isn't available;
 the
 .it icheck
 should tell you.
@@ -197,14 +197,14 @@ Definitely hardware or software error.
 .lp +5 5
 no imt
 .br
-Like `no fs&#39;, but produced elsewhere.
+Like `no fs', but produced elsewhere.
 .s3
 .lp +5 5
 no inodes
 .br
 The in-core inode table is full.
 Try increasing NINODE in param.h.
-Shouldn&#39;t be a panic, just a user error.
+Shouldn't be a panic, just a user error.
 .s3
 .lp +5 5
 no clock
@@ -216,13 +216,13 @@ neither the line nor programmable clock was found to exist.
 swap error
 .br
 An unrecoverable I/O error during a swap.
-Really shouldn&#39;t be a panic,
+Really shouldn't be a panic,
 but it is hard to fix.
 .s3
 .lp +5 5
 unlink \- iget
 .br
-The directory containing a file being deleted can&#39;t be found.
+The directory containing a file being deleted can't be found.
 Hardware or software.
 .s3
 .lp +5 5
@@ -230,25 +230,25 @@ out of swap space
 .br
 A program needs to be swapped out, and there is no more swap space.
 It has to be increased.
-This really shouldn&#39;t be a panic, but there is no easy fix.
+This really shouldn't be a panic, but there is no easy fix.
 .s3
 .lp +5 5
 out of text
 .br
 A pure procedure program is being executed,
 and the table for such things is full.
-This shouldn&#39;t be a panic.
+This shouldn't be a panic.
 .s3
 .lp +5 5
 trap
 .br
 An unexpected trap has occurred within the system.
 This is accompanied by three numbers:
-a `ka6&#39;, which is the contents of the segmentation
-register for the area in which the system&#39;s stack is kept;
-`aps&#39;, which is the location where the hardware stored
+a `ka6', which is the contents of the segmentation
+register for the area in which the system's stack is kept;
+`aps', which is the location where the hardware stored
 the program status word during the trap;
-and a `trap type&#39; which encodes
+and a `trap type' which encodes
 which trap occurred.
 The trap types are:
 .s3
@@ -281,7 +281,7 @@ If you wish to examine the stack after such a trap,
 either dump the system, or use the console switches to examine core;
 the required address mapping is described below.
 .s3
-.it &quot;Interpreting dumps.||&quot;
+.it "Interpreting dumps.||"
 All file system problems
 should be taken care of before attempting to look at dumps.
 The dump should be read into the file
@@ -289,7 +289,7 @@ The dump should be read into the file
 .it cp
 (I) will do.
 At this point, you should execute
-.it &quot;ps \*-alxk&quot;
+.it "ps \*-alxk"
 and
 .it who
 to print the process table and the users who were on
@@ -310,7 +310,7 @@ This is the per-process data associated with the process running
 at the time of the crash.
 Relabel
 the addresses 140000 to 141776.
-R5 is C&#39;s frame or display pointer.
+R5 is C's frame or display pointer.
 Stored at (R5) is the old R5 pointing to the previous
 stack frame.
 At (R5)+2
@@ -318,19 +318,19 @@ is the saved PC of the calling procedure.
 Trace
 this calling chain until
 you obtain an R5 value of 141756, which
-is where the user&#39;s R5 is stored.
+is where the user's R5 is stored.
 If the chain is broken,
 you have to look for a plausible
 R5, PC pair and continue from there.
-Each PC should be looked up in the system&#39;s name list
+Each PC should be looked up in the system's name list
 using
 .it db
-(I) and its `:&#39; command,
+(I) and its `:' command,
 to get a reverse calling order.
 In most cases this procedure will give
 an idea of what is wrong.
 A more complete discussion
 of system debugging is impossible here.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 clri, icheck, dcheck, boot procedures (VIII)
 .sh BUGS

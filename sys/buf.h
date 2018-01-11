@@ -22,7 +22,7 @@ struct buf
 {
 	int	b_flags;		/* see defines below */
 	struct	buf *b_forw;		/* headed by devtab of b_dev */
-	struct	buf *b_back;		/*  &quot;  */
+	struct	buf *b_back;		/*  "  */
 	struct	buf *av_forw;		/* position on free list, */
 	struct	buf *av_back;		/*     if not BUSY*/
 	int	b_dev;			/* major+minor device name */
@@ -73,5 +73,5 @@ struct	buf bfreelist;
 #define	B_MAP	040	/* This block has the UNIBUS map allocated */
 #define	B_WANTED 0100	/* issue wakeup when BUSY goes off */
 #define	B_RELOC	0200	/* no longer used */
-#define	B_ASYNC	0400	/* don&#39;t wait for I/O completion */
-#define	B_DELWRI 01000	/* don&#39;t write till block leaves available list */
+#define	B_ASYNC	0400	/* don't wait for I/O completion */
+#define	B_DELWRI 01000	/* don't write till block leaves available list */

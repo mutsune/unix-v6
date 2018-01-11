@@ -1,30 +1,30 @@
-# include &quot;ciodec.c&quot;
+# include "ciodec.c"
 char cputc(ch, fn)
 {
 struct fileps *fp;
 if (nargs() != 2)
-  IEHzap(&quot;cputc  &quot;);
-if (fn&lt;0 || fn&gt;20) return(ch);
-fp = &amp;IEH3fpts[fn];
-if (fp-&gt;wrflag == 1)
-	IEH3err(&quot;cputc: %d not open&quot;,fn);
-if (fp-&gt;wrflag == 0)
+  IEHzap("cputc  ");
+if (fn<0 || fn>20) return(ch);
+fp = &IEH3fpts[fn];
+if (fp->wrflag == 1)
+	IEH3err("cputc: %d not open",fn);
+if (fp->wrflag == 0)
 	IEH3mbuf(fn,1);
-*(fp-&gt;bptr++) = ch;
-if (++(fp-&gt;nchars) &lt; fp-&gt;bsize)
+*(fp->bptr++) = ch;
+if (++(fp->nchars) < fp->bsize)
 	return(ch);
-if (fp-&gt;wrflag == 3) /* append, seek to end */
+if (fp->wrflag == 3) /* append, seek to end */
 	{
 	seek(fn, 0, 2);
-	fp-&gt;wrflag = 2; /* now just write from here on */
+	fp->wrflag = 2; /* now just write from here on */
 	}
-if ( write(fn, fp-&gt;bptr=fp-&gt;buff, fp-&gt;nchars) &lt; 0)
+if ( write(fn, fp->bptr=fp->buff, fp->nchars) < 0)
 	{
-	if (fp-&gt;eoferr == 0)
-		IEH3err(&quot;cputc: writing %d&quot;,fn);
-	fp-&gt;eoferr = 3;
+	if (fp->eoferr == 0)
+		IEH3err("cputc: writing %d",fn);
+	fp->eoferr = 3;
 	}
-fp-&gt;nchars = 0;
+fp->nchars = 0;
 return (ch);
 }
 cout 1;

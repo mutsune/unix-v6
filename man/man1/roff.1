@@ -35,13 +35,13 @@ spaces whenever appropriate.
 .i0
 .dt
 Input consists of intermixed
-.it &quot;text lines,&quot;
+.it "text lines,"
 which contain information to be formatted, and
-.it &quot;request lines,&quot;
+.it "request lines,"
 which contain instructions about how to format
 it.
 Request lines begin with a distinguished
-.it &quot;control character,&quot;
+.it "control character,"
 normally a period.
 .s3
 Output lines may be
@@ -72,8 +72,8 @@ page.
 They are set by requests like
 .s3
 .in +10
-.if t \&amp;.he \(fmpart1\(fmpart2\(fmpart3\(fm
-.if n \&amp;.he &#39;part1&#39;part2&#39;part3&#39;
+.if t \&.he \(fmpart1\(fmpart2\(fmpart3\(fm
+.if n \&.he 'part1'part2'part3'
 .in -10
 .s3
 Part1 is left justified, part2 is centered,
@@ -83,7 +83,7 @@ page number.
 Any nonblank may serve as a quote.
 .s3
 ASCII tab characters are replaced in the input by a
-.it &quot;replacement character,&quot;
+.it "replacement character,"
 normally a space,
 according to the
 column settings given by a .ta command.
@@ -92,7 +92,7 @@ column settings given by a .ta command.
 Automatic hyphenation of filled output is done
 under control of .hy.
 When a word contains a designated
-.it &quot;hyphenation character,&quot;
+.it "hyphenation character,"
 that character disappears from the output and
 hyphens can be introduced into
 the word at the marked places only.
@@ -101,7 +101,7 @@ the word at the marked places only.
 .br
 /tmp/rtm?	temporary
 .br
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 nroff (I), troff (I)
 .sh BUGS
 .it Roff
@@ -136,10 +136,10 @@ the current line is stopped.
 .bl|n	yes	-	Insert of n blank lines, on new page if necessary.
 .ti 0
 .li
-.bp|+n	yes	n=1	Begin new page and number it n; no n means `+1&#39;.
+.bp|+n	yes	n=1	Begin new page and number it n; no n means `+1'.
 .ti 0
 .li
-.cc|c	no	c=.	Control character becomes `c&#39;.
+.cc|c	no	c=.	Control character becomes `c'.
 .ti 0
 .li
 .ce|n	yes	-	Center the next n input lines,
@@ -147,11 +147,11 @@ without filling.
 .ti 0
 .li
 .de|xx	no	-	Define parameterless macro 
-to be invoked by request `.xx&#39;
-(definition ends on line beginning `\fB..\fR&#39;).
+to be invoked by request `.xx'
+(definition ends on line beginning `\fB..\fR').
 .ti 0
 .li
-.ds	yes	no	Double space; same as `.ls 2&#39;.
+.ds	yes	no	Double space; same as `.ls 2'.
 .ti 0
 .li
 .ef|t	no	t=\*a\*a\*a\*a	Even foot title becomes t.
@@ -166,7 +166,7 @@ to be invoked by request `.xx&#39;
 .fo	no	t=\*a\*a\*a\*a	All foot titles are t.
 .ti 0
 .li
-.hc|c	no	none	Hyphenation character becomes `c&#39;.
+.hc|c	no	none	Hyphenation character becomes `c'.
 .ti 0
 .li
 .he|t	no	t=\*a\*a\*a\*a	All head titles are t.
@@ -180,13 +180,13 @@ and is not done, if n=0.
 .ti 0
 .li
 .ig	no	-	Ignore input lines through
-a line beginning with `\fB..\fR&#39;.
+a line beginning with `\fB..\fR'.
 .ti 0
 .li
 .in|+n	yes	-	Indent n spaces from left margin.
 .ti 0
 .li
-.ix +n	no	-	Same as `.in&#39; but without break.
+.ix +n	no	-	Same as `.in' but without break.
 .ti 0
 .li
 .li|n	no	-	Literal, treat next n lines as text.
@@ -239,7 +239,7 @@ stop if n=0.
 .nf	yes	no	Stop filling output lines.
 .ti 0
 .li
-.nx|filename	-	Change to input file `filename&#39;.
+.nx|filename	-	Change to input file `filename'.
 .ti 0
 .li
 .of|t	no	t=\*a\*a\*a\*a	Odd foot title becomes t.
@@ -248,7 +248,7 @@ stop if n=0.
 .oh|t	no	t=\*a\*a\*a\*a	Odd head title becomes t.
 .ti 0
 .li
-.pa|+n	yes	n=1	Same as `.bp&#39;.
+.pa|+n	yes	n=1	Same as `.bp'.
 .ti 0
 .li
 .pl|+n	no	n=66	Total paper length taken to be n lines.
@@ -269,14 +269,14 @@ except at top of page.
 .ti 0
 .li
 .ss	yes	yes	Single space output lines,
-equivalent to `.ls 1&#39;.
+equivalent to `.ls 1'.
 .ti 0
 .li
 .ta|n|n..		-	Pseudotab settings.
 Initial tab settings are columns 9 17 25 ...
 .ti 0
 .li
-.tc|c	no	space	Tab replacement character becomes `c&#39;.
+.tc|c	no	space	Tab replacement character becomes `c'.
 .ti 0
 .li
 .ti|+n	yes	-	Temporarily indent next output

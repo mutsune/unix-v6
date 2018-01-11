@@ -2,22 +2,22 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../proc.h&quot;
-#include &quot;../text.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../file.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../buf.h&quot;
+#include "../param.h"
+#include "../user.h"
+#include "../proc.h"
+#include "../text.h"
+#include "../systm.h"
+#include "../file.h"
+#include "../inode.h"
+#include "../buf.h"
 
 /*
  * Give up the processor till a wakeup occurs
  * on chan, at which time the process
  * enters the scheduling queue at priority pri.
  * The most important effect of pri is that when
- * pri&lt;0 a signal cannot disturb the sleep;
- * if pri&gt;=0 signals will be processed.
+ * pri<0 a signal cannot disturb the sleep;
+ * if pri>=0 signals will be processed.
  * Callers of this routine must be prepared for
  * premature return, and check that the reason for
  * sleeping has gone away.
@@ -26,36 +26,36 @@ sleep(chan, pri)
 {
 	register *rp, s;
 
-	s = PS-&gt;integ;
+	s = PS->integ;
 	rp = u.u_procp;
-	if(pri &gt;= 0) {
+	if(pri >= 0) {
 		if(issig())
 			goto psig;
 		spl6();
-		rp-&gt;p_wchan = chan;
-		rp-&gt;p_stat = SWAIT;
-		rp-&gt;p_pri = pri;
+		rp->p_wchan = chan;
+		rp->p_stat = SWAIT;
+		rp->p_pri = pri;
 		spl0();
 		if(runin != 0) {
 			runin = 0;
-			wakeup(&amp;runin);
+			wakeup(&runin);
 		}
 		swtch();
 		if(issig())
 			goto psig;
 	} else {
 		spl6();
-		rp-&gt;p_wchan = chan;
-		rp-&gt;p_stat = SSLEEP;
-		rp-&gt;p_pri = pri;
+		rp->p_wchan = chan;
+		rp->p_stat = SSLEEP;
+		rp->p_pri = pri;
 		spl0();
 		swtch();
 	}
-	PS-&gt;integ = s;
+	PS->integ = s;
 	return;
 
 	/*
-	 * If priority was low (&gt;=0) and
+	 * If priority was low (>=0) and
 	 * there has been a signal,
 	 * execute non-local goto to
 	 * the qsav location.
@@ -74,10 +74,10 @@ wakeup(chan)
 	register c, i;
 
 	c = chan;
-	p = &amp;proc[0];
+	p = &proc[0];
 	i = NPROC;
 	do {
-		if(p-&gt;p_wchan == c) {
+		if(p->p_wchan == c) {
 			setrun(p);
 		}
 		p++;
@@ -93,13 +93,13 @@ setrun(p)
 	register struct proc *rp;
 
 	rp = p;
-	rp-&gt;p_wchan = 0;
-	rp-&gt;p_stat = SRUN;
-	if(rp-&gt;p_pri &lt; curpri)
+	rp->p_wchan = 0;
+	rp->p_stat = SRUN;
+	if(rp->p_pri < curpri)
 		runrun++;
-	if(runout != 0 &amp;&amp; (rp-&gt;p_flag&amp;SLOAD) == 0) {
+	if(runout != 0 && (rp->p_flag&SLOAD) == 0) {
 		runout = 0;
-		wakeup(&amp;runout);
+		wakeup(&runout);
 	}
 }
 
@@ -114,13 +114,13 @@ setpri(up)
 	register *pp, p;
 
 	pp = up;
-	p = (pp-&gt;p_cpu &amp; 0377)/16;
-	p =+ PUSER + pp-&gt;p_nice;
-	if(p &gt; 127)
+	p = (pp->p_cpu & 0377)/16;
+	p =+ PUSER + pp->p_nice;
+	if(p > 127)
 		p = 127;
-	if(p &gt; curpri)
+	if(p > curpri)
 		runrun++;
-	pp-&gt;p_pri = p;
+	pp->p_pri = p;
 }
 
 /*
@@ -156,20 +156,20 @@ sched()
 
 sloop:
 	runin++;
-	sleep(&amp;runin, PSWP);
+	sleep(&runin, PSWP);
 
 loop:
 	spl6();
 	n = -1;
-	for(rp = &amp;proc[0]; rp &lt; &amp;proc[NPROC]; rp++)
-	if(rp-&gt;p_stat==SRUN &amp;&amp; (rp-&gt;p_flag&amp;SLOAD)==0 &amp;&amp;
-	    rp-&gt;p_time &gt; n) {
+	for(rp = &proc[0]; rp < &proc[NPROC]; rp++)
+	if(rp->p_stat==SRUN && (rp->p_flag&SLOAD)==0 &&
+	    rp->p_time > n) {
 		p1 = rp;
-		n = rp-&gt;p_time;
+		n = rp->p_time;
 	}
 	if(n == -1) {
 		runout++;
-		sleep(&amp;runout, PSWP);
+		sleep(&runout, PSWP);
 		goto loop;
 	}
 
@@ -179,10 +179,10 @@ loop:
 
 	spl0();
 	rp = p1;
-	a = rp-&gt;p_size;
-	if((rp=rp-&gt;p_textp) != NULL)
-		if(rp-&gt;x_ccount == 0)
-			a =+ rp-&gt;x_size;
+	a = rp->p_size;
+	if((rp=rp->p_textp) != NULL)
+		if(rp->x_ccount == 0)
+			a =+ rp->x_size;
 	if((a=malloc(coremap, a)) != NULL)
 		goto found2;
 
@@ -192,9 +192,9 @@ loop:
 	 */
 
 	spl6();
-	for(rp = &amp;proc[0]; rp &lt; &amp;proc[NPROC]; rp++)
-	if((rp-&gt;p_flag&amp;(SSYS|SLOCK|SLOAD))==SLOAD &amp;&amp;
-	    (rp-&gt;p_stat == SWAIT || rp-&gt;p_stat==SSTOP))
+	for(rp = &proc[0]; rp < &proc[NPROC]; rp++)
+	if((rp->p_flag&(SSYS|SLOCK|SLOAD))==SLOAD &&
+	    (rp->p_stat == SWAIT || rp->p_stat==SSTOP))
 		goto found1;
 
 	/*
@@ -204,17 +204,17 @@ loop:
 	 * oldest process in core
 	 */
 
-	if(n &lt; 3)
+	if(n < 3)
 		goto sloop;
 	n = -1;
-	for(rp = &amp;proc[0]; rp &lt; &amp;proc[NPROC]; rp++)
-	if((rp-&gt;p_flag&amp;(SSYS|SLOCK|SLOAD))==SLOAD &amp;&amp;
-	   (rp-&gt;p_stat==SRUN || rp-&gt;p_stat==SSLEEP) &amp;&amp;
-	    rp-&gt;p_time &gt; n) {
+	for(rp = &proc[0]; rp < &proc[NPROC]; rp++)
+	if((rp->p_flag&(SSYS|SLOCK|SLOAD))==SLOAD &&
+	   (rp->p_stat==SRUN || rp->p_stat==SSLEEP) &&
+	    rp->p_time > n) {
 		p1 = rp;
-		n = rp-&gt;p_time;
+		n = rp->p_time;
 	}
-	if(n &lt; 2)
+	if(n < 2)
 		goto sloop;
 	rp = p1;
 
@@ -224,7 +224,7 @@ loop:
 
 found1:
 	spl0();
-	rp-&gt;p_flag =&amp; ~SLOAD;
+	rp->p_flag =& ~SLOAD;
 	xswap(rp, 1, 0);
 	goto loop;
 
@@ -233,26 +233,26 @@ found1:
 	 */
 
 found2:
-	if((rp=p1-&gt;p_textp) != NULL) {
-		if(rp-&gt;x_ccount == 0) {
-			if(swap(rp-&gt;x_daddr, a, rp-&gt;x_size, B_READ))
+	if((rp=p1->p_textp) != NULL) {
+		if(rp->x_ccount == 0) {
+			if(swap(rp->x_daddr, a, rp->x_size, B_READ))
 				goto swaper;
-			rp-&gt;x_caddr = a;
-			a =+ rp-&gt;x_size;
+			rp->x_caddr = a;
+			a =+ rp->x_size;
 		}
-		rp-&gt;x_ccount++;
+		rp->x_ccount++;
 	}
 	rp = p1;
-	if(swap(rp-&gt;p_addr, a, rp-&gt;p_size, B_READ))
+	if(swap(rp->p_addr, a, rp->p_size, B_READ))
 		goto swaper;
-	mfree(swapmap, (rp-&gt;p_size+7)/8, rp-&gt;p_addr);
-	rp-&gt;p_addr = a;
-	rp-&gt;p_flag =| SLOAD;
-	rp-&gt;p_time = 0;
+	mfree(swapmap, (rp->p_size+7)/8, rp->p_addr);
+	rp->p_addr = a;
+	rp->p_flag =| SLOAD;
+	rp->p_time = 0;
 	goto loop;
 
 swaper:
-	panic(&quot;swap error&quot;);
+	panic("swap error");
 }
 
 /*
@@ -268,13 +268,13 @@ swtch()
 	register struct proc *rp;
 
 	if(p == NULL)
-		p = &amp;proc[0];
+		p = &proc[0];
 	/*
 	 * Remember stack of caller
 	 */
 	savu(u.u_rsav);
 	/*
-	 * Switch to scheduler&#39;s stack
+	 * Switch to scheduler's stack
 	 */
 	retu(proc[0].p_addr);
 
@@ -289,12 +289,12 @@ loop:
 	i = NPROC;
 	do {
 		rp++;
-		if(rp &gt;= &amp;proc[NPROC])
-			rp = &amp;proc[0];
-		if(rp-&gt;p_stat==SRUN &amp;&amp; (rp-&gt;p_flag&amp;SLOAD)!=0) {
-			if(rp-&gt;p_pri &lt; n) {
+		if(rp >= &proc[NPROC])
+			rp = &proc[0];
+		if(rp->p_stat==SRUN && (rp->p_flag&SLOAD)!=0) {
+			if(rp->p_pri < n) {
 				p = rp;
-				n = rp-&gt;p_pri;
+				n = rp->p_pri;
 			}
 		}
 	} while(--i);
@@ -312,7 +312,7 @@ loop:
 	 * Switch to stack of the new process and set up
 	 * his segmentation registers.
 	 */
-	retu(rp-&gt;p_addr);
+	retu(rp->p_addr);
 	sureg();
 	/*
 	 * If the new process paused because it was
@@ -324,8 +324,8 @@ loop:
 	 *
 	 * You are not expected to understand this.
 	 */
-	if(rp-&gt;p_flag&amp;SSWAP) {
-		rp-&gt;p_flag =&amp; ~SSWAP;
+	if(rp->p_flag&SSWAP) {
+		rp->p_flag =& ~SSWAP;
 		aretu(u.u_ssav);
 	}
 	/*
@@ -345,7 +345,7 @@ loop:
  * in the same call to newproc as the parent;
  * but in fact the code that runs is that of swtch.
  * The subtle implication of the returned value of swtch
- * (see above) is that this is the value that newproc&#39;s
+ * (see above) is that this is the value that newproc's
  * caller in the new process sees.
  */
 newproc()
@@ -359,23 +359,23 @@ newproc()
 	/*
 	 * First, just locate a slot for a process
 	 * and copy the useful info from this process into it.
-	 * The panic &quot;cannot happen&quot; because fork has already
+	 * The panic "cannot happen" because fork has already
 	 * checked for the existence of a slot.
 	 */
 retry:
 	mpid++;
-	if(mpid &lt; 0) {
+	if(mpid < 0) {
 		mpid = 0;
 		goto retry;
 	}
-	for(rpp = &amp;proc[0]; rpp &lt; &amp;proc[NPROC]; rpp++) {
-		if(rpp-&gt;p_stat == NULL &amp;&amp; p==NULL)
+	for(rpp = &proc[0]; rpp < &proc[NPROC]; rpp++) {
+		if(rpp->p_stat == NULL && p==NULL)
 			p = rpp;
-		if (rpp-&gt;p_pid==mpid)
+		if (rpp->p_pid==mpid)
 			goto retry;
 	}
 	if ((rpp = p)==NULL)
-		panic(&quot;no procs&quot;);
+		panic("no procs");
 
 	/*
 	 * make proc entry for new proc
@@ -383,29 +383,29 @@ retry:
 
 	rip = u.u_procp;
 	up = rip;
-	rpp-&gt;p_stat = SRUN;
-	rpp-&gt;p_flag = SLOAD;
-	rpp-&gt;p_uid = rip-&gt;p_uid;
-	rpp-&gt;p_ttyp = rip-&gt;p_ttyp;
-	rpp-&gt;p_nice = rip-&gt;p_nice;
-	rpp-&gt;p_textp = rip-&gt;p_textp;
-	rpp-&gt;p_pid = mpid;
-	rpp-&gt;p_ppid = rip-&gt;p_pid;
-	rpp-&gt;p_time = 0;
+	rpp->p_stat = SRUN;
+	rpp->p_flag = SLOAD;
+	rpp->p_uid = rip->p_uid;
+	rpp->p_ttyp = rip->p_ttyp;
+	rpp->p_nice = rip->p_nice;
+	rpp->p_textp = rip->p_textp;
+	rpp->p_pid = mpid;
+	rpp->p_ppid = rip->p_pid;
+	rpp->p_time = 0;
 
 	/*
 	 * make duplicate entries
 	 * where needed
 	 */
 
-	for(rip = &amp;u.u_ofile[0]; rip &lt; &amp;u.u_ofile[NOFILE];)
+	for(rip = &u.u_ofile[0]; rip < &u.u_ofile[NOFILE];)
 		if((rpp = *rip++) != NULL)
-			rpp-&gt;f_count++;
-	if((rpp=up-&gt;p_textp) != NULL) {
-		rpp-&gt;x_count++;
-		rpp-&gt;x_ccount++;
+			rpp->f_count++;
+	if((rpp=up->p_textp) != NULL) {
+		rpp->x_count++;
+		rpp->x_ccount++;
 	}
-	u.u_cdir-&gt;i_count++;
+	u.u_cdir->i_count++;
 	/*
 	 * Partially simulate the environment
 	 * of the new process so that when it is actually
@@ -415,9 +415,9 @@ retry:
 	rpp = p;
 	u.u_procp = rpp;
 	rip = up;
-	n = rip-&gt;p_size;
-	a1 = rip-&gt;p_addr;
-	rpp-&gt;p_size = n;
+	n = rip->p_size;
+	a1 = rip->p_addr;
+	rpp->p_size = n;
 	a2 = malloc(coremap, n);
 	/*
 	 * If there is not enough core for the
@@ -425,17 +425,17 @@ retry:
 	 * copy.
 	 */
 	if(a2 == NULL) {
-		rip-&gt;p_stat = SIDL;
-		rpp-&gt;p_addr = a1;
+		rip->p_stat = SIDL;
+		rpp->p_addr = a1;
 		savu(u.u_ssav);
 		xswap(rpp, 0, 0);
-		rpp-&gt;p_flag =| SSWAP;
-		rip-&gt;p_stat = SRUN;
+		rpp->p_flag =| SSWAP;
+		rip->p_stat = SRUN;
 	} else {
 	/*
 	 * There is core, so just copy.
 	 */
-		rpp-&gt;p_addr = a2;
+		rpp->p_addr = a2;
 		while(n--)
 			copyseg(a1++, a2++);
 	}
@@ -445,10 +445,10 @@ retry:
 
 /*
  * Change the size of the data+stack regions of the process.
- * If the size is shrinking, it&#39;s easy-- just release the extra core.
- * If it&#39;s growing, and there is core, just allocate it
+ * If the size is shrinking, it's easy-- just release the extra core.
+ * If it's growing, and there is core, just allocate it
  * and copy the image, taking care to reset registers to account
- * for the fact that the system&#39;s stack has moved.
+ * for the fact that the system's stack has moved.
  * If there is no core, arrange for the process to be swapped
  * out after adjusting the size requirement-- when it comes
  * in, enough core will be allocated.
@@ -457,7 +457,7 @@ retry:
  * from this stack level.
  *
  * After the expansion, the caller will take care of copying
- * the user&#39;s stack towards or away from the data area.
+ * the user's stack towards or away from the data area.
  */
 expand(newsize)
 {
@@ -465,10 +465,10 @@ expand(newsize)
 	register *p, a1, a2;
 
 	p = u.u_procp;
-	n = p-&gt;p_size;
-	p-&gt;p_size = newsize;
-	a1 = p-&gt;p_addr;
-	if(n &gt;= newsize) {
+	n = p->p_size;
+	p->p_size = newsize;
+	a1 = p->p_addr;
+	if(n >= newsize) {
 		mfree(coremap, n-newsize, a1+newsize);
 		return;
 	}
@@ -477,14 +477,14 @@ expand(newsize)
 	if(a2 == NULL) {
 		savu(u.u_ssav);
 		xswap(p, 1, n);
-		p-&gt;p_flag =| SSWAP;
+		p->p_flag =| SSWAP;
 		swtch();
 		/* no return */
 	}
-	p-&gt;p_addr = a2;
-	for(i=0; i&lt;n; i++)
+	p->p_addr = a2;
+	for(i=0; i<n; i++)
 		copyseg(a1+i, a2++);
 	mfree(coremap, n, a1);
-	retu(p-&gt;p_addr);
+	retu(p->p_addr);
 	sureg();
 }

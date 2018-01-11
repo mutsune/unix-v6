@@ -19,20 +19,20 @@ bsss:
 	rts	r5
 1:
 	jsr	r5,code
-		&lt;.bss\n\0&gt;; .even
+		<.bss\n\0>; .even
 	mov	functm,r3
 	beq	1f
 	jsr	r5,code
-		&lt;ft:	.=.+%d.\n\0&gt;; .even
+		<ft:	.=.+%d.\n\0>; .even
 		r3
 1:
 	cmp	r4,$dattab			/ any data?
 	beq	1f
 	jsr	r5,code
-		&lt;.data\n\0&gt;; .even
+		<.data\n\0>; .even
 1:
 	jsr	r5,code
-		&lt;base:\n\0&gt;; .even
+		<base:\n\0>; .even
 	clr	r3
 1:
 	cmp	r3,symtp
@@ -53,7 +53,7 @@ bsss:
 	bit	$200,symtab(r3)		/ param
 	beq	2f
 	jsr	r5,code
-		&lt;%n.	= %d.\n\0&gt;; .even
+		<%n.	= %d.\n\0>; .even
 		r3
 		r2
 2:
@@ -62,7 +62,7 @@ bsss:
 	mov	symtab+6(r3),r2		/ size
 	beq	2f
 	jsr	r5,code
-		&lt;.comm	%n,%d.\n\0&gt;; .even
+		<.comm	%n,%d.\n\0>; .even
 		r3
 		r2
 2:
@@ -73,7 +73,7 @@ bsss:
 	bit	$300,symtab(r3)
 	beq	1f
 	jsr	r5,code
-		&lt;%n_	= %d.\n\0&gt;; .even
+		<%n_	= %d.\n\0>; .even
 		r3
 		r2
 	br	2b
@@ -86,7 +86,7 @@ bsss:
 	add	r0,nxtaloc
 1:
 	jsr	r5,code
-		&lt;%n_ = base+%d.\n\0&gt;; .even
+		<%n_ = base+%d.\n\0>; .even
 		r3
 		r2
 	br	2b

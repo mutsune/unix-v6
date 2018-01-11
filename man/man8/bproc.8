@@ -1,9 +1,9 @@
 .tr |
-.th &quot;BOOT PROCEDURES&quot; VIII 2/11/75
+.th "BOOT PROCEDURES" VIII 2/11/75
 .sh NAME
 boot procedures \*- UNIX startup
 .sh DESCRIPTION
-.it &quot;How to start UNIX.||&quot;
+.it "How to start UNIX.||"
 UNIX is started by placing it in core
 at location zero and transferring to zero.
 Since the system is not reenterable,
@@ -25,7 +25,7 @@ or
 .it mboot
 is read into location zero and
 executed there,
-it will type `=&#39; on the console,
+it will type `=' on the console,
 read in a
 .it tp
 entry name,
@@ -43,10 +43,10 @@ When a boot is required,
 execute (somehow) a program
 which reads in and jumps to
 the first block of the tape.
-In response to the `=&#39;
+In response to the `='
 prompt,
 type the entry name of the system on the tape
-(we use plain `unix&#39;).
+(we use plain `unix').
 It is strongly recommended that a current version of
 the system be maintained in this way,
 even if it is usually booted from disk.
@@ -114,7 +114,7 @@ It can also be loaded from a
 .it tp
 tape as described above.
 .s3
-.it &quot;The switches.||&quot;
+.it "The switches.||"
 The console switches play an important role in the
 use and especially the booting of UNIX.
 During operation,
@@ -157,7 +157,7 @@ faster than the bus error timeout
 (about 10\*us)
 then a permanent disk non-existent-memory error will occur.
 .s3
-.it &quot;ROM programs.||&quot;
+.it "ROM programs.||"
 Here are some programs which are suitable for
 installing in read-only memories,
 or for manual keying into core
@@ -254,5 +254,5 @@ RP (drive 0)
 /usr/mdec/tboot \*- \fItp\fR DECtape bootstrap
 .br
 /usr/mdec/uboot \*- file system bootstrap
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 tp (I), init (VIII)

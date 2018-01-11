@@ -7,7 +7,7 @@ putdec:
 	cmp	r0,$100000
 	beq	2f
 	mov	r0,-(sp)
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	pc,putch
 	mov	(sp)+,r0
 	neg	r0
@@ -20,10 +20,10 @@ putdec:
 	mov	(sp)+,r1
 1:
 	mov	r1,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jmp	putch
 2:
 	mov	$1f,r0
 	jmp	obuild
 1:
-		&lt;-32768\0&gt;;.even
+		<-32768\0>;.even

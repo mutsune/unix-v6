@@ -18,7 +18,7 @@ its array arguments.
 		double sum^;
 		int i^;
 		sum = 0.0^;
-		for ^(^i=0^; i&lt;n^; i\fR++\fG^)^
+		for ^(^i=0^; i<n^; i\fR++\fG^)^
 			sum \fR=+\fG v1^[^i^] \** v2^[^i^]^;
 		return^(^sum^)^;
 	}
@@ -47,7 +47,7 @@ by value.
 .sp .7
 The declarations for the parameters are really exactly
 the same as in the last example.
-In the first case array declarations ``^[^^^]^&#39;&#39; were given
+In the first case array declarations ``^[^^^]^'' were given
 to emphasize that the parameters would be referred
 to as arrays; in the second, pointer declarations
 were given because the indirection operator and
@@ -112,8 +112,8 @@ struct tnode \**spacep space^;	/\** next available slot \**/
 struct tnode \**freep^;	/\** free list \**/
 /\**
  \** The main routine reads words until end-of-file \
-^(^\(aa\\0\(aa returned from &quot;getchar&quot;^)^
- \** &quot;tree&quot; is called to sort each word into the tree.
+^(^\(aa\\0\(aa returned from "getchar"^)^
+ \** "tree" is called to sort each word into the tree.
  \**/
 .ta .5i 1i 1.5i 2i 2.5i 3i
 main^(^^)^
@@ -124,8 +124,8 @@ main^(^^)^
 .sp .5
 	i = top = 0^;
 	while ^(^c=getchar^(^^)^^)^
-		if ^(^\(aaa\(aa&lt;=c &amp;&amp; c&lt;=\(aaz\(aa \(or\(or \(aaA\(aa&lt;=c &amp;&amp; c &lt;=\(aaZ\(aa^)^ {
-			if ^(^i&lt;wsize\(mi1^)^
+		if ^(^\(aaa\(aa<=c && c<=\(aaz\(aa \(or\(or \(aaA\(aa<=c && c <=\(aaZ\(aa^)^ {
+			if ^(^i<wsize\(mi1^)^
 				word^[^i\fR++\fG^]^ = c^;
 		} else
 			if ^(^i^)^ {
@@ -154,21 +154,21 @@ char word^[^^]^;
 	/\** Is pointer null? \**/
 	if ^(^p\fR==\fG0^)^ {
 		p = alloc^(^^)^;
-		copy^(^word, p\(mi&gt;tword^)^;
-		p\(mi&gt;count = 1^;
-		p\(mi&gt;right = p\(mi&gt;left = 0^;
+		copy^(^word, p\(mi>tword^)^;
+		p\(mi>count = 1^;
+		p\(mi>right = p\(mi>left = 0^;
 		return^(^p^)^;
 	}
 	/\** Is word repeated? \**/
-	if ^(^^(^cond=compar^(^p\(mi&gt;tword, word^)^^)^ \fR==\fG 0^)^ {
-		p\(mi&gt;count\fR++\fG^;
+	if ^(^^(^cond=compar^(^p\(mi>tword, word^)^^)^ \fR==\fG 0^)^ {
+		p\(mi>count\fR++\fG^;
 		return^(^p^)^;
 	}
 	/\** Sort into left or right \**/
-	if ^(^cond&lt;0^)^
-		p\(mi&gt;left = tree^(^p\(mi&gt;left, word^)^;
+	if ^(^cond<0^)^
+		p\(mi>left = tree^(^p\(mi>left, word^)^;
 	else
-		p\(mi&gt;right = tree^(^p\(mi&gt;right, word^)^;
+		p\(mi>right = tree^(^p\(mi>right, word^)^;
 	return^(^p^)^;
 }
 /\**
@@ -179,14 +179,14 @@ tprint^(^p^)^
 struct tnode \**p^;
 {
 	while ^(^p^)^ {
-		tprint^(^p\(mi&gt;left^)^;
-		printf^(^&quot;%d:  %s\\n&quot;, p\(mi&gt;count, p\(mi&gt;tword^)^;
-		p = p\(mi&gt;right^;
+		tprint^(^p\(mi>left^)^;
+		printf^(^"%d:  %s\\n", p\(mi>count, p\(mi>tword^)^;
+		p = p\(mi>right^;
 	}
 }
 /\**
- \** String comparison: return number ^(^&gt;, =, &lt;^)^ 0
- \** according as s1 ^(^&gt;, =, &lt;^)^ s2.
+ \** String comparison: return number ^(^>, =, <^)^ 0
+ \** according as s1 ^(^>, =, <^)^ s2.
  \**/
 compar^(^s1, s2^)^
 char \**s1, \**s2^;
@@ -211,7 +211,7 @@ char \**s1, \**s2^;
  \** Node allocation: return pointer to a free node.
  \** Bomb out when all are gone.  Just for fun, there
  \** is a mechanism for using nodes that have been
- \** freed, even though no one here calls &quot;free.&quot;
+ \** freed, even though no one here calls "free."
  \**/
 struct tnode \**alloc^(^^)^
 {
@@ -219,11 +219,11 @@ struct tnode \**alloc^(^^)^
 .sp .5
 	if ^(^freep^)^ {
 		t = freep^;
-		freep = freep\(mi&gt;left^;
+		freep = freep\(mi>left^;
 		return^(^t^)^;
 	}
-	if ^(^\fR\(mi\(mi\fGnnodes &lt; 0^)^ {
-		printf^(^&quot;Out of space\\n&quot;^)^;
+	if ^(^\fR\(mi\(mi\fGnnodes < 0^)^ {
+		printf^(^"Out of space\\n"^)^;
 		exit^(^^)^;
 	}
 	return^(^spacep\fR++\fG^)^;
@@ -234,7 +234,7 @@ struct tnode \**alloc^(^^)^
 free^(^p^)^
 struct tnode \**p^;
 {
-	p\(mi&gt;left = freep^;
+	p\(mi>left = freep^;
 	freep = p^;
 }
 .sp .7
@@ -271,8 +271,8 @@ and \fIalloc\fR becomes
 		int t;
 .sp .5
 		t = \fR\(mi\(mi\fGnnodes;
-		if ^(^t&lt;=0^)^ {
-			printf^(^&quot;Out of space\\n&quot;^)^;
+		if ^(^t<=0^)^ {
+			printf^(^"Out of space\\n"^)^;
 			exit^(^^)^;
 		}
 		return^(^t^)^;
@@ -306,7 +306,7 @@ a subscript also, and it becomes:
 			space^[^p^]^.count\fR++\fG;
 			return^(^p^)^;
 		}
-		if ^(^cond&lt;0^)^
+		if ^(^cond<0^)^
 			space^[^p^]^.left = tree^(^space^[^p^]^.left, word^)^;
 		else
 			space^[^p^]^.right = tree^(^space^[^p^]^.right, word^)^;
@@ -325,8 +325,8 @@ to compute an offset in \fIspace\fR
 corresponding to the subscripts.
 .pg
 The observation that subscripts
-^(^like ``a^[^i^]^&#39;&#39;^)^ are less efficient
-than pointer indirection ^(^like ``\**ap&#39;&#39;^)^
+^(^like ``a^[^i^]^''^)^ are less efficient
+than pointer indirection ^(^like ``\**ap''^)^
 holds true independently of whether or not
 structures are involved.
 There are of course many situations where subscripts
@@ -343,7 +343,7 @@ according to specifications contained in
 this format string.
 Most characters in the string are simply
 copied to the output; two-character sequences beginning
-with ``%&#39;&#39; specify that the next argument
+with ``%'' specify that the next argument
 should be printed in a style as follows:
 .sp .7
 .nf
@@ -397,7 +397,7 @@ char fmt^[^^]^;
 	struct { double \**doublep^; };
 	int \**ap, x, c^;
 .sp .5
-	ap = &amp;args^;			 /\** argument pointer \**/
+	ap = &args^;			 /\** argument pointer \**/
 	for ( ; ; ) {
 		while^(^^(^c = \**fmt\fR++\fG^)^ != \(aa%\(aa^)^ {
 			if^(^c \fR==\fG \(aa\\0\(aa^)^
@@ -408,10 +408,10 @@ char fmt^[^^]^;
 		/\** decimal \**/
 		case \(aad^\(aa:
 			x = \**ap\fR++\fG^;
-			if^(^x &lt; 0^)^ {
+			if^(^x < 0^)^ {
 				x = \(mix^;
-				if^(^x&lt;0^)^ {  	/\** is \(mi infinity \**/
-					printf^(^&quot;\(mi32768&quot;^)^;
+				if^(^x<0^)^ {  	/\** is \(mi infinity \**/
+					printf^(^"\(mi32768"^)^;
 					continue^;
 				}
 				putchar^(^\(aa\(mi\(aa^)^;
@@ -457,8 +457,8 @@ printd^(^n^)^
 printo^(^n^)^
 {
 	if ^(^n^)^
-		printo^(^^(^n&gt;&gt;3^)^&amp;017777^)^;
-	putchar^(^^(^n&amp;07^)^+\(aa0\(aa^)^;
+		printo^(^^(^n>>3^)^&017777^)^;
+	putchar^(^^(^n&07^)^+\(aa0\(aa^)^;
 }
 .br
 .fi

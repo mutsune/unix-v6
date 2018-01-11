@@ -23,7 +23,7 @@ integer function yylex(yylval)
 Clearly, the parser and the lexical analyzer must agree on the type numbers in order for
 communication between them to take place.
 These numbers may be chosen by Yacc, or chosen by the user.
-In either case, the ``define&#39;&#39; mechanisms of C and Ratfor are used to allow the lexical analyzer
+In either case, the ``define'' mechanisms of C and Ratfor are used to allow the lexical analyzer
 to return these numbers symbolically.
 For example, suppose that the token name DIGIT has been defined in the declarations section of the
 specification.
@@ -35,8 +35,8 @@ yylex( ) {
 	. . .
 	c = getchar( );
 	. . .
-	if( c &gt;= \&#39;0\&#39; &amp;&amp; c &lt;= \&#39;9\&#39; ) {
-		yylval = c\-\&#39;0\&#39;;
+	if( c >= \'0\' && c <= \'9\' ) {
+		yylval = c\-\'0\';
 		return(DIGIT);
 	}
 	. . .
@@ -47,10 +47,10 @@ The relevant portion of the Ratfor lexical analyzer might look like:
 integer function yylex(yylval)
 	integer yylval, digits(10), c
 	. . .
-	data digits(1) / &quot;0&quot; /;
-	data digits(2) / &quot;1&quot; /;
+	data digits(1) / "0" /;
+	data digits(2) / "1" /;
 	. . .
-	data digits(10) / &quot;9&quot; /;
+	data digits(10) / "9" /;
 	. . .
 #   set c to the next input character
 	. . .
@@ -74,9 +74,9 @@ This mechanism leads to clear
 and easily modified lexical analyzers; the only pitfall is that it makes it
 important to avoid using any names in the grammar which are reserved
 or significant in the chosen language; thus, in both C and Ratfor, the use of
-token names of ``if&#39;&#39; or ``yylex&#39;&#39; will almost certainly cause severe
+token names of ``if'' or ``yylex'' will almost certainly cause severe
 difficulties when the lexical analyzer is compiled.
-The token name ``error&#39;&#39; is reserved for error handling, and should not be used naively
+The token name ``error'' is reserved for error handling, and should not be used naively
 (see Section 5).
 .PP
 As mentioned above, the type numbers may be chosen by Yacc or by the user.

@@ -40,7 +40,7 @@ main:
 
 / set up tables
 / initialize stack, for definitions see tmgc.s
-/ go interpret beginning at &quot;start&quot;
+/ go interpret beginning at "start"
 / finish up
 3:
 	mov	$stkb,f
@@ -56,7 +56,7 @@ main:
 	sys	unlink;1f
 	sys	exit
 1:
-		&lt;alloc.d\0&gt;;.even
+		<alloc.d\0>;.even
 / fatal processor error
 /write a two letter message on diagnostic file
 / get a dump
@@ -69,7 +69,7 @@ errcom:
 	jsr	pc,flush
 stop:
 	4
-1:	&lt;--fatal\n\0&gt;;.even
+1:	<--fatal\n\0>;.even
 
 / all functions that succeed come here
 / test the exit indicator, and leave the rule if on
@@ -83,7 +83,7 @@ contin:
     .if tracing
 	tst	trswitch
 	beq	1f
-	mov	$&#39;r,r0
+	mov	$'r,r0
 	jsr	pc,trace
 1:
     .endif
@@ -108,7 +108,7 @@ contin:
 / bad address
 1:
 	jsr	r0,errcom
-		&lt;bad address in parsing\0&gt;;.even
+		<bad address in parsing\0>;.even
 
 / machine coded function
 2:
@@ -256,7 +256,7 @@ adv:
 	jmp	contin
 1:
 	jsr	r0,errcom
-		&lt;stack overflow\0&gt;;.even
+		<stack overflow\0>;.even
 
 /pbundle entered with pointer to earliest element of bunlde
 /to reduce from the top of stack in r0
@@ -309,7 +309,7 @@ gcontin:
     .if tracing
 	tst	trswitch
 	beq	1f
-	mov	$&#39;g,r0
+	mov	$'g,r0
 	jsr	pc,trace
 1:
     .endif 
@@ -333,7 +333,7 @@ gcontin:
 	blo	gk
 badadr:
 	jsr	r0,errcom
-		&lt;bad address in translation\0&gt;;.even
+		<bad address in translation\0>;.even
 
 / builtin  translation function
 gf:
@@ -384,7 +384,7 @@ gk:
 	neg	i
 	bge	1f
 	jsr	r0,errcom
-		&lt;not a bundle\0&gt;;.even
+		<not a bundle\0>;.even
 1:
 	cmp	i,$ktat
 	bhis	badadr

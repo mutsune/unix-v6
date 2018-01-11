@@ -2,13 +2,13 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../proc.h&quot;
-#include &quot;../seg.h&quot;
+#include "../param.h"
+#include "../user.h"
+#include "../buf.h"
+#include "../conf.h"
+#include "../systm.h"
+#include "../proc.h"
+#include "../seg.h"
 
 /*
  * This is the set of buffers proper, whose heads
@@ -33,7 +33,7 @@ int	httab;
  * buffers with various side effects.  In general the
  * arguments to an allocate routine are a device and
  * a block number, and the value is a pointer to
- * to the buffer header; the buffer is marked &quot;busy&quot;
+ * to the buffer header; the buffer is marked "busy"
  * so that no on else can touch it.  If the block was
  * already in core, no I/O need be done; if it is
  * already busy, the process waits until it becomes free.
@@ -57,10 +57,10 @@ bread(dev, blkno)
 	register struct buf *rbp;
 
 	rbp = getblk(dev, blkno);
-	if (rbp-&gt;b_flags&amp;B_DONE)
+	if (rbp->b_flags&B_DONE)
 		return(rbp);
-	rbp-&gt;b_flags =| B_READ;
-	rbp-&gt;b_wcount = -256;
+	rbp->b_flags =| B_READ;
+	rbp->b_wcount = -256;
 	(*bdevsw[dev.d_major].d_strategy)(rbp);
 	iowait(rbp);
 	return(rbp);
@@ -79,19 +79,19 @@ breada(adev, blkno, rablkno)
 	rbp = 0;
 	if (!incore(dev, blkno)) {
 		rbp = getblk(dev, blkno);
-		if ((rbp-&gt;b_flags&amp;B_DONE) == 0) {
-			rbp-&gt;b_flags =| B_READ;
-			rbp-&gt;b_wcount = -256;
+		if ((rbp->b_flags&B_DONE) == 0) {
+			rbp->b_flags =| B_READ;
+			rbp->b_wcount = -256;
 			(*bdevsw[adev.d_major].d_strategy)(rbp);
 		}
 	}
-	if (rablkno &amp;&amp; !incore(dev, rablkno)) {
+	if (rablkno && !incore(dev, rablkno)) {
 		rabp = getblk(dev, rablkno);
-		if (rabp-&gt;b_flags &amp; B_DONE)
+		if (rabp->b_flags & B_DONE)
 			brelse(rabp);
 		else {
-			rabp-&gt;b_flags =| B_READ|B_ASYNC;
-			rabp-&gt;b_wcount = -256;
+			rabp->b_flags =| B_READ|B_ASYNC;
+			rabp->b_wcount = -256;
 			(*bdevsw[adev.d_major].d_strategy)(rabp);
 		}
 	}
@@ -112,14 +112,14 @@ struct buf *bp;
 	register flag;
 
 	rbp = bp;
-	flag = rbp-&gt;b_flags;
-	rbp-&gt;b_flags =&amp; ~(B_READ | B_DONE | B_ERROR | B_DELWRI);
-	rbp-&gt;b_wcount = -256;
-	(*bdevsw[rbp-&gt;b_dev.d_major].d_strategy)(rbp);
-	if ((flag&amp;B_ASYNC) == 0) {
+	flag = rbp->b_flags;
+	rbp->b_flags =& ~(B_READ | B_DONE | B_ERROR | B_DELWRI);
+	rbp->b_wcount = -256;
+	(*bdevsw[rbp->b_dev.d_major].d_strategy)(rbp);
+	if ((flag&B_ASYNC) == 0) {
 		iowait(rbp);
 		brelse(rbp);
-	} else if ((flag&amp;B_DELWRI)==0)
+	} else if ((flag&B_DELWRI)==0)
 		geterror(rbp);
 }
 
@@ -128,7 +128,7 @@ struct buf *bp;
  * for another purpose it will be written out before being
  * given up (e.g. when writing a partial block where it is
  * assumed that another write for the same block will soon follow).
- * This can&#39;t be done for magtape, since writes must be done
+ * This can't be done for magtape, since writes must be done
  * in the same order as requested.
  */
 bdwrite(bp)
@@ -138,17 +138,17 @@ struct buf *bp;
 	register struct devtab *dp;
 
 	rbp = bp;
-	dp = bdevsw[rbp-&gt;b_dev.d_major].d_tab;
-	if (dp == &amp;tmtab || dp == &amp;httab)
+	dp = bdevsw[rbp->b_dev.d_major].d_tab;
+	if (dp == &tmtab || dp == &httab)
 		bawrite(rbp);
 	else {
-		rbp-&gt;b_flags =| B_DELWRI | B_DONE;
+		rbp->b_flags =| B_DELWRI | B_DONE;
 		brelse(rbp);
 	}
 }
 
 /*
- * Release the buffer, start I/O on it, but don&#39;t wait for completion.
+ * Release the buffer, start I/O on it, but don't wait for completion.
  */
 bawrite(bp)
 struct buf *bp;
@@ -156,7 +156,7 @@ struct buf *bp;
 	register struct buf *rbp;
 
 	rbp = bp;
-	rbp-&gt;b_flags =| B_ASYNC;
+	rbp->b_flags =| B_ASYNC;
 	bwrite(rbp);
 }
 
@@ -170,23 +170,23 @@ struct buf *bp;
 	register int sps;
 
 	rbp = bp;
-	if (rbp-&gt;b_flags&amp;B_WANTED)
+	if (rbp->b_flags&B_WANTED)
 		wakeup(rbp);
-	if (bfreelist.b_flags&amp;B_WANTED) {
-		bfreelist.b_flags =&amp; ~B_WANTED;
-		wakeup(&amp;bfreelist);
+	if (bfreelist.b_flags&B_WANTED) {
+		bfreelist.b_flags =& ~B_WANTED;
+		wakeup(&bfreelist);
 	}
-	if (rbp-&gt;b_flags&amp;B_ERROR)
-		rbp-&gt;b_dev.d_minor = -1;  /* no assoc. on error */
-	backp = &amp;bfreelist.av_back;
-	sps = PS-&gt;integ;
+	if (rbp->b_flags&B_ERROR)
+		rbp->b_dev.d_minor = -1;  /* no assoc. on error */
+	backp = &bfreelist.av_back;
+	sps = PS->integ;
 	spl6();
-	rbp-&gt;b_flags =&amp; ~(B_WANTED|B_BUSY|B_ASYNC);
-	(*backp)-&gt;av_forw = rbp;
-	rbp-&gt;av_back = *backp;
+	rbp->b_flags =& ~(B_WANTED|B_BUSY|B_ASYNC);
+	(*backp)->av_forw = rbp;
+	rbp->av_back = *backp;
 	*backp = rbp;
-	rbp-&gt;av_forw = &amp;bfreelist;
-	PS-&gt;integ = sps;
+	rbp->av_forw = &bfreelist;
+	PS->integ = sps;
 }
 
 /*
@@ -201,8 +201,8 @@ incore(adev, blkno)
 
 	dev = adev;
 	dp = bdevsw[adev.d_major].d_tab;
-	for (bp=dp-&gt;b_forw; bp != dp; bp = bp-&gt;b_forw)
-		if (bp-&gt;b_blkno==blkno &amp;&amp; bp-&gt;b_dev==dev)
+	for (bp=dp->b_forw; bp != dp; bp = bp->b_forw)
+		if (bp->b_blkno==blkno && bp->b_dev==dev)
 			return(bp);
 	return(0);
 }
@@ -221,22 +221,22 @@ getblk(dev, blkno)
 	register struct devtab *dp;
 	extern lbolt;
 
-	if(dev.d_major &gt;= nblkdev)
-		panic(&quot;blkdev&quot;);
+	if(dev.d_major >= nblkdev)
+		panic("blkdev");
 
     loop:
-	if (dev &lt; 0)
-		dp = &amp;bfreelist;
+	if (dev < 0)
+		dp = &bfreelist;
 	else {
 		dp = bdevsw[dev.d_major].d_tab;
 		if(dp == NULL)
-			panic(&quot;devtab&quot;);
-		for (bp=dp-&gt;b_forw; bp != dp; bp = bp-&gt;b_forw) {
-			if (bp-&gt;b_blkno!=blkno || bp-&gt;b_dev!=dev)
+			panic("devtab");
+		for (bp=dp->b_forw; bp != dp; bp = bp->b_forw) {
+			if (bp->b_blkno!=blkno || bp->b_dev!=dev)
 				continue;
 			spl6();
-			if (bp-&gt;b_flags&amp;B_BUSY) {
-				bp-&gt;b_flags =| B_WANTED;
+			if (bp->b_flags&B_BUSY) {
+				bp->b_flags =| B_WANTED;
 				sleep(bp, PRIBIO);
 				spl0();
 				goto loop;
@@ -247,28 +247,28 @@ getblk(dev, blkno)
 		}
 	}
 	spl6();
-	if (bfreelist.av_forw == &amp;bfreelist) {
+	if (bfreelist.av_forw == &bfreelist) {
 		bfreelist.b_flags =| B_WANTED;
-		sleep(&amp;bfreelist, PRIBIO);
+		sleep(&bfreelist, PRIBIO);
 		spl0();
 		goto loop;
 	}
 	spl0();
 	notavail(bp = bfreelist.av_forw);
-	if (bp-&gt;b_flags &amp; B_DELWRI) {
-		bp-&gt;b_flags =| B_ASYNC;
+	if (bp->b_flags & B_DELWRI) {
+		bp->b_flags =| B_ASYNC;
 		bwrite(bp);
 		goto loop;
 	}
-	bp-&gt;b_flags = B_BUSY | B_RELOC;
-	bp-&gt;b_back-&gt;b_forw = bp-&gt;b_forw;
-	bp-&gt;b_forw-&gt;b_back = bp-&gt;b_back;
-	bp-&gt;b_forw = dp-&gt;b_forw;
-	bp-&gt;b_back = dp;
-	dp-&gt;b_forw-&gt;b_back = bp;
-	dp-&gt;b_forw = bp;
-	bp-&gt;b_dev = dev;
-	bp-&gt;b_blkno = blkno;
+	bp->b_flags = B_BUSY | B_RELOC;
+	bp->b_back->b_forw = bp->b_forw;
+	bp->b_forw->b_back = bp->b_back;
+	bp->b_forw = dp->b_forw;
+	bp->b_back = dp;
+	dp->b_forw->b_back = bp;
+	dp->b_forw = bp;
+	bp->b_dev = dev;
+	bp->b_blkno = blkno;
 	return(bp);
 }
 
@@ -283,7 +283,7 @@ struct buf *bp;
 
 	rbp = bp;
 	spl6();
-	while ((rbp-&gt;b_flags&amp;B_DONE)==0)
+	while ((rbp->b_flags&B_DONE)==0)
 		sleep(rbp, PRIBIO);
 	spl0();
 	geterror(rbp);
@@ -300,12 +300,12 @@ struct buf *bp;
 	register int sps;
 
 	rbp = bp;
-	sps = PS-&gt;integ;
+	sps = PS->integ;
 	spl6();
-	rbp-&gt;av_back-&gt;av_forw = rbp-&gt;av_forw;
-	rbp-&gt;av_forw-&gt;av_back = rbp-&gt;av_back;
-	rbp-&gt;b_flags =| B_BUSY;
-	PS-&gt;integ = sps;
+	rbp->av_back->av_forw = rbp->av_forw;
+	rbp->av_forw->av_back = rbp->av_back;
+	rbp->b_flags =| B_BUSY;
+	PS->integ = sps;
 }
 
 /*
@@ -318,13 +318,13 @@ struct buf *bp;
 	register struct buf *rbp;
 
 	rbp = bp;
-	if(rbp-&gt;b_flags&amp;B_MAP)
+	if(rbp->b_flags&B_MAP)
 		mapfree(rbp);
-	rbp-&gt;b_flags =| B_DONE;
-	if (rbp-&gt;b_flags&amp;B_ASYNC)
+	rbp->b_flags =| B_DONE;
+	if (rbp->b_flags&B_ASYNC)
 		brelse(rbp);
 	else {
-		rbp-&gt;b_flags =&amp; ~B_WANTED;
+		rbp->b_flags =& ~B_WANTED;
 		wakeup(rbp);
 	}
 }
@@ -338,7 +338,7 @@ int *bp;
 	register *p;
 	register c;
 
-	p = bp-&gt;b_addr;
+	p = bp->b_addr;
 	c = 256;
 	do
 		*p++ = 0;
@@ -357,24 +357,24 @@ binit()
 	struct bdevsw *bdp;
 
 	bfreelist.b_forw = bfreelist.b_back =
-	    bfreelist.av_forw = bfreelist.av_back = &amp;bfreelist;
-	for (i=0; i&lt;NBUF; i++) {
-		bp = &amp;buf[i];
-		bp-&gt;b_dev = -1;
-		bp-&gt;b_addr = buffers[i];
-		bp-&gt;b_back = &amp;bfreelist;
-		bp-&gt;b_forw = bfreelist.b_forw;
-		bfreelist.b_forw-&gt;b_back = bp;
+	    bfreelist.av_forw = bfreelist.av_back = &bfreelist;
+	for (i=0; i<NBUF; i++) {
+		bp = &buf[i];
+		bp->b_dev = -1;
+		bp->b_addr = buffers[i];
+		bp->b_back = &bfreelist;
+		bp->b_forw = bfreelist.b_forw;
+		bfreelist.b_forw->b_back = bp;
 		bfreelist.b_forw = bp;
-		bp-&gt;b_flags = B_BUSY;
+		bp->b_flags = B_BUSY;
 		brelse(bp);
 	}
 	i = 0;
-	for (bdp = bdevsw; bdp-&gt;d_open; bdp++) {
-		dp = bdp-&gt;d_tab;
+	for (bdp = bdevsw; bdp->d_open; bdp++) {
+		dp = bdp->d_tab;
 		if(dp) {
-			dp-&gt;b_forw = dp;
-			dp-&gt;b_back = dp;
+			dp->b_forw = dp;
+			dp->b_back = dp;
 		}
 		i++;
 	}
@@ -401,11 +401,11 @@ int *devloc;
 	dp = devloc;
 	rbp = bp;
 	*dp = devblk;			/* block address */
-	*--dp = rbp-&gt;b_addr;		/* buffer address */
-	*--dp = rbp-&gt;b_wcount;		/* word count */
-	com = (hbcom&lt;&lt;8) | IENABLE | GO |
-		((rbp-&gt;b_xmem &amp; 03) &lt;&lt; 4);
-	if (rbp-&gt;b_flags&amp;B_READ)	/* command + x-mem */
+	*--dp = rbp->b_addr;		/* buffer address */
+	*--dp = rbp->b_wcount;		/* word count */
+	com = (hbcom<<8) | IENABLE | GO |
+		((rbp->b_xmem & 03) << 4);
+	if (rbp->b_flags&B_READ)	/* command + x-mem */
 		com =| RCOM;
 	else
 		com =| WCOM;
@@ -429,13 +429,13 @@ int *devloc, *abae;
 	dp = devloc;
 	rbp = bp;
 	if(cputype == 70)
-		*abae = rbp-&gt;b_xmem;
+		*abae = rbp->b_xmem;
 	*dp = devblk;			/* block address */
-	*--dp = rbp-&gt;b_addr;		/* buffer address */
-	*--dp = rbp-&gt;b_wcount;		/* word count */
+	*--dp = rbp->b_addr;		/* buffer address */
+	*--dp = rbp->b_wcount;		/* word count */
 	com = IENABLE | GO |
-		((rbp-&gt;b_xmem &amp; 03) &lt;&lt; 8);
-	if (rbp-&gt;b_flags&amp;B_READ)	/* command + x-mem */
+		((rbp->b_xmem & 03) << 8);
+	if (rbp->b_flags&B_READ)	/* command + x-mem */
 		com =| RHRCOM; else
 		com =| RHWCOM;
 	*--dp = com;
@@ -459,29 +459,29 @@ struct buf *abp;
 	if(cputype != 70)
 		return;
 	spl6();
-	while(maplock&amp;B_BUSY) {
+	while(maplock&B_BUSY) {
 		maplock =| B_WANTED;
-		sleep(&amp;maplock, PSWP);
+		sleep(&maplock, PSWP);
 	}
 	maplock =| B_BUSY;
 	spl0();
 	bp = abp;
-	bp-&gt;b_flags =| B_MAP;
-	a = bp-&gt;b_xmem;
-	for(i=16; i&lt;32; i=+2)
-		UBMAP-&gt;r[i+1] = a;
-	for(a++; i&lt;48; i=+2)
-		UBMAP-&gt;r[i+1] = a;
-	bp-&gt;b_xmem = 1;
+	bp->b_flags =| B_MAP;
+	a = bp->b_xmem;
+	for(i=16; i<32; i=+2)
+		UBMAP->r[i+1] = a;
+	for(a++; i<48; i=+2)
+		UBMAP->r[i+1] = a;
+	bp->b_xmem = 1;
 }
 
 mapfree(bp)
 struct buf *bp;
 {
 
-	bp-&gt;b_flags =&amp; ~B_MAP;
-	if(maplock&amp;B_WANTED)
-		wakeup(&amp;maplock);
+	bp->b_flags =& ~B_MAP;
+	if(maplock&B_WANTED)
+		wakeup(&maplock);
 	maplock = 0;
 }
 
@@ -492,27 +492,27 @@ swap(blkno, coreaddr, count, rdflg)
 {
 	register int *fp;
 
-	fp = &amp;swbuf.b_flags;
+	fp = &swbuf.b_flags;
 	spl6();
-	while (*fp&amp;B_BUSY) {
+	while (*fp&B_BUSY) {
 		*fp =| B_WANTED;
 		sleep(fp, PSWP);
 	}
 	*fp = B_BUSY | B_PHYS | rdflg;
 	swbuf.b_dev = swapdev;
-	swbuf.b_wcount = - (count&lt;&lt;5);	/* 32 w/block */
+	swbuf.b_wcount = - (count<<5);	/* 32 w/block */
 	swbuf.b_blkno = blkno;
-	swbuf.b_addr = coreaddr&lt;&lt;6;	/* 64 b/block */
-	swbuf.b_xmem = (coreaddr&gt;&gt;10) &amp; 077;
-	(*bdevsw[swapdev&gt;&gt;8].d_strategy)(&amp;swbuf);
+	swbuf.b_addr = coreaddr<<6;	/* 64 b/block */
+	swbuf.b_xmem = (coreaddr>>10) & 077;
+	(*bdevsw[swapdev>>8].d_strategy)(&swbuf);
 	spl6();
-	while((*fp&amp;B_DONE)==0)
+	while((*fp&B_DONE)==0)
 		sleep(fp, PSWP);
-	if (*fp&amp;B_WANTED)
+	if (*fp&B_WANTED)
 		wakeup(fp);
 	spl0();
-	*fp =&amp; ~(B_BUSY|B_WANTED);
-	return(*fp&amp;B_ERROR);
+	*fp =& ~(B_BUSY|B_WANTED);
+	return(*fp&B_ERROR);
 }
 
 /*
@@ -527,9 +527,9 @@ bflush(dev)
 
 loop:
 	spl6();
-	for (bp = bfreelist.av_forw; bp != &amp;bfreelist; bp = bp-&gt;av_forw) {
-		if (bp-&gt;b_flags&amp;B_DELWRI &amp;&amp; (dev == NODEV||dev==bp-&gt;b_dev)) {
-			bp-&gt;b_flags =| B_ASYNC;
+	for (bp = bfreelist.av_forw; bp != &bfreelist; bp = bp->av_forw) {
+		if (bp->b_flags&B_DELWRI && (dev == NODEV||dev==bp->b_dev)) {
+			bp->b_flags =| B_ASYNC;
 			notavail(bp);
 			bwrite(bp);
 			goto loop;
@@ -562,17 +562,17 @@ int (*strat)();
 	/*
 	 * Check odd base, odd count, and address wraparound
 	 */
-	if (base&amp;01 || u.u_count&amp;01 || base&gt;=base+u.u_count)
+	if (base&01 || u.u_count&01 || base>=base+u.u_count)
 		goto bad;
-	ts = (u.u_tsize+127) &amp; ~0177;
+	ts = (u.u_tsize+127) & ~0177;
 	if (u.u_sep)
 		ts = 0;
-	nb = (base&gt;&gt;6) &amp; 01777;
+	nb = (base>>6) & 01777;
 	/*
 	 * Check overlap with text. (ts and nb now
 	 * in 64-byte clicks)
 	 */
-	if (nb &lt; ts)
+	if (nb < ts)
 		goto bad;
 	/*
 	 * Check that transfer is either entirely in the
@@ -580,38 +580,38 @@ int (*strat)();
 	 * the end is in the data or the start is in the stack
 	 * (remember wraparound was already checked).
 	 */
-	if ((((base+u.u_count)&gt;&gt;6)&amp;01777) &gt;= ts+u.u_dsize
-	    &amp;&amp; nb &lt; 1024-u.u_ssize)
+	if ((((base+u.u_count)>>6)&01777) >= ts+u.u_dsize
+	    && nb < 1024-u.u_ssize)
 		goto bad;
 	spl6();
-	while (bp-&gt;b_flags&amp;B_BUSY) {
-		bp-&gt;b_flags =| B_WANTED;
+	while (bp->b_flags&B_BUSY) {
+		bp->b_flags =| B_WANTED;
 		sleep(bp, PRIBIO);
 	}
-	bp-&gt;b_flags = B_BUSY | B_PHYS | rw;
-	bp-&gt;b_dev = dev;
+	bp->b_flags = B_BUSY | B_PHYS | rw;
+	bp->b_dev = dev;
 	/*
 	 * Compute physical address by simulating
 	 * the segmentation hardware.
 	 */
-	bp-&gt;b_addr = base&amp;077;
-	base = (u.u_sep? UDSA: UISA)-&gt;r[nb&gt;&gt;7] + (nb&amp;0177);
-	bp-&gt;b_addr =+ base&lt;&lt;6;
-	bp-&gt;b_xmem = (base&gt;&gt;10) &amp; 077;
-	bp-&gt;b_blkno = lshift(u.u_offset, -9);
-	bp-&gt;b_wcount = -((u.u_count&gt;&gt;1) &amp; 077777);
-	bp-&gt;b_error = 0;
-	u.u_procp-&gt;p_flag =| SLOCK;
+	bp->b_addr = base&077;
+	base = (u.u_sep? UDSA: UISA)->r[nb>>7] + (nb&0177);
+	bp->b_addr =+ base<<6;
+	bp->b_xmem = (base>>10) & 077;
+	bp->b_blkno = lshift(u.u_offset, -9);
+	bp->b_wcount = -((u.u_count>>1) & 077777);
+	bp->b_error = 0;
+	u.u_procp->p_flag =| SLOCK;
 	(*strat)(bp);
 	spl6();
-	while ((bp-&gt;b_flags&amp;B_DONE) == 0)
+	while ((bp->b_flags&B_DONE) == 0)
 		sleep(bp, PRIBIO);
-	u.u_procp-&gt;p_flag =&amp; ~SLOCK;
-	if (bp-&gt;b_flags&amp;B_WANTED)
+	u.u_procp->p_flag =& ~SLOCK;
+	if (bp->b_flags&B_WANTED)
 		wakeup(bp);
 	spl0();
-	bp-&gt;b_flags =&amp; ~(B_BUSY|B_WANTED);
-	u.u_count = (-bp-&gt;b_resid)&lt;&lt;1;
+	bp->b_flags =& ~(B_BUSY|B_WANTED);
+	u.u_count = (-bp->b_resid)<<1;
 	geterror(bp);
 	return;
     bad:
@@ -619,10 +619,10 @@ int (*strat)();
 }
 
 /*
- * Pick up the device&#39;s error number and pass it to the user;
+ * Pick up the device's error number and pass it to the user;
  * if there is an error but the number is 0 set a generalized
  * code.  Actually the latter is always true because devices
- * don&#39;t yet return specific errors.
+ * don't yet return specific errors.
  */
 geterror(abp)
 struct buf *abp;
@@ -630,7 +630,7 @@ struct buf *abp;
 	register struct buf *bp;
 
 	bp = abp;
-	if (bp-&gt;b_flags&amp;B_ERROR)
-		if ((u.u_error = bp-&gt;b_error)==0)
+	if (bp->b_flags&B_ERROR)
+		if ((u.u_error = bp->b_error)==0)
 			u.u_error = EIO;
 }

@@ -37,18 +37,18 @@ int	montab[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 		31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 char	*monasc[] {
-	&quot;Jan&quot;,
-	&quot;Feb&quot;,
-	&quot;Mar&quot;,
-	&quot;Apr&quot;,
-	&quot;May&quot;,
-	&quot;Jun&quot;,
-	&quot;Jul&quot;,
-	&quot;Aug&quot;,
-	&quot;Sep&quot;,
-	&quot;Oct&quot;,
-	&quot;Nov&quot;,
-	&quot;Dec&quot;
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec"
 };
 
 main(argc, argv) 
@@ -60,46 +60,46 @@ char **argv;
 	extern fin;
 	int f;
 
-	wtmp = &quot;/usr/adm/wtmp&quot;;
-	while (--argc &gt; 0 &amp;&amp; **++argv == &#39;-&#39;)
+	wtmp = "/usr/adm/wtmp";
+	while (--argc > 0 && **++argv == '-')
 	switch(*++*argv) {
-	case &#39;d&#39;:
+	case 'd':
 		byday++;
 		continue;
 
-	case &#39;w&#39;:
-		if (--argc&gt;0)
+	case 'w':
+		if (--argc>0)
 			wtmp = *++argv;
 		continue;
 
-	case &#39;p&#39;:
+	case 'p':
 		pflag++;
 		continue;
 	}
 	pcount = argc;
 	pptr = argv;
-	if (fopen(wtmp, &amp;fin) &lt; 0) {
-		printf(&quot;No %s\n&quot;, wtmp);
+	if (fopen(wtmp, &fin) < 0) {
+		printf("No %s\n", wtmp);
 		return;
 	}
 	for(;;) {
-		ip = &amp;ibuf;
-		for (i=0; i&lt;16; i++) {
-			if ((c=getc(&amp;fin)) &lt; 0)
+		ip = &ibuf;
+		for (i=0; i<16; i++) {
+			if ((c=getc(&fin)) < 0)
 				goto brk;
 			*ip++ = c;
 		}
 		fl = 0;
-		for (i=0; i&lt;8; i++) {
+		for (i=0; i<8; i++) {
 			c = ibuf.name[i];
-			if (&#39;0&#39;&lt;=c&amp;&amp;c&lt;=&#39;9&#39;||&#39;a&#39;&lt;=c&amp;&amp;c&lt;=&#39;z&#39;||&#39;A&#39;&lt;=c&amp;&amp;c&lt;=&#39;Z&#39;) {
+			if ('0'<=c&&c<='9'||'a'<=c&&c<='z'||'A'<=c&&c<='Z') {
 				if (fl)
 					goto skip;
 				continue;
 			}
-			if (c==&#39; &#39; || c==&#39;\0&#39;) {
+			if (c==' ' || c=='\0') {
 				fl++;
-				ibuf.name[i] = &#39;\0&#39;;
+				ibuf.name[i] = '\0';
 			} else
 				goto skip;
 		}
@@ -107,9 +107,9 @@ char **argv;
     skip:;
 	}
     brk:
-	ibuf.name[0] = &#39;\0&#39;;
-	ibuf.tty = &#39;~&#39;;
-	time(&amp;ibuf.time);
+	ibuf.name[0] = '\0';
+	ibuf.tty = '~';
+	time(&ibuf.time);
 	loop();
 	print();
 }
@@ -123,42 +123,42 @@ loop()
 
 	if (ibuf.fill1||ibuf.fill2)
 		return;
-	ibuf.time = ltod(&amp;ibuf.time)/60.;
-	if(ibuf.tty == &#39;|&#39;) {
+	ibuf.time = ltod(&ibuf.time)/60.;
+	if(ibuf.tty == '|') {
 		dtime = ibuf.time;
 		return;
 	}
-	if(ibuf.tty == &#39;}&#39;) {
+	if(ibuf.tty == '}') {
 		if(dtime == 0.)
 			return;
-		for(tp = tbuf; tp &lt; &amp;tbuf[TSIZE]; tp++)
-			tp-&gt;ttime =+ ibuf.time-dtime;
+		for(tp = tbuf; tp < &tbuf[TSIZE]; tp++)
+			tp->ttime =+ ibuf.time-dtime;
 		dtime = 0.;
 		return;
 	}
-	if (lastime&gt;ibuf.time || lastime+(1.5*day)&lt;ibuf.time)
+	if (lastime>ibuf.time || lastime+(1.5*day)<ibuf.time)
 		midnight = 0.0;
 	if (midnight==0.0)
 		newday();
 	lastime = ibuf.time;
-	if (byday &amp;&amp; ibuf.time &gt; midnight) {
+	if (byday && ibuf.time > midnight) {
 		upall(1);
 		print();
 		newday();
-		for (up=ubuf; up &lt; &amp;ubuf[USIZE]; up++)
-			up-&gt;utime = 0.0;
+		for (up=ubuf; up < &ubuf[USIZE]; up++)
+			up->utime = 0.0;
 	}
-	if (ibuf.tty == &#39;~&#39;) {
-		ibuf.name[0] = &#39;\0&#39;;
+	if (ibuf.tty == '~') {
+		ibuf.name[0] = '\0';
 		upall(0);
 		return;
 	}
-	if ((i = ibuf.tty) &gt;= &#39;a&#39;)
-		i =- &#39;a&#39; - &#39;9&#39;;
-	i =- &#39;0&#39;;
-	if (i&lt;0 || i&gt;=TSIZE)
+	if ((i = ibuf.tty) >= 'a')
+		i =- 'a' - '9';
+	i =- '0';
+	if (i<0 || i>=TSIZE)
 		i = TSIZE-1;
-	tp = &amp;tbuf[i];
+	tp = &tbuf[i];
 	update(tp, 0);
 }
 
@@ -168,20 +168,20 @@ print()
 	float ttime, t;
 
 	ttime = 0.0;
-	for (i=0; i&lt;USIZE; i++) {
+	for (i=0; i<USIZE; i++) {
 		if(!among(i))
 			continue;
 		t = ubuf[i].utime;
-		if (t&gt;0.0)
+		if (t>0.0)
 			ttime =+ t;
-		if (pflag &amp;&amp; ubuf[i].utime &gt; 0.0) {
-			printf(&quot;\t%-8.8s%6.2f\n&quot;,
+		if (pflag && ubuf[i].utime > 0.0) {
+			printf("\t%-8.8s%6.2f\n",
 			    ubuf[i].name, ubuf[i].utime/60.);
 		}
 	}
-	if (ttime &gt; 0.0) {
+	if (ttime > 0.0) {
 		pdate();
-		printf(&quot;\ttotal%9.2f\n&quot;, ttime/60.);
+		printf("\ttotal%9.2f\n", ttime/60.);
 	}
 }
 
@@ -189,7 +189,7 @@ upall(f)
 {
 	register struct tbuf *tp;
 
-	for (tp=tbuf; tp &lt; &amp;tbuf[TSIZE]; tp++)
+	for (tp=tbuf; tp < &tbuf[TSIZE]; tp++)
 		update(tp, f);
 }
 
@@ -204,28 +204,28 @@ struct tbuf *tp;
 		t = midnight;
 	else
 		t = ibuf.time;
-	if (tp-&gt;userp) {
-		t1 = t - tp-&gt;ttime;
-		if (t1&gt;0.0 &amp;&amp; t1 &lt; 1.5*day)
-			tp-&gt;userp-&gt;utime =+ t1;
+	if (tp->userp) {
+		t1 = t - tp->ttime;
+		if (t1>0.0 && t1 < 1.5*day)
+			tp->userp->utime =+ t1;
 	}
-	tp-&gt;ttime = t;
+	tp->ttime = t;
 	if (f)
 		return;
-	if (ibuf.name[0]==&#39;\0&#39;) {
-		tp-&gt;userp = 0;
+	if (ibuf.name[0]=='\0') {
+		tp->userp = 0;
 		return;
 	}
-	for (up=ubuf; up &lt; &amp;ubuf[USIZE]; up++) {
-		if (up-&gt;name[0] == &#39;\0&#39;)
+	for (up=ubuf; up < &ubuf[USIZE]; up++) {
+		if (up->name[0] == '\0')
 			break;
-		for (j=0; j&lt;8 &amp;&amp; up-&gt;name[j]==ibuf.name[j]; j++);
-		if (j&gt;=8)
+		for (j=0; j<8 && up->name[j]==ibuf.name[j]; j++);
+		if (j>=8)
 			break;
 	}
-	for (j=0; j&lt;8; j++)
-		up-&gt;name[j] = ibuf.name[j];
-	tp-&gt;userp = up;
+	for (j=0; j<8; j++)
+		up->name[j] = ibuf.name[j];
+	tp->userp = up;
 }
 
 among(i)
@@ -235,11 +235,11 @@ among(i)
 
 	if (pcount==0)
 		return(1);
-	for (j=0; j&lt;pcount; j++) {
+	for (j=0; j<pcount; j++) {
 		p = pptr[j];
-		for (k=0; k&lt;8; k++) {
+		for (k=0; k<8; k++) {
 			if (*p == ubuf[i].name[k]) {
-				if (*p++ == &#39;\0&#39;)
+				if (*p++ == '\0')
 					return(1);
 			} else
 				break;
@@ -252,7 +252,7 @@ newday()
 {
 	if(midnight == 0.)
 		midnight = 240.;
-	while (midnight &lt;= ibuf.time)
+	while (midnight <= ibuf.time)
 		midnight =+ day;
 }
 
@@ -269,7 +269,7 @@ pdate()
 		year = 365. * day;
 		if(yrs%4 == 0)
 			year =+ day;
-		if(tim+year &gt; midnight)
+		if(tim+year > midnight)
 			break;
 		yrs++;
 		tim =+ year;
@@ -278,8 +278,8 @@ pdate()
 	montab[1] = 28;
 	if(yrs%4 == 0)
 		montab[1]++;
-	for (mons=0; montab[mons]&lt;=days; mons++)
+	for (mons=0; montab[mons]<=days; mons++)
 		days =- montab[mons];
 	mons =% 12;
-	printf(&quot;%s %2d&quot;, monasc[mons], days+1);
+	printf("%s %2d", monasc[mons], days+1);
 }

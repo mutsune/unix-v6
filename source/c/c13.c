@@ -34,7 +34,7 @@ int opdope[] {
 	034203,	/* ++post */
 	034203,	/* --post */
 	034220,	/* !un */
-	034202,	/* &amp;un */
+	034202,	/* &un */
 	034220,	/* *un */
 	034200,	/* -un */
 	034220,	/* ~un */
@@ -44,54 +44,54 @@ int opdope[] {
 	032101,	/* * */
 	032001,	/* / */
 	032001,	/* % */
-	026061,	/* &gt;&gt; */
-	026061,	/* &lt;&lt; */
-	020161,	/* &amp; */
+	026061,	/* >> */
+	026061,	/* << */
+	020161,	/* & */
 	016161,	/* | */
 	016161,	/* ^ */
-	036001,	/* -&gt; */
-	001000,	/* int -&gt; double */
-	001000,	/* double -&gt; int */
-	000001,	/* &amp;&amp; */
+	036001,	/* -> */
+	001000,	/* int -> double */
+	001000,	/* double -> int */
+	000001,	/* && */
 	000001,	/* || */
-	030001, /* &amp;~ */
-	001000,	/* double -&gt; long */
-	001000,	/* long -&gt; double */
-	001000,	/* integer -&gt; long */
-	001000,	/* long -&gt; integer */
+	030001, /* &~ */
+	001000,	/* double -> long */
+	001000,	/* long -> double */
+	001000,	/* integer -> long */
+	001000,	/* long -> integer */
 	022005,	/* == */
 	022005,	/* != */
-	024005,	/* &lt;= */
-	024005,	/* &lt; */
-	024005,	/* &gt;= */
-	024005,	/* &gt; */
-	024005,	/* &lt;p */
-	024005,	/* &lt;=p */
-	024005,	/* &gt;p */
-	024005,	/* &gt;=p */
+	024005,	/* <= */
+	024005,	/* < */
+	024005,	/* >= */
+	024005,	/* > */
+	024005,	/* <p */
+	024005,	/* <=p */
+	024005,	/* >p */
+	024005,	/* >=p */
 	012213,	/* =+ */
 	012213,	/* =- */
 	012213,	/* =* */
 	012213,	/* =/ */
 	012213,	/* =% */
-	012253,	/* =&gt;&gt; */
-	012253,	/* =&lt;&lt; */
-	012253,	/* =&amp; */
+	012253,	/* =>> */
+	012253,	/* =<< */
+	012253,	/* =& */
 	012253,	/* =| */
 	012253,	/* =^ */
 	012213,	/* = */
-	030001, /* &amp; for tests */
+	030001, /* & for tests */
 	032101,	/*  * (long) */
 	032001,	/*  / (long) */
 	032001,	/* % (long) */
-	012253,	/* =&amp; ~ */
+	012253,	/* =& ~ */
 	012213,	/* =* (long) */
 	012213,	/* / (long) */
 	012213,	/* % (long) */
 	000000,	/* 89 */
 	014201,	/* ? */
-	026061,	/* long &lt;&lt; */
-	012253,	/* long =&lt;&lt; */
+	026061,	/* long << */
+	012253,	/* long =<< */
 	000000,	/* 93 */
 	000000,	/* 94 */
 	000000,	/* 95 */
@@ -121,9 +121,9 @@ char	*opntab[] {
 	0,
 	0,
 	0,
-	&quot;:&quot;,
-	&quot;,&quot;,
-	&quot;field select&quot;,
+	":",
+	",",
+	"field select",
 	0,
 	0,
 	0,
@@ -133,95 +133,95 @@ char	*opntab[] {
 	0,
 	0,
 	0,
-	&quot;name&quot;,
-	&quot;short constant&quot;,
-	&quot;string&quot;,
-	&quot;float&quot;,
-	&quot;double&quot;,
+	"name",
+	"short constant",
+	"string",
+	"float",
+	"double",
 	0,
 	0,
-	&quot;*r++&quot;,
-	&quot;*--r&quot;,
+	"*r++",
+	"*--r",
 	0,
-	&quot;++pre&quot;,
-	&quot;--pre&quot;,
-	&quot;++post&quot;,
-	&quot;--post&quot;,
-	&quot;!un&quot;,
-	&quot;&amp;&quot;,
-	&quot;*&quot;,
-	&quot;-&quot;,
-	&quot;~&quot;,
-	&quot;.&quot;,
-	&quot;+&quot;,
-	&quot;-&quot;,
-	&quot;*&quot;,
-	&quot;/&quot;,
-	&quot;%&quot;,
-	&quot;&gt;&gt;&quot;,
-	&quot;&lt;&lt;&quot;,
-	&quot;&amp;&quot;,
-	&quot;|&quot;,
-	&quot;^&quot;,
-	&quot;-&gt;&quot;,
-	&quot;int-&gt;double&quot;,
-	&quot;double-&gt;int&quot;,
-	&quot;&amp;&amp;&quot;,
-	&quot;||&quot;,
-	&quot;&amp;~&quot;,
-	&quot;double-&gt;long&quot;,
-	&quot;long-&gt;double&quot;,
-	&quot;integer-&gt;long&quot;,
-	&quot;long-&gt;integer&quot;,
-	&quot;==&quot;,
-	&quot;!=&quot;,
-	&quot;&lt;=&quot;,
-	&quot;&lt;&quot;,
-	&quot;&gt;=&quot;,
-	&quot;&gt;&quot;,
-	&quot;&lt;p&quot;,
-	&quot;&lt;=p&quot;,
-	&quot;&gt;p&quot;,
-	&quot;&gt;=p&quot;,
-	&quot;=+&quot;,
-	&quot;=-&quot;,
-	&quot;=*&quot;,
-	&quot;=/&quot;,
-	&quot;=%&quot;,
-	&quot;=&gt;&gt;&quot;,
-	&quot;=&lt;&lt;&quot;,
-	&quot;=&amp;&quot;,
-	&quot;=|&quot;,
-	&quot;=^&quot;,
-	&quot;=&quot;,
-	&quot;&amp; for tests&quot;,
-	&quot;*&quot;,
-	&quot;/&quot;,
-	&quot;%&quot;,
-	&quot;=&amp; ~&quot;,
-	&quot;=*&quot;,
-	&quot;=/&quot;,
-	&quot;=%&quot;,
+	"++pre",
+	"--pre",
+	"++post",
+	"--post",
+	"!un",
+	"&",
+	"*",
+	"-",
+	"~",
+	".",
+	"+",
+	"-",
+	"*",
+	"/",
+	"%",
+	">>",
+	"<<",
+	"&",
+	"|",
+	"^",
+	"->",
+	"int->double",
+	"double->int",
+	"&&",
+	"||",
+	"&~",
+	"double->long",
+	"long->double",
+	"integer->long",
+	"long->integer",
+	"==",
+	"!=",
+	"<=",
+	"<",
+	">=",
+	">",
+	"<p",
+	"<=p",
+	">p",
+	">=p",
+	"=+",
+	"=-",
+	"=*",
+	"=/",
+	"=%",
+	"=>>",
+	"=<<",
+	"=&",
+	"=|",
+	"=^",
+	"=",
+	"& for tests",
+	"*",
+	"/",
+	"%",
+	"=& ~",
+	"=*",
+	"=/",
+	"=%",
 	0,
-	&quot;?&quot;,
-	&quot;&lt;&lt;&quot;,
-	&quot;=&lt;&lt;&quot;,
-	0,
-	0,
-	0,
-	0,
-	0,
-	&quot;call&quot;,
-	&quot;call&quot;,
-	&quot;call&quot;,
-	0,
-	&quot;goto&quot;,
-	&quot;jump cond&quot;,
-	&quot;branch cond&quot;,
-	&quot;set nregs&quot;,
-	&quot;load value&quot;,
+	"?",
+	"<<",
+	"=<<",
 	0,
 	0,
 	0,
-	&quot;force register&quot;
+	0,
+	0,
+	"call",
+	"call",
+	"call",
+	0,
+	"goto",
+	"jump cond",
+	"branch cond",
+	"set nregs",
+	"load value",
+	0,
+	0,
+	0,
+	"force register"
 };

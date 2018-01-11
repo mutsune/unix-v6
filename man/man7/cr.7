@@ -31,9 +31,9 @@ logical p;
 .ft R
 .sh DESCRIPTION
 These functions are named by analogy to
-.it &quot;fork, exit, read, write&quot;
+.it "fork, exit, read, write"
 (II).
-They establish and synchronize `coroutines&#39;, which
+They establish and synchronize `coroutines', which
 behave in many respects like a set of processes working
 in the same address space.
 The functions live in
@@ -41,9 +41,9 @@ The functions live in
 .s3
 Coroutines are placed
 on queues to indicate their state of readiness.
-One coroutine is always distinguished as `running&#39;.
+One coroutine is always distinguished as `running'.
 Coroutines that are runnable but not running
-are registered on a `ready queue&#39;.
+are registered on a `ready queue'.
 The head member of the ready queue is started whenever no other
 coroutine is specifically caused to be running.
 .s3
@@ -80,7 +80,7 @@ copies characters from the
 of the 
 .it crwrite
 at the head of the 
-.it connector&#39;s
+.it connector's
 write queue to the 
 .it buffer
 of
@@ -107,7 +107,7 @@ the head of the ready queue.
 .s3
 .it Crwrite
 queues the running coroutine on the
-.it connector&#39;s
+.it connector's
 write queue,
 and records the fact that
 .it nbytes
@@ -147,13 +147,13 @@ Priorities are compared as logical,
 .it i.e.
 unsigned,
 quantities.
-Initially each coroutine&#39;s priority is set as large as possible,
+Initially each coroutine's priority is set as large as possible,
 so default queuing is
 .nh
 FIFO.
 .hy
 .s3
-.bd &quot;Storage allocation.&quot;
+.bd "Storage allocation."
 The old and new coroutine share the same activation record
 in the function that invoked
 .it crfork,
@@ -168,7 +168,7 @@ The overhead may be overcome by
 providing a separate stack for each coroutine and dispensing with
 dynamic allocation.
 The base (lowest) address and size of the
-new coroutine&#39;s stack are supplied to
+new coroutine's stack are supplied to
 .it crfork
 as optional arguments
 .it stack
@@ -185,8 +185,8 @@ instead of
 .br
 /usr/lib/scr.a
 .sh DIAGNOSTICS
-`rsave doesn&#39;t work&#39; \*- an old C compilation
-has called `rsave&#39;.
+`rsave doesn't work' \*- an old C compilation
+has called `rsave'.
 It must be recompiled to work
 with the coroutine scheme.
 .sh BUGS

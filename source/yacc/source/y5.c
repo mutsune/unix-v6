@@ -8,11 +8,11 @@ extern int fin, fout;
 copen( s, c ) char *s; {
   int f;
 
-  if( c == &#39;r&#39; ){
+  if( c == 'r' ){
     fin = f = open( s, 0 );
     }
 
-  else if( c == &#39;a&#39; ){
+  else if( c == 'a' ){
     f = open( s, 1 );
     seek( f, 0, 2 );
     }
@@ -30,7 +30,7 @@ cflush(x){ /* fake! sets file to x */
   }
 
 system(){
-  error( &quot;The function \&quot;system\&quot; is called&quot; );
+  error( "The function \"system\" is called" );
   }
 
 cclose(i){

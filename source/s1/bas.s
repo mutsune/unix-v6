@@ -24,13 +24,13 @@ main:
 	sys	signal; 2; intrup
 	mov	sp,gsp
 	clr	seeka
-	mov	$&#39;a,r1
+	mov	$'a,r1
 1:
 	movb	r1,tmpf+8
 	sys	stat; tmpf; line
 	bes	1f
 	inc	r1
-	cmp	r1,$&#39;z
+	cmp	r1,$'z
 	blos	1b
 	br	2f
 1:
@@ -44,7 +44,7 @@ main:
 	jsr	pc,print
 	sys	exit
 3:
-	&lt;Tmp file?\n\0&gt;; .even
+	<Tmp file?\n\0>; .even
 1:
 	mov	r0,tfi
 
@@ -68,14 +68,14 @@ noarg:
 	jsr	pc,print
 	br	loop
 1:
-	&lt;Cannot open file\n\0&gt;; .even
+	<Cannot open file\n\0>; .even
 
 intrup:
 	sys	signal; 2; intrup
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	r5,xputc
 	jsr	r5,error
-		&lt;ready\n\0&gt;; .even
+		<ready\n\0>; .even
 
 loop:
 	mov	gsp,sp
@@ -87,9 +87,9 @@ loop:
 	jsr	pc,digit
 		br 1f
 	jsr	r5,atoi
-	cmp	r0,$&#39; /
+	cmp	r0,$' /
 	beq	3f
-	cmp	r0,$&#39;	 /tab
+	cmp	r0,$'	 /tab
 	bne	1f
 3:
 	mov	$lintab,r3
@@ -107,7 +107,7 @@ loop:
 	cmp	r3,$elintab-12.
 	blo	2f
 	jsr	r5,error
-		&lt;too many lines\n\0&gt;; .even
+		<too many lines\n\0>; .even
 2:
 	mov	r0,(r3)+
 	mov	seeka,(r3)+
@@ -136,7 +136,7 @@ size:
 	clr	-(sp)
 1:
 	inc	(sp)
-	cmpb	(r0),$&#39;\n
+	cmpb	(r0),$'\n
 	beq	1f
 	cmpb	(r0),$0
 	beq	1f
@@ -156,7 +156,7 @@ rdline:  / read input (file or tty) to carr. ret.
 	cmp	r1,$line+99.
 	bhis	2f			/ bad check, but a check
 	movb	r0,(r1)+
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	1b
 	clrb	(r1)
 	rts	pc
@@ -197,14 +197,14 @@ serror:
 1:
 	cmp	r1,r3
 	bne	2f
-	mov	$&#39;_,r0
+	mov	$'_,r0
 	jsr	r5,xputc
 	mov	$10,r0
 	jsr	r5,xputc
 2:
 	movb	(r1),r0
 	jsr	r5,xputc
-	cmpb	(r1)+,$&#39;\n
+	cmpb	(r1)+,$'\n
 	bne	1b
 	jmp	loop
 
@@ -217,24 +217,24 @@ print:
 	rts	pc
 
 digit:
-	cmp	r0,$&#39;0
+	cmp	r0,$'0
 	blo	1f
-	cmp	r0,$&#39;9
+	cmp	r0,$'9
 	bhi	1f
 	add	$2,(sp)
 1:
 	rts	pc
 
 alpha:
-	cmp	r0,$&#39;a
+	cmp	r0,$'a
 	blo	1f
-	cmp	r0,$&#39;z
+	cmp	r0,$'z
 	bhi	1f
 	add	$2,(sp)
 1:
-	cmp	r0,$&#39;A
+	cmp	r0,$'A
 	blo	1f
-	cmp	r0,$&#39;Z
+	cmp	r0,$'Z
 	bhi	1f
 	add	$2,(sp)
 1:
@@ -288,7 +288,7 @@ name:
 	cmp	r1,$esymtab-28.
 	blo	1f
 	jsr	r5,error
-		&lt;out of symbol space\n\0&gt;; .even
+		<out of symbol space\n\0>; .even
 1:
 	mov	nameb,(r1)
 	mov	nameb+2,2(r1)
@@ -297,9 +297,9 @@ name:
 	rts	pc
 
 skip:
-	cmp	r0,$&#39; /
+	cmp	r0,$' /
 	beq	1f
-	cmp	r0,$&#39;	  / tab
+	cmp	r0,$'	  / tab
 	bne	2f
 1:
 	movb	(r3)+,r0
@@ -361,7 +361,7 @@ getloc:
 	br	1b
 1:
 	jsr	r5,error
-		&lt;label not found\n\0&gt;; .even
+		<label not found\n\0>; .even
 2:
 	rts	pc
 
@@ -409,7 +409,7 @@ compile:
 	cmp	r4,$espace+20  / out of code space?
 	blo	1b
 	jsr	r5,error
-		&lt;out of code space\n\0&gt;; .even
+		<out of code space\n\0>; .even
 1:
 	tst	forp
 	jne	forer
@@ -434,7 +434,7 @@ singstat:
 	cmp	r4,$eexline
 	blo	1f
 	jsr	r5,error
-		&lt;out of code space\n\0&gt;; .even
+		<out of code space\n\0>; .even
 1:
 	mov	$loop,(r4)+
 	mov	r4,exprloc
@@ -448,9 +448,9 @@ statement:
 		br stat1
 	dec	r3
 	jsr	r5,atoi
-	cmp	r0,$&#39; /
+	cmp	r0,$' /
 	beq	1f
-	cmp	r0,$&#39;	 /tab
+	cmp	r0,$'	 /tab
 	beq	1f
 	mov	$line,r3
 	movb	(r3)+,r0
@@ -461,7 +461,7 @@ statement:
 
 stat1:
 	jsr	pc,skip
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	.+4
 	rts	pc
 	mov	r3,-(sp)
@@ -502,7 +502,7 @@ stat1:
 	mov	(sp)+,r3
 	dec	r3
 	jsr	pc,expr
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	jne	joe
 	add	$2,(sp)
 	rts	pc
@@ -514,7 +514,7 @@ stsave:
 stlist:
 	mov	$_list,func
 1:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	clrf	r0
 	jsr	pc,const
@@ -523,27 +523,27 @@ stlist:
 	br	2f
 1:
 	jsr	pc,expr
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	mov	$_dup,(r4)+
 	br	2f
 1:
 	dec	r3
 	jsr	pc,expr
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	jne	joe
 2:
 	mov	func,(r4)+
 	rts	pc
 
 stdone:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	jne	joe
 	mov	$_done,(r4)+
 	rts	pc
 
 strun:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	jne	joe
 	mov	$_run,(r4)+
 	rts	pc
@@ -554,7 +554,7 @@ stprompt:
 	br	stpr2
 
 stdump:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	jne	joe
 	mov	$_dump,(r4)+
 	rts	pc
@@ -565,9 +565,9 @@ stpr2:
 	movb	(r3)+,r0
 	jsr	pc,skip
 1:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	2f
-	cmp	r0,$&#39;&quot;
+	cmp	r0,$'"
 	beq	1f
 	dec	r3
 	jsr	pc,expr
@@ -577,9 +577,9 @@ stpr2:
 	mov	$_ascii,(r4)+
 1:
 	movb	(r3)+,(r4)
-	cmpb	(r4),$&#39;&quot;
+	cmpb	(r4),$'"
 	beq	1f
-	cmpb	(r4)+,$&#39;\n
+	cmpb	(r4)+,$'\n
 	bne	1b
 	jbr	joe
 1:
@@ -600,7 +600,7 @@ stif:
 	add	$2,ifp
 	tst	(r4)+
 	jsr	pc,skip
-	cmp	r0,$&#39;\n   / if ... fi
+	cmp	r0,$'\n   / if ... fi
 	beq	1f
 	jsr	pc,stat1
 		br  .+2
@@ -614,7 +614,7 @@ stfi:
 	rts	pc
 
 fier:
-	jsr	r5,error; &lt;if...else...fi imbalance\n\0&gt;; .even
+	jsr	r5,error; <if...else...fi imbalance\n\0>; .even
 
 stelse:
 	mov	$_tra,(r4)+  /jump around else side
@@ -629,7 +629,7 @@ stelse:
 	add	$2,ifp
 	rts	pc
 
-stedit:  / enter the regular editor &lt;ed&gt;
+stedit:  / enter the regular editor <ed>
 	sys fork
 	br	newpr
 	mov	$lintab,r0  / zero out line table during edit
@@ -645,13 +645,13 @@ stedit:  / enter the regular editor &lt;ed&gt;
 newpr:
 	sys	exec; ed; edarg
 	sys	exit
-ed:	&lt;/bin/ed\0&gt; ; .even
-ednm:	&lt;-\n&gt;
+ed:	</bin/ed\0> ; .even
+ednm:	<-\n>
  .even
 edarg:	ednm; argname; 0
 
 stcomment:  /comment line
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	movb	(r3)+,r0
 	br	stcomment
@@ -663,10 +663,10 @@ stgoto:
 	rts	pc
 
 streturn:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	jsr	pc,expr
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	joe
 	br	2f
 1:
@@ -683,7 +683,7 @@ stfor:
 	mov	r4,-(sp)
 	jsr	pc,e2
 	mov	r4,-(sp)
-	cmp	r0,$&#39;=
+	cmp	r0,$'=
 	bne	joe
 	tst	val
 	bne	joe
@@ -707,7 +707,7 @@ stfor:
 	mov	$_if,(r4)+
 	mov	forp,(r4)+
 	mov	r4,forp
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	jsr	pc,stat1
 		br .+2
@@ -716,7 +716,7 @@ stfor:
 	rts	pc
 
 forer:
-	jsr	r5,error; &lt;for/next imbalance\n\0&gt;; .even
+	jsr	r5,error; <for/next imbalance\n\0>; .even
 
 stnext:
 	mov	forp,r1
@@ -745,7 +745,7 @@ stdraw:
 	jsr	pc,expr
 	dec	r3
 	jsr	pc,expr
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	movf	$one,r0
 	jsr	pc,const
@@ -775,7 +775,7 @@ expr:
 / assignment right to left
 e1:
 	jsr	pc,e2
-	cmp	r0,$&#39;=
+	cmp	r0,$'=
 	beq	1f
 	jsr	pc,rval
 	rts	pc
@@ -792,9 +792,9 @@ e1:
 e2:
 	jsr	pc,e3
 1:
-	cmp	r0,$&#39;&amp;
+	cmp	r0,$'&
 	beq	2f
-	cmp	r0,$&#39;|
+	cmp	r0,$'|
 	beq	3f
 	rts	pc
 2:
@@ -835,35 +835,35 @@ e3:
 
 / relational operator
 e3a:
-	cmp	r0,$&#39;&gt;
+	cmp	r0,$'>
 	beq	1f
-	cmp	r0,$&#39;&lt;
+	cmp	r0,$'<
 	beq	2f
-	cmp	r0,$&#39;=
+	cmp	r0,$'=
 	beq	3f
 	rts	pc
 1:
 	mov	$_great,r0
-	cmpb	(r3),$&#39;=
+	cmpb	(r3),$'=
 	bne	1f
 	inc	r3
 	mov	$_greateq,r0
 	br	1f
 2:
-	cmpb	(r3),$&#39;&gt;
+	cmpb	(r3),$'>
 	bne	2f
 	inc	r3
 	mov	$_noteq,r0
 	br	1f
 2:
 	mov	$_less,r0
-	cmpb	(r3),$&#39;=
+	cmpb	(r3),$'=
 	bne	1f
 	inc	r3
 	mov	$_lesseq,r0
 	br	1f
 3:
-	cmpb	(r3),$&#39;=
+	cmpb	(r3),$'=
 	beq	2f
 	rts	pc
 2:
@@ -878,9 +878,9 @@ e3a:
 e4:
 	jsr	pc,e5
 1:
-	cmp	r0,$&#39;+
+	cmp	r0,$'+
 	beq	2f
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	beq	3f
 	rts	pc
 2:
@@ -898,9 +898,9 @@ e4:
 e5:
 	jsr	pc,e6
 1:
-	cmp	r0,$&#39;*
+	cmp	r0,$'*
 	beq	2f
-	cmp	r0,$&#39;/
+	cmp	r0,$'/
 	beq	3f
 	rts	pc
 2:
@@ -918,7 +918,7 @@ e5:
 e6:
 	jsr	pc,e6a
 1:
-	cmp	r0,$&#39;^
+	cmp	r0,$'^
 	beq	2f
 	rts	pc
 2:
@@ -930,7 +930,7 @@ e6:
 e6a:
 	movb	(r3)+,r0
 	jsr	pc,skip
-	cmp	r0,$&#39;_
+	cmp	r0,$'_
 	bne	1f
 	jsr	pc,e6a
 	jsr	r5,op; _neg
@@ -946,17 +946,17 @@ e7:
 	movb	(r3)+,r0
 	jsr	pc,skip
 	mov	$1,val
-	cmp	r0,$&#39;(
+	cmp	r0,$'(
 	bne	1f
 	jsr	pc,e1
-	cmp	r0,$&#39;)
+	cmp	r0,$')
 	bne	2f
 	movb	(r3)+,r0
 	br	e7a
 2:
 	jsr	pc,serror
 1:
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	beq	2f
 	jsr	pc,digit
 		br 1f
@@ -970,7 +970,7 @@ e7:
 		br jim
 	jsr	pc,name
 		br 2f
-	jsr	r5,error; &lt;reserved name\n\0&gt;; .even
+	jsr	r5,error; <reserved name\n\0>; .even
 2:
 / try to fix illegal symbol bug:
 	cmp	r4,$eexline
@@ -985,16 +985,16 @@ jim:
 
 e7a:
 	jsr	pc,skip
-	cmp	r0,$&#39;(
+	cmp	r0,$'(
 	bne	1f
 	jsr	pc,rval
 	jsr	r5,rlist; _funct
-	cmp	r0,$&#39;)
+	cmp	r0,$')
 	bne	jim
 	movb	(r3)+,r0
 	br	e7a
 1:
-	cmp	r0,$&#39;[
+	cmp	r0,$'[
 	bne	1f
 	tst	val
 	beq	2f
@@ -1002,7 +1002,7 @@ e7a:
 2:
 	jsr	r5,rlist; _subscr
 	clr	val
-	cmp	r0,$&#39;]
+	cmp	r0,$']
 	bne	jim
 	movb	(r3)+,r0
 	br	e7a
@@ -1055,14 +1055,14 @@ const:
 
 rlist:
 	clr	-(sp)
-	cmpb	(r3),$&#39;)
+	cmpb	(r3),$')
 	bne	1f
 	movb	(r3)+,r0
 	br	2f
 1:
 	inc	(sp)
 	jsr	pc,expr
-	cmp	r0,$&#39;,
+	cmp	r0,$',
 	beq	1b
 2:
 	mov	(r5)+,(r4)+
@@ -1132,7 +1132,7 @@ _save:    / _save is a _list to the file named on the bas command
 	mov	$1,prfile
 	jsr	pc,print
 	br	_done
-1:	&lt;Cannot create b.out\n\0&gt;; .even
+1:	<Cannot create b.out\n\0>; .even
 
 _list:
 	mov	$1,prfile
@@ -1209,13 +1209,13 @@ _octal:
 	jmp	*(r4)+
 
 _nline:
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	r5,xputc
 	jmp	*(r4)+
 
 _ascii:
 	movb	(r4)+,r0
-	cmp	r0,$&#39;&quot;
+	cmp	r0,$'"
 	beq	1f
 	jsr	r5,xputc
 	br	_ascii
@@ -1229,7 +1229,7 @@ _line:
 	cmp	r3,$stack+20.
 	bhi	1f
 	jsr	r5,error
-		&lt;out of space\n\0&gt;; .even
+		<out of space\n\0>; .even
 1:
 	mov	(r4)+,lineno
 	jmp	*(r4)+
@@ -1329,7 +1329,7 @@ _expon:
 	jsr	pc,pow
 	bec	advanc
 	jsr	r5,error
-		&lt;Bad exponentiation\n\0&gt;; .even
+		<Bad exponentiation\n\0>; .even
 
 _neg:  / unary -
 	negf	r0
@@ -1381,7 +1381,7 @@ _return:
 	dec	sublev
 	bge	1f
 	jsr	r5,error
-		&lt;bad return\n\0&gt;; .even
+		<bad return\n\0>; .even
 1:
 	movf	(r3),r0
 	mov	sstack,r3
@@ -1409,7 +1409,7 @@ _subscr:
 	com	r2
 	blt	2f
 	jsr	r5,error
-		&lt;subscript out of range\n\0&gt;; .even
+		<subscript out of range\n\0>; .even
 2:
 	mov	r0,r1
 	mov	4(r0),r0
@@ -1434,7 +1434,7 @@ _subscr:
 	cmp	r0,$esymtab-28.
 	blo	2f
 	jsr	r5,error
-		&lt;out of symbol space\n\0&gt;; .even
+		<out of symbol space\n\0>; .even
 2:
 	cmp	(r1)+,(r1)+
 	mov	r0,-(sp)
@@ -1465,7 +1465,7 @@ getlv:
 	add	$4,r0
 	bit	$1,(r0)+
 	bne	1f
-	jsr	r5,error;&lt;used before set\n\0&gt;; .even
+	jsr	r5,error;<used before set\n\0>; .even
 1:
 	movf	(r0),r0
 	rts	pc
@@ -1517,25 +1517,25 @@ fnlog:
 	jsr	r5,fnfn; log
 	bec	fnadvanc
 	jsr	r5,error
-		&lt;Bad log\n\0&gt;; .even
+		<Bad log\n\0>; .even
 
 fnsin:
 	jsr	r5,fnfn; sin
 	bec	fnadvanc
 	jsr	r5,error
-		&lt;Bad sine\n\0&gt;; .even
+		<Bad sine\n\0>; .even
 
 fncos:
 	jsr	r5,fnfn; cos
 	bec	fnadvanc
 	jsr	r5,error
-		&lt;Bad cosine\n\0&gt;; .even
+		<Bad cosine\n\0>; .even
 
 fnatan:
 	jsr	r5,fnfn; atan
 	bec	fnadvanc
 	jsr	r5,error
-		&lt;Bad arctangent\n\0&gt;; .even
+		<Bad arctangent\n\0>; .even
 
 fnrand:
 	tst	(r4)+
@@ -1582,14 +1582,14 @@ fnsqr:
 	jsr	r5,fnfn; sqrt
 	bec	fnadvanc
 	jsr	r5,error
-	&lt;Bad square root arg\n\0&gt;; .even
+	<Bad square root arg\n\0>; .even
 fnadvanc:
 	add	$8,r3
 	jmp	advanc
 
 narg:
 	jsr	r5,error
-		&lt;arg count\n\0&gt;; .even
+		<arg count\n\0>; .even
 
 arg:
 	tst	sublev
@@ -1607,7 +1607,7 @@ arg:
 	rts	pc
 1:
 	jsr	r5,error
-		&lt;bad arg\n\0&gt;; .even
+		<bad arg\n\0>; .even
 
 fnfn:
 	cmp	(r4)+,$1
@@ -1680,22 +1680,22 @@ atoi:
 	clr	r1
 	jsr	r5,nextc
 	clr	-(sp)
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	bne	2f
 	inc	(sp)
 1:
 	jsr	r5,nextc
 2:
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9
 	bhi	1f
 	mpy	$10.,r1
-	bcs	3f / &gt;32k
+	bcs	3f / >32k
 	add	r0,r1
-	bcs	3f / &gt;32k
+	bcs	3f / >32k
 	br	1b
 1:
-	add	$&#39;0,r0
+	add	$'0,r0
 	tst	(sp)+
 	beq	1f
 	neg	r1
@@ -1703,7 +1703,7 @@ atoi:
 	rts	r5
 3:
 	tst	(sp)+
-	mov	$&#39;.,r0  / faking overflow
+	mov	$'.,r0  / faking overflow
 	br	1b
 
 ldfps = 170100^tst
@@ -1718,13 +1718,13 @@ atof:
 	clrf	fr0
 	clr	r2
 	jsr	r5,*(r5)
-	cmpb	r0,$&#39;-
+	cmpb	r0,$'-
 	bne	2f
 	inc	(sp)
 1:
 	jsr	r5,*(r5)
 2:
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	2f
 	jsr	pc,dig
@@ -1732,21 +1732,21 @@ atof:
 	inc	r2
 	br	1b
 2:
-	cmpb	r0,$&#39;.-&#39;0
+	cmpb	r0,$'.-'0
 	bne	2f
 1:
 	jsr	r5,*(r5)
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9.
 	bhi	2f
 	jsr	pc,dig
 		dec r2
 	br	1b
 2:
-	cmpb	r0,$&#39;e-&#39;0
+	cmpb	r0,$'e-'0
 	bne	1f
 	jsr	r5,atoi
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	add	r1,r2
 1:
 	movf	$one,fr1
@@ -1781,7 +1781,7 @@ out:
 	beq	1f
 	negf	fr0
 1:
-	add	$&#39;0,r0
+	add	$'0,r0
 	mov	(sp)+,r2
 	mov	(sp)+,r1
 	movf	(sp)+,fr1
@@ -1815,7 +1815,7 @@ ftoa:
 	mov	r0,bufptr
 	tstb	r1
 	beq	1f
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	r5,*(r5)
 1:
 	cmp	r3,$-2
@@ -1832,7 +1832,7 @@ econ:
 	mov	r2,-(sp)
 	mov	$1,r2
 	jsr	pc,cout
-	mov	$&#39;e,r0
+	mov	$'e,r0
 	jsr	r5,*(r5)
 	mov	(sp)+,r0
 	dec	r0
@@ -1846,16 +1846,16 @@ cout:
 1:
 	cmp	r1,r2
 	blos	1f
-	cmpb	-(r1),$&#39;0
+	cmpb	-(r1),$'0
 	beq	1b
 	inc	r1
 1:
 	mov	(sp)+,r2
 	bge	2f
-	mov	$&#39;.,r0
+	mov	$'.,r0
 	jsr	r5,*(r5)
 1:
-	mov	$&#39;0,r0
+	mov	$'0,r0
 	jsr	r5,*(r5)
 	inc	r2
 	blt	1b
@@ -1868,7 +1868,7 @@ cout:
 	bhis	1f
 	tst	(sp)
 	bne	2f
-	mov	$&#39;.,r0
+	mov	$'.,r0
 	jsr	r5,*(r5)
 2:
 	dec	(sp)
@@ -1895,14 +1895,14 @@ ftoo:
 1:
 	cmp	r2,r1
 	bhis	1f
-	mov	$&#39;;,r0
+	mov	$';,r0
 	jsr	r5,*(r5)
 2:
 	mov	(r2)+,r0
 	jsr	pc,oct
 	br	1b
 1:
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	pc,*(r5)+
 	ldfps	(sp)+
 	rts	r5
@@ -1917,7 +1917,7 @@ oct:
 1:
 	modf	$eight,fr0
 	movfi	fr1,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	r5,*(r5)
 	dec	(sp)
 	bne	1b
@@ -1936,7 +1936,7 @@ itoa:
 	mov	r0,r1
 	bge	1f
 	neg	r1
-	mov	$&#39;-,r0
+	mov	$'-,r0
 	jsr	r5,*(r5)
 1:
 	jsr	pc,1f
@@ -1953,11 +1953,11 @@ itoa:
 	jsr	pc,1b
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	r5,*(r5)
 	rts	pc
 / bas -- BASIC
-/ new command &quot;dump&quot; which dumps symbol table values by name
+/ new command "dump" which dumps symbol table values by name
 /		R. Haight
 /
 _dump:
@@ -1970,11 +1970,11 @@ _dump:
 	bit	$1,4(r4)
 	beq	1b
 	jsr	pc,dmp1
-	mov	$&#39;=,r0
+	mov	$'=,r0
 	jsr	r5,xputc
 	movf	6(r4),r0
 	jsr	r5,ftoa; xputc
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	r5,xputc
 	br	1b
 1:
@@ -2006,13 +2006,13 @@ dmp1:
 	br	2b
 2:
 	jsr	pc,dmp1
-	mov	$&#39;[,r0
+	mov	$'[,r0
 	jsr	r5,xputc
 	mov	*(sp),r0
 	com	r0
 	movif	r0,r0
 	jsr	r5,ftoa; xputc
-	mov	$&#39;],r0
+	mov	$'],r0
 	jsr	r5,xputc
 1:
 	mov	(sp)+,r4
@@ -2027,51 +2027,51 @@ one = 40200
 .data
 
 _ndigits:10.
-tmpf:	&lt;/tmp/btma\0&gt;
-argname: &lt;b.out\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&gt;
-vt:	&lt;/dev/vt0\0&gt;
+tmpf:	</tmp/btma\0>
+argname: <b.out\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0>
+vt:	</dev/vt0\0>
 .even
-pname:	&lt;\0\0\0\0\0\0&gt;
+pname:	<\0\0\0\0\0\0>
 	.even
 
 resnam:
-	&lt;list&gt;
-	&lt;done&gt;
-	&lt;q\0\0\0&gt;
-	&lt;run\0&gt;
-	&lt;prin&gt;
-	&lt;prom&gt;   / prompt is like print without \n (cr)
-	&lt;if\0\0&gt;
-	&lt;goto&gt;
-	&lt;retu&gt;
-	&lt;for\0&gt;
-	&lt;next&gt;
-	&lt;octa&gt;
-	&lt;save&gt;
-	&lt;dump&gt;
-	&lt;fi\0\0&gt;
-	&lt;else&gt;
-	&lt;edit&gt;
-	&lt;comm&gt;  / comment
+	<list>
+	<done>
+	<q\0\0\0>
+	<run\0>
+	<prin>
+	<prom>   / prompt is like print without \n (cr)
+	<if\0\0>
+	<goto>
+	<retu>
+	<for\0>
+	<next>
+	<octa>
+	<save>
+	<dump>
+	<fi\0\0>
+	<else>
+	<edit>
+	<comm>  / comment
 .if scope / for plotting
-	&lt;disp&gt;
-	&lt;draw&gt;
-	&lt;eras&gt;
+	<disp>
+	<draw>
+	<eras>
 .endif
 eresnam:
 
 symtnam:
-	&lt;arg\0&gt;
-	&lt;exp\0&gt;
-	&lt;log\0&gt;
-	&lt;sin\0&gt;
-	&lt;cos\0&gt;
-	&lt;atn\0&gt;
-	&lt;rnd\0&gt;
-	&lt;expr&gt;
-	&lt;int\0&gt;
-	&lt;abs\0&gt;
-	&lt;sqr\0&gt;
+	<arg\0>
+	<exp\0>
+	<log\0>
+	<sin\0>
+	<cos\0>
+	<atn\0>
+	<rnd\0>
+	<expr>
+	<int\0>
+	<abs\0>
+	<sqr\0>
 esymtnam:
 
 / indirect sys calls:

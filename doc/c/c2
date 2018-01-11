@@ -27,7 +27,7 @@ involve side effects.
 7.1  Primary expressions
 .et
 Primary expressions
-involving \fG.\fR^, \fG\(mi&gt;\fR, subscripting, and function calls
+involving \fG.\fR^, \fG\(mi>\fR, subscripting, and function calls
 group left to right.
 .ms
 7.1.1  \fIidentifier\fR
@@ -35,19 +35,19 @@ group left to right.
 An identifier is a primary expression, provided it has been
 suitably declared as discussed below.
 Its type is specified by its declaration.
-However, if the type of the identifier is ``array of .^.^.&#39;&#39;,
+However, if the type of the identifier is ``array of .^.^.'',
 then the value of the identifier-expression
 is a pointer
 to the first object in the array, and the
 type of the expression is
-``pointer to .^.^.&#39;&#39;.
+``pointer to .^.^.''.
 Moreover, an array identifier is not an lvalue
 expression.
 .pg
 Likewise, an identifier which is declared
-``function returning .^.^.&#39;&#39;,
+``function returning .^.^.'',
 when used except in the function-name position
-of a call, is converted to ``pointer to function returning .^.^.&#39;&#39;.
+of a call, is converted to ``pointer to function returning .^.^.''.
 .ms
 7.1.2  \fIconstant\fR
 .et
@@ -59,9 +59,9 @@ Its type is \fGint\fR in the first three cases,
 7.1.3  \fIstring\fR
 .et
 A string is a primary expression.
-Its type is originally ``array of \fGchar\fR&#39;&#39;; but following
+Its type is originally ``array of \fGchar\fR''; but following
 the same rule as in \(sc7.1.1 for identifiers,
-this is modified to ``pointer to \fGchar\fR&#39;&#39; and the
+this is modified to ``pointer to \fGchar\fR'' and the
 result is a pointer to the first character
 in the string.
 .ms
@@ -79,11 +79,11 @@ lvalue.
 A primary expression followed by an expression in square
 brackets is a primary expression.
 The intuitive meaning is that of a subscript.
-Usually, the primary expression has type ``pointer to .^.^.&#39;&#39;,
+Usually, the primary expression has type ``pointer to .^.^.'',
 the subscript expression is \fGint\fR,
-and the type of the result is ``^.^.^.^&#39;&#39;.
-The expression ``E1[E2]&#39;&#39; is
-identical (by definition) to ``\**^(^^(^E1^)^+^(^E2^)^^)^&#39;&#39;.
+and the type of the result is ``^.^.^.^''.
+The expression ``E1[E2]'' is
+identical (by definition) to ``\**^(^^(^E1^)^+^(^E2^)^^)^''.
 All the clues
 needed to understand
 this notation are contained in this section together
@@ -99,8 +99,8 @@ containing a possibly
 empty, comma-separated list of expressions
 which constitute the actual arguments to the
 function.
-The primary expression must be of type ``function returning .^.^.&#39;&#39;,
-and the result of the function call is of type ``^.^.^.^&#39;&#39;.
+The primary expression must be of type ``function returning .^.^.'',
+and the result of the function call is of type ``^.^.^.^''.
 As indicated
 below, a hitherto unseen identifier followed
 immediately by a left parenthesis
@@ -146,7 +146,7 @@ any particular type.
 .pg
 Structures are discussed in \(sc8.5.
 .ms
-7.1.8  \fIprimary-expression \fG\(mi&gt;\fI member-of-structure\fR
+7.1.8  \fIprimary-expression \fG\(mi>\fI member-of-structure\fR
 .et
 The primary-expression is assumed to be a pointer
 which points to an object of the same form
@@ -160,8 +160,8 @@ in fact be pointer; it is sufficient that
 it be a pointer, character, or integer.
 .pg
 Except for the relaxation of the requirement that
-E1 be of pointer type, the expression ``E1\(mi&gt;MOS&#39;&#39;
-is exactly equivalent to ``(\**E1).MOS&#39;&#39;.
+E1 be of pointer type, the expression ``E1\(mi>MOS''
+is exactly equivalent to ``(\**E1).MOS''.
 .ms
 7.2  Unary operators
 .et
@@ -178,16 +178,16 @@ indirection:
 the expression must be a pointer, and the result
 is an lvalue referring to the object to
 which the expression points.
-If the type of the expression is ``pointer to .^.^.&#39;&#39;,
-the type of the result is ``^.^.^.^&#39;&#39;.
+If the type of the expression is ``pointer to .^.^.'',
+the type of the result is ``^.^.^.^''.
 .ms
-7.2.2  \fG&amp;\fI lvalue-expression\fR
+7.2.2  \fG&\fI lvalue-expression\fR
 .et
-The result of the unary \fG&amp;\fR operator is a pointer
+The result of the unary \fG&\fR operator is a pointer
 to the object referred to by the
 lvalue-expression.
-If the type of the lvalue-expression is ``^.^.^.^&#39;&#39;,
-the type of the result is ``pointer to .^.^.&#39;&#39;.
+If the type of the lvalue-expression is ``^.^.^.^'',
+the type of the result is ``pointer to .^.^.''.
 .ms
 7.2.3  \fG\(mi\fI expression\fR
 .et
@@ -206,7 +206,7 @@ This operator is applicable only to \fGint\fRs or \fGchar\fRs.
 .ms
 7.2.5  \fG\*~\fI expression\fR
 .et
-The \*~ operator yields the one&#39;s complement of its operand.
+The \*~ operator yields the one's complement of its operand.
 The type of the expression must be \fGint\fR or \fGchar\fR,
 and the result is \fGint\fR.
 .ms
@@ -311,7 +311,7 @@ by the length of the object to which the
 pointer points and the result is a pointer
 of the same type as the original pointer.
 Thus if P is a pointer
-to an object, the expression ``P+1&#39;&#39; is a pointer
+to an object, the expression ``P+1'' is a pointer
 to another object of the same type as
 the first and immediately following
 it in storage.
@@ -343,20 +343,20 @@ by a multiple of the object-length.
 .ms
 7.5  Shift operators
 .et
-The shift operators \fG&lt;&lt;\fR and \fG&gt;&gt;\fR group left-to-right.
+The shift operators \fG<<\fR and \fG>>\fR group left-to-right.
 .ms
-7.5.1  \fIexpression \fG&lt;&lt; \fIexpression\fR
+7.5.1  \fIexpression \fG<< \fIexpression\fR
 .br
-7.5.2  \fIexpression \fG&gt;&gt; \fIexpression\fR
+7.5.2  \fIexpression \fG>> \fIexpression\fR
 .et
 Both operands must be \fGint\fR or \fGchar\fR,
 and the result is \fGint\fR.
 The second operand should
 be non-negative.
-The value of ``E1&lt;&lt;E2&#39;&#39; is E1 (interpreted as a bit
+The value of ``E1<<E2'' is E1 (interpreted as a bit
 pattern 16 bits long) left-shifted E2 bits;
 vacated bits are 0-filled.
-The value of ``E1&gt;&gt;E2&#39;&#39; is E1 (interpreted as a two&#39;s
+The value of ``E1>>E2'' is E1 (interpreted as a two's
 complement, 16-bit quantity) arithmetically
 right-shifted E2 bit positions.
 Vacated bits are filled by a copy of the sign bit of E1.
@@ -367,22 +367,22 @@ survive transportation between machines.]
 7.6  Relational operators
 .et
 The relational operators group left-to-right, but
-this fact is not very useful; ``a&lt;b&lt;c&#39;&#39; does
+this fact is not very useful; ``a<b<c'' does
 not mean what it seems to.
 .ms
-7.6.1  \fIexpression \fG&lt;\fI expression\fR
+7.6.1  \fIexpression \fG<\fI expression\fR
 .br
 .ne 4
-7.6.2  \fIexpression \fG&gt;\fI expression\fR
+7.6.2  \fIexpression \fG>\fI expression\fR
 .br
 .ne 4
-7.6.3  \fIexpression \fG&lt;=\fI expression\fR
+7.6.3  \fIexpression \fG<=\fI expression\fR
 .br
 .ne 4
-7.6.4  \fIexpression \fG&gt;=\fI expression\fR
+7.6.4  \fIexpression \fG>=\fI expression\fR
 .et
-The operators &lt; (less than), &gt; (greater than), &lt;= (less than
-or equal to) and &gt;= (greater than or equal to)
+The operators < (less than), > (greater than), <= (less than
+or equal to) and >= (greater than or equal to)
 all yield 0 if the specified relation is false
 and 1 if it is true.
 Operand conversion is exactly the same as for the \fG+\fR
@@ -407,13 +407,13 @@ The \fG==\fR (equal to) and the \fG!=\fR (not equal to) operators
 are exactly analogous to the relational
 operators except for their lower
 precedence.
-(Thus ``a&lt;b@==@c&lt;d&#39;&#39; is 1 whenever
-a&lt;b and c&lt;d
+(Thus ``a<b@==@c<d'' is 1 whenever
+a<b and c<d
 have the same truth-value).
 .ms
-7.8  \fIexpression \fG&amp;\fI expression\fR
+7.8  \fIexpression \fG&\fI expression\fR
 .et
-The \fG&amp;\fR operator groups left-to-right.
+The \fG&\fR operator groups left-to-right.
 Both operands must be \fGint\fR or \fGchar\fR;
 the result is an \fGint\fR which is the bit-wise
 logical \fGand\fR function of the operands.
@@ -433,11 +433,11 @@ The \(or operator groups left-to-right.
 The operands must be \fGint\fR or \fGchar\fR; the result is an \fGint\fR
 which is the bit-wise inclusive \fGor\fR of its operands.
 .ms
-7.11  \fIexpression \fG&amp;&amp;\fI expression
+7.11  \fIexpression \fG&&\fI expression
 .et
-The \fG&amp;&amp;\fR operator returns 1 if both its operands
+The \fG&&\fR operator returns 1 if both its operands
 are non-zero, 0 otherwise.
-Unlike \fG&amp;\fR, \fG&amp;&amp;\fR guarantees left-to-right
+Unlike \fG&\fR, \fG&&\fR guarantees left-to-right
 evaluation; moreover the second operand is not evaluated
 if the first operand is 0.
 .pg
@@ -504,7 +504,7 @@ Thus it is possible to
 generate pointers which will cause addressing
 exceptions when used.
 .ms
-.ta \w&#39;0.00.00 &#39;u
+.ta \w'0.00.00 'u
 7.14.2	\fIlvalue \fG=+ \fIexpression\fR
 .br
 7.14.3	\fIlvalue \fG=\(mi \fIexpression\fR
@@ -515,11 +515,11 @@ exceptions when used.
 .br
 7.14.6	\fIlvalue \fG=% \fIexpression\fR
 .br
-7.14.7	\fIlvalue \fG=&gt;&gt; \fIexpression\fR
+7.14.7	\fIlvalue \fG=>> \fIexpression\fR
 .br
-7.14.8	\fIlvalue \fG=&lt;&lt; \fIexpression\fR
+7.14.8	\fIlvalue \fG=<< \fIexpression\fR
 .br
-7.14.9	\fIlvalue \fG=&amp; \fIexpression\fR
+7.14.9	\fIlvalue \fG=& \fIexpression\fR
 .br
 .tr ^^
 7.14.10	\fIlvalue \fG=^ \fIexpression\fR
@@ -528,11 +528,11 @@ exceptions when used.
 7.14.11	\fIlvalue \fG=^\(or \fIexpression\fR
 .et
 The behavior of an expression
-of the form ``E1@=op@E2&#39;&#39; may be inferred by
-taking it as equivalent to ``E1@=@E1@op@E2&#39;&#39;;
+of the form ``E1@=op@E2'' may be inferred by
+taking it as equivalent to ``E1@=@E1@op@E2'';
 however, E1 is evaluated only once.
 Moreover,
-expressions like ``i@=+@p&#39;&#39;
+expressions like ``i@=+@p''
 in which a pointer is added to an integer, are forbidden.
 .ms
 7.15  \fIexpression \fG,\fI expression\fR

@@ -66,7 +66,7 @@ line.:	temp
 	jmp	retrn
 
 / call circle(x, y, radius)
-/ circle&#39;s center at x, y
+/ circle's center at x, y
 
 circle.:temp
 	.+2
@@ -133,8 +133,8 @@ garg:
 frame:	.byte	4,0
 erase:	.byte	1,1
 	.byte	0
-vt:	&lt;/dev/vt0\0&gt;
-bmes:	&lt;VT unwritable.\n&gt;; emes:
+vt:	</dev/vt0\0>
+bmes:	<VT unwritable.\n>; emes:
 	.bss
 	.=.+1
 command:.=.+1

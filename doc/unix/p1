@@ -31,7 +31,7 @@ systems, including
 .tr |
 .de dl
 .sp .3
-.ti -\w&#39;1.|&#39;u
+.ti -\w'1.|'u
 ..
 .in .5i
 .dl
@@ -84,7 +84,7 @@ and other topics in computer science, and also for
 document preparation.
 .br
 .sp
-\l&#39;2i&#39;
+\l'2i'
 .ps 8
 .vs 9p
 .pg
@@ -93,7 +93,7 @@ Association for Computing Machinery, Inc.
 General permission to republish,
 but not for profit,
 all or part of this material
-is granted provided that \s7ACM\s8&#39;s copyright
+is granted provided that \s7ACM\s8's copyright
 notice is given and that reference is made to the publication,
 to its date of issue,
 and to the fact that reprinting privileges were granted by
@@ -295,7 +295,7 @@ system, it may be in the form of a
 path name,
 .ft R
 which
-is a sequence of directory names separated by slashes ``\|/\|&#39;&#39;
+is a sequence of directory names separated by slashes ``\|/\|''
 and ending in a file name.
 If the sequence begins with a slash, the search begins in the
 root directory.
@@ -305,10 +305,10 @@ then to search \fIalpha\fR for \fIbeta,\fR
 finally to find \fIgamma\fR in \fIbeta\fR.
 \fIGamma\fR may be an ordinary file, a directory, or a special
 file.
-As a limiting case, the name ``/\|&#39;&#39; refers to the root itself.
+As a limiting case, the name ``/\|'' refers to the root itself.
 .pg
-A path name not starting with ``/\|&#39;&#39; causes the system to begin the
-search in the user&#39;s current directory.
+A path name not starting with ``/\|'' causes the system to begin the
+search in the user's current directory.
 Thus, the name \fIalpha\|/\|beta\fR specifies the file named \fIbeta\fR in
 subdirectory \fIalpha\fR of the current
 directory.
@@ -334,18 +334,18 @@ disappear along with the last link to it.
 .pg
 Each directory always has at least two entries.
 The name
-``\|\fB.\|\fR&#39;&#39; in each directory refers to the directory itself.
+``\|\fB.\|\fR'' in each directory refers to the directory itself.
 Thus a program
-may read the current directory under the name ``\fB\|.\|\fR&#39;&#39; without knowing
+may read the current directory under the name ``\fB\|.\|\fR'' without knowing
 its complete path name.
-The name ``\fB\|.\|.\|\fR&#39;&#39; by convention refers to the parent of the
+The name ``\fB\|.\|.\|\fR'' by convention refers to the parent of the
 directory in which it appears, that is, to the directory in which
 it was created.
 .pl +1
 .pg
 The directory structure is constrained to have the form
 of a rooted tree.
-Except for the special entries ``\|\fB\|.\|\fR&#39;&#39; and ``\fB\|.\|.\|\fR&#39;&#39;, each directory
+Except for the special entries ``\|\fB\|.\|\fR'' and ``\fB\|.\|.\|\fR'', each directory
 must appear as an entry in exactly one other, which is its
 parent.
 The reason for this is to simplify the writing of programs
@@ -418,7 +418,7 @@ permanent file system.
 In our installation, for example,
 the root directory resides
 on the fixed-head disk,
-and the large disk drive, which contains user&#39;s files,
+and the large disk drive, which contains user's files,
 is mounted by the system initialization
 program;
 the four smaller disk drives are available
@@ -441,7 +441,7 @@ when the removable volume is finally dismounted.
 In particular, in the root directories of
 all file systems, removable or not, the
 name
-``\fB\|.\|.\|\fR&#39;&#39;
+``\fB\|.\|.\|\fR''
 refers to the directory itself instead of to its parent.
 .s2
 3.5 Protection
@@ -474,30 +474,30 @@ except by the program itself.
 If the set-user-identification bit is on for the
 program, it may access the file although
 this access might be forbidden to other programs
-invoked by the given program&#39;s user.
+invoked by the given program's user.
 Since the actual user \*sID\*n
 of the invoker of any program
 is always available,
 set-user-\*sID\*n programs
 may take any measures desired to satisfy themselves
-as to their invoker&#39;s credentials.
+as to their invoker's credentials.
 This mechanism is used to allow users to execute
 the carefully-written
 commands
 which call privileged system entries.
 For example, there is a system entry
-invokable only by the ``super-user&#39;&#39; (below)
+invokable only by the ``super-user'' (below)
 which creates
 an empty directory.
 As indicated above, directories are expected to
-have entries for ``\fB\|.\|\fR&#39;&#39; and ``\fB\|.\|.\|\fR&#39;&#39;.
+have entries for ``\fB\|.\|\fR'' and ``\fB\|.\|.\|\fR''.
 The command which creates a directory
 is owned by the super-user
 and has the set-user-\*sID\*n bit set.
-After it checks its invoker&#39;s authorization to
+After it checks its invoker's authorization to
 create the specified directory,
 it creates it and makes the entries
-for ``\fB\|.\|\fR&#39;&#39; and ``\fB\|.\|.\|\fR&#39;&#39;.
+for ``\fB\|.\|\fR'' and ``\fB\|.\|.\|\fR''.
 .pg
 Since anyone may set the set-user-\*sID\*n
 bit on one of his own files,
@@ -507,7 +507,7 @@ For example,
 this protection scheme easily solves the \*sMOO\*n
 accounting problem posed in [\n+r].
 .pg
-The system recognizes one particular user \*sID\*n (that of the ``super-user&#39;&#39;) as
+The system recognizes one particular user \*sID\*n (that of the ``super-user'') as
 exempt from the usual constraints on file access; thus (for example)
 programs may be written to dump and reload the file
 system without

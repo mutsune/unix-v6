@@ -5,6 +5,6 @@ PERMUTED INDEX
 .sp 1.5
 .nf
 .de xx
-\\h&quot;3i-\\w&#39;\\$1&#39;u&quot;\\$1   \\$2
+\\h"3i-\\w'\\$1'u"\\$1   \\$2
 ..
 .so ptxx

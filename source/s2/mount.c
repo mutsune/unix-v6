@@ -14,47 +14,47 @@ char **argv;
 	register char *np;
 	int n, mf;
 
-	mf = open(&quot;/etc/mtab&quot;, 0);
+	mf = open("/etc/mtab", 0);
 	read(mf, mtab, NMOUNT*2*NAMSIZ);
 	if (argc==1) {
-		for (mp = mtab; mp &lt; &amp;mtab[NMOUNT]; mp++)
-			if (mp-&gt;file[0])
-				printf(&quot;%s on %s\n&quot;, mp-&gt;spec, mp-&gt;file);
+		for (mp = mtab; mp < &mtab[NMOUNT]; mp++)
+			if (mp->file[0])
+				printf("%s on %s\n", mp->spec, mp->file);
 		return;
 	}
-	if(argc &lt; 3) {
-		printf(&quot;arg count\n&quot;);
+	if(argc < 3) {
+		printf("arg count\n");
 		return;
 	}
 	ro = 0;
-	if(argc &gt; 3)
+	if(argc > 3)
 		ro++;
-	if(mount(argv[1], argv[2], ro) &lt; 0) {
-		perror(&quot;mount&quot;);
+	if(mount(argv[1], argv[2], ro) < 0) {
+		perror("mount");
 		return;
 	}
 	np = argv[1];
 	while(*np++)
 		;
 	np--;
-	while(*--np == &#39;/&#39;)
-		*np = &#39;\0&#39;;
-	while(np &gt; argv[1] &amp;&amp; *--np != &#39;/&#39;)
+	while(*--np == '/')
+		*np = '\0';
+	while(np > argv[1] && *--np != '/')
 		;
-	if(*np == &#39;/&#39;)
+	if(*np == '/')
 		np++;
 	argv[1] = np;
-	for (mp = mtab; mp &lt; &amp;mtab[NMOUNT]; mp++) {
-		if (mp-&gt;file[0] == 0) {
-			for (np = mp-&gt;spec; np &lt; &amp;mp-&gt;spec[NAMSIZ-1];)
+	for (mp = mtab; mp < &mtab[NMOUNT]; mp++) {
+		if (mp->file[0] == 0) {
+			for (np = mp->spec; np < &mp->spec[NAMSIZ-1];)
 				if ((*np++ = *argv[1]++) == 0)
 					argv[1]--;
-			for (np = mp-&gt;file; np &lt; &amp;mp-&gt;file[NAMSIZ-1];)
+			for (np = mp->file; np < &mp->file[NAMSIZ-1];)
 				if ((*np++ = *argv[2]++) == 0)
 					argv[2]--;
-			mp = &amp;mtab[NMOUNT];
-			while ((--mp)-&gt;file[0] == 0);
-			mf = creat(&quot;/etc/mtab&quot;, 0644);
+			mp = &mtab[NMOUNT];
+			while ((--mp)->file[0] == 0);
+			mf = creat("/etc/mtab", 0644);
 			write(mf, mtab, (mp-mtab+1)*2*NAMSIZ);
 			return;
 		}

@@ -2,18 +2,18 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../filsys.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../systm.h"
+#include "../filsys.h"
+#include "../conf.h"
+#include "../buf.h"
+#include "../inode.h"
+#include "../user.h"
 
 /*
  * iinit is called once (from main)
  * very early in initialization.
- * It reads the root&#39;s super block
+ * It reads the root's super block
  * and initializes the current date
  * from the last modified date.
  *
@@ -28,17 +28,17 @@ iinit()
 	bp = bread(rootdev, 1);
 	cp = getblk(NODEV);
 	if(u.u_error)
-		panic(&quot;iinit&quot;);
-	bcopy(bp-&gt;b_addr, cp-&gt;b_addr, 256);
+		panic("iinit");
+	bcopy(bp->b_addr, cp->b_addr, 256);
 	brelse(bp);
 	mount[0].m_bufp = cp;
 	mount[0].m_dev = rootdev;
-	cp = cp-&gt;b_addr;
-	cp-&gt;s_flock = 0;
-	cp-&gt;s_ilock = 0;
-	cp-&gt;s_ronly = 0;
-	time[0] = cp-&gt;s_time[0];
-	time[1] = cp-&gt;s_time[1];
+	cp = cp->b_addr;
+	cp->s_flock = 0;
+	cp->s_ilock = 0;
+	cp->s_ronly = 0;
+	time[0] = cp->s_time[0];
+	time[1] = cp->s_time[1];
 }
 
 /*
@@ -58,33 +58,33 @@ alloc(dev)
 	register *bp, *ip, *fp;
 
 	fp = getfs(dev);
-	while(fp-&gt;s_flock)
-		sleep(&amp;fp-&gt;s_flock, PINOD);
+	while(fp->s_flock)
+		sleep(&fp->s_flock, PINOD);
 	do {
-		if(fp-&gt;s_nfree &lt;= 0)
+		if(fp->s_nfree <= 0)
 			goto nospace;
-		bno = fp-&gt;s_free[--fp-&gt;s_nfree];
+		bno = fp->s_free[--fp->s_nfree];
 		if(bno == 0)
 			goto nospace;
 	} while (badblock(fp, bno, dev));
-	if(fp-&gt;s_nfree &lt;= 0) {
-		fp-&gt;s_flock++;
+	if(fp->s_nfree <= 0) {
+		fp->s_flock++;
 		bp = bread(dev, bno);
-		ip = bp-&gt;b_addr;
-		fp-&gt;s_nfree = *ip++;
-		bcopy(ip, fp-&gt;s_free, 100);
+		ip = bp->b_addr;
+		fp->s_nfree = *ip++;
+		bcopy(ip, fp->s_free, 100);
 		brelse(bp);
-		fp-&gt;s_flock = 0;
-		wakeup(&amp;fp-&gt;s_flock);
+		fp->s_flock = 0;
+		wakeup(&fp->s_flock);
 	}
 	bp = getblk(dev, bno);
 	clrbuf(bp);
-	fp-&gt;s_fmod = 1;
+	fp->s_fmod = 1;
 	return(bp);
 
 nospace:
-	fp-&gt;s_nfree = 0;
-	prdev(&quot;no space&quot;, dev);
+	fp->s_nfree = 0;
+	prdev("no space", dev);
 	u.u_error = ENOSPC;
 	return(NULL);
 }
@@ -99,28 +99,28 @@ free(dev, bno)
 	register *fp, *bp, *ip;
 
 	fp = getfs(dev);
-	fp-&gt;s_fmod = 1;
-	while(fp-&gt;s_flock)
-		sleep(&amp;fp-&gt;s_flock, PINOD);
+	fp->s_fmod = 1;
+	while(fp->s_flock)
+		sleep(&fp->s_flock, PINOD);
 	if (badblock(fp, bno, dev))
 		return;
-	if(fp-&gt;s_nfree &lt;= 0) {
-		fp-&gt;s_nfree = 1;
-		fp-&gt;s_free[0] = 0;
+	if(fp->s_nfree <= 0) {
+		fp->s_nfree = 1;
+		fp->s_free[0] = 0;
 	}
-	if(fp-&gt;s_nfree &gt;= 100) {
-		fp-&gt;s_flock++;
+	if(fp->s_nfree >= 100) {
+		fp->s_flock++;
 		bp = getblk(dev, bno);
-		ip = bp-&gt;b_addr;
-		*ip++ = fp-&gt;s_nfree;
-		bcopy(fp-&gt;s_free, ip, 100);
-		fp-&gt;s_nfree = 0;
+		ip = bp->b_addr;
+		*ip++ = fp->s_nfree;
+		bcopy(fp->s_free, ip, 100);
+		fp->s_nfree = 0;
 		bwrite(bp);
-		fp-&gt;s_flock = 0;
-		wakeup(&amp;fp-&gt;s_flock);
+		fp->s_flock = 0;
+		wakeup(&fp->s_flock);
 	}
-	fp-&gt;s_free[fp-&gt;s_nfree++] = bno;
-	fp-&gt;s_fmod = 1;
+	fp->s_free[fp->s_nfree++] = bno;
+	fp->s_fmod = 1;
 }
 
 /*
@@ -139,8 +139,8 @@ badblock(afp, abn, dev)
 
 	fp = afp;
 	bn = abn;
-	if (bn &lt; fp-&gt;s_isize+2 || bn &gt;= fp-&gt;s_fsize) {
-		prdev(&quot;bad block&quot;, dev);
+	if (bn < fp->s_isize+2 || bn >= fp->s_fsize) {
+		prdev("bad block", dev);
 		return(1);
 	}
 	return(0);
@@ -163,18 +163,18 @@ ialloc(dev)
 	int i, j, k, ino;
 
 	fp = getfs(dev);
-	while(fp-&gt;s_ilock)
-		sleep(&amp;fp-&gt;s_ilock, PINOD);
+	while(fp->s_ilock)
+		sleep(&fp->s_ilock, PINOD);
 loop:
-	if(fp-&gt;s_ninode &gt; 0) {
-		ino = fp-&gt;s_inode[--fp-&gt;s_ninode];
+	if(fp->s_ninode > 0) {
+		ino = fp->s_inode[--fp->s_ninode];
 		ip = iget(dev, ino);
 		if (ip==NULL)
 			return(NULL);
-		if(ip-&gt;i_mode == 0) {
-			for(bp = &amp;ip-&gt;i_mode; bp &lt; &amp;ip-&gt;i_addr[8];)
+		if(ip->i_mode == 0) {
+			for(bp = &ip->i_mode; bp < &ip->i_addr[8];)
 				*bp++ = 0;
-			fp-&gt;s_fmod = 1;
+			fp->s_fmod = 1;
 			return(ip);
 		}
 		/*
@@ -184,32 +184,32 @@ loop:
 		iput(ip);
 		goto loop;
 	}
-	fp-&gt;s_ilock++;
+	fp->s_ilock++;
 	ino = 0;
-	for(i=0; i&lt;fp-&gt;s_isize; i++) {
+	for(i=0; i<fp->s_isize; i++) {
 		bp = bread(dev, i+2);
-		ip = bp-&gt;b_addr;
-		for(j=0; j&lt;256; j=+16) {
+		ip = bp->b_addr;
+		for(j=0; j<256; j=+16) {
 			ino++;
 			if(ip[j] != 0)
 				continue;
-			for(k=0; k&lt;NINODE; k++)
-			if(dev==inode[k].i_dev &amp;&amp; ino==inode[k].i_number)
+			for(k=0; k<NINODE; k++)
+			if(dev==inode[k].i_dev && ino==inode[k].i_number)
 				goto cont;
-			fp-&gt;s_inode[fp-&gt;s_ninode++] = ino;
-			if(fp-&gt;s_ninode &gt;= 100)
+			fp->s_inode[fp->s_ninode++] = ino;
+			if(fp->s_ninode >= 100)
 				break;
 		cont:;
 		}
 		brelse(bp);
-		if(fp-&gt;s_ninode &gt;= 100)
+		if(fp->s_ninode >= 100)
 			break;
 	}
-	fp-&gt;s_ilock = 0;
-	wakeup(&amp;fp-&gt;s_ilock);
-	if (fp-&gt;s_ninode &gt; 0)
+	fp->s_ilock = 0;
+	wakeup(&fp->s_ilock);
+	if (fp->s_ninode > 0)
 		goto loop;
-	prdev(&quot;Out of inodes&quot;, dev);
+	prdev("Out of inodes", dev);
 	u.u_error = ENOSPC;
 	return(NULL);
 }
@@ -226,12 +226,12 @@ ifree(dev, ino)
 	register *fp;
 
 	fp = getfs(dev);
-	if(fp-&gt;s_ilock)
+	if(fp->s_ilock)
 		return;
-	if(fp-&gt;s_ninode &gt;= 100)
+	if(fp->s_ninode >= 100)
 		return;
-	fp-&gt;s_inode[fp-&gt;s_ninode++] = ino;
-	fp-&gt;s_fmod = 1;
+	fp->s_inode[fp->s_ninode++] = ino;
+	fp->s_fmod = 1;
 }
 
 /*
@@ -247,34 +247,34 @@ ifree(dev, ino)
  * bad count on dev x/y -- the count
  *	check failed. At this point, all
  *	the counts are zeroed which will
- *	almost certainly lead to &quot;no space&quot;
+ *	almost certainly lead to "no space"
  *	diagnostic
  * panic: no fs -- the device is not mounted.
- *	this &quot;cannot happen&quot;
+ *	this "cannot happen"
  */
 getfs(dev)
 {
 	register struct mount *p;
 	register char *n1, *n2;
 
-	for(p = &amp;mount[0]; p &lt; &amp;mount[NMOUNT]; p++)
-	if(p-&gt;m_bufp != NULL &amp;&amp; p-&gt;m_dev == dev) {
-		p = p-&gt;m_bufp-&gt;b_addr;
-		n1 = p-&gt;s_nfree;
-		n2 = p-&gt;s_ninode;
-		if(n1 &gt; 100 || n2 &gt; 100) {
-			prdev(&quot;bad count&quot;, dev);
-			p-&gt;s_nfree = 0;
-			p-&gt;s_ninode = 0;
+	for(p = &mount[0]; p < &mount[NMOUNT]; p++)
+	if(p->m_bufp != NULL && p->m_dev == dev) {
+		p = p->m_bufp->b_addr;
+		n1 = p->s_nfree;
+		n2 = p->s_ninode;
+		if(n1 > 100 || n2 > 100) {
+			prdev("bad count", dev);
+			p->s_nfree = 0;
+			p->s_ninode = 0;
 		}
 		return(p);
 	}
-	panic(&quot;no fs&quot;);
+	panic("no fs");
 }
 
 /*
  * update is the internal name of
- * &#39;sync&#39;. It goes through the disk
+ * 'sync'. It goes through the disk
  * queues to initiate sandbagged IO;
  * goes through the I nodes to write
  * modified nodes; and it goes through
@@ -290,22 +290,22 @@ update()
 	if(updlock)
 		return;
 	updlock++;
-	for(mp = &amp;mount[0]; mp &lt; &amp;mount[NMOUNT]; mp++)
-		if(mp-&gt;m_bufp != NULL) {
-			ip = mp-&gt;m_bufp-&gt;b_addr;
-			if(ip-&gt;s_fmod==0 || ip-&gt;s_ilock!=0 ||
-			   ip-&gt;s_flock!=0 || ip-&gt;s_ronly!=0)
+	for(mp = &mount[0]; mp < &mount[NMOUNT]; mp++)
+		if(mp->m_bufp != NULL) {
+			ip = mp->m_bufp->b_addr;
+			if(ip->s_fmod==0 || ip->s_ilock!=0 ||
+			   ip->s_flock!=0 || ip->s_ronly!=0)
 				continue;
-			bp = getblk(mp-&gt;m_dev, 1);
-			ip-&gt;s_fmod = 0;
-			ip-&gt;s_time[0] = time[0];
-			ip-&gt;s_time[1] = time[1];
-			bcopy(ip, bp-&gt;b_addr, 256);
+			bp = getblk(mp->m_dev, 1);
+			ip->s_fmod = 0;
+			ip->s_time[0] = time[0];
+			ip->s_time[1] = time[1];
+			bcopy(ip, bp->b_addr, 256);
 			bwrite(bp);
 		}
-	for(ip = &amp;inode[0]; ip &lt; &amp;inode[NINODE]; ip++)
-		if((ip-&gt;i_flag&amp;ILOCK) == 0) {
-			ip-&gt;i_flag =| ILOCK;
+	for(ip = &inode[0]; ip < &inode[NINODE]; ip++)
+		if((ip->i_flag&ILOCK) == 0) {
+			ip->i_flag =| ILOCK;
 			iupdat(ip, time);
 			prele(ip);
 		}

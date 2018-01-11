@@ -1,12 +1,12 @@
 char	dayw[]
 {
-	&quot; S  M Tu  W Th  F  S&quot;
+	" S  M Tu  W Th  F  S"
 };
 char	*smon[]
 {
-	&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;,
-	&quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;,
-	&quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;,
+	"Jan", "Feb", "Mar", "Apr",
+	"May", "Jun", "Jul", "Aug",
+	"Sep", "Oct", "Nov", "Dec",
 };
 char	string[432];
 main(argc, argv)
@@ -15,8 +15,8 @@ char *argv[];
 	register y, i, j;
 	int m;
 
-	if(argc &lt; 2) {
-		printf(&quot;usage: cal [month] year\n&quot;);
+	if(argc < 2) {
+		printf("usage: cal [month] year\n");
 		exit();
 	}
 	if(argc == 2)
@@ -27,15 +27,15 @@ char *argv[];
  */
 
 	m = number(argv[1]);
-	if(m&lt;1 || m&gt;12)
+	if(m<1 || m>12)
 		goto badarg;
 	y = number(argv[2]);
-	if(y&lt;1 || y&gt;9999)
+	if(y<1 || y>9999)
 		goto badarg;
-	printf(&quot;      %s %l\n&quot;, smon[m-1], y);
-	printf(&quot;%s\n&quot;, dayw);
+	printf("      %s %l\n", smon[m-1], y);
+	printf("%s\n", dayw);
 	cal(m, y, string, 24);
-	for(i=0; i&lt;6*24; i=+24)
+	for(i=0; i<6*24; i=+24)
 		pstr(string+i, 24);
 	exit();
 
@@ -45,29 +45,29 @@ char *argv[];
 
 xlong:
 	y = number(argv[1]);
-	if(y&lt;1 || y&gt;9999)
+	if(y<1 || y>9999)
 		goto badarg;
-	printf(&quot;\n\n\n&quot;);
-	printf(&quot;				%l\n&quot;, y);
-	printf(&quot;\n&quot;);
-	for(i=0; i&lt;12; i=+3) {
-		for(j=0; j&lt;6*72; j++)
-			string[j] = &#39;\0&#39;;
-		printf(&quot;	 %s&quot;, smon[i]);
-		printf(&quot;			%s&quot;, smon[i+1]);
-		printf(&quot;		       %s\n&quot;, smon[i+2]);
-		printf(&quot;%s   %s   %s\n&quot;, dayw, dayw, dayw);
+	printf("\n\n\n");
+	printf("				%l\n", y);
+	printf("\n");
+	for(i=0; i<12; i=+3) {
+		for(j=0; j<6*72; j++)
+			string[j] = '\0';
+		printf("	 %s", smon[i]);
+		printf("			%s", smon[i+1]);
+		printf("		       %s\n", smon[i+2]);
+		printf("%s   %s   %s\n", dayw, dayw, dayw);
 		cal(i+1, y, string, 72);
 		cal(i+2, y, string+23, 72);
 		cal(i+3, y, string+46, 72);
-		for(j=0; j&lt;6*72; j=+72)
+		for(j=0; j<6*72; j=+72)
 			pstr(string+j, 72);
 	}
-	printf(&quot;\n\n\n&quot;);
+	printf("\n\n\n");
 	exit();
 
 badarg:
-	printf(&quot;Bad argument\n&quot;);
+	printf("Bad argument\n");
 }
 
 number(str)
@@ -79,9 +79,9 @@ char *str;
 	n = 0;
 	s = str;
 	while(c = *s++) {
-		if(c&lt;&#39;0&#39; || c&gt;&#39;9&#39;)
+		if(c<'0' || c>'9')
 			return(0);
-		n = n*10 + c-&#39;0&#39;;
+		n = n*10 + c-'0';
 	}
 	return(n);
 }
@@ -95,14 +95,14 @@ char *str;
 	s = str;
 	i = n;
 	while(i--)
-		if(*s++ == &#39;\0&#39;)
-			s[-1] = &#39; &#39;;
+		if(*s++ == '\0')
+			s[-1] = ' ';
 	i = n+1;
 	while(i--)
-		if(*--s != &#39; &#39;)
+		if(*--s != ' ')
 			break;
-	s[1] = &#39;\0&#39;;
-	printf(&quot;%s\n&quot;, str);
+	s[1] = '\0';
+	printf("%s\n", str);
 }
 
 char	mon[]
@@ -146,19 +146,19 @@ char *p;
 	case 2:
 		;
 	}
-	for(i=1; i&lt;m; i++)
+	for(i=1; i<m; i++)
 		d =+ mon[i];
 	d =% 7;
 	s =+ 3*d;
-	for(i=1; i&lt;=mon[m]; i++) {
-		if(i==3 &amp; mon[m]==19) {
+	for(i=1; i<=mon[m]; i++) {
+		if(i==3 & mon[m]==19) {
 			i =+ 11;
 			mon[m] =+ 11;
 		}
-		if(i &gt; 9)
-			*s = i/10+&#39;0&#39;;
+		if(i > 9)
+			*s = i/10+'0';
 		s++;
-		*s++ = i%10+&#39;0&#39;;
+		*s++ = i%10+'0';
 		s++;
 		if(++d == 7) {
 			d = 0;
@@ -191,7 +191,7 @@ jan1(yr)
  *	less three days per 400
  */
 
-	if(y &gt; 1800) {
+	if(y > 1800) {
 		d =- (y-1701)/100;
 		d =+ (y-1601)/400;
 	}
@@ -200,7 +200,7 @@ jan1(yr)
  *	great calendar changeover instant
  */
 
-	if(y &gt; 1752)
+	if(y > 1752)
 		d =+ 3;
 
 	return(d%7);

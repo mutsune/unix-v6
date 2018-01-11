@@ -8,7 +8,7 @@
  * externals.
  */
 
-#include &quot;c0h.c&quot;
+#include "c0h.c"
 
 /*
  * Process a sequence of declaration statements
@@ -20,7 +20,7 @@ declist(sclass)
 
 	offset = 0;
 	sc = sclass;
-	while ((elsize = getkeywords(&amp;sclass, &amp;type)) != -1) {
+	while ((elsize = getkeywords(&sclass, &type)) != -1) {
 		offset = declare(sclass, type, offset, elsize);
 		sclass = sc;
 	}
@@ -50,8 +50,8 @@ int *scptr, *tptr;
 		case STATIC:
 		case EXTERN:
 		case REG:
-			if (skw &amp;&amp; skw!=cval)
-				error(&quot;Conflict in storage class&quot;);
+			if (skw && skw!=cval)
+				error("Conflict in storage class");
 			skw = cval;
 			break;
 	
@@ -61,14 +61,14 @@ int *scptr, *tptr;
 
 		case STRUCT:
 			o = STRUCT;
-			elsize = strdec(&amp;o, ismos);
+			elsize = strdec(&o, ismos);
 			cval = o;
 		case INT:
 		case CHAR:
 		case FLOAT:
 		case DOUBLE:
-			if (tkw&gt;=0)
-				error(&quot;Type clash&quot;);
+			if (tkw>=0)
+				error("Type clash");
 			tkw = cval;
 			break;
 	
@@ -76,7 +76,7 @@ int *scptr, *tptr;
 			peeksym = o;
 			if (isadecl==0)
 				return(-1);
-			if (tkw&lt;0)
+			if (tkw<0)
 				tkw = INT;
 			if (skw==0)
 				skw = AUTO;
@@ -86,7 +86,7 @@ int *scptr, *tptr;
 				else if (tkw==INT)
 					tkw = LONG;
 				else
-					error(&quot;Misplaced &#39;long&#39;&quot;);
+					error("Misplaced 'long'");
 			}
 			*scptr = skw;
 			*tptr = tkw;
@@ -112,13 +112,13 @@ int *tkwp;
 	ssym = 0;
 	if ((o=symbol())==NAME) {
 		ssym = csym;
-		if (ssym-&gt;hclass==0) {
-			ssym-&gt;hclass = STRTAG;
-			ssym-&gt;lenp = dimp;
+		if (ssym->hclass==0) {
+			ssym->hclass = STRTAG;
+			ssym->lenp = dimp;
 			chkdim();
 			dimtab[dimp++] = 0;
 		}
-		if (ssym-&gt;hclass != STRTAG)
+		if (ssym->hclass != STRTAG)
 			redec();
 		mosflg = mosf;
 		o = symbol();
@@ -130,9 +130,9 @@ int *tkwp;
 			decsyn(o);
 			return(0);
 		}
-		if (ssym-&gt;hclass!=STRTAG)
-			error(&quot;Bad structure name&quot;);
-		if ((elsize = dimtab[ssym-&gt;lenp&amp;0377])==0) {
+		if (ssym->hclass!=STRTAG)
+			error("Bad structure name");
+		if ((elsize = dimtab[ssym->lenp&0377])==0) {
 			*tkwp = RSTRUCT;
 			elsize = ssym;
 		}
@@ -148,9 +148,9 @@ int *tkwp;
 		if ((o = symbol()) != RBRACE)
 			goto syntax;
 		if (ssym) {
-			if (dimtab[ssym-&gt;lenp&amp;0377])
-				error(&quot;%.8s redeclared&quot;, ssym-&gt;name);
-			dimtab[ssym-&gt;lenp&amp;0377] = elsize;
+			if (dimtab[ssym->lenp&0377])
+				error("%.8s redeclared", ssym->name);
+			dimtab[ssym->lenp&0377] = elsize;
 		}
 	}
 	return(elsize);
@@ -161,8 +161,8 @@ int *tkwp;
  */
 chkdim()
 {
-	if (dimp &gt;= dimsiz) {
-		error(&quot;Dimension/struct table overflow&quot;);
+	if (dimp >= dimsiz) {
+		error("Dimension/struct table overflow");
 		exit(1);
 	}
 }
@@ -179,7 +179,7 @@ declare(askw, tkw, offset, elsize)
 	do {
 		offset =+ decl1(skw, tkw, offset, elsize);
 	} while ((o=symbol()) == COMMA);
-	if (o==SEMI || o==RPARN &amp;&amp; skw==ARG1)
+	if (o==SEMI || o==RPARN && skw==ARG1)
 		return(offset);
 	decsyn(o);
 }
@@ -201,42 +201,42 @@ decl1(askw, tkw, offset, elsize)
 	/*
 	 * Filler field
 	 */
-	if (peeksym==COLON &amp;&amp; skw==MOS) {
+	if (peeksym==COLON && skw==MOS) {
 		peeksym = -1;
 		t1 = conexp();
 		elsize = align(tkw, offset, t1);
 		bitoffs =+ t1;
 		return(elsize);
 	}
-	if ((t1=getype()) &lt; 0)
+	if ((t1=getype()) < 0)
 		goto syntax;
 	type = 0;
 	do
-		type = type&lt;&lt;TYLEN | (t1 &amp; XTYPE);
-	while (((t1=&gt;&gt;TYLEN) &amp; XTYPE)!=0);
+		type = type<<TYLEN | (t1 & XTYPE);
+	while (((t1=>>TYLEN) & XTYPE)!=0);
 	type =| tkw;
 	dsym = defsym;
-	if (!(dsym-&gt;hclass==0
-	   || (skw==ARG &amp;&amp; dsym-&gt;hclass==ARG1)
-	   || (skw==EXTERN &amp;&amp; dsym-&gt;hclass==EXTERN &amp;&amp; dsym-&gt;htype==type)))
-		if (skw==MOS &amp;&amp; dsym-&gt;hclass==MOS &amp;&amp; dsym-&gt;htype==type)
+	if (!(dsym->hclass==0
+	   || (skw==ARG && dsym->hclass==ARG1)
+	   || (skw==EXTERN && dsym->hclass==EXTERN && dsym->htype==type)))
+		if (skw==MOS && dsym->hclass==MOS && dsym->htype==type)
 			chkoff = 1;
 		else {
 			redec();
 			goto syntax;
 		}
-	dsym-&gt;htype = type;
+	dsym->htype = type;
 	if (skw)
-		dsym-&gt;hclass = skw;
+		dsym->hclass = skw;
 	if (skw==ARG1) {
 		if (paraml==0)
 			paraml = dsym;
 		else
-			parame-&gt;hoffset = dsym;
+			parame->hoffset = dsym;
 		parame = dsym;
 	}
-	if (elsize &amp;&amp; ((type&amp;TYPE)==RSTRUCT || (type&amp;TYPE)==STRUCT)) {
-		dsym-&gt;lenp = dimp;
+	if (elsize && ((type&TYPE)==RSTRUCT || (type&TYPE)==STRUCT)) {
+		dsym->lenp = dimp;
 		chkdim();
 		dimtab[dimp++] = elsize;
 	}
@@ -248,40 +248,40 @@ decl1(askw, tkw, offset, elsize)
 			elsize = 0;
 			peeksym = -1;
 			t1 = conexp();
-			dsym-&gt;hflag =| FFIELD;
+			dsym->hflag =| FFIELD;
 		}
 		a = align(type, offset, t1);
 		elsize =+ a;
 		offset =+ a;
 		if (t1) {
-			if (chkoff &amp;&amp; (dsym-&gt;bitoffs!=bitoffs
-		 	 || dsym-&gt;flen!=t1))
+			if (chkoff && (dsym->bitoffs!=bitoffs
+		 	 || dsym->flen!=t1))
 				redec();
-			dsym-&gt;bitoffs = bitoffs;
-			dsym-&gt;flen = t1;
+			dsym->bitoffs = bitoffs;
+			dsym->flen = t1;
 			bitoffs =+ t1;
 		}
-		if (chkoff &amp;&amp; dsym-&gt;hoffset != offset)
+		if (chkoff && dsym->hoffset != offset)
 			redec();
-		dsym-&gt;hoffset = offset;
+		dsym->hoffset = offset;
 	}
-	if ((dsym-&gt;htype&amp;XTYPE)==FUNC) {
-		if (dsym-&gt;hclass!=EXTERN &amp;&amp; dsym-&gt;hclass!=AUTO)
-			error(&quot;Bad function&quot;);
-		dsym-&gt;hclass = EXTERN;
+	if ((dsym->htype&XTYPE)==FUNC) {
+		if (dsym->hclass!=EXTERN && dsym->hclass!=AUTO)
+			error("Bad function");
+		dsym->hclass = EXTERN;
 	}
-	if (dsym-&gt;hclass==AUTO) {
+	if (dsym->hclass==AUTO) {
 		autolen =+ rlength(dsym);
-		dsym-&gt;hoffset = -autolen;
-	} else if (dsym-&gt;hclass==STATIC) {
-		dsym-&gt;hoffset = isn;
-		outcode(&quot;BBNBNB&quot;, BSS, LABEL, isn++,
+		dsym->hoffset = -autolen;
+	} else if (dsym->hclass==STATIC) {
+		dsym->hoffset = isn;
+		outcode("BBNBNB", BSS, LABEL, isn++,
 		    SSPACE, rlength(dsym), PROG);
-	} else if (dsym-&gt;hclass==REG) {
-		if ((type&amp;TYPE)&gt;CHAR &amp;&amp; (type&amp;XTYPE)==0
-		 || (type&amp;XTYPE)&gt;PTR || regvar&lt;3)
-			error(&quot;Bad register %o&quot;, type);
-		dsym-&gt;hoffset = --regvar;
+	} else if (dsym->hclass==REG) {
+		if ((type&TYPE)>CHAR && (type&XTYPE)==0
+		 || (type&XTYPE)>PTR || regvar<3)
+			error("Bad register %o", type);
+		dsym->hoffset = --regvar;
 	}
 syntax:
 	return(elsize);
@@ -298,7 +298,7 @@ getype()
 	switch(o=symbol()) {
 
 	case TIMES:
-		return(getype()&lt;&lt;TYLEN | PTR);
+		return(getype()<<TYLEN | PTR);
 
 	case LPARN:
 		type = getype();
@@ -309,7 +309,7 @@ getype()
 	case NAME:
 		defsym = ds = csym;
 		type = 0;
-		ds-&gt;ssp = dimp;
+		ds->ssp = dimp;
 	getf:
 		switch(o=symbol()) {
 
@@ -323,7 +323,7 @@ getype()
 			} else
 				if ((o=symbol()) != RPARN)
 					goto syntax;
-			type = type&lt;&lt;TYLEN | FUNC;
+			type = type<<TYLEN | FUNC;
 			goto getf;
 
 		case LBRACK:
@@ -331,14 +331,14 @@ getype()
 			if ((o=symbol()) != RBRACK) {
 				peeksym = o;
 				cval = conexp();
-				for (o=ds-&gt;ssp&amp;0377; o&lt;dimp; o++)
+				for (o=ds->ssp&0377; o<dimp; o++)
 					dimtab[o] =* cval;
 				dimtab[dimp++] = cval;
 				if ((o=symbol())!=RBRACK)
 					goto syntax;
 			} else
 				dimtab[dimp++] = 1;
-			type = type&lt;&lt;TYLEN | ARRAY;
+			type = type<<TYLEN | ARRAY;
 			goto getf;
 		}
 		peeksym = o;
@@ -361,35 +361,35 @@ align(type, offset, aflen)
 	flen = aflen;
 	a = offset;
 	t = type;
-	ftl = &quot;Field too long&quot;;
-	if (flen==0 &amp;&amp; bitoffs) {
+	ftl = "Field too long";
+	if (flen==0 && bitoffs) {
 		a =+ (bitoffs-1) / NBPC;
 		bitoffs = 0;
 	}
-	while ((t&amp;XTYPE)==ARRAY)
+	while ((t&XTYPE)==ARRAY)
 		t = decref(t);
 	if (t!=CHAR) {
-		a = (a+ALIGN) &amp; ~ALIGN;
-		if (a&gt;offset)
+		a = (a+ALIGN) & ~ALIGN;
+		if (a>offset)
 			bitoffs = 0;
 	}
 	if (flen) {
 		if (type==INT) {
-			if (flen &gt; NBPW)
+			if (flen > NBPW)
 				error(ftl);
-			if (flen+bitoffs &gt; NBPW) {
+			if (flen+bitoffs > NBPW) {
 				bitoffs = 0;
 				a =+ NCPW;
 			}
 		} else if (type==CHAR) {
-			if (flen &gt; NBPC)
+			if (flen > NBPC)
 				error(ftl);
-			if (flen+bitoffs &gt; NCPW) {
+			if (flen+bitoffs > NCPW) {
 				bitoffs = 0;
 				a =+ 1;
 			}
 		} else
-			error(&quot;Bad type for field&quot;);
+			error("Bad type for field");
 	}
 	return(a-offset);
 }
@@ -399,7 +399,7 @@ align(type, offset, aflen)
  */
 decsyn(o)
 {
-	error(&quot;Declaration syntax&quot;);
+	error("Declaration syntax");
 	errflush(o);
 }
 
@@ -408,5 +408,5 @@ decsyn(o)
  */
 redec()
 {
-	error(&quot;%.8s redeclared&quot;, defsym-&gt;name);
+	error("%.8s redeclared", defsym->name);
 }

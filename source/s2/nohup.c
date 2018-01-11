@@ -9,17 +9,17 @@ char *argv[];
 	int i;
 	char **argp, *strp, *p;
 
-	if(argc &lt; 2) {
-		printf(&quot;arg count\n&quot;);
+	if(argc < 2) {
+		printf("arg count\n");
 		exit();
 	}
 	argc--;
 	argv++;
 	argp = args;
 	strp = string;
-	for (i=0; i&lt;9; i++)
-		*strp++ = &quot;/usr/bin/&quot;[i];
-	for(i=0; i&lt;argc; i++) {
+	for (i=0; i<9; i++)
+		*strp++ = "/usr/bin/"[i];
+	for(i=0; i<argc; i++) {
 		*argp++ = strp;
 		p = *argv++;
 		while(*strp++ = *p++);
@@ -31,5 +31,5 @@ char *argv[];
 	execv(string+9, args);
 	execv(string+4, args);
 	execv(string, args);
-	printf(&quot;%s not found\n&quot;, string+9);
+	printf("%s not found\n", string+9);
 }

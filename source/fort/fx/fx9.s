@@ -3,12 +3,12 @@
 
 / fx9 -- code
 
-/	jsr	r5,code; &lt;string\0&gt;; .even
+/	jsr	r5,code; <string\0>; .even
 /		arg1
 /		arg2
 /		...
 /
-/ args specified by %&lt;c&gt; in string.
+/ args specified by %<c> in string.
 /   %s:  string
 /   %d:  decimal number
 /   %o:  octal number
@@ -37,22 +37,22 @@ code:
 1:
 	movb	(r4)+,r0
 	beq	1f
-	cmp	r0,$&#39;%
+	cmp	r0,$'%
 	beq	2f
 	jsr	r5,putc; obuf
 	br	1b
 2:
 	movb	(r4)+,r0
 	beq	1f
-	cmp	r0,$&#39;s
+	cmp	r0,$'s
 	beq	cstr
-	cmp	r0,$&#39;c
+	cmp	r0,$'c
 	beq	cchr
-	cmp	r0,$&#39;d
+	cmp	r0,$'d
 	beq	cdec
-	cmp	r0,$&#39;o
+	cmp	r0,$'o
 	beq	coct
-	cmp	r0,$&#39;n
+	cmp	r0,$'n
 	beq	cnam
 	jsr	r5,putc; obuf
 	br	1b
@@ -67,7 +67,7 @@ cstr:
 2:
 	movb	(r1)+,r0
 	beq	1b
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	2b
 	jsr	r5,putc; obuf
 	br	2b
@@ -100,7 +100,7 @@ cdec:
 	jsr	pc,2b
 2:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	r5,putc; obuf
 	rts	pc
 1:

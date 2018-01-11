@@ -235,7 +235,7 @@ copy2:
 bad:	mov	$1,r0
 	sys write;1f;2f-1f
 	4
-1:	&lt;error on copy\n&gt;
+1:	<error on copy\n>
 2:	.even
 /
 swap:

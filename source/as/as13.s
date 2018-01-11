@@ -22,9 +22,9 @@ assem:
 3:
 	mov	r4,-(sp)
 	jsr	pc,readop
-	cmp	r4,$&#39;=
+	cmp	r4,$'=
 	beq	4f
-	cmp	r4,$&#39;:
+	cmp	r4,$':
 	beq	1f
 	mov	r4,savop
 	mov	(sp)+,r4
@@ -36,12 +36,12 @@ assem:
 	bhis	1f
 	cmp	r4,$1		/ digit
 	beq	3f
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 	br	assem
 1:
 	bitb	$37,(r4)
 	beq	1f
-	jsr	r5,error; &#39;m
+	jsr	r5,error; 'm
 1:
 	bisb	dot-2,(r4)
 	mov	dot,2(r4)
@@ -64,7 +64,7 @@ assem:
 	mov	(sp)+,r1
 	cmp	r1,$200
 	bhis	1f
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 	br	ealoop
 1:
 	cmp	r1,$dotrel
@@ -82,25 +82,25 @@ assem:
 	mov	r2,2(r1)
 	br	ealoop
 1:
-	jsr	r5,error; &#39;.
+	jsr	r5,error; '.
 	movb	$2,dotrel
 ealoop:
-	cmp	r4,$&#39;;
+	cmp	r4,$';
 	beq	assem1
-	cmp	r4,$&#39;\n
+	cmp	r4,$'\n
 	bne	1f
 	inc	line
 	br	assem1
 1:
-	cmp	r4,$&#39;\e
+	cmp	r4,$'\e
 	bne	2f
 	tst	ifflg
 	beq	1f
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 1:
 	rts	pc
 2:
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 2:
 	jsr	pc,checkeos
 		br assem1
@@ -114,16 +114,16 @@ fbcheck:
 	bhi	1f
 	rts	pc
 1:
-	jsr	r5,error; &#39;f
+	jsr	r5,error; 'f
 	clr	r0
 	rts	pc
 
 checkeos:
-	cmp	r4,$&#39;\n
+	cmp	r4,$'\n
 	beq	1f
-	cmp	r4,$&#39;;
+	cmp	r4,$';
 	beq	1f
-	cmp	r4,$&#39;\e
+	cmp	r4,$'\e
 	beq	1f
 	add	$2,(sp)
 1:

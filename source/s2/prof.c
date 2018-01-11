@@ -77,74 +77,74 @@ char **argv;
 
 	obuf[0] = 1;
 	argv++;
-	namfil = &quot;a.out&quot;;
-	while (argc&gt;1) {
-		if (**argv == &#39;-&#39;) {
-			if (*++*argv == &#39;l&#39;)
+	namfil = "a.out";
+	while (argc>1) {
+		if (**argv == '-') {
+			if (*++*argv == 'l')
 				lflg++;
-			if (**argv == &#39;a&#39;)
+			if (**argv == 'a')
 				aflg = 040;
-			if(**argv == &#39;v&#39;)
+			if(**argv == 'v')
 				vflg++;
 		} else
 			namfil = *argv;
 		argc--;
 		argv++;
 	}
-	if ((nf = open(namfil, 0)) &lt; 0) {
-		printf(&quot;Can&#39;t find %s\n&quot;, namfil);
+	if ((nf = open(namfil, 0)) < 0) {
+		printf("Can't find %s\n", namfil);
 		done();
 	}
 	read(nf, buf, 020);
-	if (buf[0] != 0407 &amp;&amp; buf[0] != 0410 &amp;&amp; buf[0] != 0411) { /* a.out magic */
-		printf(&quot;Bad format: %s\n&quot;, namfil);
+	if (buf[0] != 0407 && buf[0] != 0410 && buf[0] != 0411) { /* a.out magic */
+		printf("Bad format: %s\n", namfil);
 		done();
 	}
 	symsiz = buf[4];
 	symoff = buf[1] + buf[2];
 	if (buf[7] != 1)
-		symoff =&lt;&lt; 1;
+		symoff =<< 1;
 	seek(nf, symoff+020, 0);
-	if ((pf = open(&quot;mon.out&quot;, 0)) &lt; 0) {
-		printf(&quot;No mon.out\n&quot;);
+	if ((pf = open("mon.out", 0)) < 0) {
+		printf("No mon.out\n");
 		done();
 	}
 	fstat(pf, buf);
-	read(pf, &amp;lowpc, 2);
-	read(pf, &amp;highpc, 2);
-	read(pf, &amp;ncount, 2);
-	bufs = buf-&gt;size/2 - 3*(ncount+1);
+	read(pf, &lowpc, 2);
+	read(pf, &highpc, 2);
+	read(pf, &ncount, 2);
+	bufs = buf->size/2 - 3*(ncount+1);
 	read(pf, cbuf, ncount*6);
-	lowpc = (lowpc&gt;&gt;1) &amp; 077777;
-	highpc = (highpc&gt;&gt;1) &amp; 077777;
+	lowpc = (lowpc>>1) & 077777;
+	highpc = (highpc>>1) & 077777;
 	npe = nl;
 	initf(nf);
-	for (nname = 0; symsiz &gt; 0; symsiz =- 12) {
-		for(i=0; i&lt;12; i++)
-			buf-&gt;fname[i] = getc(ibuf);
-		if ((buf-&gt;flag | aflg) != 042)
+	for (nname = 0; symsiz > 0; symsiz =- 12) {
+		for(i=0; i<12; i++)
+			buf->fname[i] = getc(ibuf);
+		if ((buf->flag | aflg) != 042)
 			continue;
-		buf-&gt;fvalue = (buf-&gt;fvalue&gt;&gt;1) &amp; 077777;
-		npe-&gt;value = buf-&gt;fvalue;
-		for (i=0; i&lt;8; i++)
-			npe-&gt;name[i] = buf-&gt;fname[i];
+		buf->fvalue = (buf->fvalue>>1) & 077777;
+		npe->value = buf->fvalue;
+		for (i=0; i<8; i++)
+			npe->name[i] = buf->fname[i];
 		npe++;
 		nname++;
 	}
 	if (nname == 0) {
-		printf(&quot;No symbols: %s\n&quot;, namfil);
+		printf("No symbols: %s\n", namfil);
 		done();
 	}
-	npe-&gt;value = 077777;
+	npe->value = 077777;
 	npe++;
-	for (cp = cbuf; cp &lt; &amp;cbuf[ncount]; cp++)
-		for (np = nl; np &lt; npe; np++)
-			if (cp-&gt;cvalue-8 == np-&gt;value&lt;&lt;1) {
-				np-&gt;ncall[0] = cp-&gt;cncall[0];
-				np-&gt;ncall[1] = cp-&gt;cncall[1];
+	for (cp = cbuf; cp < &cbuf[ncount]; cp++)
+		for (np = nl; np < npe; np++)
+			if (cp->cvalue-8 == np->value<<1) {
+				np->ncall[0] = cp->cncall[0];
+				np->ncall[1] = cp->cncall[1];
 				break;
 			}
-	qsort(nl, nname, 18, &amp;valcmp);
+	qsort(nl, nname, 18, &valcmp);
 	scale = (highpc-lowpc)/(bufs+0.0);
 	initf(pf);
 	for (i=0; (j = getc(ibuf)) != -1; i++) {
@@ -153,31 +153,31 @@ char **argv;
 		if (ccnt == 0)
 			continue;
 		time = ccnt;
-		if (ccnt&lt;0)
+		if (ccnt<0)
 			time =+ 65536.;
 		totime =+ time;
-		if(time &gt; maxtime)
+		if(time > maxtime)
 			maxtime = time;
 		pcl = lowpc + scale*i - 1;
 		pch = lowpc + scale*(i+1) - 1;
-		for (j=0; j&lt;nname; j++) {
-			if (pch &lt; nl[j].value)
+		for (j=0; j<nname; j++) {
+			if (pch < nl[j].value)
 				break;
-			if (pcl &gt;= nl[j+1].value)
+			if (pcl >= nl[j+1].value)
 				continue;
 			overlap=(min(pch,nl[j+1].value)-max(pcl,nl[j].value));
 			nl[j].time =+ overlap*time/scale;
 		}
 	}
 	if (totime==0.0) {
-		printf(&quot;No time accumulated\n&quot;);
+		printf("No time accumulated\n");
 		done();
 	}
 	if(!vflg)
 		goto print;
-	vf = open(&quot;/dev/vt0&quot;, 1);
-	if(vf &lt; 0) {
-		printf(&quot;Cannot open vt\n&quot;);
+	vf = open("/dev/vt0", 1);
+	if(vf < 0) {
+		printf("Cannot open vt\n");
 		done();
 	}
 	obuf[0] = vf;
@@ -189,7 +189,7 @@ char **argv;
 	vtch(3);
 	point(0., -2048.);
 	point(0., 2048.);
-	for(j=0; j&lt;9; j++) {
+	for(j=0; j<9; j++) {
 		vtch(3);
 		point(-2048., 2048. - j*512.);
 		point(0., 2048. - j*512.);
@@ -204,7 +204,7 @@ char **argv;
 		ccnt.fname[0] = j;
 		ccnt.fname[1] = getc(ibuf);
 		time = ccnt;
-		if(ccnt &lt; 0)
+		if(ccnt < 0)
 			time =+ 65536.;
 		vtch(3);
 		point(lastsx, lasty);
@@ -220,13 +220,13 @@ char **argv;
 	}
 	scale = 4096./(highpc-lowpc);
 	lastx = 50.;
-	for(np = nl; np&lt;npe;  np++) {
-		if(np-&gt;value &lt; lowpc)
+	for(np = nl; np<npe;  np++) {
+		if(np->value < lowpc)
 			continue;
-		if(np-&gt;value &gt;= highpc)
+		if(np->value >= highpc)
 			continue;
-		time = np-&gt;time/totime;
-		lasty = 2048. - (np-&gt;value - lowpc)*scale;
+		time = np->time/totime;
+		lasty = 2048. - (np->value - lowpc)*scale;
 		vtch(3);
 		point(0., lasty);
 		point(50., lasty);
@@ -237,43 +237,43 @@ char **argv;
 		point(lastx+10., lasty+60.);
 		vtch(1);
 		vtch(3);
-		for(j=0; j&lt;8; j++)
-			if(np-&gt;name[j] != &#39;_&#39;)
-			vtch(np-&gt;name[j]);
+		for(j=0; j<8; j++)
+			if(np->name[j] != '_')
+			vtch(np->name[j]);
 		vtch(0);
 		lastx =+ 500.;
-		if(lastx &gt; 2000.)
+		if(lastx > 2000.)
 			lastx = 50.;
 	}
 	done();
 
 print:
-	printf(&quot;    name %%time #call  ms/call\n&quot;);
+	printf("    name %%time #call  ms/call\n");
 	if (!lflg)
-		qsort(nl, nname, 18, &amp;timcmp);
-	for (np = nl; np&lt;npe-1; np++) {
-		time = np-&gt;time/totime;
-		printf(&quot;%8.8s%6.1f&quot;, np-&gt;name, 100*time);
-		fnc = ltod(np-&gt;ncall);
+		qsort(nl, nname, 18, &timcmp);
+	for (np = nl; np<npe-1; np++) {
+		time = np->time/totime;
+		printf("%8.8s%6.1f", np->name, 100*time);
+		fnc = ltod(np->ncall);
 		if (fnc != 0.0) {
-			printf(&quot;%6s&quot;, locv(np-&gt;ncall[0], np-&gt;ncall[1]));
-			printf(&quot; %7.2f\n&quot;, np-&gt;time/(fnc*.06));
+			printf("%6s", locv(np->ncall[0], np->ncall[1]));
+			printf(" %7.2f\n", np->time/(fnc*.06));
 		} else
-			printf(&quot;\n&quot;);
+			printf("\n");
 	}
 	done();
 }
 
 min(a, b)
 {
-	if (a&lt;b)
+	if (a<b)
 		return(a);
 	return(b);
 }
 
 max(a, b)
 {
-	if (a&gt;b)
+	if (a>b)
 		return(a);
 	return(b);
 }
@@ -281,7 +281,7 @@ max(a, b)
 valcmp(p1, p2)
 struct nl *p1, *p2;
 {
-	return(p1-&gt;value - p2-&gt;value);
+	return(p1->value - p2->value);
 }
 
 timcmp(p1, p2)
@@ -289,10 +289,10 @@ struct nl *p1, *p2;
 {
 	float d;
 
-	d = p2-&gt;time - p1-&gt;time;
-	if (d &gt; 0.0)
+	d = p2->time - p1->time;
+	if (d > 0.0)
 		return(1);
-	if (d &lt; 0.0)
+	if (d < 0.0)
 		return(-1);
 	return(0);
 }
@@ -301,7 +301,7 @@ vtch(c)
 int c;
 {
 
-	putchar(c&amp;0377);
+	putchar(c&0377);
 }
 
 point(x, y)
@@ -324,9 +324,9 @@ float xy;
 	int ixy;
 	struct { char b1; char b2;};
 
-	if(xy &gt; 2047.)
+	if(xy > 2047.)
 		xy = 2047.;
-	if(xy &lt; -2048.)
+	if(xy < -2048.)
 		xy = -2048.;
 	ixy = xy;
 	vtch(ixy.b1);

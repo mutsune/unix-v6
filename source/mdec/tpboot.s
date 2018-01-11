@@ -1,5 +1,5 @@
 / tape boot program to load and transfer
-/ to a &#39;tp&#39; entry
+/ to a 'tp' entry
 
 / entry is made by jsr pc,*$0
 / so return can be rts pc
@@ -28,18 +28,18 @@ start:
 	mov	$trvect,r5
 	mov	$name,r4
 	jsr	pc,rew
-	mov	$&#39;=,r0
+	mov	$'=,r0
 	jsr	pc,(r5)
 2:
 	mov	r4,r1
 1:
 	jsr	pc,getc
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
-	cmp	r0,$&#39;@
+	cmp	r0,$'@
 	beq	2b
 	movb	r0,(r1)+
-	cmp	r0,$&#39;#
+	cmp	r0,$'#
 	bne	1b
 	sub	$2,r1
 	cmp	r1,r4

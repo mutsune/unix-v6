@@ -94,7 +94,7 @@ div3:
 /
 /	load r5 with binary divisor for finding
 /	trial quotient digits. If leading digit of
-/	divisor is &lt;10, it is scaled
+/	divisor is <10, it is scaled
 /
 	clr	magic
 	mov	divisor,r1

@@ -34,7 +34,7 @@ argument matches the current file name.
 Normal
 .it Shell
 argument syntax may be used if escaped (watch out for
-`[&#39;, `?&#39; and `*&#39;).
+`[', `?' and `*').
 .s3
 .lp +16 16
 \fB\*-perm\fR onum	\c
@@ -49,7 +49,7 @@ If
 is prefixed by a minus sign,
 more flag bits (017777, see stat(II)) become significant and
 the flags are compared: 
-.it &quot;(flags&amp;onum)==onum.&quot;
+.it "(flags&onum)==onum."
 .s3
 .lp +16 16
 \fB\*-type\fI c\fR	True if the type of the file
@@ -58,7 +58,7 @@ is
 where
 .it c
 is
-.bd &quot;b, c, d&quot;
+.bd "b, c, d"
 or
 .bd f
 for
@@ -109,7 +109,7 @@ exit status zero
 (most commands do).
 The end of the command is punctuated by an escaped
 semicolon.
-A command argument `{}&#39; is replaced by the
+A command argument `{}' is replaced by the
 current pathname.
 .s3
 .lp +16 16
@@ -151,15 +151,15 @@ second operand evaluated only if first is false
 .s3
 .i0
 To remove files named
-`a.out&#39; and `*.o&#39; not accessed for a week:
+`a.out' and `*.o' not accessed for a week:
 .s3
 .lp +.5i 0
-find / &quot;(&quot; \*-name a.out \*-o \*-name &quot;*.o&quot; &quot;)&quot;
-\*-a \*-atime +7 \*-a \*-exec rm {} &quot;;&quot;
+find / "(" \*-name a.out \*-o \*-name "*.o" ")"
+\*-a \*-atime +7 \*-a \*-exec rm {} ";"
 .i0
 .sh FILES
 /etc/passwd
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 sh (I), if(I), file system (V)
 .sh BUGS
 There is no way to check device type.

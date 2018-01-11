@@ -18,7 +18,7 @@ start:
 	mov	savr5,r5
 	mov	savsp,sp
 	jsr	pc,4(r5)
-		&lt;set up to format on drive 0\n\0&gt;
+		<set up to format on drive 0\n\0>
 		.even
 
 	clr	r0
@@ -172,7 +172,7 @@ start:
 
 / foreward pass
 / confirm block numbers
-/ write all 1&#39;s in data
+/ write all 1's in data
 
 check:
 	clrb	tcst
@@ -199,7 +199,7 @@ check:
 / reverse pass
 / confirm block numbers
 / read data and compare
-/ to all 1&#39;s
+/ to all 1's
 
 1:
 	mov	$4003,tccm
@@ -241,16 +241,16 @@ error6:
 error7:
 	mov	$7,r0
 1:
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,0f
 	mov	tcst,-(sp)
 	mov	tccm,-(sp)
 	mov	$1,tccm
 	mov	savr5,r5
 	jsr	pc,4(r5)
-		&lt;error&gt;
+		<error>
 0:
-		&lt;x\ntcst in r0; tccm in r1\n\0&gt;
+		<x\ntcst in r0; tccm in r1\n\0>
 		.even
 	mov	(sp)+,r1
 	mov	(sp)+,r0

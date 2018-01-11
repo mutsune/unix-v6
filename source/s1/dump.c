@@ -11,19 +11,19 @@
  * 0 dump from the epoch
  * d dump specified number of days
  * h dump specified number of hours
- * a on incremental dump, dump files even &gt;= MAXSIZE
+ * a on incremental dump, dump files even >= MAXSIZE
  */
 
 char	*dargv[]
 {
 	0,
-	&quot;i&quot;,
-	&quot;/dev/rp0&quot;,
+	"i",
+	"/dev/rp0",
 	0
 };
 
-#include &quot;/usr/sys/ino.h&quot;
-#include &quot;/usr/sys/filsys.h&quot;
+#include "/usr/sys/ino.h"
+#include "/usr/sys/filsys.h"
 #define	MAXSIZE	1000
 struct filsys sblock;
 struct
@@ -31,7 +31,7 @@ struct
 	char	name[16];
 	int	date[2];
 } dtab[10];
-char	*dfile	&quot;/etc/dtab&quot;;
+char	*dfile	"/etc/dtab";
 char	*ofile;
 int	*talist;
 int	fi;
@@ -59,7 +59,7 @@ char **argv;
 	register struct inode *ip;
 	int ino;
 
-	ofile = &quot;/dev/mt0&quot;;
+	ofile = "/dev/mt0";
 	time(date);
 	if(argc == 1) {
 		argv = dargv;
@@ -73,55 +73,55 @@ char **argv;
 	switch(*key++) {
 
 	default:
-		printf(&quot;bad character in key\n&quot;);
+		printf("bad character in key\n");
 		exit();
 
-	case &#39;a&#39;: /* dump all (even large) */
+	case 'a': /* dump all (even large) */
 		aflg++;
 		continue;
 
-	case &#39;-&#39;:
+	case '-':
 		continue;
 
-	case &#39;c&#39;: /* increment file name */
+	case 'c': /* increment file name */
 		cflg++;
 		continue;
 
-	case &#39;f&#39;: /* file name from arg list */
+	case 'f': /* file name from arg list */
 		argc--;
 		argv++;
 		ofile = *argv;
 		continue;
 
-	case &#39;i&#39;: /* date from date file */
+	case 'i': /* date from date file */
 		iflg++;
 		continue;
 
-	case &#39;s&#39;: /* tape size */
+	case 's': /* tape size */
 		tsize = number(argv[1]) * 9;
 		argv++;
 		argc--;
 		continue;
 
-	case &#39;b&#39;: /* tape size */
+	case 'b': /* tape size */
 		tsize = number(argv[1]);
 		argv++;
 		argc--;
 		continue;
 
-	case &#39;u&#39;: /* rewrite date */
+	case 'u': /* rewrite date */
 		dflg++;
 		continue;
 
-	case &#39;0&#39;: /* dump all */
+	case '0': /* dump all */
 		ddate[0] = ddate[1] = 0;
 		continue;
 
-	case &#39;d&#39;: /* dump some number of days */
+	case 'd': /* dump some number of days */
 		i = 21600;
 		goto sd;
 
-	case &#39;h&#39;: /* dump some number of hours */
+	case 'h': /* dump some number of hours */
 		i = 900;
 		goto sd;
 
@@ -132,64 +132,64 @@ char **argv;
 		argv++;
 		argc--;
 		while(s) {
-			if(i &gt; ddate[1])
+			if(i > ddate[1])
 				ddate[0]--;
 			ddate[1] =- i;
 			s--;
 		}
 		continue;
 	}
-	if(argc &lt;= 1) {
-		printf(&quot;no file system specified\n&quot;);
+	if(argc <= 1) {
+		printf("no file system specified\n");
 		exit();
 	}
 	if(iflg) {
 		f = open(dfile, 0);
-		if(f &gt;= 0) {
+		if(f >= 0) {
 			read(f, dtab, sizeof dtab);
 			close(f);
-			for(i=0; i&lt;10; i++)
+			for(i=0; i<10; i++)
 				if(equal(dtab[i].name, argv[1])) {
 					ddate[0] = dtab[i].date[0];
 					ddate[1] = dtab[i].date[1];
 				}
 		}
 	}
-	printf(&quot;%s:\n&quot;, argv[1]);
+	printf("%s:\n", argv[1]);
 	fi = open(argv[1], 0);
-	if(fi &lt; 0) {
-		printf(&quot;cannot open %s\n&quot;, argv[1]);
+	if(fi < 0) {
+		printf("cannot open %s\n", argv[1]);
 		exit();
 	}
-	printf(&quot;incremental dump from\n&quot;);
+	printf("incremental dump from\n");
 	pdate(ddate);
 	sync();
-	bread(1, &amp;sblock);
+	bread(1, &sblock);
 	talist = sbrk(size(0, sblock.s_isize*32)*512);
 	tap = talist;
 	if(tap == -1) {
-		printf(&quot;No memory\n&quot;);
+		printf("No memory\n");
 		exit();
 	}
 	nfil = 0;
 	nblk = size(0, sblock.s_isize*32);
 	ino = 0;
-	for(i=0; i&lt;sblock.s_isize; i++) {
+	for(i=0; i<sblock.s_isize; i++) {
 		bread(i+2, buf);
-		for(ip = &amp;buf[0]; ip &lt; &amp;buf[256]; ip++) {
+		for(ip = &buf[0]; ip < &buf[256]; ip++) {
 			ino++;
-			if(ip-&gt;i_mode == 0 || ip-&gt;i_nlink == 0) {
+			if(ip->i_mode == 0 || ip->i_nlink == 0) {
 				*tap++ = -1;
 				continue;
 			}
-			if(ip-&gt;i_mtime[0] &lt; ddate[0])
+			if(ip->i_mtime[0] < ddate[0])
 				goto no;
-			if(ip-&gt;i_mtime[0] == ddate[0] &amp;&amp;
-			   ip-&gt;i_mtime[1] &lt;  ddate[1])
+			if(ip->i_mtime[0] == ddate[0] &&
+			   ip->i_mtime[1] <  ddate[1])
 				goto no;
-			s = size(ip-&gt;i_size0&amp;0377, ip-&gt;i_size1) + 1;
-			if (s&gt;MAXSIZE &amp;&amp; aflg==0 &amp;&amp; iflg!=0) {
-				printf(&quot;%l big; not dumped.\n&quot;, ino);
+			s = size(ip->i_size0&0377, ip->i_size1) + 1;
+			if (s>MAXSIZE && aflg==0 && iflg!=0) {
+				printf("%l big; not dumped.\n", ino);
 				goto no;
 			}
 			nfil++;
@@ -200,9 +200,9 @@ char **argv;
 			*tap++ = 0;
 		}
 	}
-	printf(&quot;%l files\n%l blocks\n&quot;, nfil, nblk);
+	printf("%l files\n%l blocks\n", nfil, nblk);
 	i = ldiv(0, nblk, ldiv(0, tsize, 10));
-	printf(&quot;%l.%l tapes\n&quot;, i/10, i%10);
+	printf("%l.%l tapes\n", i/10, i%10);
 	tap = buf;
 	clrbuf(tap);
 	*tap++ = sblock.s_isize;
@@ -220,36 +220,36 @@ char **argv;
 		tap =+ 256;
 	}
 	tap = talist;
-	for(i=0; i&lt;sblock.s_isize; i++) {
+	for(i=0; i<sblock.s_isize; i++) {
 		bread(i+2, buf);
-		for(ip = &amp;buf[0]; ip &lt; &amp;buf[256]; ip++) {
-			if(*tap &amp;&amp; *tap != -1)
+		for(ip = &buf[0]; ip < &buf[256]; ip++) {
+			if(*tap && *tap != -1)
 				dump(ip, *tap-1);
 			tap++;
 		}
 	}
-	printf(&quot;%l phase errors\n&quot;, pher);
+	printf("%l phase errors\n", pher);
 	if(!dflg)
 		exit();
-	for(i=0; i&lt;10; i++)
+	for(i=0; i<10; i++)
 		dtab[i].name[0] = 0;
 	f = open(dfile, 2);
-	if(f &lt; 0) {
+	if(f < 0) {
 		f = creat(dfile, 0666);
-		if(f &lt; 0) {
-			printf(&quot;cannot create %s\n&quot;, dfile);
+		if(f < 0) {
+			printf("cannot create %s\n", dfile);
 			exit();
 		}
 	} else
 		read(f, dtab, sizeof dtab);
-	for(i=0; i&lt;10; i++)
+	for(i=0; i<10; i++)
 		if(dtab[i].name[0] == 0 || equal(dtab[i].name, argv[1]))
 			goto found;
-	printf(&quot;%s full\n&quot;, dfile);
+	printf("%s full\n", dfile);
 	exit();
 
 found:
-	for(s=0; s&lt;15; s++) {
+	for(s=0; s<15; s++) {
 		dtab[i].name[s] = argv[1][s];
 		if(argv[1][s] == 0)
 			break;
@@ -258,7 +258,7 @@ found:
 	dtab[i].date[1] = date[1];
 	seek(f, 0, 0);
 	write(f, dtab, sizeof dtab);
-	printf(&quot;date updated\n&quot;);
+	printf("date updated\n");
 	pdate(date);
 }
 
@@ -266,8 +266,8 @@ pdate(d)
 int *d;
 {
 
-	if(d[0] == 0 &amp;&amp; d[1] == 0)
-		printf(&quot;the epoch\n&quot;); else
+	if(d[0] == 0 && d[1] == 0)
+		printf("the epoch\n"); else
 		printf(ctime(d));
 }
 
@@ -279,38 +279,38 @@ struct inode *ip;
 	p = dbuf;
 	q = ip;
 	clrbuf(p);
-	while(q &lt; &amp;ip-&gt;i_mtime[2])
+	while(q < &ip->i_mtime[2])
 		*p++ = *q++;
 	swrite(dbuf);
-	if(ip-&gt;i_mode &amp; (IFBLK&amp;IFCHR)) {
+	if(ip->i_mode & (IFBLK&IFCHR)) {
 		if(sz != 0)
-			printf(&quot;special\n&quot;);
+			printf("special\n");
 		return;
 	}
-	for(p = &amp;ip-&gt;i_addr[0]; p &lt; &amp;ip-&gt;i_addr[8]; p++)
+	for(p = &ip->i_addr[0]; p < &ip->i_addr[8]; p++)
 	if(*p) {
-		if(ip-&gt;i_mode&amp;ILARG) {
+		if(ip->i_mode&ILARG) {
 			bread(*p, ibuf);
-			for(q = &amp;ibuf[0]; q &lt; &amp;ibuf[256]; q++)
+			for(q = &ibuf[0]; q < &ibuf[256]; q++)
 			if(*q) {
-				if(p == &amp;ip-&gt;i_addr[7]) {
+				if(p == &ip->i_addr[7]) {
 					bread(*q, vbuf);
-					for(r = &amp;vbuf[0]; r &lt; &amp;vbuf[256]; r++)
+					for(r = &vbuf[0]; r < &vbuf[256]; r++)
 					if(*r) {
-						if(--sz &lt; 0)
+						if(--sz < 0)
 							goto pe;
 						bread(*r, dbuf);
 						bwrite(dbuf);
 					}
 					continue;
 				}
-				if(--sz &lt; 0)
+				if(--sz < 0)
 					goto pe;
 				bread(*q, dbuf);
 				bwrite(dbuf);
 			}
 		} else {
-			if(--sz &lt; 0)
+			if(--sz < 0)
 				goto pe;
 			bread(*p, dbuf);
 			bwrite(dbuf);
@@ -322,7 +322,7 @@ struct inode *ip;
 
 pe:
 	clrbuf(dbuf);
-	while(--sz &gt;= 0)
+	while(--sz >= 0)
 		bwrite(dbuf);
 	pher++;
 }
@@ -332,7 +332,7 @@ bread(bno, b)
 
 	seek(fi, bno, 3);
 	if(read(fi, b, 512) != 512) {
-		printf(&quot;read error %l\n&quot;, bno);
+		printf("read error %l\n", bno);
 	}
 }
 
@@ -367,7 +367,7 @@ bwrite(b)
 
 	if(taddr == 0) {
 		if(fo != -1) {
-			printf(&quot;change tapes\n&quot;);
+			printf("change tapes\n");
 			close(fo);
 			rdline();
 		}
@@ -375,13 +375,13 @@ bwrite(b)
 	}
 wloop:
 	if(write(fo, b, 512) != 512) {
-		printf(&quot;write error\n&quot;);
+		printf("write error\n");
 		rdline();
 		seek(fo, taddr, 3);
 		goto wloop;
 	}
 	taddr++;
-	if(taddr &gt;= tsize)
+	if(taddr >= tsize)
 		taddr = 0;
 }
 
@@ -391,10 +391,10 @@ rdline()
 
 loop:
 	c = 0;
-	read(0, &amp;c, 1);
+	read(0, &c, 1);
 	if(c == 0)
 		exit();
-	if(c != &#39;\n&#39;)
+	if(c != '\n')
 		goto loop;
 }
 
@@ -405,9 +405,9 @@ char *s;
 
 	n = 0;
 	while(c = *s++) {
-		if(c&lt;&#39;0&#39; || c&gt;&#39;9&#39;)
+		if(c<'0' || c>'9')
 			continue;
-		n = n*10+c-&#39;0&#39;;
+		n = n*10+c-'0';
 	}
 	return(n);
 }
@@ -417,7 +417,7 @@ size(s0, s1)
 	register s;
 	extern ldivr;
 
-	s = ldiv(s0&amp;0377, s1, 512);
+	s = ldiv(s0&0377, s1, 512);
 	if(ldivr)
 		s++;
 	return(s);
@@ -428,8 +428,8 @@ otape()
 	register char *p;
 
 	fo = creat(ofile, 0666);
-	if(fo &lt; 0) {
-		printf(&quot;can not open %s\n&quot;, ofile);
+	if(fo < 0) {
+		printf("can not open %s\n", ofile);
 		exit();
 	}
 	if(!cflg)

@@ -16,7 +16,7 @@ geti:
 	mov	$symbuf,r0
 1:
 	movb	(r0)+,r1
-	sub	$&#39;0,r1
+	sub	$'0,r1
 	cmp	r1,$9
 	bhi	1f
 	mpy	$10.,r3

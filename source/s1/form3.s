@@ -64,12 +64,12 @@ esub:
 2:
 	mov	(sp),r1
 	jsr	pc,rewind
-	mov	$&#39;\[,r0
+	mov	$'\[,r0
 1:
 	jsr	r5,tfoput
 	jsr	pc,getchar
 	bec	1b
-	mov	$&#39;\],r0
+	mov	$'\],r0
 	jsr	r5,tfoput
 	mov	$10.,r0
 	jsr	pc,allocate
@@ -102,7 +102,7 @@ earg:
 1:
 	mov	r1,-(sp)
 	inc	argf
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	asl	r0
 	mov	arg(r0),r1
 	beq	5f
@@ -130,13 +130,13 @@ earg:
 	rts	pc
 5:
 	mov	r0,-(sp)
-	mov	$&#39;\[,r0
+	mov	$'\[,r0
 	jsr	r5,tfoput
 	mov	(sp),r0
 	asr	r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	r5,tfoput
-	mov	$&#39;\],r0
+	mov	$'\],r0
 	jsr	r5,tfoput
 	mov	$10.,r0
 	jsr	pc,allocate

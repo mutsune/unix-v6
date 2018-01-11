@@ -16,12 +16,12 @@ times = 43.
 	mul	$60.,r0
 	mov	r0,ltbuf
 	mov	r1,ltbuf+2
-	jsr	r5,mesg; &lt;\nreal\0&gt;; .even
+	jsr	r5,mesg; <\nreal\0>; .even
 	mov	$ltbuf,r2
 	jsr	r5,ptime
-	jsr	r5,mesg; &lt;user\0&gt;; .even
+	jsr	r5,mesg; <user\0>; .even
 	jsr	r5,ptime
-	jsr	r5,mesg; &lt;sys \0&gt;; .even
+	jsr	r5,mesg; <sys \0>; .even
 	jsr	r5,ptime
 	sys	exit
 
@@ -29,7 +29,7 @@ execarg:
 	sys	fork
 		br newproc
 	bec	2f
-	jsr	r5,mesg; &lt;Try again.\n\0&gt;; .even
+	jsr	r5,mesg; <Try again.\n\0>; .even
 	sys	exit
 2:
 	mov	r0,r2
@@ -40,7 +40,7 @@ execarg:
 	bne	2b
 	bit	$377,r1
 	beq	1f
-	jsr	r5,mesg; &lt;Command terminated abnormally.\n\0&gt;; .even
+	jsr	r5,mesg; <Command terminated abnormally.\n\0>; .even
 	clr	r0
 	sys	seek; 0; 2
 1:
@@ -67,11 +67,11 @@ newproc:
 	cmp	$8,r0
 	beq	rcom
 	mov	$end-10.,r0
-	mov	$&quot;x/,(r0)+
-	mov	$&quot;us,(r0)+
-	mov	$&quot;r/,(r0)+
-	mov	$&quot;bi,(r0)+
-	mov	$&quot;n/,(r0)+
+	mov	$"x/,(r0)+
+	mov	$"us,(r0)+
+	mov	$"r/,(r0)+
+	mov	$"bi,(r0)+
+	mov	$"n/,(r0)+
 	mov	$end-5,r1
 	sys	exec; end-5; ibuf
 	cmp	$8,r0
@@ -85,7 +85,7 @@ rcom:
 	mov	$shname+5,ibuf-2
 	sys	exec ; shname ; ibuf-2
 1:
-	jsr	r5,mesg; &lt;Command not found.\n\0&gt;; .even
+	jsr	r5,mesg; <Command not found.\n\0>; .even
 	clr	r0
 	sys	seek; 0; 2
 	sys	exit
@@ -97,9 +97,9 @@ printd:
 	jsr	r5,tdiv; 10.
 	jsr	r5,tdiv; 10.
 1:
-	cmpb	(r4),$&#39;0
+	cmpb	(r4),$'0
 	bne	1f
-	movb	$&#39; ,(r4)+
+	movb	$' ,(r4)+
 	cmp	r4,$tbuf+3
 	bne	1b
 1:
@@ -118,35 +118,35 @@ ptime:
 	mov	$tbuf+9.,r4
 	jsr	r5,tdiv; 10.
 	jsr	r5,tdiv; 6.
-	movb	$&#39;:,-(r4)
+	movb	$':,-(r4)
 	mov	(sp)+,r0
 	jsr	r5,tdiv; 10.
 	jsr	r5,tdiv; 6.
-	movb	$&#39;:,-(r4)
+	movb	$':,-(r4)
 	jsr	r5,tdiv; 10.
 	jsr	r5,tdiv; 10.
 	jsr	r5,tdiv; 10.
 1:
-	cmpb	(r4),$&#39;0
+	cmpb	(r4),$'0
 	beq	2f
-	cmpb	(r4),$&#39;:
+	cmpb	(r4),$':
 	bne	1f
 2:
-	movb	$&#39; ,(r4)+
+	movb	$' ,(r4)+
 	cmp	r4,$tbuf+8.
 	bne	1b
 1:
 	mov	$2,r0
 	sys	write; tbuf; 9.
-	jsr	r5,mesg; &lt;.\0&gt;; .even
+	jsr	r5,mesg; <.\0>; .even
 	mov	clicks,r1
 	clr	r0
 	div	$6,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	mov	r0,ch
 	mov	$2,r0
 	sys	write; ch; 1
-	jsr	r5,mesg; &lt;\n\0&gt;; .even
+	jsr	r5,mesg; <\n\0>; .even
 	rts	r5
 
 tdiv:
@@ -154,7 +154,7 @@ tdiv:
 	mov	r0,r1
 	clr	r0
 	div	(r5)+,r0
-	add	$&#39;0,r1
+	add	$'0,r1
 	movb	r1,-(r4)
 	mov	(sp)+,r1
 	rts	r5
@@ -182,5 +182,5 @@ ltbuf:	.=.+16.
 end:	.=.+1000.
 
 .data
-shname:	&lt;/bin/sh\0&gt;
+shname:	</bin/sh\0>
 .even

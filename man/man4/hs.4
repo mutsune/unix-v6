@@ -3,11 +3,11 @@
 hs \*- RH11/RS03-RS04 fixed-head disk file
 .sh DESCRIPTION
 The files
-.it &quot;hs0 ... hs7&quot;
+.it "hs0 ... hs7"
 refer to
 RJS03 disk drives 0 through 7.
 The files
-.it &quot;hs8 ... hs15&quot;
+.it "hs8 ... hs15"
 refer to
 RJS04 disk drives 0 through 7.
 The RJS03 drives are each 1024 blocks long and
@@ -16,13 +16,13 @@ the RJS04 drives are 2048 blocks long.
 The
 .it hs
 files
-access the disk via the system&#39;s normal
+access the disk via the system's normal
 buffering mechanism
 and may be read and written without regard to
 physical disk records.
-There is also a ``raw&#39;&#39; inteface
+There is also a ``raw'' inteface
 which provides for direct transmission between the disk
-and the user&#39;s read or write buffer.
+and the user's read or write buffer.
 A single read or write call results in exactly one I/O operation
 and therefore raw I/O is considerably more efficient when
 many words are transmitted.

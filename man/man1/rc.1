@@ -17,10 +17,10 @@ rc \*- Ratfor compiler
 invokes the Ratfor preprocessor on a set of Ratfor source files.
 It accepts three types of arguments:
 .s3
-Arguments whose names end with `.r&#39; are taken to be
+Arguments whose names end with `.r' are taken to be
 Ratfor source programs; they are 
 preprocessed into Fortran and compiled.
-Each subroutine or function `name&#39; is placed on a separate file
+Each subroutine or function `name' is placed on a separate file
 .it name.f,
 and its object code is left on
 .it name.o.
@@ -32,7 +32,7 @@ block data subprograms go on
 .it blockdata?.f
 and
 .it blockdata?.o.
-The files resulting from a `.r&#39; file are
+The files resulting from a `.r' file are
 loaded into a single object file
 .it file.o,
 and the intermediate object and Fortran files are removed.
@@ -40,7 +40,7 @@ and the intermediate object and Fortran files are removed.
 The following flags are interpreted by
 .it rc.
 See
-.it &quot;ld (I)&quot;
+.it "ld (I)"
 for load-time flags.
 .s3
 .lp +6 5
@@ -52,21 +52,21 @@ as does any error in anything.
 This is primarily for debugging.
 .s3
 .lp +6 5
-\fB\*-r\fR	Ratfor only; don&#39;t try to compile the Fortran.
+\fB\*-r\fR	Ratfor only; don't try to compile the Fortran.
 This implies
 .bd \*-f
 and
 .bd \*-c.
 .s3
 .lp +6 5
-\fB\*-v\fR	Don&#39;t list intermediate file names while compiling.
+\fB\*-v\fR	Don't list intermediate file names while compiling.
 .i0
 .dt
 .s3
-Arguments whose names end with `.f&#39; are taken to be
+Arguments whose names end with `.f' are taken to be
 Fortran source programs;
 they are compiled in the normal manner.
-(Only one Fortran routine is allowed in a `.f&#39; file.)
+(Only one Fortran routine is allowed in a `.f' file.)
 Other arguments
 are taken
 to be either loader flag arguments, or Fortran-compatible
@@ -85,8 +85,8 @@ ratjunk		temporary
 /usr/bin/ratfor	preprocessor
 .br
 /usr/fort/fc1	Fortran compiler
-.sh &quot;SEE ALSO&quot;
-``RATFOR \*- A Rational Fortran&#39;&#39;.
+.sh "SEE ALSO"
+``RATFOR \*- A Rational Fortran''.
 .br
 fc(I) for Fortran error messages.
 .sh DIAGNOSTICS
@@ -97,4 +97,4 @@ itself and from Fortran.
 Limit of about 50 arguments, 10 block data files.
 .s3
 #define and #include lines in
-``.f&#39;&#39; files are not processed.
+``.f'' files are not processed.

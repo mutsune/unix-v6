@@ -18,7 +18,7 @@ genop:
 	clrb	r3
 	swab	r3
 	jsr	r5,code
-		&lt;	%c%c%d\0&gt;; .even
+		<	%c%c%d\0>; .even
 		r1
 		r0
 		r3
@@ -28,9 +28,9 @@ genop:
 
 newline:
 	jsr	r5,code
-		&lt;\n\0&gt;; .even
+		<\n\0>; .even
 	rts	r5
 
 typ:
-	&lt;?irlc??g&gt;
+	<?irlc??g>
 

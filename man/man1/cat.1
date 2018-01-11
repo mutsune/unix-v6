@@ -10,27 +10,27 @@ reads each file in sequence
 and writes it on the standard output.
 Thus
 .s3
-.bd &quot;   cat file&quot;
+.bd "   cat file"
 .s3
 prints the file, and
 .s3
-.bd &quot;   cat file1 file2 &gt;file3&quot;
+.bd "   cat file1 file2 >file3"
 .s3
 concatenates the first two files and places the result on the third.
 .s3
 If no input file is given,
-or if the argument `\-&#39; is encountered,
+or if the argument `\-' is encountered,
 .it cat
 reads from the standard
 input file.
 .s3
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 pr(I), cp(I)
 .sh DIAGNOSTICS
 none;
 if a file cannot be found it is ignored.
 .sh BUGS
-.bd &quot;cat x y &gt;x&quot;
+.bd "cat x y >x"
 and
-.bd &quot;cat x y &gt;y&quot;
+.bd "cat x y >y"
 cause strange results.

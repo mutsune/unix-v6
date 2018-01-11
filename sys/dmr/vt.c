@@ -6,8 +6,8 @@
  * VT01 driver via DR11C to 11/20
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../user.h"
 
 int	vtflag;
 
@@ -27,13 +27,13 @@ vtopen(dev, flag)
 	if (!flag)
 		u.u_error = ENXIO;
 	else
-		VTADDR-&gt;csr = BIENABL;
+		VTADDR->csr = BIENABL;
 }
 
 vtclose()
 {
-	VTADDR-&gt;buf = SEOF;
-	VTADDR-&gt;csr =| RQINT;
+	VTADDR->buf = SEOF;
+	VTADDR->csr =| RQINT;
 }
 
 vtwrite()
@@ -41,16 +41,16 @@ vtwrite()
 	register int c;
 	int register count;
 
-	while ((c=cpass()) &gt;= 0) {
+	while ((c=cpass()) >= 0) {
 	    retry:
-		for (count=0; count&lt;10; count++)
-			if ((VTADDR-&gt;csr&amp;RQINT)==0) {
-				VTADDR-&gt;buf = c&amp;0377;
-				VTADDR-&gt;csr =| RQINT;
+		for (count=0; count<10; count++)
+			if ((VTADDR->csr&RQINT)==0) {
+				VTADDR->buf = c&0377;
+				VTADDR->csr =| RQINT;
 				goto contin;
 			}
 		spl5();
-		if (VTADDR-&gt;csr&amp;RQINT) {
+		if (VTADDR->csr&RQINT) {
 			vtflag++;
 			sleep(VTADDR, VTPRI);
 		}
@@ -62,7 +62,7 @@ vtwrite()
 
 vtintr()
 {
-	VTADDR-&gt;csr =&amp; ~RQINT;
+	VTADDR->csr =& ~RQINT;
 	if (vtflag) {
 		vtflag = 0;
 		wakeup(VTADDR);

@@ -19,7 +19,7 @@ rfo:
 	bec	2f
 	sys	creat; otfil; 666
 	bec	cont
-2:	cmpb	$&#39;z,otfil+4
+2:	cmpb	$'z,otfil+4
 	beq	err3
 	incb	otfil+4
 	br	1b
@@ -28,9 +28,9 @@ err3:
 	mov	$1,r0
 	sys	write; mes3; 24.
 	sys	exit
-mes3:	&lt;cannot open output file\n&gt;
-otfil:	&lt;forma\0&gt;
-default:	&lt;letter\0&gt;
+mes3:	<cannot open output file\n>
+otfil:	<forma\0>
+default:	<letter\0>
 	.even
 
 cont:	mov	r0,rfo
@@ -75,7 +75,7 @@ cont:	mov	r0,rfo
 	jsr	pc,putchar
 	br	1b
 1:
-	movb	$&#39; ,r0
+	movb	$' ,r0
 	jsr	pc,putchar
 	clr	r0
 	mov	(sp),r1
@@ -85,11 +85,11 @@ cont:	mov	r0,rfo
 	mov	arg,r1
 	tst	r0
 	beq	1f
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putchar
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	jsr	pc,putchar
 	jmp	loop
 
@@ -97,18 +97,18 @@ daytab: 31.; 28.; 31.; 30.; 31.; 30.; 31.; 31.; 30.; 31.; 30.; 999.
 
 montab: m1; m2; m3; m4; m5; m6; m7; m8; m9; m10; m11; m12
 
-m1:	&lt;January\0&gt;
-m2:	&lt;February\0&gt;
-m3:	&lt;March\0&gt;
-m4:	&lt;April\0&gt;
-m5:	&lt;May\0&gt;
-m6:	&lt;June\0&gt;
-m7:	&lt;July\0&gt;
-m8:	&lt;August\0&gt;
-m9:	&lt;September\0&gt;
-m10:	&lt;October\0&gt;
-m11:	&lt;November\0&gt;
-m12:	&lt;December\0&gt;
+m1:	<January\0>
+m2:	<February\0>
+m3:	<March\0>
+m4:	<April\0>
+m5:	<May\0>
+m6:	<June\0>
+m7:	<July\0>
+m8:	<August\0>
+m9:	<September\0>
+m10:	<October\0>
+m11:	<November\0>
+m12:	<December\0>
 
 buf:	.=.+34.
 .=rfo+516.
@@ -125,7 +125,7 @@ loop:
 	jsr	pc,allocate
 	mov	r1,scr
 	mov	letter,r3
-	movb	$&#39;\{,r0
+	movb	$'\{,r0
 	jsr	pc,putchar
 1:
 	movb	(r3)+,r0
@@ -133,7 +133,7 @@ loop:
 	jsr	pc,putchar
 	br	1b
 1:
-	movb	$&#39;\},r0
+	movb	$'\},r0
 	jsr	pc,putchar
 
 	clr	switch
@@ -145,7 +145,7 @@ loop:
 1:
 	jsr	pc,scan
 
-	movb	$&#39;\n,r0
+	movb	$'\n,r0
 	jsr	r5,putc
 	jsr	r5,flushb
 

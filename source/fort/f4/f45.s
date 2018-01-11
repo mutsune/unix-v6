@@ -23,7 +23,7 @@ constn:
 1:
 	jsr	r5,getln
 		br 1f
-	cmp	r0,$&#39;c
+	cmp	r0,$'c
 	bne	1b
 	jsr	r5,packcon
 	mov	r2,-(r4)		/ put p ptr in p p ptr
@@ -47,13 +47,13 @@ constn:
 	asr	r0
 	neg	r0
 	jsr	r5,code
-		&lt;c%d:\n\0&gt;; .even
+		<c%d:\n\0>; .even
 		r0
 	br	2b
 2:
 	mov	(r2)+,r0
 	jsr	r5,code
-		&lt;	%o\n\0&gt;; .even
+		<	%o\n\0>; .even
 		r0
 	br	1b
 1:

@@ -6,9 +6,9 @@
  * DN-11 ACU interface
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../user.h"
 
 struct dn {
 	struct {
@@ -38,18 +38,18 @@ dnopen(dev, flag)
 	register int rdev;
 
 	rdev = dev.d_minor;
-	dp = &amp;DNADDR-&gt;dn11[rdev];
-	if (dp-&gt;dn_reg&amp;(PWI|DLO))
+	dp = &DNADDR->dn11[rdev];
+	if (dp->dn_reg&(PWI|DLO))
 		u.u_error = ENXIO;
 	else {
-		DNADDR-&gt;dn11[0].dn_stat =| MENABLE;
-		dp-&gt;dn_stat = IENABLE|MENABLE|CRQ;
+		DNADDR->dn11[0].dn_stat =| MENABLE;
+		dp->dn_stat = IENABLE|MENABLE|CRQ;
 	}
 }
 
 dnclose(dev)
 {
-	DNADDR-&gt;dn11[dev.d_minor].dn_stat =&amp; MENABLE;
+	DNADDR->dn11[dev.d_minor].dn_stat =& MENABLE;
 }
 
 dnwrite(dev)
@@ -58,28 +58,28 @@ dnwrite(dev)
 	register c;
 	extern lbolt;
 
-	dp = &amp;DNADDR-&gt;dn11[dev.d_minor];
+	dp = &DNADDR->dn11[dev.d_minor];
 	for(;;) {
-		while ((dp-&gt;dn_stat&amp;DONE)==0)
+		while ((dp->dn_stat&DONE)==0)
 			sleep(DNADDR, DNPRI);
-		dp-&gt;dn_stat =&amp; ~DONE;
+		dp->dn_stat =& ~DONE;
 	    contin:
-		if (dp-&gt;dn_reg&amp;(PWI|ACR)) {
+		if (dp->dn_reg&(PWI|ACR)) {
 			u.u_error = EIO;
 			return;
 		}
-		if (dp-&gt;dn_stat&amp;DSS)
+		if (dp->dn_stat&DSS)
 			return;
 		c = 0;
-		if (u.u_count==0 || (dp-&gt;dn_stat&amp;PND)==0 || (c=cpass())&lt;0)
+		if (u.u_count==0 || (dp->dn_stat&PND)==0 || (c=cpass())<0)
 			continue;
-		if (c==&#39;-&#39;) {
-			sleep(&amp;lbolt, DNPRI);
-			sleep(&amp;lbolt, DNPRI);
+		if (c=='-') {
+			sleep(&lbolt, DNPRI);
+			sleep(&lbolt, DNPRI);
 			goto contin;
 		}
-		dp-&gt;dn_reg = c-&#39;0&#39;;
-		dp-&gt;dn_stat =| DPR;
+		dp->dn_reg = c-'0';
+		dp->dn_stat =| DPR;
 	}
 }
 

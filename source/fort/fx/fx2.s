@@ -41,7 +41,7 @@ perror:
 	mov	r2,-(sp)
 	mov	ifno,r0
 	jsr	r5,tdecml
-	mov	$&#39;\t,r0
+	mov	$'\t,r0
 	jsr	r5,tput
 	mov	$line,r1
 2:
@@ -74,7 +74,7 @@ perror:
 	jsr	r5,tdecml
 	cmp	r1,errp
 	bhis	2f
-	mov	$&#39;,,r0
+	mov	$',,r0
 	jsr	r5,tput
 	br	3b
 3:
@@ -90,7 +90,7 @@ perror:
 	bes	4f
 	tst	r0
 	beq	4f
-	cmpb	ich,$&#39;\n
+	cmpb	ich,$'\n
 	bne	4b
 	br	3b
 3:
@@ -100,7 +100,7 @@ perror:
 	tst	r0
 	beq	4f
 	movb	ich,r0
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	3f
 	jsr	r5,tput
 	br	3b
@@ -113,7 +113,7 @@ perror:
 	cmp	r1,$errp
 	blo	2b
 2:
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	r5,tput
 	mov	$errb,errp
 	mov	(sp)+,r2
@@ -122,13 +122,13 @@ perror:
 	rts	r5
 
 mes1:
-	&lt;\n** &gt;
+	<\n** >
 mes2:
-	.byte 010, &#39;_
+	.byte 010, '_
 mes3:
-	&lt;Unknown diagnostic&gt;
+	<Unknown diagnostic>
 errfil:
-	&lt;/usr/fort/errors\0&gt;
+	</usr/fort/errors\0>
 .even
 .bss
 ich:	.=.+2

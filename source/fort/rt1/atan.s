@@ -1,7 +1,7 @@
 /
 /
 
-/ atan &amp; datan fortran functions
+/ atan & datan fortran functions
 
 .globl	atan.
 .globl	datan.

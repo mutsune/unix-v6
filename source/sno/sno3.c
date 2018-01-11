@@ -1,4 +1,4 @@
-#include &quot;sno.h&quot;
+#include "sno.h"
 
 /*
  * sno3
@@ -13,10 +13,10 @@ struct node *str, *last;
 	int c, d;
 
 	s = str;
-	if ((c = s-&gt;p1) == 0)
+	if ((c = s->p1) == 0)
 		goto bad;
 	b = d = 0;
-	a = s-&gt;p2;
+	a = s->p2;
 	if(a == 0) {
 		a = c;
 		goto eb2;
@@ -24,10 +24,10 @@ struct node *str, *last;
 eb1:
 	if (a == last)
 		goto bad;
-	a = a-&gt;p1;
+	a = a->p1;
 eb2:
 	d++;
-	c = class(a-&gt;ch);
+	c = class(a->ch);
 	if (c == 1) { /* rp */
 		if (b == 0)
 			goto bad;
@@ -40,7 +40,7 @@ eb2:
 	}
 eb3:
 	if (b == 0) {
-		s-&gt;p2= a;
+		s->p2= a;
 		return(d);
 	}
 	goto eb1;
@@ -54,17 +54,17 @@ struct node *str, *last;
 	register struct node *a, *b, *s;
 
 	s = str;
-	a = s-&gt;p1;
+	a = s->p1;
 	if(a == 0)
 		goto bad;
-	b = s-&gt;p2;
+	b = s->p2;
 	if(b == 0)
 		goto good;
 	if (b == last)
 		goto bad;
-	a = b-&gt;p1;
+	a = b->p1;
 good:
-	s-&gt;p2 = a;
+	s->p2 = a;
 	return(1);
 bad:
 	return(0);
@@ -78,14 +78,14 @@ struct node *arg, *r;
 	register struct node *a, *b, *var;
 	int c, d;
 
-	a = arg-&gt;p2;
+	a = arg->p2;
 	list = base = alloc();
 	last = next = 0;
 	goto badv1;
 badvanc:
-	a = a-&gt;p1;
-	if (a-&gt;typ == 0) {
-		list-&gt;p1 = 0;
+	a = a->p1;
+	if (a->typ == 0) {
+		list->p1 = 0;
 		if (rfail == 1) {
 			a = 0;
 			goto fail;
@@ -93,58 +93,58 @@ badvanc:
 		list = base;
 		if (r == 0)
 			next = last = 0; else {
-			next = r-&gt;p1;
-			last = r-&gt;p2;
+			next = r->p1;
+			last = r->p2;
 		}
 		goto adv1;
 	}
 	b = alloc();
-	list-&gt;p1 = b;
+	list->p1 = b;
 	list = b;
 badv1:
-	list-&gt;p2 = back = alloc();
-	back-&gt;p1 = last;
-	b = a-&gt;p2;
-	c = a-&gt;typ;
-	list-&gt;typ = c;
-	if (c &lt; 2) {
-		back-&gt;p2 = eval(b, 1);
+	list->p2 = back = alloc();
+	back->p1 = last;
+	b = a->p2;
+	c = a->typ;
+	list->typ = c;
+	if (c < 2) {
+		back->p2 = eval(b, 1);
 		goto badvanc;
 	}
 	last = list;
 	str = alloc();
 	etc = alloc();
-	back-&gt;p2 = var = alloc();
-	var-&gt;typ = b-&gt;typ;
-	var-&gt;p1 = str;
-	var-&gt;p2 = etc;
-	e = b-&gt;p1;
+	back->p2 = var = alloc();
+	var->typ = b->typ;
+	var->p1 = str;
+	var->p2 = etc;
+	e = b->p1;
 	if (e == 0)
-		etc-&gt;p1 = 0; else
-		etc-&gt;p1 = eval(e, 0);
-	e = b-&gt;p2;
+		etc->p1 = 0; else
+		etc->p1 = eval(e, 0);
+	e = b->p2;
 	if (e == 0)
-		etc-&gt;p2 = 0; else {
+		etc->p2 = 0; else {
 		e = eval(e, 1);
-		etc-&gt;p2 = strbin(e);
+		etc->p2 = strbin(e);
 		delete(e);
 	}
 	goto badvanc;
 
 retard:
-	a = back-&gt;p1;
+	a = back->p1;
 	if (a == 0) {
 		rfail = 1;
 		goto fail;
 	}
 	list = a;
-	back = list-&gt;p2;
-	var = back-&gt;p2;
-	str = var-&gt;p1;
-	etc = var-&gt;p2;
-	if (etc-&gt;p2)
+	back = list->p2;
+	var = back->p2;
+	str = var->p1;
+	etc = var->p2;
+	if (etc->p2)
 		goto retard;
-	if (var-&gt;typ == 1) {
+	if (var->typ == 1) {
 		if (bextend(str, last) == 0)
 			goto retard;
 		goto adv0;
@@ -152,29 +152,29 @@ retard:
 	if (ubextend(str, last) == 0)
 		goto retard;
 adv0:
-	a = str-&gt;p2;
+	a = str->p2;
 adv01:
 	if (a == last)
 		next = 0; else
-		next = a-&gt;p1;
+		next = a->p1;
 advanc:
-	a = list-&gt;p1;
+	a = list->p1;
 	if (a == 0) {
 		a = alloc();
 		if (r == 0) {
-			a-&gt;p1 = a-&gt;p2 = 0;
+			a->p1 = a->p2 = 0;
 			goto fail;
 		}
-		b = r-&gt;p1;
-		a-&gt;p1 = b;
+		b = r->p1;
+		a->p1 = b;
 		if (next == 0) {
-			a-&gt;p2 = r-&gt;p2;
+			a->p2 = r->p2;
 			goto fail;
 		}
 		while(1) {
-			e = b-&gt;p1;
+			e = b->p1;
 			if (e == next) {
-				a-&gt;p2 = b;
+				a->p2 = b;
 				goto fail;
 			}
 			b = e;
@@ -182,34 +182,34 @@ advanc:
 	}
 	list = a;
 adv1:
-	back = list-&gt;p2;
-	var = back-&gt;p2;
-	d = list-&gt;typ;
-	if(d &lt; 2) {
+	back = list->p2;
+	var = back->p2;
+	d = list->typ;
+	if(d < 2) {
 		if (var == 0)
 			goto advanc;
 		if (next == 0)
 			goto retard;
 		a = next;
-		b = var-&gt;p1;
-		e = var-&gt;p2;
+		b = var->p1;
+		e = var->p2;
 		while(1) {
-			if (a-&gt;ch != b-&gt;ch)
+			if (a->ch != b->ch)
 				goto retard;
 			if (b == e)
 				goto adv01;
 			if (a == last)
 				goto retard;
-			a = a-&gt;p1;
-			b = b-&gt;p1;
+			a = a->p1;
+			b = b->p1;
 		}
 	}
-	str = var-&gt;p1;
-	etc = var-&gt;p2;
-	str-&gt;p1 = next;
-	str-&gt;p2 = 0;
-	c = etc-&gt;p2;
-	if (var-&gt;typ == 1) {
+	str = var->p1;
+	etc = var->p2;
+	str->p1 = next;
+	str->p2 = 0;
+	c = etc->p2;
+	if (var->typ == 1) {
 		d = bextend(str, last);
 		if (d == 0)
 			goto retard;
@@ -219,7 +219,7 @@ adv1:
 			c =- d;
 			if (c == 0)
 				goto adv0;
-			if (c &lt; 0)
+			if (c < 0)
 				goto retard;
 			d = bextend(str, last);
 			if (d == 0)
@@ -227,8 +227,8 @@ adv1:
 		}
 	}
 	if (c == 0) {
-		if(d==3 &amp; next!=0) {
-			str-&gt;p2 = last;
+		if(d==3 & next!=0) {
+			str->p2 = last;
 			goto adv0;
 		}
 		goto advanc;
@@ -243,26 +243,26 @@ fail:
 	goto f1;
 fadv:
 	free(back);
-	b = list-&gt;p1;
+	b = list->p1;
 	free(list);
 	if (b == 0)
 		return(a);
 	list = b;
 f1:
-	back = list-&gt;p2;
-	var = back-&gt;p2;
-	if (list-&gt;typ &lt; 2) {
+	back = list->p2;
+	var = back->p2;
+	if (list->typ < 2) {
 		delete(var);
 		goto fadv;
 	}
-	str = var-&gt;p1;
-	etc = var-&gt;p2;
-	if (a != 0 &amp; etc-&gt;p1 != 0) {
-		if (str-&gt;p2 == 0) {
+	str = var->p1;
+	etc = var->p2;
+	if (a != 0 & etc->p1 != 0) {
+		if (str->p2 == 0) {
 			free(str);
 			str = 0;
 		}
-		assign(etc-&gt;p1, copy(str));
+		assign(etc->p1, copy(str));
 	}
 	if (str)
 		free(str);

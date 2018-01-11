@@ -11,24 +11,24 @@ put(string,n)
 	int	i;
 	char	*o;
 
-/*printf(&quot;%d %c %d\n&quot;,fil,*string,n);/*DEBUG*/
+/*printf("%d %c %d\n",fil,*string,n);/*DEBUG*/
 
 	string--;
 
-	if((i = optr + n - 512) &gt;= 0) {
+	if((i = optr + n - 512) >= 0) {
 		n =- i;
-		o = &amp;obuf[optr] -1;
-		while(--n &gt;= 0)
+		o = &obuf[optr] -1;
+		while(--n >= 0)
 			*++o = *++string;
 		optr = 512;
 		flsh(1);
 		n = i;
 	}
 
-	o = &amp;obuf[optr] - 1;
+	o = &obuf[optr] - 1;
 	optr =+ n;
 
-	while(--n &gt;= 0) {
+	while(--n >= 0) {
 		*++o = *++string;
 	}
 	return(0);
@@ -38,7 +38,7 @@ flsh(fil)
 {
 	extern	tp[],utmp;
 
-	if(optr &lt;= 0)	return(optr);
+	if(optr <= 0)	return(optr);
 
 	nflush++;
 	if(write(tp[0],obuf,optr) != optr)

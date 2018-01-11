@@ -10,7 +10,7 @@ core = 24.	/ first core loc (in KW) not used
 .. = [core*2048.]-512.
 start:
 
-/ copy self to &#39;core&#39; - 512. bytes
+/ copy self to 'core' - 512. bytes
 / strip of UNIX execute header if present
 
 	mov	$..,sp
@@ -36,19 +36,19 @@ start:
 
 / prompt
 / read in path name
-/ breaking on &#39;/&#39; into 14 ch names
+/ breaking on '/' into 14 ch names
 
 	mov	$trvect,r5
-	mov	$&#39;@,r0
+	mov	$'@,r0
 	jsr	pc,(r5)
 	mov	$names,r2
 1:
 	mov	r2,r1
 2:
 	jsr	pc,getc
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
-	cmp	r0,$&#39;/
+	cmp	r0,$'/
 	beq	3f
 	movb	r0,(r1)+
 	br	2b

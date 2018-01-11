@@ -4,7 +4,7 @@
 .tr @
 .br
 .po 0
-.tl &#39;-&#39;&#39;&#39;
+.tl '-'''
 .po
 .pl 11i
 .ll 6.5i
@@ -56,18 +56,18 @@ Murray Hill, New Jersey 07974
 .ne 4
 ..
 .de fo
-&#39;bp
+'bp
 ..
 .de he
 .po 0
-.tl &#39;-&#39;&#39;&#39;
+.tl '-'''
 .po
-&#39;sp 0.5i
+'sp 0.5i
 .ft I
-.if o .tl &#39;&#39;&#39;C  Reference  Manual - %&#39;
-.if e .tl &#39;C  Reference  Manual - %&#39;&#39;&#39;
+.if o .tl '''C  Reference  Manual - %'
+.if e .tl 'C  Reference  Manual - %'''
 .ft
-&#39;sp 0.4i
+'sp 0.4i
 ..
 .de bG
 .br
@@ -90,5 +90,5 @@ Murray Hill, New Jersey 07974
 .wh -1i fo
 .wh 0 he
 .ds op \s6\d\fIopt\fP\u\s10
-.ds * \fR\v&#39;.2&#39;*\fP\v&#39;-.2&#39;
-.ds ~ \v&#39;.5&#39;\s14~\s10\v&#39;-.5&#39;
+.ds * \fR\v'.2'*\fP\v'-.2'
+.ds ~ \v'.5'\s14~\s10\v'-.5'

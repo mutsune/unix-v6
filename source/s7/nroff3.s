@@ -11,7 +11,7 @@ skipcont:
 /	jsr	pc,alph2
 /	beq	0b
 1:
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	1f
 	jsr	pc,getchar
 	br	1b
@@ -68,7 +68,7 @@ rbreak1:
 	mov	$line,r2
 1:
 	movb	(r2)+,r0
-	cmp	$&#39; ,r0
+	cmp	$' ,r0
 	bne	2f
 	jsr	pc,fill
 	tst	nc
@@ -167,7 +167,7 @@ donum:
 	rts	pc
 
 newline:
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	pc,putchar
 	tst	op
 	beq	1f
@@ -283,9 +283,9 @@ number1:
 	clr	-(sp)
 1:
 	jsr	pc,getchar
-	cmp	r0,$&#39;+
+	cmp	r0,$'+
 	beq	2f
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	beq	2f
 	mov	r0,ch
 1:
@@ -307,12 +307,12 @@ number1:
 	mov	(r0),r0
 1:
 	mov	(sp)+,r1
-	cmp	r1,$&#39;-
+	cmp	r1,$'-
 	bne	1f
 	sub	r3,r0
 	br	2f
 1:
-	cmp	r1,$&#39;+
+	cmp	r1,$'+
 	bne	1f
 	add	r3,r0
 	br	2f
@@ -352,7 +352,7 @@ storeline:
 2:
 	inc	over
 	rts	pc
-linemes: &lt;Line overflow\n\0&gt;
+linemes: <Line overflow\n\0>
 	.even
 
 getword:
@@ -370,7 +370,7 @@ getword:
 1:
 	jsr	pc,gettchar
 	bmi	4f
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	0f
 	clr	wne
 	clr	wch
@@ -381,14 +381,14 @@ getword:
 	inc	hypedf
 	br	1b
 2:
-	cmpb	$&#39; ,r0
+	cmpb	$' ,r0
 	bne	2f
 	jsr	pc,storeword
 	br	1b
 2:
 4:
 	mov	r0,-(sp)
-	mov	$&#39; ,r0
+	mov	$' ,r0
 /	bis	chbits,r0
 	jsr	pc,storeword
 	tst	spaceflg
@@ -418,15 +418,15 @@ getword:
 1:
 	tst	r0
 	bmi	2b
-	cmpb	$&#39; ,r0
+	cmpb	$' ,r0
 	beq	1f
-	cmpb	$&#39;\n,r0
+	cmpb	$'\n,r0
 	bne	2b
-	cmpb	-1(r2),$&#39;.
+	cmpb	-1(r2),$'.
 	beq	0f
-	cmpb	-1(r2),$&#39;!
+	cmpb	-1(r2),$'!
 	beq	0f
-	cmpb	-1(r2),$&#39;?
+	cmpb	-1(r2),$'?
 	bne	1f
 0:
 	inc	spaceflg
@@ -485,7 +485,7 @@ storeword:
 2:
 	inc	over
 	rts	pc
-wordmes: &lt;Word overflow\n\0&gt;
+wordmes: <Word overflow\n\0>
 	.even
 
 need:
@@ -546,13 +546,13 @@ copyb:
 1:
 	jsr	pc,getchar
 	bmi	9f
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	2f
 	mov	$1,(sp)
 	clr	nlflg
 	br	4f
 2:
-	cmpb	r0,$&#39;.
+	cmpb	r0,$'.
 	bne	9f
 	cmp	(sp),$1
 	bgt	3f
@@ -584,7 +584,7 @@ copyb:
 	clr	copyf
 	rts	pc
 
-allocmes: &lt;Out of temp file space.\n\0&gt;
+allocmes: <Out of temp file space.\n\0>
 	.even
 
 alloc:
@@ -750,19 +750,19 @@ incoff:
 5:
 	jsr	r5,stringfl; badmes
 	jmp	place
-badmes: &lt;Bad storage allocation\n\0&gt;
+badmes: <Bad storage allocation\n\0>
 	.even
 
 alph:
 	movb	(r0),r2
 alph2:
-	cmp	r2,$&#39;A
+	cmp	r2,$'A
 	blo	1f
-	cmp	r2,$&#39;Z
+	cmp	r2,$'Z
 	blos	2f
-	cmp	r2,$&#39;a
+	cmp	r2,$'a
 	blo	1f
-	cmp	r2,$&#39;z
+	cmp	r2,$'z
 	bhi	1f
 2:
 	sez
@@ -800,12 +800,12 @@ atoi:
 	mov	r0,-(sp)
 1:
 	jsr	pc,getchar
-	cmp	r0,$&#39;+
+	cmp	r0,$'+
 	beq	4f
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	beq	5f
 2:
-	cmp	r0,$&#39;*
+	cmp	r0,$'*
 	bne	2f
 	jsr	pc,atoi1
 	beq	3f
@@ -814,7 +814,7 @@ atoi:
 	mov	r1,(sp)
 	br	1b
 2:
-	cmp	r0,$&#39;\/
+	cmp	r0,$'\/
 	bne	2f
 	jsr	pc,atoi1
 	beq	3f
@@ -849,13 +849,13 @@ atoi1:
 	clr	-(sp)
 	clr	r3
 	jsr	pc,getchar
-	cmp	r0,$&#39;-
+	cmp	r0,$'-
 	bne	2f
 	inc	(sp)
 1:
 	jsr	pc,getchar
 2:
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9
 	bhi	1f
 	inc	4(sp)
@@ -863,10 +863,10 @@ atoi1:
 	add	r0,r3
 	br	1b
 1:
-	add	$&#39;0,r0
+	add	$'0,r0
 	mov	r0,ch
 	bne	0f
-	mov	$&#39; ,ch
+	mov	$' ,ch
 0:
 	tst	(sp)+
 	beq	1f
@@ -949,7 +949,7 @@ findr:
 4:
 	add	$[vlist-rlist],r1
 	rts	pc
-9: &lt;No more number registers.\n\0&gt;
+9: <No more number registers.\n\0>
 	.even
 
 setn0:
@@ -962,13 +962,13 @@ setn:
 	clr	-(sp)
 	clr	temp
 	jsr	pc,get1
-	cmpb	r0,$&#39;+
+	cmpb	r0,$'+
 	bne	1f
 	inc	(sp)
 0:
 	jsr	pc,get1
 1:
-	cmpb	r0,$&#39;\\
+	cmpb	r0,$'\\
 	bne	1f
 3:
 	jsr	pc,get1
@@ -981,13 +981,13 @@ setn:
 	tst	temp
 	bne	2f
 	bic	$!177,r0
-	cmpb	r0,$&#39;(
+	cmpb	r0,$'(
 	bne	1f
 	inc	temp
 	jsr	pc,get1
 2:
 	bic	$!177,r0
-	cmpb	r0,$&#39;\\
+	cmpb	r0,$'\\
 	beq	3b
 	mov	r0,-(sp)
 	jsr	pc,get1
@@ -998,59 +998,59 @@ setn:
 	cmpb	2(sp),$372
 	beq	5f /exit if called by \k
 	clr	nform
-	cmp	r0,$&quot;.v
+	cmp	r0,$".v
 	bne	0f
 	mov	ls,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.p
+	cmp	r0,$".p
 	bne	0f
 	mov	pl,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.t
+	cmp	r0,$".t
 	bne	0f
 	clr	r0
 	jsr	pc,findt
 	mov	r1,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.o
+	cmp	r0,$".o
 	bne	0f
 	mov	po,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.l
+	cmp	r0,$".l
 	bne	0f
 	mov	ll,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.i
+	cmp	r0,$".i
 	bne	0f
 	mov	in,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.$
+	cmp	r0,$".$
 	bne	0f
 	mov	*frame,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.x
+	cmp	r0,$".x
 	bne	0f
 	mov	evp,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.c
+	cmp	r0,$".c
 	bne	0f
 	mov	iline,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.h
+	cmp	r0,$".h
 	bne	0f
 	mov	hnl,r0
 	br	setn1
 0:
-	cmp	r0,$&quot;.n
+	cmp	r0,$".n
 	bne	0f
 	mov	lastl,r0
 	br	setn1
@@ -1069,7 +1069,7 @@ setn1:
 	mov	$cbuf,r4
 	tst	r0
 	bge	1f
-	movb	$&#39;-,(r4)+
+	movb	$'-,(r4)+
 	neg	r0
 1:
 	jsr	r5,fnumb0;wrc
@@ -1090,7 +1090,7 @@ wrc:
 
 seta:
 	jsr	pc,get1
-	cmp	r0,$&#39;\\
+	cmp	r0,$'\\
 	bne	1f
 	jsr	pc,get1
 	jsr	r5,switch;esctab
@@ -1213,7 +1213,7 @@ collect:
 	bne	9f
 	mov	r1,(r2)+
 	jsr	pc,getchar
-	cmp	r0,$&#39;&quot;
+	cmp	r0,$'"
 	bne	3f
 	inc	quote
 2:
@@ -1223,14 +1223,14 @@ collect:
 	bne	8f
 	tst	quote
 	bne	4f
-	cmp	r0,$&#39; /
+	cmp	r0,$' /
 	beq	8f
 	br	5f
 4:
-	cmp	r0,$&#39;&quot;
+	cmp	r0,$'"
 	bne	5f
 	jsr	pc,getchar
-	cmpb	r0,$&#39;&quot;
+	cmpb	r0,$'"
 	bne	8f
 5:
 	movb	r0,(r1)+

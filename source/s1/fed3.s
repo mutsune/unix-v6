@@ -97,7 +97,7 @@ getspq:
 	jsr	pc,rewind
 	mov	(sp),r2
 2:
-	cmpb	(r2),$&#39;*
+	cmpb	(r2),$'*
 	bne	3f
 	clr	strflg
 	mov	$2,qflag
@@ -114,7 +114,7 @@ getspq:
 	bne	4f
 	mov	ch,r2
 3:
-	cmpb	(r2),$&#39;?
+	cmpb	(r2),$'?
 	bne	3f
 	inc	r2
 	tst	qflag
@@ -207,10 +207,10 @@ ask:
 	mov	r2,-(sp)
 	mov	r0,r1
 	jsr	pc,getn
-	movb	$&#39; ,(r2)+
+	movb	$' ,(r2)+
 	jsr	pc,output
 	jsr	pc,tfiget
-	cmpb	$&#39;\n,r0
+	cmpb	$'\n,r0
 	bne	1f
 2:
 	mov	asmem,r1
@@ -219,22 +219,22 @@ ask:
 	sec
 	rts	pc
 1:
-	cmpb	r0,$&#39;y
+	cmpb	r0,$'y
 	beq	4f
-	cmpb	r0,$&#39;q
+	cmpb	r0,$'q
 	beq	3f
 1:
 	tst	iflag
 	bne	2b
 	jsr	pc,tfiget
-	cmpb	$&#39;\n,r0
+	cmpb	$'\n,r0
 	bne	1b
 	br	2b
 4:
 	tst	iflag
 	bne	2b
 	jsr	pc,tfiget
-	cmpb	$&#39;\n,r0
+	cmpb	$'\n,r0
 	bne	1b
 	mov	asmem,r1
 	mov	(sp)+,r2
@@ -244,7 +244,7 @@ ask:
 	tst	iflag
 	bne	2b
 	jsr	pc,tfiget
-	cmpb	$&#39;\n,r0
+	cmpb	$'\n,r0
 	bne	1b
 	mov	(sp)+,r2
 	jmp	loop
@@ -308,7 +308,7 @@ oct:
 	clr	r0
 	div	$8.,r0
 	mov	r1,-(sp)
-	add	$&#39;0,(sp)
+	add	$'0,(sp)
 	tst	r0
 	beq	1f
 	jsr	r5,oct
@@ -325,7 +325,7 @@ decml:
 	clr	r0
 	div	$10.,r0
 	mov	r1,-(sp)
-	add	$&#39;0,(sp)
+	add	$'0,(sp)
 	tst	r0
 	beq	1f
 	jsr	r5,decml
@@ -341,8 +341,8 @@ iflag:	0
 qflag:	0
 vflag:	0
 	.data
-err4:	&lt; not in memory.\n&gt;
-err1:	&lt;Cannot open file &gt;
+err4:	< not in memory.\n>
+err1:	<Cannot open file >
 end1:	.even
 	.bss
 freeh:	.=.+2

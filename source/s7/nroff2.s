@@ -9,18 +9,18 @@ casead:
 	tst	nlflg
 	bne	1f
 	jsr	pc,getchar
-	cmp	r0,$&#39;r	/right adj, left ragged
+	cmp	r0,$'r	/right adj, left ragged
 	bne	0f
 	mov	$2,jfomod
 	br	1f
 0:
-	cmp	r0,$&#39;l	/left adj, right ragged
+	cmp	r0,$'l	/left adj, right ragged
 	bne	0f
 	clr	jfomod
 	clr	ad
 	br	1f
 0:
-	cmp	r0,$&#39;c	/centered adj
+	cmp	r0,$'c	/centered adj
 	bne	0f
 	mov	$1,jfomod
 	br	1f
@@ -42,7 +42,7 @@ casec2:
 0:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	2f
 	tst	(sp)
 	bne	1f
@@ -297,13 +297,13 @@ casetr:
 	jsr	pc,skipcont
 1:
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
 	mov	r0,r1
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	2f
-	mov	$&#39; ,r0
+	mov	$' ,r0
 2:
 	movb	r0,trtab(r1)
 	br	1b
@@ -317,16 +317,16 @@ caseta:
 	jsr	pc,getchar
 	tst	nlflg
 	bne	1f
-	cmpb	r0,$&#39;+
+	cmpb	r0,$'+
 	bne	0f
 	inc	(sp)
 	br	2f
 0:
-	cmpb	r0,$&#39;-
+	cmpb	r0,$'-
 	beq	2f
-	cmpb	r0,$&#39;0
+	cmpb	r0,$'0
 	blo	1b
-	cmpb	r0,$&#39;9
+	cmpb	r0,$'9
 	bhi	1b
 2:
 	mov	r0,ch
@@ -391,7 +391,7 @@ caselt:
 casehc:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	movb	$200,r0
 1:
@@ -401,7 +401,7 @@ casehc:
 casetc:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	mov	$014,r0
 1:
@@ -411,9 +411,9 @@ casetc:
 caselc:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
-	mov	$&#39;.,r0
+	mov	$'.,r0
 1:
 	mov	r0,dotc
 	rts	pc
@@ -421,7 +421,7 @@ caselc:
 casenc:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	1f
 	mov	$034,r0
 1:
@@ -631,7 +631,7 @@ casede:
 	jeq	edone
 	jmp	done2
 /	br	6b
-8: &lt;Too many string/macro names.\n\0&gt;
+8: <Too many string/macro names.\n\0>
 	.even
 
 findmn:
@@ -820,14 +820,14 @@ caseev:
 6:
 	jsr	r5,string;9f
 	rts	pc
-9: &lt;Cannot do &quot;ev&quot;.\n\0&gt;
+9: <Cannot do "ev".\n\0>
 .even
 
 caseif:
 	clr	-(sp)
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;!
+	cmp	r0,$'!
 	bne	1f
 	inc	(sp)
 	br	2f
@@ -841,19 +841,19 @@ caseif:
 	br	6f /false
 1:
 	jsr	pc,getchar
-	cmp	r0,$&#39;e
+	cmp	r0,$'e
 	bne	1f
 	bit	$1,pn
 	bne	6f
 	br	5f
 1:
-	cmp	r0,$&#39;o
+	cmp	r0,$'o
 	bne	1f
 	bit	$1,pn
 	beq	6f
 	br	5f
 1:
-	cmpb	r0,$&#39;n
+	cmpb	r0,$'n
 	beq	5f
 1:
 	tst	(sp)+
@@ -865,7 +865,7 @@ caseif:
 	clr	column
 	jsr	pc,getchar
 	bmi	0f
-	cmpb	r0,$&#39; /
+	cmpb	r0,$' /
 	beq	2b
 0:
 	mov	r0,ch
@@ -880,7 +880,7 @@ casewh:
 	clr	-(sp)
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmp	r0,$&#39;x
+	cmp	r0,$'x
 	bne	1f
 	mov	$-1,r0
 	jsr	pc,findt
@@ -1023,7 +1023,7 @@ casetm:
 	bne	2f
 	cmp	r1,$ename
 	blo	1b
-	movb	$&#39;\n,-1(r1)
+	movb	$'\n,-1(r1)
 2:
 	clrb	(r1)
 	jsr	r5,stringfl; bname
@@ -1058,8 +1058,8 @@ caserd:
 	br	1b
 6:
 	jmp	rdtty2
-3:	&lt;: \0&gt;
-4:	&lt;\0&gt; /bell
+3:	<: \0>
+4:	<\0> /bell
 	.even
 
 caseaf:
@@ -1083,11 +1083,11 @@ caseaf:
 3:
 	rts	pc
 4:
-.byte &#39;1,1
-.byte &#39;i,2
-.byte &#39;I,3
-.byte &#39;a,4
-.byte &#39;A,5
+.byte '1,1
+.byte 'i,2
+.byte 'I,3
+.byte 'a,4
+.byte 'A,5
 .byte 0,0
 
 casenr:
@@ -1165,9 +1165,9 @@ caseeo:
 caseec:
 	jsr	pc,skipcont
 	jsr	pc,getchar
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	bne	1f
-	movb	$&#39;\\,r0
+	movb	$'\\,r0
 1:
 	movb	r0,eschar
 	movb	r0,eschar+1
@@ -1188,7 +1188,7 @@ caseem:
 
 casefc:
 	mov	$4,fc
-	mov	$&#39; ,padc
+	mov	$' ,padc
 	jsr	pc,skipcont
 	bne	1f
 	jsr	pc,getchar
@@ -1235,5 +1235,5 @@ casepi:
 	jsr	r5,string;9f
 	sys	exit
 args: bname;0
-9: &lt;exec failed\n\0&gt;
+9: <exec failed\n\0>
 .even

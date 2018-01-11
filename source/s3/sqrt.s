@@ -2,7 +2,7 @@ ldfps = 170100^tst
 stfps = 170200^tst
 /
 /	sqrt replaces the f.p. number in fr0 by its
-/	square root.  newton&#39;s method
+/	square root.  newton's method
 /
 .globl	sqrt, _sqrt
 /

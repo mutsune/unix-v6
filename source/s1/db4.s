@@ -2,9 +2,9 @@
 
 maxsym = 24000.
 core:
-   &lt;core\0&gt;
+   <core\0>
 a.out:
-   &lt;a.out\0&gt;
+   <a.out\0>
 .even
 zero:	0
 .bss
@@ -20,7 +20,7 @@ objmagic: 407
 nobjmagic: 410
 namsiz:	nambuf
 incdot: 2
-nlcom: &#39;/
+nlcom: '/
 
 	.bss
 

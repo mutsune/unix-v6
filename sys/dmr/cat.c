@@ -6,9 +6,9 @@
  * GP DR11C driver used for C/A/T
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../tty.h&quot;
+#include "../param.h"
+#include "../user.h"
+#include "../tty.h"
 
 #define	CATADDR	0167750
 #define	PCAT	9
@@ -29,7 +29,7 @@ ctopen(dev)
 {
 	if (cat.catlock==0) {
 		cat.catlock++;
-		CATADDR-&gt;catcsr =| IENABLE;
+		CATADDR->catcsr =| IENABLE;
 	} else
 		u.u_error = ENXIO;
 }
@@ -44,12 +44,12 @@ ctwrite(dev)
 	register c;
 	extern lbolt;
 
-	while ((c=cpass()) &gt;= 0) {
+	while ((c=cpass()) >= 0) {
 		spl5();
-		while (cat.oq.c_cc &gt; CATHIWAT)
-			sleep(&amp;cat.oq, PCAT);
-		while (putc(c, &amp;cat.oq) &lt; 0)
-			sleep(&amp;lbolt, PCAT);
+		while (cat.oq.c_cc > CATHIWAT)
+			sleep(&cat.oq, PCAT);
+		while (putc(c, &cat.oq) < 0)
+			sleep(&lbolt, PCAT);
 		catintr();
 		spl0();
 	}
@@ -59,12 +59,12 @@ catintr()
 {
 	register int c;
 
-	if (CATADDR-&gt;catcsr&amp;DONE &amp;&amp; (c=getc(&amp;cat.oq))&gt;=0) {
-		CATADDR-&gt;catbuf = c;
+	if (CATADDR->catcsr&DONE && (c=getc(&cat.oq))>=0) {
+		CATADDR->catbuf = c;
 		if (cat.oq.c_cc==0 || cat.oq.c_cc==CATLOWAT)
-			wakeup(&amp;cat.oq);
+			wakeup(&cat.oq);
 	} else {
 		if (cat.catlock==0)
-			CATADDR-&gt;catcsr = 0;
+			CATADDR->catcsr = 0;
 	}
 }

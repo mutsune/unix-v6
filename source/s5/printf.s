@@ -20,7 +20,7 @@ loop:
 	movb	*formp,r0
 	beq	1f
 	inc	formp
-	cmp	r0,$&#39;%
+	cmp	r0,$'%
 	beq	2f
 3:
 	mov	r0,(sp)
@@ -31,7 +31,7 @@ loop:
 2:
 	clr	rjust
 	clr	ndigit
-	cmpb	*formp,$&#39;-
+	cmpb	*formp,$'-
 	bne	2f
 	inc	formp
 	inc	rjust
@@ -39,7 +39,7 @@ loop:
 	jsr	r3,gnum
 	mov	r1,width
 	clr	ndfnd
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	bne	1f
 	jsr	r3,gnum
 	mov	r1,ndigit
@@ -55,15 +55,15 @@ loop:
 	jmp	(r2)
 	.data
 swtab:
-	decimal;	&#39;d
-	octal;		&#39;o
-	hex;		&#39;x
-	float;		&#39;f
-	scien;		&#39;e
-	charac;		&#39;c
-	string;		&#39;s
-	logical;	&#39;l
-	remote;		&#39;r
+	decimal;	'd
+	octal;		'o
+	hex;		'x
+	float;		'f
+	scien;		'e
+	charac;		'c
+	string;		's
+	logical;	'l
+	remote;		'r
 	0;  0
 	.text
 
@@ -71,7 +71,7 @@ decimal:
 	mov	(r4)+,r1
 	bge	1f
 	neg	r1
-	movb	$&#39;-,(r3)+
+	movb	$'-,(r3)+
 	br	1f
 
 logical:
@@ -88,7 +88,7 @@ logical:
 	jsr	pc,1b
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	movb	r0,(r3)+
 	rts	pc
 
@@ -134,7 +134,7 @@ octal:
 	beq	2f
 	tst	ndigit
 	beq	2f
-	movb	$&#39;0,(r3)+
+	movb	$'0,(r3)+
 2:
 	clr	r0
 	jsr	pc,1f
@@ -147,10 +147,10 @@ octal:
 1:
 	mov	(sp)+,r0
 	bic	2(r2),r0
-	add	$&#39;0,r0
-	cmp	r0,$&#39;9
+	add	$'0,r0
+	cmp	r0,$'9
 	ble	1f
-	add	$&#39;A-&#39;0-10.,r0
+	add	$'A-'0-10.,r0
 1:
 	movb	r0,(r3)+
 	rts	pc
@@ -178,7 +178,7 @@ prbuf:
 	sub	r2,r3
 prstr:
 	mov	r4,-(sp)
-	mov	$&#39; ,-(sp)
+	mov	$' ,-(sp)
 	mov	r3,r4
 	neg	r3
 	add	width,r3
@@ -198,7 +198,7 @@ prstr:
 2:
 	tst	r3
 	ble	1f
-	mov	$&#39; ,(sp)
+	mov	$' ,(sp)
 2:
 	jsr	pc,*$_putchar
 	sob	r3,2b
@@ -213,8 +213,8 @@ gnum:
 1:
 	movb	*formp,r0
 	inc	formp
-	sub	$&#39;0,r0
-	cmp	r0,$&#39;*-&#39;0
+	sub	$'0,r0
+	cmp	r0,$'*-'0
 	bne	2f
 	mov	(r4)+,r0
 	br	3f
@@ -227,7 +227,7 @@ gnum:
 	add	r0,r1
 	br	1b
 1:
-	add	$&#39;0,r0
+	add	$'0,r0
 	rts	r3
 
 .bss

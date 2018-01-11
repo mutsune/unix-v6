@@ -39,17 +39,17 @@ $p
 But instead you can do the job once and for all.
 Type
 .B1
-ls chap* &gt;temp
+ls chap* >temp
 .B2
 to get the list of filenames into a file.
 Then edit this file to make the necessary
 series of editing commands
 (using the global commands of
 .C ed ),
-and write it into ``script&#39;&#39;.
+and write it into ``script''.
 Now the command
 .B1
-ed &lt;script
+ed <script
 .B2
 will produce
 the same output as the laborious hand typing.
@@ -93,21 +93,21 @@ who | wc -l
 every hour, and write down the numbers, but that is rather primitive.
 The next step is probably to say
 .B1
-(date; who | wc -l) &gt;&gt;users
+(date; who | wc -l) >>users
 .B2
-which uses ``&gt;&gt;&#39;&#39; to 
+which uses ``>>'' to 
 .ul
 append
-to the end of the file ``users&#39;&#39;.
-(We haven&#39;t mentioned ``&gt;&gt;&#39;&#39; before _
-it&#39;s another service of the shell.)
+to the end of the file ``users''.
+(We haven't mentioned ``>>'' before _
+it's another service of the shell.)
 Now all you have to do is to put a loop around this,
-and ensure that it&#39;s done every hour.
-Thus, place the following commands into a file, say ``count&#39;&#39;:
+and ensure that it's done every hour.
+Thus, place the following commands into a file, say ``count'':
 .B1
 .ne 4
 : loop
-(date; who | wc -l) &gt;&gt;users
+(date; who | wc -l) >>users
 sleep  3600
 goto loop
 .B2
@@ -116,10 +116,10 @@ The command
 is followed by a space and a label,
 which you can then 
 .C goto .
-Notice that it&#39;s quite legal to branch backwards.
+Notice that it's quite legal to branch backwards.
 Now if you issue the command
 .B1
-sh  count  &amp;
+sh  count  &
 .B2
 the users will be counted every hour,
 and you can go on with other things.
@@ -127,23 +127,23 @@ and you can go on with other things.
 .C kill
 to stop counting.)
 .PP
-If you would like ``every hour&#39;&#39; to be a parameter,
+If you would like ``every hour'' to be a parameter,
 you can arrange for that too:
 .B1
 .ne 4
 : loop
-(date; who | wc - l) &gt;&gt;users
+(date; who | wc - l) >>users
 sleep  $1
 goto loop
 .B2
-``$1&#39;&#39; means the first argument when this procedure is invoked.
+``$1'' means the first argument when this procedure is invoked.
 If you say
 .B1
 sh count 60
 .B2
 it will count every minute.
 A shell program can have up to nine arguments,
-``$1&#39;&#39; through ``$9&#39;&#39;.
+``$1'' through ``$9''.
 .PP
 The other aspect of programming is conditional testing.
 The
@@ -153,20 +153,20 @@ can test conditions and execute commands accordingly.
 As a simple example, suppose you want to add to your login sequence
 something to print your mail if you have some.
 Thus, knowing that mail is stored in a file called
-`mailbox&#39;, you could say
+`mailbox', you could say
 .B1
 if -r mailbox  mail
 .B2
 This says
-``if the file `mailbox&#39; is readable, execute the
+``if the file `mailbox' is readable, execute the
 .C mail
-command.&#39;&#39;
+command.''
 .PP
 As another example, you could arrange that the
-``count&#39;&#39;
+``count''
 procedure count every hour by default,
 but allow an optional argument to specify a different time.
-Simply replace the ``sleep $1&#39;&#39; line by
+Simply replace the ``sleep $1'' line by
 .B1
 .ne 2
 if $1x = x sleep 3600
@@ -176,12 +176,12 @@ The construction
 .B1
 if $1x = x
 .B2
-tests whether ``$1&#39;&#39;, the first argument, was present or absent.
+tests whether ``$1'', the first argument, was present or absent.
 .PP
 More complicated conditions can be tested:
 you can find out the status of an executed command,
-and you can combine conditions with `and&#39;, `or&#39;,
-`not&#39; and parentheses _
+and you can combine conditions with `and', `or',
+`not' and parentheses _
 see
 .SE if (I).
 You should also read
@@ -213,7 +213,7 @@ and use
 .C cat
 to concatentate several files into it.
 This may not be adequate for the long run,
-but for the early stages it&#39;s just right.
+but for the early stages it's just right.
 .PP
 There are a number of supporting programs that go with C.
 The C debugger,
@@ -231,16 +231,16 @@ print statements.
 .PP
 You can instrument C programs and thus find out
 where they spend their time and what parts are worth optimising.
-Compile the routines with the ``-p&#39;&#39; option;
+Compile the routines with the ``-p'' option;
 after the test run use
 .C prof
 to print an execution profile.
 The command
 .C time
 will give you the gross run-time statistics
-of a program, but it&#39;s not super accurate or reproducible.
+of a program, but it's not super accurate or reproducible.
 .PP
-C programs that don&#39;t depend too much on special features of 
+C programs that don't depend too much on special features of 
 .UC UNIX
 can be moved to the Honeywell 6070
 and

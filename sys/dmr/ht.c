@@ -6,10 +6,10 @@
  * TJU16 tape driver
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../buf.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
+#include "../param.h"
+#include "../buf.h"
+#include "../conf.h"
+#include "../user.h"
 
 struct {
 	int	htcs1;
@@ -65,8 +65,8 @@ htopen(dev, flag)
 {
 	register unit;
 
-	unit = dev.d_minor&amp;077;
-	if (unit &gt;= NUNIT || h_openf[unit])
+	unit = dev.d_minor&077;
+	if (unit >= NUNIT || h_openf[unit])
 		u.u_error = ENXIO;
 	else {
 		h_openf[unit]++;
@@ -80,7 +80,7 @@ htclose(dev, flag)
 {
 	register int unit;
 
-	unit = dev.d_minor&amp;077;
+	unit = dev.d_minor&077;
 	h_openf[unit] = 0;
 	if (flag) {
 		hcommand(dev, WEOF);
@@ -95,17 +95,17 @@ hcommand(dev, com)
 	extern lbolt;
 
 	unit = dev.d_minor;
-	while (httab.d_active || (HTADDR-&gt;htcs1 &amp; CRDY)==0)
-		sleep(&amp;lbolt, 1);
-	HTADDR-&gt;htcs2 = (unit&gt;&gt;3)&amp;07;
-	while((HTADDR-&gt;htds&amp;DRY) == 0)
-		sleep(&amp;lbolt, 1);
-	if(unit &gt;= 64)
-		HTADDR-&gt;httc = P800 | (unit&amp;07); else
-		HTADDR-&gt;httc = P1600 | (unit&amp;07);
-	while((HTADDR-&gt;htds&amp;(MOL|PIP)) != MOL)
-		sleep(&amp;lbolt, 1);
-	HTADDR-&gt;htcs1 = com | GO;
+	while (httab.d_active || (HTADDR->htcs1 & CRDY)==0)
+		sleep(&lbolt, 1);
+	HTADDR->htcs2 = (unit>>3)&07;
+	while((HTADDR->htds&DRY) == 0)
+		sleep(&lbolt, 1);
+	if(unit >= 64)
+		HTADDR->httc = P800 | (unit&07); else
+		HTADDR->httc = P1600 | (unit&07);
+	while((HTADDR->htds&(MOL|PIP)) != MOL)
+		sleep(&lbolt, 1);
+	HTADDR->htcs1 = com | GO;
 }
 
 htstrategy(abp)
@@ -115,27 +115,27 @@ struct buf *abp;
 	register char **p;
 
 	bp = abp;
-	p = &amp;h_nxrec[bp-&gt;b_dev.d_minor&amp;077];
-	if (*p &lt;= bp-&gt;b_blkno) {
-		if (*p &lt; bp-&gt;b_blkno) {
-			bp-&gt;b_flags =| B_ERROR;
+	p = &h_nxrec[bp->b_dev.d_minor&077];
+	if (*p <= bp->b_blkno) {
+		if (*p < bp->b_blkno) {
+			bp->b_flags =| B_ERROR;
 			iodone(bp);
 			return;
 		}
-		if (bp-&gt;b_flags&amp;B_READ) {
+		if (bp->b_flags&B_READ) {
 			clrbuf(bp);
 			iodone(bp);
 			return;
 		}
 	}
-	if ((bp-&gt;b_flags&amp;B_READ)==0)
-		*p = bp-&gt;b_blkno + 1;
-	bp-&gt;av_forw = 0;
+	if ((bp->b_flags&B_READ)==0)
+		*p = bp->b_blkno + 1;
+	bp->av_forw = 0;
 	spl5();
 	if (httab.d_actf==0)
 		httab.d_actf = bp;
 	else
-		httab.d_actl-&gt;av_forw = bp;
+		httab.d_actl->av_forw = bp;
 	httab.d_actl = bp;
 	if (httab.d_active==0)
 		htstart();
@@ -151,36 +151,36 @@ htstart()
     loop:
 	if ((bp = httab.d_actf) == 0)
 		return;
-	unit = bp-&gt;b_dev.d_minor;
-	HTADDR-&gt;htcs2 = (unit&gt;&gt;3)&amp;07;
-	if(unit &gt;= 64)
-		HTADDR-&gt;httc = P800 | (unit&amp;07); else
-		HTADDR-&gt;httc = P1600 | (unit&amp;07);
-	unit =&amp; 077;
+	unit = bp->b_dev.d_minor;
+	HTADDR->htcs2 = (unit>>3)&07;
+	if(unit >= 64)
+		HTADDR->httc = P800 | (unit&07); else
+		HTADDR->httc = P1600 | (unit&07);
+	unit =& 077;
 	blkno = h_blkno[unit];
-	if (h_openf[unit] &lt; 0 || (HTADDR-&gt;htcs1 &amp; CRDY)==0) {
-		bp-&gt;b_flags =| B_ERROR;
-		httab.d_actf = bp-&gt;av_forw;
+	if (h_openf[unit] < 0 || (HTADDR->htcs1 & CRDY)==0) {
+		bp->b_flags =| B_ERROR;
+		httab.d_actf = bp->av_forw;
 		iodone(bp);
 		goto loop;
 	}
-	if (blkno != bp-&gt;b_blkno) {
+	if (blkno != bp->b_blkno) {
 		httab.d_active = SSEEK;
-		if (blkno &lt; bp-&gt;b_blkno) {
-			HTADDR-&gt;htfc = blkno - bp-&gt;b_blkno;
-			HTADDR-&gt;htcs1 = SFORW|IENABLE|GO;
+		if (blkno < bp->b_blkno) {
+			HTADDR->htfc = blkno - bp->b_blkno;
+			HTADDR->htcs1 = SFORW|IENABLE|GO;
 		} else {
-			if (bp-&gt;b_blkno == 0)
-				HTADDR-&gt;htcs1 = REW|IENABLE|GO;
+			if (bp->b_blkno == 0)
+				HTADDR->htcs1 = REW|IENABLE|GO;
 			else {
-				HTADDR-&gt;htfc = bp-&gt;b_blkno - blkno;
-				HTADDR-&gt;htcs1 = SREV|IENABLE|GO;
+				HTADDR->htfc = bp->b_blkno - blkno;
+				HTADDR->htcs1 = SREV|IENABLE|GO;
 			}
 		}
 		return;
 	}
 	httab.d_active = SIO;
-	rhstart(bp, &amp;HTADDR-&gt;htfc, bp-&gt;b_wcount&lt;&lt;1, &amp;HTADDR-&gt;htbae);
+	rhstart(bp, &HTADDR->htfc, bp->b_wcount<<1, &HTADDR->htbae);
 }
 
 htintr()
@@ -190,50 +190,50 @@ htintr()
 
 	if ((bp = httab.d_actf)==0)
 		return;
-	unit = bp-&gt;b_dev.d_minor&amp;077;
-	if (HTADDR-&gt;htcs1 &amp; ERR) {
+	unit = bp->b_dev.d_minor&077;
+	if (HTADDR->htcs1 & ERR) {
 /*
-		deverror(bp, HTADDR-&gt;hter, 0);
+		deverror(bp, HTADDR->hter, 0);
  */
-		if(HTADDR-&gt;htds&amp;EOF) {
-			if(bp != &amp;rhtbuf &amp;&amp; h_openf[unit])
+		if(HTADDR->htds&EOF) {
+			if(bp != &rhtbuf && h_openf[unit])
 				h_openf[unit] = -1;
 		}
-		HTADDR-&gt;htcs1 = ERR|CLR|GO;
-		if ((HTADDR-&gt;htds&amp;DRY)!=0 &amp;&amp; httab.d_active==SIO) {
-			if (++httab.d_errcnt &lt; 10) {
+		HTADDR->htcs1 = ERR|CLR|GO;
+		if ((HTADDR->htds&DRY)!=0 && httab.d_active==SIO) {
+			if (++httab.d_errcnt < 10) {
 				h_blkno[unit]++;
 				httab.d_active = 0;
 				htstart();
 				return;
 			}
 		}
-		bp-&gt;b_flags =| B_ERROR;
+		bp->b_flags =| B_ERROR;
 		httab.d_active = SIO;
 	}
 	if (httab.d_active == SIO) {
 		httab.d_errcnt = 0;
 		h_blkno[unit]++;
-		httab.d_actf = bp-&gt;av_forw;
+		httab.d_actf = bp->av_forw;
 		httab.d_active = 0;
 		iodone(bp);
-		bp-&gt;b_resid = HTADDR-&gt;htfc;
+		bp->b_resid = HTADDR->htfc;
 	} else
-		h_blkno[unit] = bp-&gt;b_blkno;
+		h_blkno[unit] = bp->b_blkno;
 	htstart();
 }
 
 htread(dev)
 {
 	htphys(dev);
-	physio(htstrategy, &amp;rhtbuf, dev, B_READ);
+	physio(htstrategy, &rhtbuf, dev, B_READ);
 	u.u_count = -rhtbuf.b_resid;
 }
 
 htwrite(dev)
 {
 	htphys(dev);
-	physio(htstrategy, &amp;rhtbuf, dev, B_WRITE);
+	physio(htstrategy, &rhtbuf, dev, B_WRITE);
 	u.u_count = 0;
 }
 

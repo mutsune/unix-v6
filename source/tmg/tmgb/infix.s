@@ -19,7 +19,7 @@
 	bis	(sp),4(sp)
 	br	9f
 
-/ &amp;
+/ &
 .n:
 	jsr	pc,sprv
 	com	(sp)

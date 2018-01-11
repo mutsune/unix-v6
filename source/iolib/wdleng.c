@@ -4,7 +4,7 @@ wdleng ()
 {
 int k, leng;
 k = leng = 1;
-while (k =&lt;&lt; 1)
+while (k =<< 1)
 	leng++;
 return (leng);
 }

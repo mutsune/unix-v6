@@ -31,15 +31,15 @@ struct map *mp;
 	register int a;
 	register struct map *bp;
 
-	for (bp = mp; bp-&gt;m_size; bp++) {
-		if (bp-&gt;m_size &gt;= size) {
-			a = bp-&gt;m_addr;
-			bp-&gt;m_addr =+ size;
-			if ((bp-&gt;m_size =- size) == 0)
+	for (bp = mp; bp->m_size; bp++) {
+		if (bp->m_size >= size) {
+			a = bp->m_addr;
+			bp->m_addr =+ size;
+			if ((bp->m_size =- size) == 0)
 				do {
 					bp++;
-					(bp-1)-&gt;m_addr = bp-&gt;m_addr;
-				} while ((bp-1)-&gt;m_size = bp-&gt;m_size);
+					(bp-1)->m_addr = bp->m_addr;
+				} while ((bp-1)->m_size = bp->m_size);
 			return(a);
 		}
 	}
@@ -60,27 +60,27 @@ struct map *mp;
 	register int a;
 
 	a = aa;
-	for (bp = mp; bp-&gt;m_addr&lt;=a &amp;&amp; bp-&gt;m_size!=0; bp++);
-	if (bp&gt;mp &amp;&amp; (bp-1)-&gt;m_addr+(bp-1)-&gt;m_size == a) {
-		(bp-1)-&gt;m_size =+ size;
-		if (a+size == bp-&gt;m_addr) {
-			(bp-1)-&gt;m_size =+ bp-&gt;m_size;
-			while (bp-&gt;m_size) {
+	for (bp = mp; bp->m_addr<=a && bp->m_size!=0; bp++);
+	if (bp>mp && (bp-1)->m_addr+(bp-1)->m_size == a) {
+		(bp-1)->m_size =+ size;
+		if (a+size == bp->m_addr) {
+			(bp-1)->m_size =+ bp->m_size;
+			while (bp->m_size) {
 				bp++;
-				(bp-1)-&gt;m_addr = bp-&gt;m_addr;
-				(bp-1)-&gt;m_size = bp-&gt;m_size;
+				(bp-1)->m_addr = bp->m_addr;
+				(bp-1)->m_size = bp->m_size;
 			}
 		}
 	} else {
-		if (a+size == bp-&gt;m_addr &amp;&amp; bp-&gt;m_size) {
-			bp-&gt;m_addr =- size;
-			bp-&gt;m_size =+ size;
+		if (a+size == bp->m_addr && bp->m_size) {
+			bp->m_addr =- size;
+			bp->m_size =+ size;
 		} else if (size) do {
-			t = bp-&gt;m_addr;
-			bp-&gt;m_addr = a;
+			t = bp->m_addr;
+			bp->m_addr = a;
 			a = t;
-			t = bp-&gt;m_size;
-			bp-&gt;m_size = size;
+			t = bp->m_size;
+			bp->m_size = size;
 			bp++;
 		} while (size = t);
 	}

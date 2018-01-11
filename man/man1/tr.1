@@ -57,26 +57,26 @@ is taken to be huge;
 this facility is useful for padding
 .it string2.
 .s3
-The escape character `\\&#39; may be used as in
+The escape character `\\' may be used as in
 .it sh
 to remove special meaning from any character in a string.
 In addition,
-`\\&#39; followed by 1, 2 or 3 octal digits stands for the
+`\\' followed by 1, 2 or 3 octal digits stands for the
 character whose ascii code is given by those digits.
 .s3
 The following example creates a list of all
-the words in `file1&#39; one per line in `file2&#39;,
+the words in `file1' one per line in `file2',
 where a word is taken to be a maximal string of alphabetics.
 The strings are quoted
 to protect the special characters from interpretation by the Shell;
 012 is the ascii code for newline.
 .s3
 .ti +8
-tr \*-cs &quot;[A\*-Z][a\*-z]&quot; &quot;[\\012*]&quot; &lt;file1 &gt;file2
-.sh &quot;SEE ALSO&quot;
+tr \*-cs "[A\*-Z][a\*-z]" "[\\012*]" <file1 >file2
+.sh "SEE ALSO"
 sh (I), ed (I), ascii (V)
 .sh BUGS
-Won&#39;t handle ascii NUL in
+Won't handle ascii NUL in
 .it string1
 or
 .it string2;

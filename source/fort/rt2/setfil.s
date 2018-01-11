@@ -28,7 +28,7 @@ setfil.:
 1:
 	movb	(r0)+,(r1)
 	beq	1f
-	cmpb	$&#39; ,(r1)+
+	cmpb	$' ,(r1)+
 	bne	1b
 	clrb	-(r1)
 1:

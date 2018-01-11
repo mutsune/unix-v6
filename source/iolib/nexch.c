@@ -3,8 +3,8 @@ IEH3nxch ()
 {
 	char ch, cgetc();
 	extern int IEH3sfil;
-while ((ch = cgetc(IEH3sfil)) &gt; 0 &amp;&amp; IEH3spce(ch));
-if  (ch &gt; 0)
+while ((ch = cgetc(IEH3sfil)) > 0 && IEH3spce(ch));
+if  (ch > 0)
 	return (ch);
 return (-1);
 }

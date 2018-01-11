@@ -24,9 +24,9 @@ chartab:
 .data
 
 namedone:.byte 0
-a.tmp1:	&lt;/tmp/atm1a\0&gt;
-a.tmp2:	&lt;/tmp/atm2a\0&gt;
-a.tmp3:	&lt;/tmp/atm3a\0&gt;
+a.tmp1:	</tmp/atm1a\0>
+a.tmp2:	</tmp/atm2a\0>
+a.tmp3:	</tmp/atm3a\0>
 	.even
 curfb:
 	-1;-1;-1;-1;-1;-1;-1;-1;-1;-1

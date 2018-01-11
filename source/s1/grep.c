@@ -36,36 +36,36 @@ char **argv;
 
 	fout = dup(1);
 	flush();
-	while (--argc &gt; 0 &amp;&amp; (++argv)[0][0]==&#39;-&#39;)
+	while (--argc > 0 && (++argv)[0][0]=='-')
 		switch (argv[0][1]) {
 
-		case &#39;v&#39;:
+		case 'v':
 			vflag++;
 			continue;
 
-		case &#39;b&#39;:
+		case 'b':
 			bflag++;
 			continue;
 
-		case &#39;c&#39;:
+		case 'c':
 			cflag++;
 			continue;
 
-		case &#39;n&#39;:
+		case 'n':
 			nflag++;
 			continue;
 
 		default:
-			printf2(&quot;Unknown flag\n&quot;);
+			printf2("Unknown flag\n");
 			continue;
 		}
-	if (argc&lt;=0)
+	if (argc<=0)
 		exit(2);
 	compile(*argv);
 	nfile = --argc;
-	if (argc&lt;=0)
+	if (argc<=0)
 		execute(0);
-	else while (--argc &gt;= 0) {
+	else while (--argc >= 0) {
 		argv++;
 		execute(*argv);
 	}
@@ -83,56 +83,56 @@ char *astr;
 
 	ep = expbuf;
 	sp = astr;
-	if (*sp == &#39;^&#39;) {
+	if (*sp == '^') {
 		circf++;
 		sp++;
 	}
 	for (;;) {
-		if (ep &gt;= &amp;expbuf[ESIZE])
+		if (ep >= &expbuf[ESIZE])
 			goto cerror;
-		if ((c = *sp++) != &#39;*&#39;)
+		if ((c = *sp++) != '*')
 			lastep = ep;
 		switch (c) {
 
-		case &#39;\0&#39;:
+		case '\0':
 			*ep++ = CEOF;
 			return;
 
-		case &#39;.&#39;:
+		case '.':
 			*ep++ = CDOT;
 			continue;
 
-		case &#39;*&#39;:
+		case '*':
 			if (lastep==0)
 				goto defchar;
 			*lastep =| STAR;
 			continue;
 
-		case &#39;$&#39;:
-			if (*sp != &#39;\0&#39;)
+		case '$':
+			if (*sp != '\0')
 				goto defchar;
 			*ep++ = CDOL;
 			continue;
 
-		case &#39;[&#39;:
+		case '[':
 			*ep++ = CCL;
 			*ep++ = 0;
 			cclcnt = 1;
-			if ((c = *sp++) == &#39;^&#39;) {
+			if ((c = *sp++) == '^') {
 				c = *sp++;
 				ep[-2] = NCCL;
 			}
 			do {
 				*ep++ = c;
 				cclcnt++;
-				if (c==&#39;\0&#39; || ep &gt;= &amp;expbuf[ESIZE])
+				if (c=='\0' || ep >= &expbuf[ESIZE])
 					goto cerror;
-			} while ((c = *sp++) != &#39;]&#39;);
+			} while ((c = *sp++) != ']');
 			lastep[1] = cclcnt;
 			continue;
 
-		case &#39;\\&#39;:
-			if ((c = *sp++) == &#39;\0&#39;)
+		case '\\':
+			if ((c = *sp++) == '\0')
 				goto cerror;
 		defchar:
 		default:
@@ -141,7 +141,7 @@ char *astr;
 		}
 	}
     cerror:
-	printf2(&quot;RE error\n&quot;);
+	printf2("RE error\n");
 }
 
 execute(file)
@@ -152,8 +152,8 @@ execute(file)
 	char *ebp, *cbp;
 
 	if (file) {
-		if ((f = open(file, 0)) &lt; 0) {
-			printf2(&quot;Can&#39;t open %s\n&quot;, file);
+		if ((f = open(file, 0)) < 0) {
+			printf2("Can't open %s\n", file);
 		}
 	} else
 		f = 0;
@@ -167,19 +167,19 @@ execute(file)
 	for (;;) {
 		if ((++lnum[1])==0)
 			lnum[1]++;
-		if((lnum[1]&amp;0377) == 0)
+		if((lnum[1]&0377) == 0)
 			flush();
 		p1 = linebuf;
 		p2 = cbp;
 		for (;;) {
-			if (p2 &gt;= ebp) {
-				if ((c = read(f, ibuf, 512)) &lt;= 0) {
+			if (p2 >= ebp) {
+				if ((c = read(f, ibuf, 512)) <= 0) {
 					close(f);
 					if (cflag) {
-						if (nfile &gt; 1)
-							printf(&quot;%s:&quot;, file);
+						if (nfile > 1)
+							printf("%s:", file);
 						p1 = locv(tln[0],tln[1]);
-						printf(&quot;%s\n&quot;, p1);
+						printf("%s\n", p1);
 					}
 					return;
 				}
@@ -187,10 +187,10 @@ execute(file)
 				p2 = ibuf;
 				ebp = ibuf+c;
 			}
-			if ((c = *p2++) == &#39;\n&#39;)
+			if ((c = *p2++) == '\n')
 				break;
 			if(c)
-			if (p1 &lt; &amp;linebuf[LBSIZE-1])
+			if (p1 < &linebuf[LBSIZE-1])
 				*p1++ = c;
 		}
 		*p1++ = 0;
@@ -292,11 +292,11 @@ advance(alp, aep)
 			lp--;
 			if (advance(lp, ep))
 				return(1);
-		} while (lp &gt; curlp);
+		} while (lp > curlp);
 		return(0);
 
 	default:
-		printf2(&quot;RE botch\n&quot;);
+		printf2("RE botch\n");
 	}
 }
 
@@ -332,11 +332,11 @@ succeed(f)
 			tln[0]++;
 		return;
 	}
-	if (nfile &gt; 1)
-		printf(&quot;%s:&quot;, f);
+	if (nfile > 1)
+		printf("%s:", f);
 	if (bflag)
-		printf(&quot;%l:&quot;, blkno);
+		printf("%l:", blkno);
 	if (nflag)
-		printf(&quot;%s:&quot;, locv(lnum[0], lnum[1]));
-	printf(&quot;%s\n&quot;, linebuf);
+		printf("%s:", locv(lnum[0], lnum[1]));
+	printf("%s\n", linebuf);
 }

@@ -7,7 +7,7 @@ stfps = 170200^tst
 /	floating point sin/cos
 /	replaces the value in fr0 by its sin/cos
 /	there are no error exits
-/	coefficients are #3370 from Hart &amp; Cheney
+/	coefficients are #3370 from Hart & Cheney
 /
 _sin:
 	mov	r5,-(sp)
@@ -39,7 +39,7 @@ sin:
 	mov	r0,-(sp)
 /
 /	quadrant reduction -  arg = (2/J)x
-/	-1 &lt; arg &lt; 1
+/	-1 < arg < 1
 /
 	movf	fr0,-(sp)
 	absf	fr0

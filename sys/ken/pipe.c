@@ -2,12 +2,12 @@
 /*
  */
 
-#include &quot;../param.h&quot;
-#include &quot;../systm.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../inode.h&quot;
-#include &quot;../file.h&quot;
-#include &quot;../reg.h&quot;
+#include "../param.h"
+#include "../systm.h"
+#include "../user.h"
+#include "../inode.h"
+#include "../file.h"
+#include "../reg.h"
 
 /*
  * Max allowable buffering per pipe.
@@ -41,20 +41,20 @@ pipe()
 	r = u.u_ar0[R0];
 	wf = falloc();
 	if(wf == NULL) {
-		rf-&gt;f_count = 0;
+		rf->f_count = 0;
 		u.u_ofile[r] = NULL;
 		iput(ip);
 		return;
 	}
 	u.u_ar0[R1] = u.u_ar0[R0];
 	u.u_ar0[R0] = r;
-	wf-&gt;f_flag = FWRITE|FPIPE;
-	wf-&gt;f_inode = ip;
-	rf-&gt;f_flag = FREAD|FPIPE;
-	rf-&gt;f_inode = ip;
-	ip-&gt;i_count = 2;
-	ip-&gt;i_flag = IACC|IUPD;
-	ip-&gt;i_mode = IALLOC;
+	wf->f_flag = FWRITE|FPIPE;
+	wf->f_inode = ip;
+	rf->f_flag = FREAD|FPIPE;
+	rf->f_inode = ip;
+	ip->i_count = 2;
+	ip->i_flag = IACC|IUPD;
+	ip->i_mode = IALLOC;
 }
 
 /*
@@ -66,7 +66,7 @@ int *fp;
 	register *rp, *ip;
 
 	rp = fp;
-	ip = rp-&gt;f_inode;
+	ip = rp->f_inode;
 
 loop:
 	/*
@@ -80,12 +80,12 @@ loop:
 	 * the tail (write), reset both to 0.
 	 */
 
-	if(rp-&gt;f_offset[1] == ip-&gt;i_size1) {
-		if(rp-&gt;f_offset[1] != 0) {
-			rp-&gt;f_offset[1] = 0;
-			ip-&gt;i_size1 = 0;
-			if(ip-&gt;i_mode&amp;IWRITE) {
-				ip-&gt;i_mode =&amp; ~IWRITE;
+	if(rp->f_offset[1] == ip->i_size1) {
+		if(rp->f_offset[1] != 0) {
+			rp->f_offset[1] = 0;
+			ip->i_size1 = 0;
+			if(ip->i_mode&IWRITE) {
+				ip->i_mode =& ~IWRITE;
 				wakeup(ip+1);
 			}
 		}
@@ -97,9 +97,9 @@ loop:
 		 */
 
 		prele(ip);
-		if(ip-&gt;i_count &lt; 2)
+		if(ip->i_count < 2)
 			return;
-		ip-&gt;i_mode =| IREAD;
+		ip->i_mode =| IREAD;
 		sleep(ip+2, PPIPE);
 		goto loop;
 	}
@@ -109,9 +109,9 @@ loop:
 	 */
 
 	u.u_offset[0] = 0;
-	u.u_offset[1] = rp-&gt;f_offset[1];
+	u.u_offset[1] = rp->f_offset[1];
 	readi(ip);
-	rp-&gt;f_offset[1] = u.u_offset[1];
+	rp->f_offset[1] = u.u_offset[1];
 	prele(ip);
 }
 
@@ -123,7 +123,7 @@ writep(fp)
 	register *rp, *ip, c;
 
 	rp = fp;
-	ip = rp-&gt;f_inode;
+	ip = rp->f_inode;
 	c = u.u_count;
 
 loop:
@@ -145,7 +145,7 @@ loop:
 	 * return error and signal too.
 	 */
 
-	if(ip-&gt;i_count &lt; 2) {
+	if(ip->i_count < 2) {
 		prele(ip);
 		u.u_error = EPIPE;
 		psignal(u.u_procp, SIGPIPE);
@@ -158,8 +158,8 @@ loop:
 	 * and truncate it.
 	 */
 
-	if(ip-&gt;i_size1 == PIPSIZ) {
-		ip-&gt;i_mode =| IWRITE;
+	if(ip->i_size1 == PIPSIZ) {
+		ip->i_mode =| IWRITE;
 		prele(ip);
 		sleep(ip+1, PPIPE);
 		goto loop;
@@ -171,13 +171,13 @@ loop:
 	 */
 
 	u.u_offset[0] = 0;
-	u.u_offset[1] = ip-&gt;i_size1;
+	u.u_offset[1] = ip->i_size1;
 	u.u_count = min(c, PIPSIZ-u.u_offset[1]);
 	c =- u.u_count;
 	writei(ip);
 	prele(ip);
-	if(ip-&gt;i_mode&amp;IREAD) {
-		ip-&gt;i_mode =&amp; ~IREAD;
+	if(ip->i_mode&IREAD) {
+		ip->i_mode =& ~IREAD;
 		wakeup(ip+2);
 	}
 	goto loop;
@@ -194,11 +194,11 @@ int *ip;
 	register *rp;
 
 	rp = ip;
-	while(rp-&gt;i_flag&amp;ILOCK) {
-		rp-&gt;i_flag =| IWANT;
+	while(rp->i_flag&ILOCK) {
+		rp->i_flag =| IWANT;
 		sleep(rp, PPIPE);
 	}
-	rp-&gt;i_flag =| ILOCK;
+	rp->i_flag =| ILOCK;
 }
 
 /*
@@ -214,9 +214,9 @@ int *ip;
 	register *rp;
 
 	rp = ip;
-	rp-&gt;i_flag =&amp; ~ILOCK;
-	if(rp-&gt;i_flag&amp;IWANT) {
-		rp-&gt;i_flag =&amp; ~IWANT;
+	rp->i_flag =& ~ILOCK;
+	if(rp->i_flag&IWANT) {
+		rp->i_flag =& ~IWANT;
 		wakeup(rp);
 	}
 }

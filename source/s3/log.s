@@ -7,7 +7,7 @@ stexp = 175000^movfi
 /	log accepts its argument and returns its result
 /	in fr0.  The carry bit is set if the argument is
 /	zero or negative.
-/	The coefficients are #2705 from Hart &amp; Cheney.
+/	The coefficients are #2705 from Hart & Cheney.
 /
 /	movf	arg,fr0
 /	jsr	pc,log
@@ -42,7 +42,7 @@ log:
 	ldexp	$1,fr0
 	dec	(sp)
 1:
-	movf	fr0,fr1		/(1/2)^(1/2) &lt; x &lt; 2^(1/2)
+	movf	fr0,fr1		/(1/2)^(1/2) < x < 2^(1/2)
 	subf	$one,fr0
 	addf	$one,fr1
 	divf	fr1,fr0		/z = (x-1)/(x+1)

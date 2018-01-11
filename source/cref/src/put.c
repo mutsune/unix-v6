@@ -17,24 +17,24 @@ put(fil,string,n)
 	int	i;
 	char	*o;
 
-/*printf(&quot;%d %c %d\n&quot;,fil,*string,n);/*DEBUG*/
+/*printf("%d %c %d\n",fil,*string,n);/*DEBUG*/
 
 	string--;
 
-	if((i = optr[fil] + n - 512) &gt;= 0) {
+	if((i = optr[fil] + n - 512) >= 0) {
 		n =- i;
-		o = &amp;obuf[fil][optr[fil]] -1;
-		while(--n &gt;= 0)
+		o = &obuf[fil][optr[fil]] -1;
+		while(--n >= 0)
 			*++o = *++string;
 		optr[fil] = 512;
 		flsh(fil);
 		n = i;
 	}
 
-	o = &amp;obuf[fil][optr[fil]] - 1;
+	o = &obuf[fil][optr[fil]] - 1;
 	optr[fil] =+ n;
 
-	while(--n &gt;= 0) {
+	while(--n >= 0) {
 		*++o = *++string;
 	}
 	return(0);
@@ -44,10 +44,10 @@ flsh(fil)
 {
 	extern	tp[],utmp;
 
-	if(optr[fil] &lt;= 0)	return(optr[fil]);
+	if(optr[fil] <= 0)	return(optr[fil]);
 
-	if(bct[fil]++ &gt;= 128 &amp;&amp; utmp == 0) {
-		printf(&quot;Wraparound temp file %d\n&quot;,fil);
+	if(bct[fil]++ >= 128 && utmp == 0) {
+		printf("Wraparound temp file %d\n",fil);
 		dexit();
 	}
 	nflush++;

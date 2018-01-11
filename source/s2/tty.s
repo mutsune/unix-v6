@@ -11,7 +11,7 @@
 
 .data
 name:
-	&lt;tty&gt;
+	<tty>
 nam:
-	&lt;x\n&gt;
+	<x\n>
 .even

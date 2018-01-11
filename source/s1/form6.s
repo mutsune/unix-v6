@@ -99,7 +99,7 @@ www:	jsr	pc,collect
 	mov	$1,r0
 	sys	write; 1f; 2f-1f
 	jmp	interrupt
-1:	&lt;Out of space.\n&gt;
+1:	<Out of space.\n>
 2:	.even
 /
 /	split larger block into two smaller pieces and
@@ -119,7 +119,7 @@ yyy:
 	mov	l(r1),l(r3)
 	mov	r2,l(r1)		/L
 	mov	r2,a(r3)
-	clr	w(r3)			/W&#39;
+	clr	w(r3)			/W'
 	mov	r1,r2
 	sub	$hblk,r2
 	mov	r2,frlist-2(r0)
@@ -248,7 +248,7 @@ advance:
 	sys	write; 4f; 5f-4f
 	4
 /
-4:	&lt;Out of headers.\n&gt;
+4:	<Out of headers.\n>
 5:	.even
 /
 /
@@ -359,9 +359,9 @@ err2:
 	sys	write; 4f; 5f-4f
 	4
 	.data
-4:	&lt;cannot open output file\n&gt;
+4:	<cannot open output file\n>
 5:
-almem:	&lt;form.m\0&gt;
+almem:	<form.m\0>
 	.even
 	.text
 /

@@ -1,5 +1,5 @@
 .th SPEAK VI 4/26/75
-.if t .ds A \o&quot;a\(ga&quot;
+.if t .ds A \o"a\(ga"
 .if n .ds A a`
 .if t .ds v \|\(bv
 .sh NAME
@@ -27,7 +27,7 @@ It receives, from the standard input
 \*-	phonetic lines: strings of phonemes for one word preceded
 and separated by commas.
 The phonemes may be followed by comma-percent then a `replacement
-part&#39; \*- an ASCII string with no spaces.
+part' \*- an ASCII string with no spaces.
 The phonetic code is given in 
 .it vs
 (V).
@@ -60,7 +60,7 @@ specified word
 .s3
 .i0
 Each working line replaces its predecessor.
-Its first word is the `working word&#39;.
+Its first word is the `working word'.
 Each phonetic line replaces the phonetics stored for the
 working word.
 In particular, a phonetic line of comma only deletes the
@@ -74,13 +74,13 @@ are spelled.
 For the builtin part of
 the rules, see the reference.
 Spelling is done by taking each character of
-the word, prefixing it with `*&#39;, and looking it up.
+the word, prefixing it with `*', and looking it up.
 Unspellable words burp.
 .s3
 Words not found verbatim in the vocabulary
 are pronounced piecewise.
 First the word is bracketed by sharps:
-`#...#&#39;.
+`#...#'.
 The vocabulary is then searched for
 the longest fragment that matches the
 beginning of the word.
@@ -89,7 +89,7 @@ and the matched fragment is replaced by the replacement
 part of the phonetic string, if any.
 The process is repeated until the word is exhausted.
 A fragment is entered into the vocabulary as a working
-word prefixed by `%&#39;.
+word prefixed by `%'.
 .s3
 .it Speak
 is initialized with a coded vocabulary stored in file
@@ -109,7 +109,7 @@ Their meanings are:
 .lp +8 4
 \fBe\fR	suppress English preprocessing
 .lp +8 4
-\fBf\fR	equivalent to `f1, f2,...&#39;
+\fBf\fR	equivalent to `f1, f2,...'
 .lp +8 4
 \fBp\fR	suppress pronunciation by rule
 .lp +8 4
@@ -119,7 +119,7 @@ Their meanings are:
 .s3
 .i0
 The following input will reconstitute a
-coded vocabulary, `speak.m&#39;, from an ascii listing, `speak.v&#39;, that
+coded vocabulary, `speak.m', from an ascii listing, `speak.v', that
 was created using \fB!l\fR.
 .s3
 .lp +8 0
@@ -128,8 +128,8 @@ was created using \fB!l\fR.
 .i0
 .sh FILES
 /usr/lib/speak.m
-.sh &quot;SEE ALSO&quot;
-M. D. McIlroy, ``Synthetic English Speech by Rule,&#39;&#39;
+.sh "SEE ALSO"
+M. D. McIlroy, ``Synthetic English Speech by Rule,''
 Computing Science Technical Report #14,
 Bell Laboratories, 1973
 .br
@@ -140,4 +140,4 @@ Excessively long words cause dumps.
 Space is not reclaimed from changed entries;
 use \fB!w\fR and \fB!r\fR to effect reclamation.
 .br
-\fB!p\fR doesn&#39;t always work as advertised.
+\fB!p\fR doesn't always work as advertised.

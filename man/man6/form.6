@@ -17,10 +17,10 @@ is invoked with the
 argument \fIx\fR, the associative memory is
 searched for an entry with name \fIx\fR and the contents filed under that name are
 used as the prototype.
-If the search fails, the message `[\fIx\fR]:&#39; is typed on
+If the search fails, the message `[\fIx\fR]:' is typed on
 the console and whatever text is typed in from the console, terminated by
 two new lines, is used as the prototype.
-If the prototype argument is missing, `{letter}&#39; is assumed.
+If the prototype argument is missing, `{letter}' is assumed.
 .s3
 Basically,
 .it form
@@ -30,14 +30,14 @@ the \fIn\fR-th
 .it arg
 is inserted in its place, and that argument is then
 rescanned.  If [0] is encountered, the current date is inserted.  If
-the desired argument has not been given, a message of the form `[\fIn\fR]:&#39; is
+the desired argument has not been given, a message of the form `[\fIn\fR]:' is
 typed.
 The response typed in then is used for that argument.
 .s3
 If an element of the form [\fIname\fR] or {\fIname\fR} is encountered, the \fIname\fR is looked up in the
 associative memory.  If it is found, the contents of the memory under this
 \fIname\fR replaces the original element (again rescanned).  If
-the \fIname\fR is not found, a message of the form `[\fIname\fR]:&#39; is typed.
+the \fIname\fR is not found, a message of the form `[\fIname\fR]:' is typed.
 The response typed in is used for that element.  The response is
 entered in the memory under the name if the name is enclosed in [ ].
 The response is not entered in the memory but is remembered for the
@@ -51,10 +51,10 @@ two new lines is passed with the text.
 If one of the special characters [{]}\\ is preceded by
 a \\, it loses its special character.
 .s3
-If a file named `forma&#39; already exists in the user&#39;s directory, `formb&#39; is
-used as the output file and so forth to `formz&#39;.
+If a file named `forma' already exists in the user's directory, `formb' is
+used as the output file and so forth to `formz'.
 .s3
-The file `form.m&#39; is created if none exists.  Because form.m is
+The file `form.m' is created if none exists.  Because form.m is
 operated on by the disc allocator, it should only be changed by using
 .it fed,
 the form letter editor, or
@@ -64,7 +64,7 @@ the form letter editor, or
 form.m	associative memory
 .br
 form?	output file (read only)
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 fed (VI), roff (I)
 .sh BUGS
 An unbalanced ] or } acts as an end of file but

@@ -84,7 +84,7 @@ data:
 	namep:	.=.+2	/ init(namebuf)
 .=.+40	/fake
 	.=.+1		/ make odd
-	symbuf:	.=.+smblsize	/ init(&lt;_&gt;)
+	symbuf:	.=.+smblsize	/ init(<_>)
 	esymbuf:
 	ch:	.=.+1
 	ch1:	.=.+1

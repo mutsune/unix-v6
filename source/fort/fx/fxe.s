@@ -15,10 +15,10 @@ tfildiag:
 	sys	exit
 
 mes1:
-	&lt;Temp file?\n&gt;
+	<Temp file?\n>
 emes1:
 tfil1:
-	&lt;f.tmp1\0&gt;
+	<f.tmp1\0>
 tfil2:
-	&lt;f.tmp2\0&gt;
+	<f.tmp2\0>
 

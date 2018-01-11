@@ -19,12 +19,12 @@ char **argv;
 		char pad2[2];
 	} *p;
 
-	s = &quot;/etc/utmp&quot;;
+	s = "/etc/utmp";
 	if(argc == 2)
 		s = argv[1];
 	fi = open(s, 0);
-	if(fi &lt; 0) {
-		write(&quot;cannot open wtmp\n&quot;, 17);
+	if(fi < 0) {
+		write("cannot open wtmp\n", 17);
 		exit();
 	}
 	fout = dup(1);
@@ -37,28 +37,28 @@ loop:
 	if(n == 0) {
 		flush();
 		if (argc==3)
-			write(fout, &quot;Nobody.\n&quot;, 8);
+			write(fout, "Nobody.\n", 8);
 		exit();
 	}
 
-	p = &amp;buf;
-	for(p = &amp;buf; (n =- 16)&gt;=0; p++) {
-		if (argc==3 &amp;&amp; tty!=p-&gt;tty)
+	p = &buf;
+	for(p = &buf; (n =- 16)>=0; p++) {
+		if (argc==3 && tty!=p->tty)
 			continue;
-		if(p-&gt;name[0] == &#39;\0&#39; &amp;&amp; argc==1)
+		if(p->name[0] == '\0' && argc==1)
 			continue;
-		for(i=0; i&lt;8; i++) {
-			if(p-&gt;name[i] == &#39;\0&#39;)
-				p-&gt;name[i] = &#39; &#39;;
-			putchar(p-&gt;name[i]);
+		for(i=0; i<8; i++) {
+			if(p->name[i] == '\0')
+				p->name[i] = ' ';
+			putchar(p->name[i]);
 		}
-		for(i=0; i&lt;3; i++)
-			putchar(&quot;tty&quot;[i]);
-		putchar(p-&gt;tty);
-		cbuf = ctime(p-&gt;time);
-		for(i=3; i&lt;16; i++)
+		for(i=0; i<3; i++)
+			putchar("tty"[i]);
+		putchar(p->tty);
+		cbuf = ctime(p->time);
+		for(i=3; i<16; i++)
 			putchar(cbuf[i]);
-		putchar(&#39;\n&#39;);
+		putchar('\n');
 		if (argc==3) {
 			flush();
 			exit();

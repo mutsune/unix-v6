@@ -1,6 +1,6 @@
 #
-# include &quot;../mcons.h&quot;
-# include &quot;../ccmn.h&quot;
+# include "../mcons.h"
+# include "../ccmn.h"
 # define SKIP 0
 # define COLLECT 1
 # define SKIP2 2
@@ -12,7 +12,7 @@ char	mone	-1;
 coll()
 {
 	cs = COLLECT;
-	temp[t1].beg = &amp;line[l];
+	temp[t1].beg = &line[l];
 	return;
 }
 
@@ -20,13 +20,13 @@ save()
 {
 	extern	wspace();
 
-	line[l] = &#39;\0&#39;;
-	temp[t1].ct = &amp;line[l] - temp[t1].beg;
+	line[l] = '\0';
+	temp[t1].ct = &line[l] - temp[t1].beg;
 	temp[t1].term = c;
 
-	if((c == &#39; &#39; || c == &#39;\t&#39;) &amp;&amp; cflag) {
+	if((c == ' ' || c == '\t') && cflag) {
 		gch[++fl] = mone;
-		flag[fl] = &amp;wspace;
+		flag[fl] = &wspace;
 	} else {
 		sav1();
 	}
@@ -39,22 +39,22 @@ sav1()
 	struct tempent	*ptr;
 	int	a,tt,val;
 
-	if(cflag &amp;&amp; c == &#39;(&#39; &amp;&amp; level == 0)	csym();
+	if(cflag && c == '(' && level == 0)	csym();
 
 	cs = SKIP;
 
-	ptr = &amp;temp[t1];
-	val = search(ptr-&gt;beg,ptr-&gt;ct,&amp;itab,0);
+	ptr = &temp[t1];
+	val = search(ptr->beg,ptr->ct,&itab,0);
 
 	if(xsw) {
 	    switch(val) {
 		case 0:
-			if((!level&amp;&amp;!hlevel)||(c == &#39;(&#39;)||xtrn
+			if((!level&&!hlevel)||(c == '(')||xtrn
 				|| ssw) {
-				search(ptr-&gt;beg,ptr-&gt;ct,&amp;xtab,1);
+				search(ptr->beg,ptr->ct,&xtab,1);
 				goto yes;
 			} else {
-				if(search(ptr-&gt;beg,ptr-&gt;ct,&amp;xtab,0))
+				if(search(ptr->beg,ptr->ct,&xtab,0))
 					goto yes;
 			}
 			goto no;
@@ -68,7 +68,7 @@ sav1()
 
 		case 3:
 			if(hlevel)	type = 1;
-			if(!level&amp;&amp;!hlevel)	ssw = 1;
+			if(!level&&!hlevel)	ssw = 1;
 			goto no;
 
 		case 4:
@@ -77,15 +77,15 @@ sav1()
 	    }
 	}
 
-	if(hlevel &amp;&amp; (val == 4 || val == 3))	type = 1;
+	if(hlevel && (val == 4 || val == 3))	type = 1;
 	if(!val == !only)	goto yes;
 no:
-	*(ptr-&gt;beg + ptr-&gt;ct) = ptr-&gt;term;
+	*(ptr->beg + ptr->ct) = ptr->term;
 	return(0);
 yes:
 	tt = t1;
 	while(tt)
-		if(comp(ptr-&gt;beg,temp[--tt].beg))	goto no;
+		if(comp(ptr->beg,temp[--tt].beg))	goto no;
 	t1++;
 	return(1);
 }
@@ -100,7 +100,7 @@ out()
 		temp[ct].beg[temp[ct].ct] = temp[ct].term;
 
 	while(t1--) {
-/*printf(&quot;t1 = %d  beg = %d  ct = %d\n&quot;,t1,temp[t1].beg,temp[t1].ct); /* DEBUG */
+/*printf("t1 = %d  beg = %d  ct = %d\n",t1,temp[t1].beg,temp[t1].ct); /* DEBUG */
 
 		switch(order) {
 
@@ -110,11 +110,11 @@ out()
 				else
 					i = dfile(temp[t1].beg);
 
-				if((ct = temp[t1].ct) &gt;= 8) {
+				if((ct = temp[t1].ct) >= 8) {
 					ct = 8;
 					*curf = -1;
 				} else {
-					*curf = &#39;\t&#39;;
+					*curf = '\t';
 				}
 
 				put(i,temp[t1].beg,ct);
@@ -132,12 +132,12 @@ out()
 					conf(lno,4,lbuf);
 					put(i,lbuf,5);
 				}
-				if((ct = temp[t1].ct) &gt;= 8) {
+				if((ct = temp[t1].ct) >= 8) {
 					put(i,temp[t1].beg,8);
-					put(i,&amp;mone,1);
+					put(i,&mone,1);
 				} else {
 					put(i,temp[t1].beg,ct);
-					put(i,&quot;\t&quot;,1);
+					put(i,"\t",1);
 				}
 				if(cross) {
 					conf(lno,4,lbuf);
@@ -148,12 +148,12 @@ out()
 			case 3:
 				i = dfile(curs);
 				put(i,curs,cursl);
-				if((ct = temp[t1].ct) &gt;= 8) {
+				if((ct = temp[t1].ct) >= 8) {
 					put(i,temp[t1].beg,8);
 					*curf = -1;
 				} else {
 					put(i,temp[t1].beg,ct);
-					*curf = &#39;\t&#39;;
+					*curf = '\t';
 				}
 				put(i,curf,curfl);
 				conf(lno,4,lbuf);
@@ -179,13 +179,13 @@ asym()
 	if(cs == COLLECT) {
 		if(cross) {
 			p = temp[t1].beg;
-			cursl = &amp;line[l] - p;
-			cursl = cursl&gt;8?8:cursl;
+			cursl = &line[l] - p;
+			cursl = cursl>8?8:cursl;
 			i = -1;
-			while(++i &lt; cursl)
+			while(++i < cursl)
 				curs[i] = *p++;
-			if(cursl &lt; 8)
-				curs[cursl++] = &#39;\t&#39;;
+			if(cursl < 8)
+				curs[cursl++] = '\t';
 			else
 				curs[cursl++] = -1;
 		}
@@ -201,42 +201,42 @@ asw()
 		case 0:
 			if(cs == COLLECT)	save();
 			cs = SKIP;
-			flag[++fl] = &amp;asw;
+			flag[++fl] = &asw;
 			gch[fl] = c;
 			return(1);
 
-		case &#39;\&#39;&#39;:
-			if(c == &#39;\\&#39;) {
+		case '\'':
+			if(c == '\\') {
 				gch[fl] = c;
 				return(1);
 			}
 			break;
 
-		case &#39;&quot;&#39;:
-			gch[fl] = &#39;\&#39;&#39;;
+		case '"':
+			gch[fl] = '\'';
 
-			if(c == &#39;\\&#39;) {
-				flag[++fl] = &amp;asw;
+			if(c == '\\') {
+				flag[++fl] = &asw;
 				gch[fl] = c;
 				return(1);
 			}
 			return(1);
 
-		case &#39;&lt;&#39;:
-			if(c == &#39;\n&#39;)	out();
-			if(c == &#39;\\&#39;) {
-				flag[++fl] = &amp;asw;
+		case '<':
+			if(c == '\n')	out();
+			if(c == '\\') {
+				flag[++fl] = &asw;
 				gch[fl] = c;
 				return(1);
 			}
-			if(c != &#39;&gt;&#39;)	return(1);
+			if(c != '>')	return(1);
 			break;
 
-		case &#39;/&#39;:
-			if(c != &#39;\n&#39;)	return(1);
+		case '/':
+			if(c != '\n')	return(1);
 
-		case &#39;\\&#39;: 
-			if(c == &#39;\n&#39;)	out();
+		case '\\': 
+			if(c == '\n')	out();
 
 	}
 	fl--;
@@ -251,30 +251,30 @@ csw()
 	switch(gch[fl]) {
 
 		case 0:
-			if(c == &#39;*&#39;)
-				if(line[l - 1] != &#39;/&#39;)
+			if(c == '*')
+				if(line[l - 1] != '/')
 					return(1);
 			gch[++fl] = c;
-			flag[fl] = &amp;csw;
+			flag[fl] = &csw;
 			return(1);
 
-		case &#39;*&#39;:
-			if(c == &#39;\n&#39;)	out();
-			if(c == &#39;/&#39; &amp;&amp; line[l - 1] == &#39;*&#39;)
+		case '*':
+			if(c == '\n')	out();
+			if(c == '/' && line[l - 1] == '*')
 				break;
 			return(1);
 
-		case &#39;\&#39;&#39;:
-		case &#39;&quot;&#39;:
+		case '\'':
+		case '"':
 			if(c == gch[fl])
 				break;
-			if(c == &#39;\\&#39;) {
+			if(c == '\\') {
 				gch[++fl] = c;
-				flag[fl] = &amp;csw;
+				flag[fl] = &csw;
 			}
 			return(1);
 
-		case &#39;\\&#39;:
+		case '\\':
 			break;
 		}
 		fl--;
@@ -283,7 +283,7 @@ csw()
 
 incl()
 {
-/*	printf(&quot;incl: l = %d hl = %d dl = %d\n&quot;,level,hlevel,dlevel);/*DEBUG*/
+/*	printf("incl: l = %d hl = %d dl = %d\n",level,hlevel,dlevel);/*DEBUG*/
 	if(cs == COLLECT)	save();
 	if(hlevel) {
 		hlevel = 0;
@@ -297,16 +297,16 @@ incl()
 
 decl()
 {
-/*	printf(&quot;decl: l = %d hl = %d dl = %d\n&quot;,level,hlevel,dlevel);/*DEBUG*/
+/*	printf("decl: l = %d hl = %d dl = %d\n",level,hlevel,dlevel);/*DEBUG*/
 	if(cs == COLLECT)	save();
 	cs = SKIP;
 	if(dlevel) {
 		dlevel--;
 		return;
 	}
-	if(--level &gt; 0)	return;
-	curs[0] = &#39;_&#39;;
-	curs[1] = &#39;\t&#39;;
+	if(--level > 0)	return;
+	curs[0] = '_';
+	curs[1] = '\t';
 	cursl = 2;
 	level = 0;
 	return;
@@ -317,17 +317,17 @@ csym()
 	int	i;
 	char	*p;
 
-/*	printf(&quot;csym: l = %d hl = %d dl = %d\n&quot;,level,hlevel,dlevel);/*DEBUG*/
+/*	printf("csym: l = %d hl = %d dl = %d\n",level,hlevel,dlevel);/*DEBUG*/
 	p = temp[t1].beg;
-	if(cs == COLLECT &amp;&amp; level == 0) {
+	if(cs == COLLECT && level == 0) {
 		if(cross) {
 			cursl = temp[t1].ct;
-			cursl = cursl&gt;8?8:cursl;
+			cursl = cursl>8?8:cursl;
 			i = -1;
-			while(++i &lt; cursl)
+			while(++i < cursl)
 				curs[i] = *p++;
-			if(cursl &lt; 8)
-				curs[cursl++] = &#39;\t&#39;;
+			if(cursl < 8)
+				curs[cursl++] = '\t';
 			else
 				curs[cursl++] = -1;
 		}
@@ -339,9 +339,9 @@ csym()
 dfile(a)
 	char	*a;
 {
-	if(*a &lt; &#39;c&#39;)	return(0);
-	if(*a &lt; &#39;h&#39;)	return(1);
-	if(*a &lt; &#39;r&#39;)	return(2);
+	if(*a < 'c')	return(0);
+	if(*a < 'h')	return(1);
+	if(*a < 'r')	return(2);
 	return(3);
 }
 
@@ -373,16 +373,16 @@ search(symbol,length,params,install)
 	static	char	*symt;
 	auto	h,i,j,k;
 
-	if(hptr != params-&gt;hptr) {
-		hptr = params-&gt;hptr;
-		hsiz = params-&gt;hsiz;
-		symt = params-&gt;symt;
-		ssiz = params-&gt;ssiz;
-		curb = params-&gt;curb;
-		nsym = params-&gt;nsym;
+	if(hptr != params->hptr) {
+		hptr = params->hptr;
+		hsiz = params->hsiz;
+		symt = params->symt;
+		ssiz = params->ssiz;
+		curb = params->curb;
+		nsym = params->nsym;
 	}
 
-	symbol[length] = &#39;\0&#39;;
+	symbol[length] = '\0';
 	sp = symbol;
 
 	i = length;
@@ -393,12 +393,12 @@ search(symbol,length,params,install)
 	if(h == 0100000) {
 		h = 1;
 	} else {
-		h = h&lt;0?(-h)%hsiz:h%hsiz;
+		h = h<0?(-h)%hsiz:h%hsiz;
 	}
 	if(h == 0)	h++;
-/*		printf(&quot;%s %d\n&quot;,symbol,h);	/*DEBUG*/
+/*		printf("%s %d\n",symbol,h);	/*DEBUG*/
 
-	while((p = &amp;symt[hptr[h]]) &gt; symt) {
+	while((p = &symt[hptr[h]]) > symt) {
 		j = length + 2;
 		sp = symbol;
 		while(--j) {
@@ -409,23 +409,23 @@ no:
 		h = (h + h)%hsiz;
 	}
 	if(install) {
-		if(++nsym &gt;= hsiz) {
-			printf(&quot;Too many symbols.\n&quot;);
+		if(++nsym >= hsiz) {
+			printf("Too many symbols.\n");
 			dexit();
 		}
 
 		hptr[h] = curb;
 		length++;
-		if((curb + length) &gt;= ssiz) {
-			printf(&quot;Too many characters in symbols.\n&quot;);
+		if((curb + length) >= ssiz) {
+			printf("Too many characters in symbols.\n");
 			dexit();
 		}
 
 		while(length--)
 			symt[curb++] = *symbol++;
 		symt[curb++] = install;
-		params-&gt;curb = curb;
-		params-&gt;nsym = nsym;
+		params->curb = curb;
+		params->nsym = nsym;
 	}
 	return(0);
 }
@@ -436,9 +436,9 @@ conf(n,width,buf)
 	auto	i,a;
 
 	i = width;
-	while(i--)	buf[i] = &#39; &#39;;
+	while(i--)	buf[i] = ' ';
 
-	buf[(a = n/10)?conf(a,--width,buf):--width] = n%10 + &#39;0&#39;;
+	buf[(a = n/10)?conf(a,--width,buf):--width] = n%10 + '0';
 
 	return(++width);
 }
@@ -451,7 +451,7 @@ comp(a,b)
 	a--;
 	b--;
 	while(*++a == *++b)
-		if(*a == &#39;\0&#39;)	return(1);
+		if(*a == '\0')	return(1);
 	return(0);
 }
 
@@ -464,8 +464,8 @@ semi()
 		ssw = 0;
 		if(!type) {
 			hlevel = 0;
-			curs[0] = &#39;_&#39;;
-			curs[1] = &#39;\t&#39;;
+			curs[0] = '_';
+			curs[1] = '\t';
 			cursl = 2;
 		}
 		type = 0;
@@ -475,7 +475,7 @@ semi()
 
 wspace()
 {
-	if(c == &#39; &#39; || c == &#39;\t&#39;)
+	if(c == ' ' || c == '\t')
 		return(1);
 	sav1();
 	fl--;

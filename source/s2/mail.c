@@ -26,8 +26,8 @@ struct	passwd {
 	char	*pw_shell;
 };
 
-char	lettmp[] &quot;/tmp/maxxxxx&quot;;
-char	preptmp[] &quot;/tmp/mbxxxxx&quot;;
+char	lettmp[] "/tmp/maxxxxx";
+char	preptmp[] "/tmp/mbxxxxx";
 int	pwfil;
 
 main(argc, argv)
@@ -41,30 +41,30 @@ char **argv;
 	int uf;
 
 	maketemp();
-	if (argc==1 || argc==2 &amp;&amp; argv[1][0]==&#39;-&#39;) {
+	if (argc==1 || argc==2 && argv[1][0]=='-') {
 		printmail(argc, argv);
 		delexit();
 	}
 	signal(SIGINT, delexit);
 	fout = creat(lettmp, 0600);
-	if (((me=ttyn(1))!=&#39;x&#39; || (me=ttyn(2))!=&#39;x&#39;)
-	 &amp;&amp; (uf = open(&quot;/etc/utmp&quot;, 0)) &gt; 0) {
-		while (read(uf, &amp;ubuf, sizeof ubuf) == sizeof ubuf)
+	if (((me=ttyn(1))!='x' || (me=ttyn(2))!='x')
+	 && (uf = open("/etc/utmp", 0)) > 0) {
+		while (read(uf, &ubuf, sizeof ubuf) == sizeof ubuf)
 			if (ubuf.tty == me) {
-				ubuf.name[8] = &#39; &#39;;
+				ubuf.name[8] = ' ';
 				close(uf);
-				for (cp=ubuf.name; *cp++!=&#39; &#39;;);
+				for (cp=ubuf.name; *cp++!=' ';);
 				*--cp = 0;
 				bulkmail(argc, argv, ubuf.name);
 			}
 	}
-	me = getuid() &amp; 0377;
+	me = getuid() & 0377;
 	setpw();
 	for (;;)
-		if ((p = getpwent()) &amp;&amp; p-&gt;pw_uid == me)
-			bulkmail(argc, argv, p-&gt;pw_name);
+		if ((p = getpwent()) && p->pw_uid == me)
+			bulkmail(argc, argv, p->pw_name);
 	fout = 1;
-	printf(&quot;Who are you?\n&quot;);
+	printf("Who are you?\n");
 	delexit();
 }
 
@@ -74,27 +74,27 @@ char **argv;
 	extern fin, fout;
 	register n, c, f;
 
-	if (fopen(&quot;.mail&quot;, &amp;fin)&gt;=0 &amp;&amp; (c = getchar())) {
+	if (fopen(".mail", &fin)>=0 && (c = getchar())) {
 		do {
 			putchar(c);
 		} while (c = getchar());
 		close(fin);
-		c = &#39;y&#39;;
-		if (argc&lt;2) {
-			if (ttyn(0)!=&#39;x&#39;) {
-				printf(&quot;Save?&quot;);
+		c = 'y';
+		if (argc<2) {
+			if (ttyn(0)!='x') {
+				printf("Save?");
 				fin = 0;
 				c = getchar();
 			}
 		} else
 			c = argv[1][1];
-		if (c==&#39;y&#39;) {
-			prepend(&quot;.mail&quot;, &quot;mbox&quot;);
-			printf(&quot;Saved mail in &#39;mbox&#39;\n&quot;);
+		if (c=='y') {
+			prepend(".mail", "mbox");
+			printf("Saved mail in 'mbox'\n");
 		}
-		close(creat(&quot;.mail&quot;));
+		close(creat(".mail"));
 	} else
-		printf(&quot;No mail.\n&quot;);
+		printf("No mail.\n");
 }
 
 bulkmail(argc, argv, from)
@@ -105,15 +105,15 @@ char **argv, *from;
 	register c;
 
 	fin = 0;
-	(&amp;fin)[1] = 0;
+	(&fin)[1] = 0;
 	time(tbuf);
-	printf(&quot;From %s %s&quot;, from, ctime(tbuf));
+	printf("From %s %s", from, ctime(tbuf));
 	while (c = getchar())
 		putchar(c);
-	putchar(&#39;\n&#39;);
+	putchar('\n');
 	flush();
 	close(fout);
-	while (--argc &gt; 0)
+	while (--argc > 0)
 		sendto(*++argv);
 	delexit();
 }
@@ -128,20 +128,20 @@ char *person;
 
 	setpw();
 	while (p = getpwent()) {
-		if (equal(p-&gt;pw_name, person)) {
-			if (prepend(lettmp, cat(p-&gt;pw_dir, &quot;/.mail&quot;))==0)
+		if (equal(p->pw_name, person)) {
+			if (prepend(lettmp, cat(p->pw_dir, "/.mail"))==0)
 				break;
 			return;
 		}
 	}
 	fout = 1;
 	flush();
-	printf(&quot;Can&#39;t send to %s.\n&quot;, person);
-	if (ttyn(0)!=&#39;x&#39; &amp;&amp; saved==0) {
-		unlink(&quot;dead.letter&quot;);
+	printf("Can't send to %s.\n", person);
+	if (ttyn(0)!='x' && saved==0) {
+		unlink("dead.letter");
 		saved++;
-		printf(&quot;Letter saved in &#39;dead.letter&#39;\n&quot;);
-		prepend(lettmp, &quot;dead.letter&quot;);
+		printf("Letter saved in 'dead.letter'\n");
+		prepend(lettmp, "dead.letter");
 	}
 }
 
@@ -150,20 +150,20 @@ char *from, *to;
 {
 	extern int fin, fout;
 
-	fcreat(preptmp, &amp;fout);
-	fopen(from, &amp;fin);
+	fcreat(preptmp, &fout);
+	fopen(from, &fin);
 	while (putchar(getchar()));
 	close(fin);
-	fopen(to, &amp;fin);
+	fopen(to, &fin);
 	while (putchar(getchar()));
 	close(fin);
 	flush();
 	close(fout);
-	if (fcreat(to, &amp;fout) &lt; 0) {
+	if (fcreat(to, &fout) < 0) {
 		fout = 1;
 		return(0);
 	}
-	fopen(preptmp, &amp;fin);
+	fopen(preptmp, &fin);
 	while(putchar(getchar()));
 	flush();
 	close(fout);
@@ -177,11 +177,11 @@ setpw()
 	extern fin;
 
 	if (pwfil == 0) {
-		fopen(&quot;/etc/passwd&quot;, &amp;fin);
+		fopen("/etc/passwd", &fin);
 		pwfil = fin;
 	} else
 		fin = pwfil;
-	(&amp;fin)[1] = 0;
+	(&fin)[1] = 0;
 	seek(fin, 0, 0);
 }
 
@@ -194,10 +194,10 @@ getpwent()
 	extern fin;
 
 	p = line;
-	while((c=getchar()) != &#39;\n&#39;) {
-		if(c &lt;= 0)
+	while((c=getchar()) != '\n') {
+		if(c <= 0)
 			return(0);
-		if(p &lt; line+98)
+		if(p < line+98)
 			*p++ = c;
 	}
 	*p = 0;
@@ -215,7 +215,7 @@ getpwent()
 	passwd.pw_dir = p;
 	p = pwskip(p);
 	passwd.pw_shell = p;
-	return(&amp;passwd);
+	return(&passwd);
 }
 
 pwskip(ap)
@@ -224,7 +224,7 @@ char *ap;
 	register char *p;
 
 	p = ap;
-	while(*p != &#39;:&#39;) {
+	while(*p != ':') {
 		if(*p == 0)
 			return(p);
 		p++;
@@ -245,11 +245,11 @@ maketemp()
 	int i, pid, d;
 
 	pid = getpid();
-	for (i=11; i&gt;=7; --i) {
-		d = (pid&amp;07) + &#39;0&#39;;
+	for (i=11; i>=7; --i) {
+		d = (pid&07) + '0';
 		lettmp[i] = d;
 		preptmp[i] = d;
-		pid =&gt;&gt; 3;
+		pid =>> 3;
 	}
 }
 

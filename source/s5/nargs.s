@@ -1,7 +1,7 @@
 / C library -- nargs
 
 / WARNING: this routine does not work
-/ with user I&amp;D space separate.
+/ with user I&D space separate.
 / Moreover, due to a design botch in
 / the 11/45, it cannot be made to work
 / by adding mfpi instructions.

@@ -37,7 +37,7 @@ sasgn:
 	jsr	r5,convrt
 	mov	r2,r3
 	bis	$7,r3
-	mov	$&quot;mv,r0
+	mov	$"mv,r0
 	jsr	r5,genop
 	mov	(sp)+,r3
 	jsr	r5,name
@@ -54,8 +54,8 @@ sasgn:
 	mov	(sp)+,r2
 	jsr	r5,convrt
 	mov	r2,r3
-	bis	$7,r3		/ type &#39;g&#39;
-	mov	$&quot;as,r0
+	bis	$7,r3		/ type 'g'
+	mov	$"as,r0
 	jsr	r5,genop
 	jsr	r5,newline
 	rts	r5
@@ -64,9 +64,9 @@ sassi:
 	jsr	r5,getlab
 		br 9f
 	mov	r0,-(sp)
-	cmpb	(r1)+,$&#39;t
+	cmpb	(r1)+,$'t
 	bne	8f
-	cmpb	(r1)+,$&#39;o
+	cmpb	(r1)+,$'o
 	bne	8f
 	jsr	r5,e2
 	cmp	r0,$40.			/ =|
@@ -75,7 +75,7 @@ sassi:
 	mov	(sp)+,r0
 	mov	r3,-(sp)
 	jsr	r5,code
-		&lt;	lval; .%d\n\0&gt;; .even
+		<	lval; .%d\n\0>; .even
 		r0
 	mov	$int2con,r3
 	br	1b

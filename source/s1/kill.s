@@ -8,14 +8,14 @@ loop:
 	ble	done
 	mov	(sp)+,r5
 	clr	r3
-	cmpb	(r5),$&#39;-
+	cmpb	(r5),$'-
 	bne	1f
 	inc	r5
 	clr	signo
 1:
 	movb	(r5)+,r0
 	beq	1f
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9
 	bhi	error
 	mul	$10.,r3
@@ -58,17 +58,17 @@ decml:
 	jsr	pc,decml
 1:
 	mov	(sp)+,r0
-	add	$&#39;0,r0
+	add	$'0,r0
 	mov	r0,ch
 	mov	$1,r0
 	sys	write; ch; 1
 	rts	pc
 
 m1:
-	&lt;: not found\n&gt;
+	<: not found\n>
 em1:
 m2:
-	&lt;non-numeric arg\n&gt;
+	<non-numeric arg\n>
 em2:
 .bss
 ch:	.=.+2

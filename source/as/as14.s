@@ -15,7 +15,7 @@ rname:
 	clr	-(r2)
 	clr	-(sp)
 	clr	-(sp)
-	cmp	r0,$&#39;~		/  symbol not for hash table
+	cmp	r0,$'~		/  symbol not for hash table
 	bne	1f
 	inc	2(sp)
 	clr	ch
@@ -118,20 +118,20 @@ number:
 	clr	r5
 1:
 	jsr	pc,rch
-	jsr	r5,betwen; &#39;0; &#39;9
+	jsr	r5,betwen; '0; '9
 		br 1f
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	mpy	$10.,r5
 	add	r0,r5
 	als	$3,r1
 	add	r0,r1
 	br	1b
 1:
-	cmp	r0,$&#39;b
+	cmp	r0,$'b
 	beq	1f
-	cmp	r0,$&#39;f
+	cmp	r0,$'f
 	beq	1f
-	cmp	r0,$&#39;.
+	cmp	r0,$'.
 	bne	2f
 	mov	r5,r1
 	clr	r0
@@ -147,7 +147,7 @@ number:
 	mov	r5,r0
 	jsr	pc,fbcheck
 	add	$141,r0
-	cmp	r3,$&#39;b
+	cmp	r3,$'b
 	beq	1f
 	add	$10.,r0
 1:
@@ -188,12 +188,12 @@ rch:
 3:
 	decb	nargs
 	bgt	2f
-	mov	$&#39;\e,r0
+	mov	$'\e,r0
 	rts	pc
 2:
 	tst	ifflg
 	beq	2f
-	jsr	r5,error; &#39;i
+	jsr	r5,error; 'i
 	jmp	aexit
 2:
 	mov	curarg,r0
@@ -207,7 +207,7 @@ rch:
 	.text
 	bec	2f
 	mov	0b,r0
-	jsr	r5,filerr; &lt;?\n&gt;
+	jsr	r5,filerr; <?\n>
 	jmp	 aexit
 2:
 	movb	r0,fin

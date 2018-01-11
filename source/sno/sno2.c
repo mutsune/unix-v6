@@ -1,4 +1,4 @@
-#include &quot;sno.h&quot;
+#include "sno.h"
 
 
 compon() {
@@ -10,17 +10,17 @@ compon() {
 		schar = getc(); else
 		next = 0;
 	if (schar == 0) {
-		(a=alloc())-&gt;typ = 0;
+		(a=alloc())->typ = 0;
 		return(a);
 	}
-	switch (class(schar-&gt;ch)) {
+	switch (class(schar->ch)) {
 
 	case 1:
-		schar-&gt;typ = 5;
+		schar->typ = 5;
 		return(schar);
 
 	case 2:
-		schar-&gt;typ = 16;
+		schar->typ = 16;
 		return(schar);
 
 	case 3:
@@ -28,99 +28,99 @@ compon() {
 		for(;;) {
 			schar = getc();
 			if (schar == 0) {
-				a-&gt;typ = 0;
+				a->typ = 0;
 				return(a);
 			}
-			if (class(schar-&gt;ch) != 3)
+			if (class(schar->ch) != 3)
 				break;
 			free(schar);
 		}
 		next = 1;
-		a-&gt;typ = 7;
+		a->typ = 7;
 		return(a);
 
 	case 4:
-		schar-&gt;typ = 8;
+		schar->typ = 8;
 		return(schar);
 
 	case 5:
-		schar-&gt;typ = 9;
+		schar->typ = 9;
 		return(schar);
 
 	case 6:
 		a = schar;
 		schar = getc();
-		if (class(schar-&gt;ch) == 3)
-			a-&gt;typ = 10; else
-			a-&gt;typ = 1;
+		if (class(schar->ch) == 3)
+			a->typ = 10; else
+			a->typ = 1;
 		next = 1;
 		return(a);
 
 	case 7:
 		a = schar;
 		schar = getc();
-		if (class(schar-&gt;ch) == 3)
-			a-&gt;typ = 11; else
-			a-&gt;typ = 2;
+		if (class(schar->ch) == 3)
+			a->typ = 11; else
+			a->typ = 2;
 		next = 1;
 		return(a);
 
 	case 8:
-		schar-&gt;typ = 12;
+		schar->typ = 12;
 		return(schar);
 
 	case 9:
-		c = schar-&gt;ch;
+		c = schar->ch;
 		a = getc();
 		if(a == 0)
 			goto lerr;
 		b = schar;
-		if(a-&gt;ch == c) {
+		if(a->ch == c) {
 			free(schar);
-			a-&gt;typ = 15;
-			a-&gt;p1 = 0;
+			a->typ = 15;
+			a->p1 = 0;
 			return(a);
 		}
-		b-&gt;p1 = a;
+		b->p1 = a;
 		for(;;) {
 			schar = getc();
 			if (schar == 0)
 			lerr:
-				writes(&quot;illegal literal string&quot;);
-			if(schar-&gt;ch == c)
+				writes("illegal literal string");
+			if(schar->ch == c)
 				break;
-			a-&gt;p1 = schar;
+			a->p1 = schar;
 			a = schar;
 		}
-		b-&gt;p2 = a;
-		schar-&gt;typ = 15;
-		schar-&gt;p1 = b;
+		b->p2 = a;
+		schar->typ = 15;
+		schar->p1 = b;
 		return(schar);
 
 	case 10:
-		schar-&gt;typ = 3;
+		schar->typ = 3;
 		return(schar);
 
 	case 11:
-		schar-&gt;typ = 4;
+		schar->typ = 4;
 		return(schar);
 
 	}
 	b = alloc();
-	b-&gt;p1 = a = schar;
+	b->p1 = a = schar;
 	schar = getc();
-	while(schar!=0 &amp; !class(schar-&gt;ch)) {
-		a-&gt;p1 = schar;
+	while(schar!=0 & !class(schar->ch)) {
+		a->p1 = schar;
 		a = schar;
 		schar = getc();
 	}
-	b-&gt;p2 = a;
+	b->p2 = a;
 	next = 1;
 	a = look(b);
 	delete(b);
 	b = alloc();
-	b-&gt;typ = 14;
-	b-&gt;p1 = a;
+	b->typ = 14;
+	b->p1 = a;
 	return(b);
 }
 
@@ -128,7 +128,7 @@ nscomp()
 {
 	register struct node *c;
 
-	while((c=compon())-&gt;typ == 7)
+	while((c=compon())->typ == 7)
 		free(c);
 	return(c);
 }
@@ -136,7 +136,7 @@ nscomp()
 push(stack) {
 	register struct node *a;
 
-	(a=alloc())-&gt;p2 = stack;
+	(a=alloc())->p2 = stack;
 	return(a);
 }
 
@@ -147,8 +147,8 @@ struct node *stack;
 
 	s = stack;
 	if (s == 0)
-		writes(&quot;pop&quot;);
-	a = s-&gt;p2;
+		writes("pop");
+	a = s->p2;
 	free(s);
 	return(a);
 }
@@ -162,9 +162,9 @@ struct node *e;
 	int d;
 
 	list = alloc();
-	e-&gt;p2 = list;
+	e->p2 = list;
 	stack = push(0);
-	stack-&gt;typ = eof;
+	stack->typ = eof;
 	operand = 0;
 	space = start;
 l1:
@@ -175,7 +175,7 @@ l1:
 		comp = compon();
 
 l3:
-	op = comp-&gt;typ;
+	op = comp->typ;
 	switch (op) {
 
 	case 7:
@@ -186,20 +186,20 @@ l3:
 
 	case 10:
 		if (space == 0) {
-			comp-&gt;typ = 1;
+			comp->typ = 1;
 			goto l3;
 		}
 
 	case 11:
 		if (space == 0) {
-			comp-&gt;typ = 2;
+			comp->typ = 2;
 			goto l3;
 		}
 
 	case 8:
 	case 9:
 		if (operand == 0)
-			writes(&quot;no operand preceding operator&quot;);
+			writes("no operand preceding operator");
 		operand = 0;
 		goto l5;
 
@@ -219,7 +219,7 @@ l3:
 		if (space)
 			goto l4;
 	l7:
-		writes(&quot;illegal juxtaposition of operands&quot;);
+		writes("illegal juxtaposition of operands");
 
 	case 16:
 		if (operand == 0)
@@ -227,21 +227,21 @@ l3:
 		if (space)
 			goto l4;
 		b = compon();
-		op = comp-&gt;typ = 13;
-		if (b-&gt;typ == 5) {
-			comp-&gt;p1 = 0;
+		op = comp->typ = 13;
+		if (b->typ == 5) {
+			comp->p1 = 0;
 			goto l10;
 		}
-		comp-&gt;p1 = a = alloc();
+		comp->p1 = a = alloc();
 		b = expr(b, 6, a);
-		while((d=b-&gt;typ) == 4) {
-			a-&gt;p1 = b;
+		while((d=b->typ) == 4) {
+			a->p1 = b;
 			a = b;
 			b = expr(0, 6, a);
 		}
 		if (d != 5)
-			writes(&quot;error in function&quot;);
-		a-&gt;p1 = 0;
+			writes("error in function");
+		a->p1 = 0;
 	l10:
 		free(b);
 		goto l6;
@@ -253,35 +253,35 @@ l3:
 		goto l6;
 	}
 	if (operand==0)
-		writes(&quot;no operand at end of expression&quot;);
+		writes("no operand at end of expression");
 l5:
 	space = 0;
 l6:
-	op1 = stack-&gt;typ;
-	if (op &gt; op1) {
+	op1 = stack->typ;
+	if (op > op1) {
 		stack = push(stack);
 		if (op == 16)
 			op = 6;
-		stack-&gt;typ = op;
-		stack-&gt;p1 = comp;
+		stack->typ = op;
+		stack->p1 = comp;
 		goto l1;
 	}
-	c = stack-&gt;p1;
+	c = stack->p1;
 	stack = pop(stack);
 	if (stack == 0) {
-		list-&gt;typ = 0;
+		list->typ = 0;
 		return(comp);
 	}
 	if (op1 == 6) {
 		if (op != 5)
-			writes(&quot;too many (&#39;s&quot;);
+			writes("too many ('s");
 		goto l1;
 	}
 	if (op1 == 7)
 		c = alloc();
-	list-&gt;typ = op1;
-	list-&gt;p2 = c-&gt;p1;
-	list-&gt;p1 = c;
+	list->typ = op1;
+	list->p2 = c->p1;
+	list->p1 = c;
 	list = c;
 	goto l6;
 }
@@ -295,17 +295,17 @@ struct node *m;
 
 	term = bal = 0;
 	list = alloc();
-	m-&gt;p2 = list;
+	m->p2 = list;
 	comp = start;
 	if (!comp)
 		comp = compon();
 	goto l2;
 
 l3:
-	list-&gt;p1 = a = alloc();
+	list->p1 = a = alloc();
 	list = a;
 l2:
-	switch (comp-&gt;typ) {
+	switch (comp->typ) {
 	case 7:
 		free(comp);
 		comp = compon();
@@ -317,43 +317,43 @@ l2:
 	case 16:
 		term = 0;
 		comp = expr(comp, 6, list);
-		list-&gt;typ = 1;
+		list->typ = 1;
 		goto l3;
 
 	case 1:
 		free(comp);
 		comp = compon();
 		bal = 0;
-		if (comp-&gt;typ == 16) {
+		if (comp->typ == 16) {
 			bal = 1;
 			free(comp);
 			comp = compon();
 		}
 		a = alloc();
-		b = comp-&gt;typ;
+		b = comp->typ;
 		if (b == 2 | b == 5 | b == 10 | b == 1)
-			a-&gt;p1 = 0; else {
+			a->p1 = 0; else {
 			comp = expr(comp, 11, a);
-			a-&gt;p1 = a-&gt;p2;
+			a->p1 = a->p2;
 		}
-		if (comp-&gt;typ != 2) {
-			a-&gt;p2 = 0;
+		if (comp->typ != 2) {
+			a->p2 = 0;
 		} else {
 			free(comp);
 			comp = expr(0, 6, a);
 		}
 		if (bal) {
-			if (comp-&gt;typ != 5)
+			if (comp->typ != 5)
 				goto merr;
 			free(comp);
 			comp = compon();
 		}
-		b = comp-&gt;typ;
-		if (b != 1 &amp; b != 10)
+		b = comp->typ;
+		if (b != 1 & b != 10)
 			goto merr;
-		list-&gt;p2 = a;
-		list-&gt;typ = 2;
-		a-&gt;typ = bal;
+		list->p2 = a;
+		list->typ = 2;
+		a->typ = bal;
 		free(comp);
 		comp = compon();
 		if(bal)
@@ -362,12 +362,12 @@ l2:
 		goto l3;
 	}
 	if(term)
-		term-&gt;typ = 3;
-	list-&gt;typ = 0;
+		term->typ = 3;
+	list->typ = 0;
 	return(comp);
 
 merr:
-	writes(&quot;unrecognized component in match&quot;);
+	writes("unrecognized component in match");
 }
 
 compile() {
@@ -378,20 +378,20 @@ compile() {
 
 	m = l = as = xs = xf = t = 0;
 	comp = compon();
-	a = comp-&gt;typ;
+	a = comp->typ;
 	if (a == 14) {
-		l = comp-&gt;p1;
+		l = comp->p1;
 		free(comp);
 		comp = compon();
-		a = comp-&gt;typ;
+		a = comp->typ;
 	}
 	if (a != 7)
-		writes(&quot;no space beginning statement&quot;);
+		writes("no space beginning statement");
 	free(comp);
 	if (l == lookdef)
 		goto def;
 	comp = expr(0, 11, r=alloc());
-	a = comp-&gt;typ;
+	a = comp->typ;
 	if (a == 0)
 		goto asmble;
 	if (a == 2)
@@ -400,29 +400,29 @@ compile() {
 		goto assig;
 	m = alloc();
 	comp = match(comp, m);
-	a = comp-&gt;typ;
+	a = comp->typ;
 	if (a == 0)
 		goto asmble;
 	if (a == 2)
 		goto xfer;
 	if (a == 3)
 		goto assig;
-	writes(&quot;unrecognized component in match&quot;);
+	writes("unrecognized component in match");
 
 assig:
 	free(comp);
 	comp = expr(0, 6, as=alloc());
-	a = comp-&gt;typ;
+	a = comp->typ;
 	if (a == 0)
 		goto asmble;
 	if (a == 2)
 		goto xfer;
-	writes(&quot;unrecognized component in assignment&quot;);
+	writes("unrecognized component in assignment");
 
 xfer:
 	free(comp);
 	comp = compon();
-	a = comp-&gt;typ;
+	a = comp->typ;
 	if (a == 16)
 		goto xboth;
 	if (a == 0) {
@@ -432,7 +432,7 @@ xfer:
 	}
 	if (a != 14)
 		goto xerr;
-	b = comp-&gt;p1;
+	b = comp->p1;
 	free(comp);
 	if (b == looks)
 		goto xsuc;
@@ -440,18 +440,18 @@ xfer:
 		goto xfail;
 
 xerr:
-	writes(&quot;unrecognized component in goto&quot;);
+	writes("unrecognized component in goto");
 
 xboth:
 	free(comp);
 	xs = alloc();
 	xf = alloc();
 	comp = expr(0, 6, xs);
-	if (comp-&gt;typ != 5)
+	if (comp->typ != 5)
 		goto xerr;
-	xf-&gt;p2 = xs-&gt;p2;
+	xf->p2 = xs->p2;
 	comp = compon();
-	if (comp-&gt;typ != 0)
+	if (comp->typ != 0)
 		goto xerr;
 	goto asmble;
 
@@ -459,10 +459,10 @@ xsuc:
 	if(xs)
 		goto xerr;
 	comp = compon();
-	if (comp-&gt;typ != 16)
+	if (comp->typ != 16)
 		goto xerr;
 	comp = expr(0, 6, xs=alloc());
-	if (comp-&gt;typ != 5)
+	if (comp->typ != 5)
 		goto xerr;
 	goto xfer;
 
@@ -470,90 +470,90 @@ xfail:
 	if (xf)
 		goto xerr;
 	comp = compon();
-	if (comp-&gt;typ != 16)
+	if (comp->typ != 16)
 		goto xerr;
 	comp = expr(0, 6, xf=alloc());
-	if (comp-&gt;typ != 5)
+	if (comp->typ != 5)
 		goto xerr;
 	goto xfer;
 
 asmble:
 	if(l) {
-		if (l-&gt;typ)
-			writes(&quot;name doubly defined&quot;);
-		l-&gt;p2 = comp;
-		l-&gt;typ = 2; /* type label;*/
+		if (l->typ)
+			writes("name doubly defined");
+		l->p2 = comp;
+		l->typ = 2; /* type label;*/
 	}
-	comp-&gt;p2 = r;
+	comp->p2 = r;
 	if (m) {
 		t++;
-		r-&gt;p1 = m;
+		r->p1 = m;
 		r = m;
 	}
 	if (as) {
 		t =+ 2;
-		r-&gt;p1 = as;
+		r->p1 = as;
 		r = as;
 	}
-	(g=alloc())-&gt;p1 = 0;
+	(g=alloc())->p1 = 0;
 	if (xs) {
-		g-&gt;p1 = xs-&gt;p2;
+		g->p1 = xs->p2;
 		free(xs);
 	}
-	g-&gt;p2 = 0;
+	g->p2 = 0;
 	if (xf) {
-		g-&gt;p2 = xf-&gt;p2;
+		g->p2 = xf->p2;
 		free(xf);
 	}
-	r-&gt;p1 = g;
-	comp-&gt;typ = t;
-	comp-&gt;ch = lc;
+	r->p1 = g;
+	comp->typ = t;
+	comp->ch = lc;
 	return(comp);
 
 def:
 	r = nscomp();
-	if (r-&gt;typ != 14)
+	if (r->typ != 14)
 		goto derr;
-	l = r-&gt;p1;
-	if (l-&gt;typ)
-		writes(&quot;name doubly defined&quot;);
-	l-&gt;typ = 5; /*type function;*/
+	l = r->p1;
+	if (l->typ)
+		writes("name doubly defined");
+	l->typ = 5; /*type function;*/
 	a = r;
-	l-&gt;p2 = a;
+	l->p2 = a;
 	r = nscomp();
 	l = r;
-	a-&gt;p1 = l;
-	if (r-&gt;typ == 0)
+	a->p1 = l;
+	if (r->typ == 0)
 		goto d4;
-	if (r-&gt;typ != 16)
+	if (r->typ != 16)
 		goto derr;
 
 d2:
 	r = nscomp();
-	if (r-&gt;typ != 14)
+	if (r->typ != 14)
 		goto derr;
-	a-&gt;p2 = r;
-	r-&gt;typ = 0;
+	a->p2 = r;
+	r->typ = 0;
 	a = r;
 	r = nscomp();
-	if (r-&gt;typ == 4) {
+	if (r->typ == 4) {
 		free(r);
 		goto d2;
 	}
-	if (r-&gt;typ != 5)
+	if (r->typ != 5)
 		goto derr;
 	free(r);
-	if ((r=compon())-&gt;typ != 0)
+	if ((r=compon())->typ != 0)
 		goto derr;
 	free(r);
 
 d4:
 	r = compile();
-	a-&gt;p2 = 0;
-	l-&gt;p1 = r;
-	l-&gt;p2 = 0;
+	a->p2 = 0;
+	l->p1 = r;
+	l->p2 = 0;
 	return(r);
 
 derr:
-	writes(&quot;illegal component in define&quot;);
+	writes("illegal component in define");
 }

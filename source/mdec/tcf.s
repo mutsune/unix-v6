@@ -15,12 +15,12 @@ tcdt = 177350
 	mov	sp,savsp
 
 	jsr	pc,4(r5)
-		&lt;ready drive 0 and type y\n\0&gt;; .even
+		<ready drive 0 and type y\n\0>; .even
 	jsr	pc,2(r5)
 	mov	r0,-(sp)
-	mov	$&#39;\n,r0
+	mov	$'\n,r0
 	jsr	pc,(r5)
-	cmp	(sp)+,$&#39;y
+	cmp	(sp)+,$'y
 	beq	1f
 	rts	pc
 1:
@@ -175,7 +175,7 @@ tcdt = 177350
 
 / foreward pass
 / confirm block numbers
-/ write all 1&#39;s in data
+/ write all 1's in data
 
 check:
 	clrb	tcst
@@ -202,7 +202,7 @@ check:
 / reverse pass
 / confirm block numbers
 / read data and compare
-/ to all 1&#39;s
+/ to all 1's
 
 1:
 	mov	$4003,tccm
@@ -250,7 +250,7 @@ error7:
 	mov	savr5,r5
 	mov	savsp,sp
 	jsr	pc,4(r5)
-		&lt;tcf: error\n\0&gt;; .even
+		<tcf: error\n\0>; .even
 	rts	pc
 
 compare:

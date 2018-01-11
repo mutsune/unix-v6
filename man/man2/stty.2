@@ -74,8 +74,8 @@ impossible speed changes are ignored.
 In the current configuration,
 only 110, 150 and 300 baud are really supported on dial-up lines,
 in that the code conversion and line control required for
-IBM 2741&#39;s (134.5 baud)
-must be implemented by the user&#39;s
+IBM 2741's (134.5 baud)
+must be implemented by the user's
 program,
 and the half-duplex line discipline
 required for the 202 dataset (1200 baud)
@@ -88,7 +88,7 @@ specify the erase and kill characters respectively.
 The
 .it mode
 contains several bits which determine the
-system&#39;s treatment of the typewriter:
+system's treatment of the typewriter:
 .s3
 .lp +12 7
 100000	Select one of two algorithms for backspace delays
@@ -115,7 +115,7 @@ system&#39;s treatment of the typewriter:
 .lp +12 7
 000002	echo and print tabs as spaces
 .lp +12 7
-000001	hang up (remove `data terminal ready,&#39; lead CD) after last close
+000001	hang up (remove `data terminal ready,' lead CD) after last close
 .i0
 .s3
 The delay bits specify how long
@@ -124,7 +124,7 @@ when certain characters are sent to the terminal.
 In all cases a value of 0 indicates no delay.
 .s3
 Backspace delays are currently ignored but will
-be used for Terminet 300&#39;s.
+be used for Terminet 300's.
 .s3
 If a form-feed/vertical tab delay is specified,
 it lasts for about 2 seconds.
@@ -136,7 +136,7 @@ for the VT05 and the TI 700.
 Delay type 3 is unimplemented and is 0.
 .s3
 New-line delay type 1 is dependent on the current column
-and is tuned for Teletype model 37&#39;s.
+and is tuned for Teletype model 37's.
 Type 2 is useful for the VT05 and is about .10 seconds.
 Type 3 is unimplemented and is 0.
 .s3
@@ -158,7 +158,7 @@ Mode 020 causes input carriage returns to be turned into
 new-lines;
 input of either CR or LF causes LF-CR both to
 be echoed
-(used for GE TermiNet 300&#39;s and other terminals without the newline function).
+(used for GE TermiNet 300's and other terminals without the newline function).
 .s3
 The hangup mode 01
 causes the line to be disconnected
@@ -172,7 +172,7 @@ This system call is also used with certain special
 files other than typewriters,
 but since none of them are part of the standard system
 the specifications will not be given.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 stty (I), gtty (II)
 .sh DIAGNOSTICS
 The error bit

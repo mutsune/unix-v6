@@ -1,5 +1,5 @@
 .if n .ds / /
-.if t .ds / \z/\h&#39;\w&#39;*&#39;u&#39;
+.if t .ds / \z/\h'\w'*'u'
 .th UNITS VI 8/30/74
 .sh NAME
 units \*- conversion program
@@ -10,30 +10,30 @@ in various standard scales to
 their equivalents in other scales.
 It works interactively in this fashion:
 .s3
-.it &quot;	You have:&quot;
+.it "	You have:"
 inch
 .br
-.it &quot;	You want:&quot;
+.it "	You want:"
 cm
 .br
-.it &quot;		* 2.54000e+00
+.it "		* 2.54000e+00
 .br
-.it &quot;		\*/ 3.93701e\-01
+.it "		\*/ 3.93701e\-01
 .s3
 A quantity is specified as a multiplicative combination of
 units optionally preceded by a numeric multiplier.
 Powers are indicated by suffixed positive integers,
 division by the usual sign:
 .s3
-.it &quot;	You have:&quot;
+.it "	You have:"
 15 pounds force/in2
 .br
-.it &quot;	You want:&quot;
+.it "	You want:"
 atm
 .br
-.it &quot;		* 1.02069e+00&quot;
+.it "		* 1.02069e+00"
 .br
-.it &quot;		\*/ 9.79730e\-01&quot;
+.it "		\*/ 9.79730e\-01"
 .s3
 .it Units 
 only does multiplicative scale changes.
@@ -50,17 +50,17 @@ and a few constants of nature including:
 	e	charge on an electron
 	g	acceleration of gravity 
 	force	same as g
-	mole	Avogadro&#39;s number
+	mole	Avogadro's number
 	water	pressure head per unit height of water
 	au	astronomical unit
 .s3
 .fi
-`Pound&#39; is a unit of
+`Pound' is a unit of
 mass.
-Compound names are run together, e.g. `lightyear&#39;.
+Compound names are run together, e.g. `lightyear'.
 British units that differ from their US counterparts
-are prefixed thus: `brgallon&#39;.
-For a complete list of units, `cat /usr/lib/units&#39;.
+are prefixed thus: `brgallon'.
+For a complete list of units, `cat /usr/lib/units'.
 .sh FILES
 /usr/lib/units
 .sh BUGS

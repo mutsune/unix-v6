@@ -16,8 +16,8 @@ declarations,
 and
 .ul
 programs.
-The sections are separated by double percent ``%%&#39;&#39; marks.
-(The per-cent ``%&#39;&#39; is generally used in Yacc specifications as an escape character.)
+The sections are separated by double percent ``%%'' marks.
+(The per-cent ``%'' is generally used in Yacc specifications as an escape character.)
 .PP
 In other words, a full specification file looks like
 .DS
@@ -49,28 +49,28 @@ A  :  BODY  ;
 A represents a nonterminal name, and BODY represents a sequence of zero or more names and literals.
 Notice that the colon and the semicolon are Yacc punctuation.
 .PP
-Names may be of arbitrary length, and may be made up of letters, dot ``.&#39;&#39;, underscore ``\_&#39;&#39;, and
+Names may be of arbitrary length, and may be made up of letters, dot ``.'', underscore ``\_'', and
 non-initial digits.
 Notice that Yacc considers that upper and lower case letters are distinct.
 The names used in the body of a grammar rule may represent tokens or nonterminal symbols.
 .PP
-A literal consists of a character enclosed in single quotes ``\&#39;&#39;&#39;.
-As in C, the backslash ``\e&#39;&#39; is an escape character within literals, and all the C escapes
+A literal consists of a character enclosed in single quotes ``\'''.
+As in C, the backslash ``\e'' is an escape character within literals, and all the C escapes
 are recognized.
 Thus
 .DS
-\&#39;\en\&#39;	represents newline
-\&#39;\er\&#39;	represents return
-\&#39;\e\&#39;\&#39;	represents single quote ``\&#39;&#39;&#39;
-\&#39;\e\e\&#39;	represents backslash ``\e&#39;&#39;
-\&#39;\et\&#39;	represents tab
-\&#39;\eb\&#39;	represents backspace
-\&#39;\exxx\&#39; represents ``xxx&#39;&#39; in octal
+\'\en\'	represents newline
+\'\er\'	represents return
+\'\e\'\'	represents single quote ``\'''
+\'\e\e\'	represents backslash ``\e''
+\'\et\'	represents tab
+\'\eb\'	represents backspace
+\'\exxx\' represents ``xxx'' in octal
 .DE
-For a number of technical reasons, the nul character (\&#39;\e0\&#39; or 000) should never
+For a number of technical reasons, the nul character (\'\e0\' or 000) should never
 be used in grammar rules.
 .PP
-If there are several grammar rules with the same left hand side, the vertical bar ``|&#39;&#39;
+If there are several grammar rules with the same left hand side, the vertical bar ``|''
 can be used to avoid rewriting the left hand side.
 In addition,
 the semicolon at the end of a rule can be dropped before a vertical bar.
@@ -134,4 +134,4 @@ If the endmarker is seen in any other context, it is an error.
 It is the job of the user supplied lexical analyzer
 to return the endmarker when appropriate; see section 3, below.
 Frequently, the endmarker token represents some reasonably obvious 
-I/O status, such as ``end-of-file&#39;&#39; or ``end-of-record&#39;&#39;.
+I/O status, such as ``end-of-file'' or ``end-of-record''.

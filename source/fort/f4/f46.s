@@ -15,18 +15,18 @@ getcon:
 	clrf	fr0
 	movif	$10.,fr1
 	clr	-(sp)			/ - flag
-	cmpb	(r1)+,$&#39;+
+	cmpb	(r1)+,$'+
 	beq	1f
-	cmpb	-(r1),$&#39;-
+	cmpb	-(r1),$'-
 	bne	1f
 	inc	r1
 	inc	(sp)
 1:
 	movb	(r1)+,r0
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9
 	blos	2f
-	cmp	r0,$&#39;.-&#39;0
+	cmp	r0,$'.-'0
 	bne	1f
 	dec	r2
 	br	1b
@@ -44,26 +44,26 @@ getcon:
 	bne	1f
 	dec	r2
 1:
-	cmp	r0,$&#39;e-&#39;0
+	cmp	r0,$'e-'0
 	beq	2f
-	cmp	r0,$&#39;d-&#39;0
+	cmp	r0,$'d-'0
 	bne	1f
 2:
 	mov	r3,-(sp)
 	clr	r3
 	clr	-(sp)
-	cmpb	(r1),$&#39;-
+	cmpb	(r1),$'-
 	bne	3f
 	inc	r1
 	inc	(sp)
 	br	2f
 3:
-	cmpb	(r1),$&#39;+
+	cmpb	(r1),$'+
 	bne	2f
 	inc	r1
 2:
 	movb	(r1)+,r0
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9
 	bhi	2f
 	mpy	$10.,r3
@@ -103,19 +103,19 @@ getcon:
 	beq	1f
 	negf	fr0
 1:
-	cmpb	-(r1),$&#39;,
+	cmpb	-(r1),$',
 	bne	1f
 	movf	fr0,-(sp)
 	inc	r1
 	jsr	r5,getcon
-	movf	(sp)+,fr1		/ a,b -&gt; r1,r0
+	movf	(sp)+,fr1		/ a,b -> r1,r0
 1:
 	mov	(sp)+,r2
 	mov	(sp)+,r0
 	rts	r5
 
 dope:
-	cmp	progt,$6		/ test &quot;block data&quot;
+	cmp	progt,$6		/ test "block data"
 	bne	1f
 	rts	r5
 1:
@@ -135,7 +135,7 @@ dope:
 	add	r0,r2
 	mov	(r2),r0
 	jsr	r5,code
-		&lt;d%d:	%d.\n	\0&gt;; .even
+		<d%d:	%d.\n	\0>; .even
 		r0
 		r1
 3:
@@ -144,11 +144,11 @@ dope:
 	mov	-(r2),r0
 	bge	4f
 	jsr	r5,code
-		&lt;..; \0&gt;; .even
+		<..; \0>; .even
 	br	3b
 4:
 	jsr	r5,code
-		&lt;%d.; \0&gt;; .even
+		<%d.; \0>; .even
 		r0
 	br	3b
 3:
@@ -156,7 +156,7 @@ dope:
 	clrb	r2
 	swab	r2
 	jsr	r5,code
-		&lt;%d.\n\0&gt;; .even
+		<%d.\n\0>; .even
 		r2
 2:
 	add	$8,r3

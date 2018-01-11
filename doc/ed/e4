@@ -18,22 +18,22 @@ You will get
 on the other side of the coin
 .X2
 A substitute command changes only the first occurrence of the first string.
-You can change all occurrences by adding a ``g&#39;&#39; (for ``global&#39;&#39;)
-to the ``s&#39;&#39; command, like this:
+You can change all occurrences by adding a ``g'' (for ``global'')
+to the ``s'' command, like this:
 .X1
 s/ . . . / . . . /gp
 .X2
 Try other characters instead of slashes to delimit the two sets
-of characters in the ``s&#39;&#39; command \(mi anything should work
+of characters in the ``s'' command \(mi anything should work
 except blanks or tabs.
 .PG
 (If you get funny results using any of the characters
 .X1
 ^    \*.    $    [    *    \\
 .X2
-read the section on ``Special Characters&#39;&#39;.)
+read the section on ``Special Characters''.)
 .H1
-Context searching \(mi ``/ . . . /&#39;&#39;
+Context searching \(mi ``/ . . . /''
 .H2
 .PG
 With the substitute command mastered, we can move on to
@@ -48,12 +48,12 @@ Now is the time
 for all good men
 to come to the aid of their party.
 .X2
-Suppose we want to find the line that contains ``their&#39;&#39; so
-we can change it to ``the&#39;&#39;.
-Now with only three lines in the buffer, it&#39;s pretty easy
-to keep track of what line the word ``their&#39;&#39; is on.
+Suppose we want to find the line that contains ``their'' so
+we can change it to ``the''.
+Now with only three lines in the buffer, it's pretty easy
+to keep track of what line the word ``their'' is on.
 But if the buffer contained several hundred lines,
-and we&#39;d been making changes, deleting and rearranging lines,
+and we'd been making changes, deleting and rearranging lines,
 and so on, we would no longer really know what this line
 number would be.
 Context searching is simply a method of specifying the desired line,
@@ -61,7 +61,7 @@ regardless of what its number is,
 by specifying some context on it.
 .PG
 The way we say ``search for a line
-that contains this particular string of characters&#39;&#39;
+that contains this particular string of characters''
 is to type
 .X1
 /\fIstring of characters we want to find\fP/
@@ -77,22 +77,22 @@ line
 is a context search which
 is sufficient to find the desired line \(mi
 it will locate the next occurrence of
-the characters between slashes (``their&#39;&#39;).
+the characters between slashes (``their'').
 It also sets dot to that line
 and prints the line for verification:
 .X1
 to come to the aid of their party.
 .X2
-``Next occurrence&#39;&#39; means that
+``Next occurrence'' means that
 .ul
 ed
-starts looking for the string at line ``\*.+1&#39;&#39;,
+starts looking for the string at line ``\*.+1'',
 searches to the end of the buffer,
 then continues at line 1 and searches to line dot.
-(That is, the search ``wraps around&#39;&#39; from ``$&#39;&#39; to 1.) 
+(That is, the search ``wraps around'' from ``$'' to 1.) 
 It scans all the lines in the buffer until it either finds the desired line
 or gets back to dot again.
-If the given string of characters can&#39;t be found in any line,
+If the given string of characters can't be found in any line,
 .ul
 ed
 types the error message
@@ -116,13 +116,13 @@ to come to the aid of the party.
 There were three parts to that last command:
 context search for the desired line, make the substitution, print the line.
 .PG
-The expression ``/their/&#39;&#39; is a context search expression.
+The expression ``/their/'' is a context search expression.
 In their simplest form,
 all context search expressions are like this \(mi
 a string of characters surrounded by slashes.
 Context searches are interchangeable with line numbers,
 so they can be used by themselves to find and print a desired line,
-or as line numbers for some other command, like ``s&#39;&#39;.
+or as line numbers for some other command, like ``s''.
 We used them both ways in the examples above.
 .PG
 Suppose the buffer contains the three familiar lines
@@ -165,10 +165,10 @@ or
 /Now/,/Now/+2p
 .X2
 or by any number of similar combinations.
-The first one of these might be better if we don&#39;t
+The first one of these might be better if we don't
 know how many lines are involved.
 (Of course, if there were only three lines in the buffer,
-we&#39;d use
+we'd use
 .X1
 1,$p
 .X2
@@ -191,20 +191,20 @@ the same context search.
 Try using context searches as line numbers for the
 substitute, print and delete commands.
 (They can also be used
-with ``r&#39;&#39;, ``w&#39;&#39;, and ``a&#39;&#39;.)
+with ``r'', ``w'', and ``a''.)
 .PG
-Try context searching using ``?text?&#39;&#39; instead of ``/text/&#39;&#39;.
+Try context searching using ``?text?'' instead of ``/text/''.
 This scans lines in the buffer in reverse order
 rather than normal.
 This is
 sometimes useful if you go too far while looking for some
-string of characters \(mi it&#39;s an easy way to back up.
+string of characters \(mi it's an easy way to back up.
 .PG
 (If you get funny results with any of the characters
 .X1
 ^    \*.    $    [    *    \\
 .X2
-read the section on ``Special Characters&#39;&#39;.)
+read the section on ``Special Characters''.)
 .PG
 .ul
 Ed
@@ -218,7 +218,7 @@ line number
 .X1
 /string/
 .X2
-will find the next occurrence of ``string&#39;&#39;.
+will find the next occurrence of ``string''.
 It often happens that this is not the desired line,
 so the search must be repeated.
 This can be done by typing merely
@@ -226,18 +226,18 @@ This can be done by typing merely
 //
 .X2
 This shorthand stands for ``the most recently used
-context search expression.&#39;&#39;
+context search expression.''
 It can
 also be used as the first string of the substitute
 command, as in
 .X1
 /string1/s//string2/
 .X2
-which will find the next occurrence of ``string1&#39;&#39;
-and replace it by ``string2&#39;&#39;.
+which will find the next occurrence of ``string1''
+and replace it by ``string2''.
 This can save a lot of typing.
 Similarly
 .X1
 ??
 .X2
-means ``scan backwards for the same expression.&#39;&#39;
+means ``scan backwards for the same expression.''

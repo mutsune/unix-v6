@@ -12,7 +12,7 @@ econ:
 	mov	r0,tmpr
 	br	1f
 2:
-	cmpb	$&#39;z,ftemp+9.
+	cmpb	$'z,ftemp+9.
 	bne	2f
 	mov	$1,r0
 	sys	write; erm; 23.
@@ -34,7 +34,7 @@ econ:
 	movb	r0,(r2)+
 	br	1b
 1:
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 	jsr	pc,output
 	mov	r4,r1
 	jsr	pc,rewind
@@ -135,15 +135,15 @@ econ:
 	sys	exec; edd; eda
 	sys	exit
 eda:	edd; ftemp; 0
-edd:	&lt;/bin/ed\0&gt;
+edd:	</bin/ed\0>
 	.even
-ftemp:	&lt;/tmp/ftmpa\0&gt;
-erm:	&lt;Cannot open temp. file\n&gt;
+ftemp:	</tmp/ftmpa\0>
+erm:	<Cannot open temp. file\n>
 	.even
 tmpw:	.=.+2
 tmpr:	.=.+2
 /
-/	remove a &#39;file&#39; from memory
+/	remove a 'file' from memory
 /
 remove:
 	mov	(sp)+,r3
@@ -204,7 +204,7 @@ remove:
 	tst	(sp)+
 	jmp	loop
 /
-/	rename a &#39;file&#39;
+/	rename a 'file'
 /
 rename:
 	mov	(sp)+,r3
@@ -274,7 +274,7 @@ rename:
 /
 list:
 	mov	$buffer,r2
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 	jsr	pc,output
 	mov	(sp)+,r3
 	beq	1f
@@ -301,7 +301,7 @@ list:
 	mov	r0,r1
 3:
 	jsr	pc,getn
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 	jsr	pc,output
 	tst	vflag
 	bne	1f
@@ -317,11 +317,11 @@ list:
 	bgt	5b
 2:
 	mov	$buffer,r2
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 	jsr	pc,output
 	jmp	loop
 /
-/	list a &#39;file
+/	list a 'file
 /
 listf:
 	mov	(sp)+,r3
@@ -335,7 +335,7 @@ listf:
 	mov	r2,r1
 	jsr	pc,rewind
 	mov	$buffer,r2
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 1:
 	jsr	pc,getchar
 	bes	1f
@@ -347,12 +347,12 @@ listf:
 1:
 	mov	r4,r1
 	jsr	pc,rewind
-	movb	$&#39;:,(r2)+
+	movb	$':,(r2)+
 	cmp	r2,$bufend
 	blo	2f
 	jsr	pc,output
 2:
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 1:
 	tst	iflag
 	beq	2f
@@ -375,7 +375,7 @@ listf:
 	dec	r3
 	bgt	4b
 	mov	$buffer,r2
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 	jsr	pc,output
 	jmp	loop
 /
@@ -391,12 +391,12 @@ memck:	mov	(sp)+,r3
 2:
 	ble	2f
 	mov	(sp)+,r1
-	cmpb	(r1),$&#39;p
+	cmpb	(r1),$'p
 	bne	1f
 	bis	$1,vflag
 	br	3f
 1:
-	cmpb	(r1),$&#39;f
+	cmpb	(r1),$'f
 	bne	3f
 	bis	$2,vflag
 3:
@@ -513,7 +513,7 @@ cont:
 	jsr	pc,output
 	br	2b
 2:
-	movb	$&#39;\n,(r2)+
+	movb	$'\n,(r2)+
 	jsr	pc,output
 	mov	r1,r2
 	cmp	vflag,$1
@@ -525,9 +525,9 @@ cont:
 /
 interrupt: 4
 /
-un:	&lt; header not accounted for\n&gt;
-re:	&lt; part of asmem released\n&gt;
-lf:	&lt;\n&gt;
-frh:	&lt; free headers\n &gt;
-frb:	&lt; free blocks size &gt;
+un:	< header not accounted for\n>
+re:	< part of asmem released\n>
+lf:	<\n>
+frh:	< free headers\n >
+frb:	< free blocks size >
 endc:	.even

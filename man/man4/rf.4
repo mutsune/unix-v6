@@ -17,13 +17,13 @@ etc.
 The
 .it rf0
 file
-accesses the disk via the system&#39;s normal
+accesses the disk via the system's normal
 buffering mechanism
 and may be read and written without regard to
 physical disk records.
-There is also a ``raw&#39;&#39; interface
+There is also a ``raw'' interface
 which provides for direct transmission between the disk
-and the user&#39;s read or write buffer.
+and the user's read or write buffer.
 A single read or write call results in exactly one I/O operation
 and therefore raw I/O is considerably more efficient when
 many words are transmitted.

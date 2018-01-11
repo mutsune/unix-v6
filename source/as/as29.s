@@ -26,7 +26,7 @@ dotrel: 02; dot:000000 /.
 
 
 .if eae
-/eae &amp; switches
+/eae & switches
 
 01;177570 /csw
 01;177300 /div

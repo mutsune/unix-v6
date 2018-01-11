@@ -1,10 +1,10 @@
 .de h
-&#39;sp 2
-.tl &#39;&#39;&#39;UNIX Security - %&#39;
-&#39;sp 3
+'sp 2
+.tl '''UNIX Security - %'
+'sp 3
 ..
 .de f
-&#39;bp
+'bp
 ..
 .wh -6 f
 .br
@@ -83,14 +83,14 @@ Processes are another resource on which the only limit
 is total exhaustion.
 For example, the sequence
 .bd
-command&amp;
-command&amp;
-command&amp;
+command&
+command&
+command&
 .li
 . . .
 .ed
 if continued long enough will use up all the slots in the
-system&#39;s process table and prevent
+system's process table and prevent
 anyone from executing any commands.
 Alternatively, if the commands use much core,
 swap space may run out, causing a panic.
@@ -100,8 +100,8 @@ no matter how short a time it takes each command to
 terminate.
 (The process-table slot is not freed until the terminated
 process is waited for;
-if no commands without ``&amp;&#39;&#39; are executed,
-the Shell never executes a ``wait.&#39;&#39;)
+if no commands without ``&'' are executed,
+the Shell never executes a ``wait.'')
 .pg
 It should be evident that unbounded consumption of disk
 space, files, swap space, and processes can easily occur
@@ -140,22 +140,22 @@ identification number
 Nine of the protection bits
 are used to specify independently
 permission to read, to write, and to execute the file
-to the user himself, to members of the user&#39;s
+to the user himself, to members of the user's
 group, and to all other users.
 Each process generated
 by or for a user has associated with
 it an effective UID and a real UID, and an effective and real GID.
 When an attempt is made
 to access the file for reading, writing, or execution,
-the user process&#39;s effective UID is compared
-against the file&#39;s UID; if a match is obtained,
+the user process's effective UID is compared
+against the file's UID; if a match is obtained,
 access is granted provided the read, write, or execute
 bit respectively for the user himself is
 present.
 If the UID for the file and for the process fail to match,
-but the GID&#39;s do match, the group bits are used; if the GID&#39;s
+but the GID's do match, the group bits are used; if the GID's
 do not match, the bits for other users are tested.
-The last two bits of each file&#39;s protection information,
+The last two bits of each file's protection information,
 called the set-UID and set-GID bits,
 are used only when the
 file is executed as a program.
@@ -180,7 +180,7 @@ The classical example is the game-playing program which
 maintains records of the scores of its players.
 The program itself has to read and write the score file,
 but
-no one but the game&#39;s sponsor can be allowed
+no one but the game's sponsor can be allowed
 unrestricted access to the file lest they manipulate
 the game to their own advantage.
 The solution is to
@@ -211,7 +211,7 @@ it is impossible
 for any user to write directly into any directory.
 .pg
 Another, and from the point of view of security, much
-more serious special case is that there is a ``super user&#39;&#39;
+more serious special case is that there is a ``super user''
 who is able to read any file and write any non-directory.
 The super-user is also able to change the protection
 mode and the owner UID and GID of any file
@@ -230,7 +230,7 @@ readable and writable by everyone.
 This means that more or less
 continuous attention must be
 paid to adjusting modes properly.
-If one wants to keep one&#39;s files completely secret,
+If one wants to keep one's files completely secret,
 it is possible to remove all permissions from the directory in which they live,
 which is easy and effective;
 but if it is desired
@@ -267,7 +267,7 @@ It follows from this discussion
 that to maintain both data privacy and
 data integrity,
 it is necessary, and largely sufficient,
-to make one&#39;s directory inaccessible to others.
+to make one's directory inaccessible to others.
 The lack of sufficiency could follow
 from the existence of set-UID programs
 created by the user
@@ -306,7 +306,7 @@ As a practical test of the possibilities in this area,
 67 encrypted passwords were collected from 10 UNIX installations.
 These were tested against all five-letter combinations,
 all combinations of letters and digits of length four or less,
-and all words in Webster&#39;s Second unabridged dictionary;
+and all words in Webster's Second unabridged dictionary;
 60 of the 67 passwords were found.
 The whole process took about 12 hours of machine time.
 This experience suggests that passwords should be
@@ -316,7 +316,7 @@ which includes digits and special characters.
 Of course there also exist
 feasible non-cryptanalytic
 ways of finding out passwords.
-For example: write a program which types out ``login:\|&#39;&#39;
+For example: write a program which types out ``login:\|''
 on the typewriter and copies whatever is typed
 to a file of your own.
 Then invoke the command and go away until the victim arrives.
@@ -352,12 +352,12 @@ The trouble is that
 .ul
 mail
 is rather dumb:
-anyone can mail someone else&#39;s private file to himself.
+anyone can mail someone else's private file to himself.
 Much more serious,
 is the following scenario:
 make a file with a line like one in the password file
 which allows one to log in as the super-user.
-Then make a link named ``.mail&#39;&#39; to the password file
+Then make a link named ``.mail'' to the password file
 in some writeable
 directory on the same device as the password file (say /tmp).
 Finally mail the bogus login line to /tmp/.mail;

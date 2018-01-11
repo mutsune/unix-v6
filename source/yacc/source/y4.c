@@ -1,20 +1,20 @@
-# include &quot;dextern&quot;
+# include "dextern"
 
 output(){ /* print the output for the states */
 
   int i, j, k, c;
 
   settab();
-  arrset(&quot;yyact&quot;);
+  arrset("yyact");
 
-  for( i=0; i&lt;nstate; ++i ){ /* output the stuff for state i */
+  for( i=0; i<nstate; ++i ){ /* output the stuff for state i */
     nolook = (tystate[i]==0);
     closure(i);
     /* output actions */
     aryfil( temp1, nterms+1, 0 );
-    for( j=0; j&lt;cwset; ++j ){ /* look at the items */
+    for( j=0; j<cwset; ++j ){ /* look at the items */
       c = *( wsets[j].pitem );
-      if( c&gt;0 &amp;&amp; c&lt;NTBASE &amp;&amp; temp1[c]==0 ) temp1[c] = go2(i,c);
+      if( c>0 && c<NTBASE && temp1[c]==0 ) temp1[c] = go2(i,c);
       }
 
     if( i == 1 ) temp1[1] = ACCEPTCODE;
@@ -22,18 +22,18 @@ output(){ /* print the output for the states */
     /* now, we have the shifts; look at the reductions */
 
     lastred = 0;
-    for( j=0; j&lt;cwset; ++j ){
+    for( j=0; j<cwset; ++j ){
       c = *( wsets[j].pitem );
-      if( c&lt;=0 ){ /* reduction */
+      if( c<=0 ){ /* reduction */
         lastred = -c;
-        for( k=1; k&lt;=nterms; ++k ){
-          if( ((wsets[j].ws[k&gt;&gt;4])&amp;(1&lt;&lt;(k&amp;017))) != 0 ) {
+        for( k=1; k<=nterms; ++k ){
+          if( ((wsets[j].ws[k>>4])&(1<<(k&017))) != 0 ) {
             if( temp1[k] == 0 ) temp1[k] = c;
-            else if( temp1[k]&lt;0 ){ /* reduce/reduce conflict */
+            else if( temp1[k]<0 ){ /* reduce/reduce conflict */
               settty();
-              printf(&quot;\n%d: reduce/reduce conflict (red&#39;ns %d and %d ) on %s&quot;,
+              printf("\n%d: reduce/reduce conflict (red'ns %d and %d ) on %s",
                 i, -temp1[k], lastred, symnam(k) );
-              if( -temp1[k] &gt; lastred ) temp1[k] = -lastred;
+              if( -temp1[k] > lastred ) temp1[k] = -lastred;
               ++zzrrconf;
               settab();
               }
@@ -43,7 +43,7 @@ output(){ /* print the output for the states */
             case 0: /* precedence does not apply */
 
                 settty();
-                printf(&quot;\n%d: shift/reduce conflict (shift %d, red&#39;n %d) on %s&quot;, i,
+                printf("\n%d: shift/reduce conflict (shift %d, red'n %d) on %s", i,
 			temp1[k], lastred, symnam(k) );
                 ++zzsrconf;
                 settab();
@@ -82,11 +82,11 @@ output(){ /* print the output for the states */
 prred(){ /* print the information about the actions and the reductions */
   int index, i;
 
-  arrset(&quot;yypact&quot;);
+  arrset("yypact");
   index = 1;    /* position in the output table */
 
-  for( i=0; i&lt;nstate; ++i ){
-    if( tystate[i]&gt;0 ){  /* the state is real */
+  for( i=0; i<nstate; ++i ){
+    if( tystate[i]>0 ){  /* the state is real */
       temp1[i] = index;
       arrval( index );
       index =+ tystate[i];
@@ -98,18 +98,18 @@ prred(){ /* print the information about the actions and the reductions */
 
   arrdone();
 
-  arrset(&quot;yyr1&quot;);
-  for( i=1; i&lt;nprod; ++i ) arrval( *prdptr[i] - NTBASE );
+  arrset("yyr1");
+  for( i=1; i<nprod; ++i ) arrval( *prdptr[i] - NTBASE );
   arrdone();
 
-  arrset(&quot;yyr2&quot;);
-  for( i=1; i&lt;nprod; ++i ) arrval( ( prdptr[i+1]-prdptr[i]-2 ) );
+  arrset("yyr2");
+  for( i=1; i<nprod; ++i ) arrval( ( prdptr[i+1]-prdptr[i]-2 ) );
   arrdone();
 
   }
 
 go2(i,c){ /* do a goto on the closure state, not worrying about lookaheads */
-  if( c&lt;NTBASE ) return( amem[ apstate[i]+c ] );
+  if( c<NTBASE ) return( amem[ apstate[i]+c ] );
   else return( amem[ apstate[i] + c - NTBASE + nterms ] );
   }
 
@@ -121,48 +121,48 @@ apack(p, n ) int *p;{ /* pack state i from temp1 into amem */
   /* find the spot */
 
   j = n;
-  for( off = 0; off &lt;= j &amp;&amp; p[off] == 0; ++off ) ;
-  if( off &gt; j ){ /* no actions */
+  for( off = 0; off <= j && p[off] == 0; ++off ) ;
+  if( off > j ){ /* no actions */
     return(0);
     }
   j =- off;
-  for( k=0; k&lt;actsiz; ++k ){
-    for( l=0; l&lt;=j; ++l ){
+  for( k=0; k<actsiz; ++k ){
+    for( l=0; l<=j; ++l ){
       if( p[off+l] != 0 ){
-        if( p[off+l] != amem[k+l] &amp;&amp; amem[k+l] != 0 ) goto nextk;
+        if( p[off+l] != amem[k+l] && amem[k+l] != 0 ) goto nextk;
         }
       }
-    if( pkdebug ){ settty(); printf(&quot;off = %d, k = %d\n&quot;, off, k ); }
+    if( pkdebug ){ settty(); printf("off = %d, k = %d\n", off, k ); }
     /* we have found an acceptable k */
-    for( l=0; l&lt;=j; ++l ){
+    for( l=0; l<=j; ++l ){
       if( p[off+l] ){
-        if( k+l &gt;= actsiz ) error(&quot;action table overflow&quot;);
-        if( k+l &gt;= memact ) memact = k+l;
+        if( k+l >= actsiz ) error("action table overflow");
+        if( k+l >= memact ) memact = k+l;
         amem[k+l] = p[off+l];
         }
       }
     if( pkdebug ){
-      for( k=0; k&lt;memact; k=+10){
-        printf(&quot;\t&quot;);
-        for( l=0; l&lt;=9; ++l ) printf(&quot;%d &quot;, amem[k+l] );
-        printf(&quot;\n&quot;);
+      for( k=0; k<memact; k=+10){
+        printf("\t");
+        for( l=0; l<=9; ++l ) printf("%d ", amem[k+l] );
+        printf("\n");
         }
       }
     return(k-off);
 
     nextk: ;
     }
-  error(&quot;no space in action table&quot;);
+  error("no space in action table");
   }
 
 go2out(){ /* output the gotos for the nontermninals */
   int i, j, k, best, offset, count, cbest, times;
 
   settab();
-  arrset(&quot;yygo&quot;);
+  arrset("yygo");
   offset = 1;
 
-  for( i=1; i&lt;=nnonter; ++i ) {
+  for( i=1; i<=nnonter; ++i ) {
     go2gen(i);
 
     /* find the best one to make default */
@@ -172,7 +172,7 @@ go2out(){ /* output the gotos for the nontermninals */
     best = -1;
     times = 0;
 
-    for( j=0; j&lt;=nstate; ++j ){ /* is j the most frequent */
+    for( j=0; j<=nstate; ++j ){ /* is j the most frequent */
       if( tystate[j] == 0 ) continue;
       if( tystate[j] == best ) continue;
 
@@ -181,9 +181,9 @@ go2out(){ /* output the gotos for the nontermninals */
       count = 0;
       cbest = tystate[j];
 
-      for( k=j; k&lt;=nstate; ++k ) if( tystate[k]==cbest ) ++count;
+      for( k=j; k<=nstate; ++k ) if( tystate[k]==cbest ) ++count;
 
-      if( count &gt; times ){
+      if( count > times ){
         best = cbest;
         times = count;
         }
@@ -193,8 +193,8 @@ go2out(){ /* output the gotos for the nontermninals */
 
     zzgobest =+ (times-1)*2;
     settab();
-    for( j=0; j&lt;=nstate; ++j ){
-      if( tystate[j] != 0 &amp;&amp; tystate[j]!=best ){
+    for( j=0; j<=nstate; ++j ){
+      if( tystate[j] != 0 && tystate[j]!=best ){
         arrval( j );
         arrval( tystate[j] );
         offset =+ 2;
@@ -213,8 +213,8 @@ go2out(){ /* output the gotos for the nontermninals */
 
   arrdone();
 
-  arrset(&quot;yypgo&quot;);
-  for( i=1; i&lt;=nnonter; ++i ) arrval( temp2[i] );
+  arrset("yypgo");
+  for( i=1; i<=nnonter; ++i ) arrval( temp2[i] );
   arrdone();
 
   }
@@ -233,8 +233,8 @@ go2gen(c){ /* output the gotos for nonterminal c */
   work = 1;
   while( work ){
     work = 0;
-    for( i=0; i&lt;nprod; ++i ){
-      if( (cc=prdptr[i][1]-NTBASE) &gt;= 0 ){ /* cc is a nonterminal */
+    for( i=0; i<nprod; ++i ){
+      if( (cc=prdptr[i][1]-NTBASE) >= 0 ){ /* cc is a nonterminal */
         if( temp1[cc] != 0 ){ /* cc has a goto on c */
           cc = *prdptr[i]-NTBASE; /* thus, the left side of production i does too */
           if( temp1[cc] == 0 ){
@@ -250,43 +250,43 @@ go2gen(c){ /* output the gotos for nonterminal c */
 
   if( g2debug ){
     settty();
-    printf(&quot;%s: gotos on &quot;, nontrst[c].name );
-    for( i=0; i&lt;=nnonter; ++i ) if( temp1[i]) printf(&quot;%s &quot;, nontrst[i].name);
-    printf(&quot;\n&quot;);
+    printf("%s: gotos on ", nontrst[c].name );
+    for( i=0; i<=nnonter; ++i ) if( temp1[i]) printf("%s ", nontrst[i].name);
+    printf("\n");
     }
 
   /* now, go through and put gotos into tystate */
 
   aryfil( tystate, nstate, 0 );
   settty();
-  printf(&quot;\nnonterminal %s\n&quot;, nontrst[c].name );
-  for( i=0; i&lt;nstate; ++i ){
+  printf("\nnonterminal %s\n", nontrst[c].name );
+  for( i=0; i<nstate; ++i ){
     q = pstate[i+1];
-    for( p=pstate[i]; p&lt;q; ++p ){
-      if( (cc= *p-&gt;pitem) &gt;= NTBASE ){
+    for( p=pstate[i]; p<q; ++p ){
+      if( (cc= *p->pitem) >= NTBASE ){
         if( temp1[cc =- NTBASE] ){ /* goto on c is possible */
           tystate[i] = amem[indgo[i]+c];
           break;
           }
         }
       }
-    if( tystate[i] ) printf(&quot;\t%d\t%d\n&quot;, i, tystate[i]);
+    if( tystate[i] ) printf("\t%d\t%d\n", i, tystate[i]);
     }
   }
 
 precftn(r,t){ /* decide a shift/reduce conflict by precedence.
-			Returns 0 if action is &#39;do nothing&#39;,1 if action is reduce,
-			2 if the action is &#39;error,binary operator&#39;
-			and 3 if the action is &#39;reduce&#39;. */
+			Returns 0 if action is 'do nothing',1 if action is reduce,
+			2 if the action is 'error,binary operator'
+			and 3 if the action is 'reduce'. */
 
 	int lp,lt;
 	lp = levprd[r];
 	lt = trmlev[t];
-	if ((lt==0)||((lp&amp;03)==0))return(0);
-	if((lt&gt;&gt;3) == (lp&gt;&gt;3)){
-		return(lt&amp;03);
+	if ((lt==0)||((lp&03)==0))return(0);
+	if((lt>>3) == (lp>>3)){
+		return(lt&03);
 		}
-	if((lt&gt;&gt;3) &gt; (lp&gt;&gt;3)) return(3);
+	if((lt>>3) > (lp>>3)) return(3);
 	return(1);
 	}
 
@@ -301,23 +301,23 @@ wract(i){ /* output state i */
 
   lastred = 0;
   ntimes = 0;
-  for( j=1; j&lt;=nterms; ++j ){
-    if( temp1[j] &gt;= 0 ) continue;
+  for( j=1; j<=nterms; ++j ){
+    if( temp1[j] >= 0 ) continue;
     if( temp1[j]+lastred == 0 ) continue;
     /* count the number of appearances of temp1[j] */
     count = 0;
     tred = -temp1[j];
-    for( p=1; p&lt;=nterms; ++p ){
+    for( p=1; p<=nterms; ++p ){
       if( temp1[p]+tred == 0 ) ++count;
       }
-    if( count &gt;ntimes ){
+    if( count >ntimes ){
       lastred = tred;
       ntimes = count;
       }
     }
 
     /* clear out entries in temp1 which equal lastred */
-    for( p=1; p&lt;= nterms; ++p ) if( temp1[p]+lastred == 0 )temp1[p]=0;
+    for( p=1; p<= nterms; ++p ) if( temp1[p]+lastred == 0 )temp1[p]=0;
 
     /* write out the state */
 
@@ -326,8 +326,8 @@ wract(i){ /* output state i */
 
     p0 = 0;
     q1 = pstate[i+1];
-    for( q0=pstate[i]; q0&lt;q1; ++q0 ){
-      if( (p1= *(q0-&gt;pitem) ) &lt; NTBASE ) goto standard;
+    for( q0=pstate[i]; q0<q1; ++q0 ){
+      if( (p1= *(q0->pitem) ) < NTBASE ) goto standard;
       if( p0 == 0 ) p0 = p1;
       else if( p0 != p1 ) goto standard;
       }
@@ -335,18 +335,18 @@ wract(i){ /* output state i */
     /* now, all items have dots before p0 */
     if( cdebug ){
       settty();
-      printf(&quot;state %d, pre-nonterminal %s\n&quot;,i,nontrst[p0-NTBASE].name);
+      printf("state %d, pre-nonterminal %s\n",i,nontrst[p0-NTBASE].name);
       }
 
-    for( j=0; j&lt;i; ++j ){
+    for( j=0; j<i; ++j ){
       if( apstate[i] != apstate[j] ) continue;
 
       /* equal positions -- check items */
 
-      if( cdebug )printf(&quot;states %d and %d have equal positions\n&quot;,i,j);
+      if( cdebug )printf("states %d and %d have equal positions\n",i,j);
       q1 = pstate[j+1];
-      for( q0=pstate[j]; q0&lt;q1; ++q0 ){
-        if( *(q0-&gt;pitem) != p0 ) goto nextj;
+      for( q0=pstate[j]; q0<q1; ++q0 ){
+        if( *(q0->pitem) != p0 ) goto nextj;
         }
 
       /* we have a match with state j ! */
@@ -366,10 +366,10 @@ wract(i){ /* output state i */
     wrstate(i);
 
     size = 0;
-    for( p0=1; p0&lt;=nterms; ++p0 )
+    for( p0=1; p0<=nterms; ++p0 )
       if( (p1=temp1[p0])!=0 ) {
         arrval( TESTACT+trmset[p0].value );
-        if( p1 &lt; 0 ) arrval( REDUCACT - p1 );
+        if( p1 < 0 ) arrval( REDUCACT - p1 );
         else if( p1 == ACCEPTCODE ) arrval( ACCEPTACT );
         else if( p1 == ERRCODE ) arrval( ERRACT );
         else arrval( SHIFTACT + p1 );
@@ -386,31 +386,31 @@ wrstate(i){ /* writes state i */
 	int j0,j1,s;
         struct item *pp, *qq;
 	settty();
-	printf(&quot;\nstate %d\n&quot;,i);
+	printf("\nstate %d\n",i);
 	qq = pstate[i+1];
-	for( pp=pstate[i]; pp&lt;qq; ++pp) printf(&quot;\t%s\n&quot;, writem(pp));
+	for( pp=pstate[i]; pp<qq; ++pp) printf("\t%s\n", writem(pp));
 
         /* check for state equal to another */
 
-        if( tystate[i] &lt;= 0 ){
-          printf(&quot;\n\tsame as %d\n\n&quot;, -tystate[i] );
+        if( tystate[i] <= 0 ){
+          printf("\n\tsame as %d\n\n", -tystate[i] );
           return;
           }
 
-	for( j0=1; j0&lt;=nterms; ++j0 ) if( (j1=temp1[j0]) != 0 ){
-	printf(&quot;\n\t%s  &quot;, symnam(j0) );
-             if( j1&gt;0 ){ /* shift, error, or accept */
-               if( j1 == ACCEPTCODE ) printf( &quot;accept&quot; );
-               else if( j1 == ERRCODE ) printf( &quot;error&quot; );
-               else printf( &quot;shift %d&quot;, j1 );
+	for( j0=1; j0<=nterms; ++j0 ) if( (j1=temp1[j0]) != 0 ){
+	printf("\n\t%s  ", symnam(j0) );
+             if( j1>0 ){ /* shift, error, or accept */
+               if( j1 == ACCEPTCODE ) printf( "accept" );
+               else if( j1 == ERRCODE ) printf( "error" );
+               else printf( "shift %d", j1 );
                }
-		   else printf(&quot;reduce %d&quot;,-j1 );
+		   else printf("reduce %d",-j1 );
 	   }
 
 	/* output the final production */
 
-	if( lastred ) printf(&quot;\n\t.  reduce %d\n\n&quot;, lastred );
-	else printf(&quot;\n\t.  error\n\n&quot; );
+	if( lastred ) printf("\n\t.  reduce %d\n\n", lastred );
+	else printf("\n\t.  error\n\n" );
 
 ret:
 	settab();

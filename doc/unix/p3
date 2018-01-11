@@ -35,7 +35,7 @@ the size of which may be extended by a system call.
 Starting at the highest
 address in the virtual address space is a stack segment,
 which automatically grows downward
-as the hardware&#39;s stack pointer fluctuates.
+as the hardware's stack pointer fluctuates.
 .s2
 5.1 Processes
 .es
@@ -114,7 +114,7 @@ execute\|(\|file, arg\*t\d1\u\*n, arg\*t\d2\u\*n, .\|.\|. , arg\*t\dn\u\*n\|)\|
 which requests the system to read in and execute the program
 named by \fIfile\fR, passing it string arguments
 .ft I
-arg\v&#39;.3&#39;\*t1\*n\v&#39;-.3&#39;\|, arg\v&#39;.3&#39;\*t2\*n\v&#39;-.3&#39;\|, .\|.\|.\|\|, arg\v&#39;.3&#39;\*tn\*n\v&#39;-.3&#39;.
+arg\v'.3'\*t1\*n\v'-.3'\|, arg\v'.3'\*t2\*n\v'-.3'\|, .\|.\|.\|\|, arg\v'.3'\*tn\*n\v'-.3'.
 .ft R
 All the code and data in the process using \fIexecute\fR
 is replaced from the \fIfile\fR,
@@ -126,7 +126,7 @@ because \fIfile\fR could not be found or because
 its execute-permission bit was not set, does a return
 take place from the \fIexecute\fR
 primitive;
-it resembles a ``jump&#39;&#39; machine instruction
+it resembles a ``jump'' machine instruction
 rather than a subroutine call.
 .s2
 5.4 Process synchronization

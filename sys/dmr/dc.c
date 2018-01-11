@@ -5,20 +5,20 @@
 /*
  *   DC-11 driver
  */
-#include &quot;../param.h&quot;
-#include &quot;../conf.h&quot;
-#include &quot;../user.h&quot;
-#include &quot;../tty.h&quot;
-#include &quot;../proc.h&quot;
+#include "../param.h"
+#include "../conf.h"
+#include "../user.h"
+#include "../tty.h"
+#include "../proc.h"
 
 /*
- * Base address of DC-11&#39;s. Minor device  i  is at
+ * Base address of DC-11's. Minor device  i  is at
  * DCADDR + 10*i.
  */
 #define	DCADDR	0174000
 
 /*
- * Number of DC&#39;s for which table space is allocated.
+ * Number of DC's for which table space is allocated.
  */
 #define	NDC11	14
 
@@ -96,7 +96,7 @@ int dctstab[] {
 /*
  * Open a DC11, waiting until carrier is established.
  * Default initial conditions are set up on the first open.
- * t_state&#39;s CARR_ON bit is a pure copy of the hardware
+ * t_state's CARR_ON bit is a pure copy of the hardware
  * CARRIER bit, and is only used to regularize
  * carrier tests in general tty routines.
  */
@@ -105,30 +105,30 @@ dcopen(dev, flag)
 	register struct tty *rtp;
 	register *addr;
 
-	if (dev.d_minor &gt;= NDC11) {
+	if (dev.d_minor >= NDC11) {
 		u.u_error = ENXIO;
 		return;
 	}
-	rtp = &amp;dc11[dev.d_minor];
-	rtp-&gt;t_addr = addr = DCADDR + dev.d_minor*8;
-	rtp-&gt;t_state =| WOPEN;
-	addr-&gt;dcrcsr =| IENABLE|CDLEAD;
-	if ((rtp-&gt;t_state&amp;ISOPEN) == 0) {
-		rtp-&gt;t_erase = CERASE;
-		rtp-&gt;t_kill = CKILL;
-		addr-&gt;dcrcsr = IENABLE|CDLEAD|SPEED1;
-		addr-&gt;dctcsr = IENABLE|SPEED1|STOP1|RQSEND;
-		rtp-&gt;t_state = ISOPEN | WOPEN;
-		rtp-&gt;t_flags = ODDP|EVENP|ECHO;
+	rtp = &dc11[dev.d_minor];
+	rtp->t_addr = addr = DCADDR + dev.d_minor*8;
+	rtp->t_state =| WOPEN;
+	addr->dcrcsr =| IENABLE|CDLEAD;
+	if ((rtp->t_state&ISOPEN) == 0) {
+		rtp->t_erase = CERASE;
+		rtp->t_kill = CKILL;
+		addr->dcrcsr = IENABLE|CDLEAD|SPEED1;
+		addr->dctcsr = IENABLE|SPEED1|STOP1|RQSEND;
+		rtp->t_state = ISOPEN | WOPEN;
+		rtp->t_flags = ODDP|EVENP|ECHO;
 	}
-	if (addr-&gt;dcrcsr &amp; CARRIER)
-		rtp-&gt;t_state =| CARR_ON;
-	while ((rtp-&gt;t_state &amp; CARR_ON) == 0)
-		sleep(&amp;rtp-&gt;t_rawq, TTIPRI);
-	rtp-&gt;t_state =&amp; ~WOPEN;
-	if (u.u_procp-&gt;p_ttyp == 0) {
-		u.u_procp-&gt;p_ttyp = rtp;
-		rtp-&gt;t_dev = dev;
+	if (addr->dcrcsr & CARRIER)
+		rtp->t_state =| CARR_ON;
+	while ((rtp->t_state & CARR_ON) == 0)
+		sleep(&rtp->t_rawq, TTIPRI);
+	rtp->t_state =& ~WOPEN;
+	if (u.u_procp->p_ttyp == 0) {
+		u.u_procp->p_ttyp = rtp;
+		rtp->t_dev = dev;
 	}
 }
 
@@ -139,9 +139,9 @@ dcclose(dev)
 {
 	register struct tty *tp;
 
-	(tp = &amp;dc11[dev.d_minor])-&gt;t_state = 0;
-	if (tp-&gt;t_flags&amp;HUPCL)
-		tp-&gt;t_addr-&gt;dcrcsr =&amp; ~CDLEAD;
+	(tp = &dc11[dev.d_minor])->t_state = 0;
+	if (tp->t_flags&HUPCL)
+		tp->t_addr->dcrcsr =& ~CDLEAD;
 	wflushtty(tp);
 }
 
@@ -150,7 +150,7 @@ dcclose(dev)
  */
 dcread(dev)
 {
-	ttread(&amp;dc11[dev.d_minor]);
+	ttread(&dc11[dev.d_minor]);
 }
 
 /*
@@ -158,7 +158,7 @@ dcread(dev)
  */
 dcwrite(dev)
 {
-	ttwrite(&amp;dc11[dev.d_minor]);
+	ttwrite(&dc11[dev.d_minor]);
 }
 
 /*
@@ -168,9 +168,9 @@ dcxint(dev)
 {
 	register struct tty *tp;
 
-	ttstart(tp = &amp;dc11[dev.d_minor]);
-	if (tp-&gt;t_outq.c_cc == 0 || tp-&gt;t_outq.c_cc == TTLOWAT)
-		wakeup(&amp;tp-&gt;t_outq);
+	ttstart(tp = &dc11[dev.d_minor]);
+	if (tp->t_outq.c_cc == 0 || tp->t_outq.c_cc == TTLOWAT)
+		wakeup(&tp->t_outq);
 }
 
 /*
@@ -181,31 +181,31 @@ dcrint(dev)
 	register struct tty *tp;
 	register int c, csr;
 
-	tp = &amp;dc11[dev.d_minor];
-	c = tp-&gt;t_addr-&gt;dcrbuf;
+	tp = &dc11[dev.d_minor];
+	c = tp->t_addr->dcrbuf;
 	/*
 	 * If carrier is off, and an open is not in progress,
 	 * knock down the CD lead to hang up the local dataset
 	 * and signal a hangup.
 	 */
-	if (((csr = tp-&gt;t_addr-&gt;dcrcsr) &amp; CARRIER) == 0) {
-		if ((tp-&gt;t_state&amp;WOPEN) == 0) {
-			tp-&gt;t_addr-&gt;dcrcsr =&amp; ~CDLEAD;
-			if (tp-&gt;t_state &amp; CARR_ON)
+	if (((csr = tp->t_addr->dcrcsr) & CARRIER) == 0) {
+		if ((tp->t_state&WOPEN) == 0) {
+			tp->t_addr->dcrcsr =& ~CDLEAD;
+			if (tp->t_state & CARR_ON)
 				signal(tp, SIGHUP);
 			flushtty(tp);
 		}
-		tp-&gt;t_state =&amp; ~CARR_ON;
+		tp->t_state =& ~CARR_ON;
 		return;
 	}
-	if (csr&amp;ERROR || (tp-&gt;t_state&amp;ISOPEN)==0) {
-		if (tp-&gt;t_state&amp;WOPEN &amp;&amp; csr&amp;CARRIER)
-			tp-&gt;t_state =| CARR_ON;
+	if (csr&ERROR || (tp->t_state&ISOPEN)==0) {
+		if (tp->t_state&WOPEN && csr&CARRIER)
+			tp->t_state =| CARR_ON;
 		wakeup(tp);
 		return;
 	}
-	csr =&amp; PARITY;
-	if (csr&amp;&amp;(tp-&gt;t_flags&amp;ODDP) || !csr&amp;&amp;(tp-&gt;t_flags&amp;EVENP))
+	csr =& PARITY;
+	if (csr&&(tp->t_flags&ODDP) || !csr&&(tp->t_flags&EVENP))
 		ttyinput(c, tp);
 }
 
@@ -219,13 +219,13 @@ int *av;
 	register struct tty *tp;
 	register r;
 
-	tp = &amp;dc11[dev.d_minor];
+	tp = &dc11[dev.d_minor];
 	if (ttystty(tp, av))
 		return;
-	if (r = dcrstab[tp-&gt;t_speeds.lobyte&amp;017])
-		tp-&gt;t_addr-&gt;dcrcsr = r;
+	if (r = dcrstab[tp->t_speeds.lobyte&017])
+		tp->t_addr->dcrcsr = r;
 	else
-		tp-&gt;t_addr-&gt;dcrcsr =&amp; ~CDLEAD;
-	if (r = dctstab[tp-&gt;t_speeds.hibyte&amp;017])
-		tp-&gt;t_addr-&gt;dctcsr = r;
+		tp->t_addr->dcrcsr =& ~CDLEAD;
+	if (r = dctstab[tp->t_speeds.hibyte&017])
+		tp->t_addr->dctcsr = r;
 }

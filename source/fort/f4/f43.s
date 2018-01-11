@@ -1,7 +1,7 @@
 /
 /
 
-/ f43 -- output globals and bdata bss&#39;s
+/ f43 -- output globals and bdata bss's
 
 .globl	globls
 
@@ -21,12 +21,12 @@ globls:
 	4f
 1:
 	jsr	r5,code
-		&lt;.globl	main\n\0&gt;; .even
+		<.globl	main\n\0>; .even
 	rts	r5
 2:
 3:
 	jsr	r5,code
-		&lt;.globl	%n.\n\0&gt;; .even
+		<.globl	%n.\n\0>; .even
 		8
 	rts	r5
 4:
@@ -53,14 +53,14 @@ globls:
 	br	3b
 3:
 	jsr	r5,code
-		&lt;.bss\n.globl	%n\n%n:	.=.+%d.\n.text\n\0&gt;; .even
+		<.bss\n.globl	%n\n%n:	.=.+%d.\n.text\n\0>; .even
 		r3
 		r3
 		r2
 	br	2f
 4:
 	jsr	r5,code
-		&lt;.data\n.globl	%n\n%n:\n\0&gt;; .even
+		<.data\n.globl	%n\n%n:\n\0>; .even
 		r3
 		r3
 	mov	r2,-(sp)
@@ -75,7 +75,7 @@ globls:
 	jsr	r5,perror
 9:
 	jsr	r5,code
-		&lt;.=.+%d.\n.text\n\0&gt;; .even
+		<.=.+%d.\n.text\n\0>; .even
 	r2
 2:
 	add	$8,r3

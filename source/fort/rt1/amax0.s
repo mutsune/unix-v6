@@ -1,7 +1,7 @@
 /
 /
 
-/ max0 &amp; amax0 fortran functions
+/ max0 & amax0 fortran functions
 
 .globl	amax0.
 .globl	max0.

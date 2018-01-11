@@ -11,8 +11,8 @@
 .globl	geticon
 
 / turn constant subscripts into offset.
-/	in: r3 -&gt; symtab
-/	    r1 -&gt; just beyond (
+/	in: r3 -> symtab
+/	    r1 -> just beyond (
 /	out:r0 has offset
 
 consub:

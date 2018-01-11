@@ -1,8 +1,8 @@
-.h0 &quot;\na.\n+b User Access Control&quot;
+.h0 "\na.\n+b User Access Control"
 .sh LOGIN
 Sign on as a new user.
 .op
-Verify password and establish user&#39;s 
+Verify password and establish user's 
 individual and group (project) identity.
 .op
 Adapt to characteristics of terminal.
@@ -23,7 +23,7 @@ Passwords are kept encrypted for better security.
 .sh NEWGRP
 Change working group (project).
 Protects against changes to unauthorized projects.
-.h0 &quot;\na.\n+b File Manipulation&quot;
+.h0 "\na.\n+b File Manipulation"
 .sh CAT
 Concatenate one or more files onto standard output.
 Particularly used for unadorned printing, for
@@ -75,7 +75,7 @@ Patterns may include:
 .in +2
 specified characters,
 .br
-don&#39;t care characters,
+don't care characters,
 .br
 choices among characters,
 .br
@@ -112,7 +112,7 @@ Mapping of upper case to lower.
 Raw vs. edited input.
 .op
 Delays for tabs, newlines and carriage returns.
-.h0 &quot;\na.\n+b Manipulation of Directories and File Names&quot;
+.h0 "\na.\n+b Manipulation of Directories and File Names"
 .sh RM
 Remove a file.
 Only the name goes away if any other names are linked to the file.
@@ -124,7 +124,7 @@ Move a file.
 Used for renaming files or directories.
 .sh CHMOD
 Change permissions on one or more files.
-Executable by files&#39; owner.
+Executable by files' owner.
 .sh CHOWN
 Change owner of one or more files.
 .sh CHGRP
@@ -160,7 +160,7 @@ Specified commands may be performed on every file found.
 .sh DSW
 Interactively step through a directory,
 deleting or keeping files.
-.h0 &quot;\na.\n+b Running of Programs&quot;
+.h0 "\na.\n+b Running of Programs"
 .sh SH
 The Shell, or command language interpreter.
 Provides \*(lqbackground\*(rq and macro capability when
@@ -173,12 +173,12 @@ Redirect standard input or standard output.
 .op
 Operators to compose compound commands:
 .in+2
-`;&#39; for sequential execution,
+`;' for sequential execution,
 .br
-`|&#39; for functional composition with output of one
+`|' for functional composition with output of one
 command taken directly as input to another running simultaneously,
 .br
-`&amp;&#39; for asynchronous operation,
+`&' for asynchronous operation,
 .br
 parentheses for grouping.
 .in -2
@@ -226,7 +226,7 @@ Ranges are specifiable for each.
 .sh TEE
 Pass data between processes and divert a copy into a file.
 Used as a filter.
-.h0 &quot;\na.\n+b Status Inquiries&quot;
+.h0 "\na.\n+b Status Inquiries"
 .sh LS
 List the names of one, several, or all files in one or more directories.
 .op
@@ -251,13 +251,13 @@ of calendric and horological peculiarities.
 .op
 Print present date, day of week, local time.
 .op
-May set U\s8NIX\s10&#39;s idea of date and time.
+May set U\s8NIX\s10's idea of date and time.
 .sh DF
 Report amount of free space on file system devices.
 .sh DU
 Print a summary of total space occupied by all files in a hierarchy.
 .sh WHO
-Tell who&#39;s on the system.
+Tell who's on the system.
 .op
 List of presently logged in users,
 ports and times on.
@@ -276,7 +276,7 @@ Extended status information available:
 state and scheduling info,
 priority,
 attached terminal,
-what it&#39;s waiting for,
+what it's waiting for,
 size.
 .fi
 .in -2
@@ -287,7 +287,7 @@ Find name of your terminal.
 Print name of your working directory.
 .sh PFE
 Print type of last floating exception.
-.h0 &quot;\na.\n+b Backup and Maintenance&quot;
+.h0 "\na.\n+b Backup and Maintenance"
 .sh MOUNT
 Attach a device containing
 a file system to
@@ -358,7 +358,7 @@ Used in putting damaged file systems together again.
 .sh SYNC
 Force all outstanding I/O on the system to completion.
 Used to shut down gracefully.
-.h0 &quot;\na.\n+b Accounting&quot;
+.h0 "\na.\n+b Accounting"
 .in0
 .sp
 These routines use floating point.
@@ -382,7 +382,7 @@ Total system time, user time and elapsed time.
 Optional averages and percentages.
 .op
 Sorting on various fields.
-.h0 &quot;\na.\n+b Inter-user Communication&quot;
+.h0 "\na.\n+b Inter-user Communication"
 .sh MAIL
 Mail a message to one or more users.
 Also used to read and dispose of incoming mail.

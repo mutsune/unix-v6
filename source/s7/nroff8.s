@@ -22,19 +22,19 @@ obufp:	obuf
 wbufp:	wbuf
 thresh:	240
 suffil:
-	&lt;/usr/lib/suftab\0&gt;
+	</usr/lib/suftab\0>
 ones:
-	&lt;ixcm&gt;
+	<ixcm>
 fives:
-	&lt;vld&gt;
-cones:	&lt;IXCM&gt;
-cfives:	&lt;VLD&gt;
-ttyx:	&lt;/dev/tty0\0&gt;
-tmfile:	&lt;nr.out\0&gt;
+	<vld>
+cones:	<IXCM>
+cfives:	<VLD>
+ttyx:	</dev/tty0\0>
+tmfile:	<nr.out\0>
 bfn:
-	&lt;/tmp/&gt;
-bfn1: &lt;rtma\0&gt;
-/indf: &lt;index\0&gt;
+	</tmp/>
+bfn1: <rtma\0>
+/indf: <index\0>
 	.even
 ttyid:	0
 ttyod:	2
@@ -46,7 +46,7 @@ tch:	024
 ifp:	ifl
 namesiz = 88.
 bname:
-nextf: &lt;/usr/lib/tmac.&gt;
+nextf: </usr/lib/tmac.>
 nextf1:	.=nextf+namesiz
 ename:	.=.+2
 fc:	004
@@ -63,14 +63,14 @@ ad:	1
 nms:	1
 ndf:	1
 fi:	1
-cc:	&#39;.
-c2:	&#39;&#39;
+cc:	'.
+c2:	''
 ohc:	200
 hyf:	1
 hypedf:	0
 un1:	-1
 tabc:	014
-dotc:	&#39;.
+dotc:	'.
 numc:	034
 tabtab:	8.;16.;24.;32.;40.;48.;56.;64.;72.
 	80.;88.;96.;104.;112.;120.;128.;136.;144.;152.;160.

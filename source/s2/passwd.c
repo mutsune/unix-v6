@@ -3,8 +3,8 @@
  * this program should be suid with owner
  * with an owner with write permission on /etc/passwd
  */
-char	*tfile	{ &quot;/tmp/ptmp&quot; };
-char	*pfile	{ &quot;/etc/passwd&quot; };
+char	*tfile	{ "/tmp/ptmp" };
+char	*pfile	{ "/etc/passwd" };
 int	tbuf[259];
 int	pbuf[259];
 
@@ -15,25 +15,25 @@ char *argv[];
 	register char *p;
 
 	if(argc != 3) {
-		write(2, &quot;Usage: passwd user password\n&quot;, 28);
+		write(2, "Usage: passwd user password\n", 28);
 		goto bex;
 	}
 	signal(1, 1);
 	signal(2, 1);
 	signal(3, 1);
 
-	if(stat(tfile, tbuf+20) &gt;= 0) {
-		write(2, &quot;Temporary file busy -- try again\n&quot;, 33);
+	if(stat(tfile, tbuf+20) >= 0) {
+		write(2, "Temporary file busy -- try again\n", 33);
 		goto bex;
 	}
 	tbuf[0] = creat(tfile, 0600);
-	if(tbuf[0] &lt; 0) {
-		write(2, &quot;Cannot create temporary file\n&quot;, 29);
+	if(tbuf[0] < 0) {
+		write(2, "Cannot create temporary file\n", 29);
 		goto bex;
 	}
 	pbuf[0] = open(pfile, 0);
-	if(pbuf[0] &lt; 0) {
-		write(2, &quot;Cannot open /etc/passwd\n&quot;, 24);
+	if(pbuf[0] < 0) {
+		write(2, "Cannot open /etc/passwd\n", 24);
 		goto out;
 	}
 	goto l1;
@@ -43,8 +43,8 @@ char *argv[];
  */
 
 skip:
-	while(c != &#39;\n&#39;) {
-		if(c &lt; 0)
+	while(c != '\n') {
+		if(c < 0)
 			goto ill;
 		c = getc(pbuf);
 		putc(c, tbuf);
@@ -57,12 +57,12 @@ skip:
 l1:
 	c = getc(pbuf);
 	putc(c, tbuf);
-	if(c &lt; 0) {
-		write(2, &quot;User name not found in password file\n&quot;, 37);
+	if(c < 0) {
+		write(2, "User name not found in password file\n", 37);
 		goto out;
 	}
 	p = argv[1];
-	while(c != &#39;:&#39;) {
+	while(c != ':') {
 		if(*p++ != c)
 			goto skip;
 		c = getc(pbuf);
@@ -75,15 +75,15 @@ l1:
  */
 	do {
 		c = getc(pbuf);
-		if(c &lt; 0)
+		if(c < 0)
 			goto ill;
-	} while(c != &#39;:&#39;);
+	} while(c != ':');
 
 /*
  * copy in new password
  */
 	p = argv[2];
-	for(c=0; c&lt;9; c++)
+	for(c=0; c<9; c++)
 		if(*p++ == 0)
 			break;
 	*--p = 0;
@@ -91,7 +91,7 @@ l1:
 		p = crypt(argv[2]);
 	while(*p)
 		putc(*p++, tbuf);
-	putc(&#39;:&#39;, tbuf);
+	putc(':', tbuf);
 
 /*
  * validate uid
@@ -101,14 +101,14 @@ l1:
 	do {
 		c = getc(pbuf);
 		putc(c, tbuf);
-		if(c &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39;)
-			u = u*10 + c-&#39;0&#39;;
-		if(c &lt; 0)
+		if(c >= '0' && c <= '9')
+			u = u*10 + c-'0';
+		if(c < 0)
 			goto ill;
-	} while(c != &#39;:&#39;);
-	c = getuid() &amp; 0377;
-	if(c != 0 &amp;&amp; c != u) {
-		write(2, &quot;Permission denied\n&quot;, 18);
+	} while(c != ':');
+	c = getuid() & 0377;
+	if(c != 0 && c != u) {
+		write(2, "Permission denied\n", 18);
 		goto out;
 	}
 
@@ -118,21 +118,21 @@ l1:
 
 	for(;;) {
 		c = getc(pbuf);
-		if(c &lt; 0) {
+		if(c < 0) {
 			fflush(tbuf);
 			close(pbuf[0]);
 			close(tbuf[0]);
 			tbuf[0] = open(tfile, 0);
-			if(tbuf[0] &lt; 0) {
-				write(2, &quot;Urk\n&quot;, 4);
+			if(tbuf[0] < 0) {
+				write(2, "Urk\n", 4);
 				goto out;
 			}
 			pbuf[0] = creat(pfile, 0644);
-			if(pbuf[0] &lt; 0) {
-				write(2, &quot;Cannot create /etc/passwd\n&quot;, 26);
+			if(pbuf[0] < 0) {
+				write(2, "Cannot create /etc/passwd\n", 26);
 				goto out;
 			}
-			while((c = read(tbuf[0], tbuf+1, 512)) &gt; 0)
+			while((c = read(tbuf[0], tbuf+1, 512)) > 0)
 				write(pbuf[0], tbuf+1, c);
 			unlink(tfile);
 			exit(0);
@@ -141,7 +141,7 @@ l1:
 	}
 
 ill:
-	write(2, &quot;Password file illformed\n&quot;, 24);
+	write(2, "Password file illformed\n", 24);
 
 out:
 	unlink(tfile);

@@ -8,7 +8,7 @@ main(argc, argv)
 char **argv;
 {
 /*
-	A1 -&gt; A
+	A1 -> A
 	A2    B
 	A     O
 	B1    C
@@ -30,7 +30,7 @@ char **argv;
 		C	+4
 		1	+8
 
-	z  -&gt; 4
+	z  -> 4
 	c     10
 	a     14
 	e     20
@@ -42,117 +42,117 @@ char **argv;
 	extern fin;
 
 	smode = nlflg = snlflg = ssmode = 0;
-	if (argc&gt;1)
-		if ((fin = open(argv[1], 0)) &lt; 0) {
-			putchar(&#39;?\n&#39;);
+	if (argc>1)
+		if ((fin = open(argv[1], 0)) < 0) {
+			putchar('?\n');
 			return;
 		}
 	obuf[0] = 1;
-	if (argc&gt;2) 
-		if ((obuf[0] = creat(argv[2], 0666)) &lt; 0) {
-			putchar(&#39;?\n&#39;);
+	if (argc>2) 
+		if ((obuf[0] = creat(argv[2], 0666)) < 0) {
+			putchar('?\n');
 			return;
 		}
 loop:
 	c = getc();
-	if (c!=&#39;\n&#39; &amp;&amp; c!=&#39;\t&#39;) nlflg = 0;
-	if (ssmode!=0 &amp;&amp; c!=&#39;%&#39;) {
+	if (c!='\n' && c!='\t') nlflg = 0;
+	if (ssmode!=0 && c!='%') {
 		ssmode = 0;
-		printf(&quot;.data\nL%d:&lt;&quot;, labno++);
+		printf(".data\nL%d:<", labno++);
 	}
 	switch(c) {
 
-	case &#39;\0&#39;:
-		printf(&quot;.text; 0\n&quot;);
+	case '\0':
+		printf(".text; 0\n");
 		fflush(obuf);
 		return;
 
-	case &#39;:&#39;:
+	case ':':
 		if (!smode)
-			printf(&quot;=.+2; 0&quot;); else
-			putchar(&#39;:&#39;);
+			printf("=.+2; 0"); else
+			putchar(':');
 		goto loop;
 
-	case &#39;A&#39;:
-		if ((c=getc())==&#39;1&#39; || c==&#39;2&#39;) {
-			putchar(c+&#39;A&#39;-&#39;1&#39;);
+	case 'A':
+		if ((c=getc())=='1' || c=='2') {
+			putchar(c+'A'-'1');
 			goto loop;
 		}
-		putchar(&#39;O&#39;);
+		putchar('O');
 		peekc = c;
 		goto loop;
 
-	case &#39;B&#39;:
+	case 'B':
 		switch (getc()) {
 
-		case &#39;1&#39;:
-			putchar(&#39;C&#39;);
+		case '1':
+			putchar('C');
 			goto loop;
 
-		case &#39;2&#39;:
-			putchar(&#39;D&#39;);
+		case '2':
+			putchar('D');
 			goto loop;
 
-		case &#39;E&#39;:
-			putchar(&#39;L&#39;);
+		case 'E':
+			putchar('L');
 			goto loop;
 
-		case &#39;F&#39;:
-			putchar(&#39;P&#39;);
+		case 'F':
+			putchar('P');
 			goto loop;
 		}
-		putchar(&#39;?&#39;);
+		putchar('?');
 		goto loop;
 
-	case &#39;C&#39;:
-		putchar(getc()+&#39;E&#39;-&#39;1&#39;);
+	case 'C':
+		putchar(getc()+'E'-'1');
 		goto loop;
 
-	case &#39;F&#39;:
-		putchar(&#39;G&#39;);
+	case 'F':
+		putchar('G');
 		goto subtre;
 
-	case &#39;R&#39;:
-		if ((c=getc()) == &#39;1&#39;)
-		putchar(&#39;J&#39;); else {
-			putchar(&#39;I&#39;);
+	case 'R':
+		if ((c=getc()) == '1')
+		putchar('J'); else {
+			putchar('I');
 			peekc = c;
 		}
 		goto loop;
 
-	case &#39;H&#39;:
-		putchar(&#39;H&#39;);
+	case 'H':
+		putchar('H');
 		goto subtre;
 
-	case &#39;I&#39;:
-		putchar(&#39;M&#39;);
+	case 'I':
+		putchar('M');
 		goto loop;
 
-	case &#39;S&#39;:
-		putchar(&#39;K&#39;);
+	case 'S':
+		putchar('K');
 subtre:
 		snlflg = 1;
-		t = &#39;A&#39;;
+		t = 'A';
 l1:
 		switch (c=getc()) {
 
-		case &#39;*&#39;:
+		case '*':
 			t++;
 			goto l1;
 
-		case &#39;S&#39;:
+		case 'S':
 			t =+ 2;
 			goto l1;
 
-		case &#39;C&#39;:
+		case 'C':
 			t =+ 4;
 			goto l1;
 
-		case &#39;1&#39;:
+		case '1':
 			t =+ 8;
 			goto l1;
 
-		case &#39;2&#39;:
+		case '2':
 			t =+ 16;
 			goto l1;
 		}
@@ -160,89 +160,89 @@ l1:
 		putchar(t);
 		goto loop;
 
-	case &#39;#&#39;:
-		if(getc()==&#39;1&#39;)
-			putchar(&#39;#&#39;); else
-			putchar(&#39;&quot;&#39;);
+	case '#':
+		if(getc()=='1')
+			putchar('#'); else
+			putchar('"');
 		goto loop;
 
-	case &#39;%&#39;:
+	case '%':
 		if (smode)
-			printf(&quot;.text;&quot;);
+			printf(".text;");
 		if (ssmode==0) {
-			if ((peekc=getc())==&#39;[&#39;) {
+			if ((peekc=getc())=='[') {
 				peekc = 0;
-				printf(&quot;.data;&quot;);
-				while((c=getc())!=&#39;]&#39;)
+				printf(".data;");
+				while((c=getc())!=']')
 					putchar(c);
 				getc();
-				printf(&quot;;.text;&quot;);
+				printf(";.text;");
 				goto loop;
 			}
 		}
 loop1:
 		switch (c=getc()) {
 
-		case &#39; &#39;:
-		case &#39;\t&#39;:
+		case ' ':
+		case '\t':
 			goto loop1;
-		case &#39;a&#39;:
+		case 'a':
 			m = 16;
 			t = flag();
 			goto pf;
 
-		case &#39;,&#39;:
-			putchar(&#39;;&#39;);
+		case ',':
+			putchar(';');
 			goto loop1;
 
-		case &#39;i&#39;:
+		case 'i':
 			m = 12;
 			t = flag();
 			goto pf;
-		case &#39;z&#39;:
+		case 'z':
 			m = 4;
 			t = flag();
 			goto pf;
 
-		case &#39;r&#39;:
+		case 'r':
 			m = 9;
 			t = flag();
 			goto pf;
 
-		case &#39;1&#39;:
+		case '1':
 			m = 5;
 			t = flag();
 			goto pf;
 
-		case &#39;c&#39;:
+		case 'c':
 			t = 0;
 			m = 8;
 			goto pf;
 
-		case &#39;e&#39;:
+		case 'e':
 			t = flag();
 			m = 20;
 			goto pf;
 
-		case &#39;n&#39;:
+		case 'n':
 			t = flag();
 			m = 63;
 pf:
-			if ((c=getc())==&#39;*&#39;)
+			if ((c=getc())=='*')
 				m =+ 0100; else
 				peekc = c;
-			printf(&quot;.byte %o,%o&quot;, m, t);
+			printf(".byte %o,%o", m, t);
 			goto loop1;
-		case &#39;[&#39;:
-			printf(&quot;L%d=&quot;, labno++);
-			while ((c=getc())!=&#39;]&#39;)
+		case '[':
+			printf("L%d=", labno++);
+			while ((c=getc())!=']')
 				putchar(c);
 			ssmode = 0;
 			smode = 0;
 			goto loop;
 
-		case &#39;\n&#39;:
-			printf(&quot;\nL%d\n&quot;, labno);
+		case '\n':
+			printf("\nL%d\n", labno);
 			ssmode = 1;
 			nlflg = 1;
 			smode = 1;
@@ -251,7 +251,7 @@ pf:
 		putchar(c);
 		goto loop1;
 
-	case &#39;\t&#39;:
+	case '\t':
 		if (nlflg) {
 			nlflg = 0;
 			goto loop;
@@ -260,30 +260,30 @@ pf:
 			tabflg++;
 			goto loop;
 		}
-		putchar(&#39;\t&#39;);
+		putchar('\t');
 		goto loop;
 
-	case &#39;\n&#39;:
+	case '\n':
 		if (!smode)  {
-			putchar(&#39;\n&#39;);
+			putchar('\n');
 			goto loop;
 		}
 		if (nlflg) {
 			nlflg = 0;
-			printf(&quot;\\0&gt;\n.text\n&quot;);
+			printf("\\0>\n.text\n");
 			smode = 0;
 			goto loop;
 		}
 		if (!snlflg)
-			printf(&quot;\\n&quot;);
+			printf("\\n");
 		snlflg = 0;
-		printf(&quot;&gt;\n&lt;&quot;);
+		printf(">\n<");
 		nlflg = 1;
 		goto loop;
 
-	case &#39;X&#39;:
-	case &#39;Y&#39;:
-	case &#39;T&#39;:
+	case 'X':
+	case 'Y':
+	case 'T':
 		snlflg++;
 	}
 	putchar(c);
@@ -302,17 +302,17 @@ gc:
 		t = getchar();
 	if (t==0)
 		return(0);
-	if (t==&#39;{&#39;) {
+	if (t=='{') {
 		ifcnt++;
 		t = getchar();
 	}
-	if (t==&#39;}&#39;) {
+	if (t=='}') {
 		t = getc();
 		if (--ifcnt==0)
-			if (t==&#39;\n&#39;)
+			if (t=='\n')
 				t = getc();
 	}
-	if (ifcnt &amp;&amp; nofloat)
+	if (ifcnt && nofloat)
 		goto gc;
 	return(t);
 }
@@ -324,35 +324,35 @@ flag() {
 l1:
 	switch(c=getc()) {
 
-	case &#39;w&#39;:
+	case 'w':
 		f = 1;
 		goto l1;
 
-	case &#39;i&#39;:
+	case 'i':
 		f = 2;
 		goto l1;
 
-	case &#39;b&#39;:
+	case 'b':
 		f = 3;
 		goto l1;
 
-	case &#39;f&#39;:
+	case 'f':
 		f = 4;
 		goto l1;
 
-	case &#39;d&#39;:
+	case 'd':
 		f = 5;
 		goto l1;
 
-	case &#39;s&#39;:
+	case 's':
 		f = 6;
 		goto l1;
 
-	case &#39;l&#39;:
+	case 'l':
 		f = 8;
 		goto l1;
 
-	case &#39;p&#39;:
+	case 'p':
 		f =+ 16;
 		goto l1;
 	}
@@ -364,7 +364,7 @@ putchar(c)
 {
 	if (tabflg) {
 		tabflg = 0;
-		printf(&quot;&gt;;.byte %o;&lt;&quot;, c+0200);
+		printf(">;.byte %o;<", c+0200);
 	} else
 		putc(c, obuf);
 }

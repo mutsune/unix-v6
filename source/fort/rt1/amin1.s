@@ -1,7 +1,7 @@
 /
 /
 
-/ min1, amin1 &amp; dmin1 fortran functions
+/ min1, amin1 & dmin1 fortran functions
 
 .globl	amin1.
 .globl	dmin1.

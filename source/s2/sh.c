@@ -52,25 +52,25 @@ int	onelflg;
 
 char	*mesg[] {
 	0,
-	&quot;Hangup&quot;,
+	"Hangup",
 	0,
-	&quot;Quit&quot;,
-	&quot;Illegal instruction&quot;,
-	&quot;Trace/BPT trap&quot;,
-	&quot;IOT trap&quot;,
-	&quot;EMT trap&quot;,
-	&quot;Floating exception&quot;,
-	&quot;Killed&quot;,
-	&quot;Bus error&quot;,
-	&quot;Memory fault&quot;,
-	&quot;Bad system call&quot;,
+	"Quit",
+	"Illegal instruction",
+	"Trace/BPT trap",
+	"IOT trap",
+	"EMT trap",
+	"Floating exception",
+	"Killed",
+	"Bus error",
+	"Memory fault",
+	"Bad system call",
 	0,
-	&quot;Sig 14&quot;,
-	&quot;Sig 15&quot;,
-	&quot;Sig 16&quot;,
-	&quot;Sig 17&quot;,
-	&quot;Sig 18&quot;,
-	&quot;Sig 19&quot;,
+	"Sig 14",
+	"Sig 15",
+	"Sig 16",
+	"Sig 17",
+	"Sig 18",
+	"Sig 19",
 };
 
 struct stime {
@@ -90,39 +90,39 @@ char **av;
 	register f;
 	register char *acname, **v;
 
-	for(f=2; f&lt;15; f++)
+	for(f=2; f<15; f++)
 		close(f);
 	if((f=dup(1)) != 2)
 		close(f);
 	dolc = getpid();
-	for(f=4; f&gt;=0; f--) {
+	for(f=4; f>=0; f--) {
 		dolc = ldiv(0, dolc, 10);
-		pidp[f] = ldivr+&#39;0&#39;;
+		pidp[f] = ldivr+'0';
 	}
 	v = av;
-	acname = &quot;/usr/adm/sha&quot;;
-	promp = &quot;% &quot;;
-	if(((uid = getuid())&amp;0377) == 0)
-		promp = &quot;# &quot;;
+	acname = "/usr/adm/sha";
+	promp = "% ";
+	if(((uid = getuid())&0377) == 0)
+		promp = "# ";
 	acctf = open(acname, 1);
-	if(c &gt; 1) {
+	if(c > 1) {
 		promp = 0;
-		if (*v[1]==&#39;-&#39;) {
-			**v = &#39;-&#39;;
-			if (v[1][1]==&#39;c&#39; &amp;&amp; c&gt;2)
+		if (*v[1]=='-') {
+			**v = '-';
+			if (v[1][1]=='c' && c>2)
 				arginp = v[2];
-			else if (v[1][1]==&#39;t&#39;)
+			else if (v[1][1]=='t')
 				onelflg = 2;
 		} else {
 			close(0);
 			f = open(v[1], 0);
-			if(f &lt; 0) {
+			if(f < 0) {
 				prs(v[1]);
-				err(&quot;: cannot open&quot;);
+				err(": cannot open");
 			}
 		}
 	}
-	if(**v == &#39;-&#39;) {
+	if(**v == '-') {
 		setintr++;
 		signal(QUIT, 1);
 		signal(INTR, 1);
@@ -152,9 +152,9 @@ main1()
 	do {
 		cp = linep;
 		word();
-	} while(*cp != &#39;\n&#39;);
+	} while(*cp != '\n');
 	treep = trebuf;
-	treeend = &amp;trebuf[TRESIZ];
+	treeend = &trebuf[TRESIZ];
 	if(gflg == 0) {
 		if(error == 0) {
 			setexit();
@@ -163,7 +163,7 @@ main1()
 			t = syntax(args, argp);
 		}
 		if(error != 0)
-			err(&quot;syntax error&quot;); else
+			err("syntax error"); else
 			execute(t);
 	}
 }
@@ -177,15 +177,15 @@ word()
 loop:
 	switch(c = getc()) {
 
-	case &#39; &#39;:
-	case &#39;\t&#39;:
+	case ' ':
+	case '\t':
 		goto loop;
 
-	case &#39;\&#39;&#39;:
-	case &#39;&quot;&#39;:
+	case '\'':
+	case '"':
 		c1 = c;
 		while((c=readc()) != c1) {
-			if(c == &#39;\n&#39;) {
+			if(c == '\n') {
 				error++;
 				peekc = c;
 				return;
@@ -194,17 +194,17 @@ loop:
 		}
 		goto pack;
 
-	case &#39;&amp;&#39;:
-	case &#39;;&#39;:
-	case &#39;&lt;&#39;:
-	case &#39;&gt;&#39;:
-	case &#39;(&#39;:
-	case &#39;)&#39;:
-	case &#39;|&#39;:
-	case &#39;^&#39;:
-	case &#39;\n&#39;:
+	case '&':
+	case ';':
+	case '<':
+	case '>':
+	case '(':
+	case ')':
+	case '|':
+	case '^':
+	case '\n':
 		*linep++ = c;
-		*linep++ = &#39;\0&#39;;
+		*linep++ = '\0';
 		return;
 	}
 
@@ -213,11 +213,11 @@ loop:
 pack:
 	for(;;) {
 		c = getc();
-		if(any(c, &quot; &#39;\&quot;\t;&amp;&lt;&gt;()|^\n&quot;)) {
+		if(any(c, " '\"\t;&<>()|^\n")) {
 			peekc = c;
-			if(any(c, &quot;\&quot;&#39;&quot;))
+			if(any(c, "\"'"))
 				goto loop;
-			*linep++ = &#39;\0&#39;;
+			*linep++ = '\0';
 			return;
 		}
 		*linep++ = c;
@@ -231,8 +231,8 @@ int n;
 
 	t = treep;
 	treep =+ n;
-	if (treep&gt;treeend) {
-		prs(&quot;Command line overflow\n&quot;);
+	if (treep>treeend) {
+		prs("Command line overflow\n");
 		error++;
 		reset();
 	}
@@ -248,49 +248,49 @@ getc()
 		peekc = 0;
 		return(c);
 	}
-	if(argp &gt; eargp) {
+	if(argp > eargp) {
 		argp =- 10;
-		while((c=getc()) != &#39;\n&#39;);
+		while((c=getc()) != '\n');
 		argp =+ 10;
-		err(&quot;Too many args&quot;);
+		err("Too many args");
 		gflg++;
 		return(c);
 	}
-	if(linep &gt; elinep) {
+	if(linep > elinep) {
 		linep =- 10;
-		while((c=getc()) != &#39;\n&#39;);
+		while((c=getc()) != '\n');
 		linep =+ 10;
-		err(&quot;Too many characters&quot;);
+		err("Too many characters");
 		gflg++;
 		return(c);
 	}
 getd:
 	if(dolp) {
 		c = *dolp++;
-		if(c != &#39;\0&#39;)
+		if(c != '\0')
 			return(c);
 		dolp = 0;
 	}
 	c = readc();
-	if(c == &#39;\\&#39;) {
+	if(c == '\\') {
 		c = readc();
-		if(c == &#39;\n&#39;)
-			return(&#39; &#39;);
+		if(c == '\n')
+			return(' ');
 		return(c|QUOTE);
 	}
-	if(c == &#39;$&#39;) {
+	if(c == '$') {
 		c = readc();
-		if(c&gt;=&#39;0&#39; &amp;&amp; c&lt;=&#39;9&#39;) {
-			if(c-&#39;0&#39; &lt; dolc)
-				dolp = dolv[c-&#39;0&#39;];
+		if(c>='0' && c<='9') {
+			if(c-'0' < dolc)
+				dolp = dolv[c-'0'];
 			goto getd;
 		}
-		if(c == &#39;$&#39;) {
+		if(c == '$') {
 			dolp = pidp;
 			goto getd;
 		}
 	}
-	return(c&amp;0177);
+	return(c&0177);
 }
 
 readc()
@@ -303,15 +303,15 @@ readc()
 			exit();
 		if ((c = *arginp++) == 0) {
 			arginp = 1;
-			c = &#39;\n&#39;;
+			c = '\n';
 		}
 		return(c);
 	}
 	if (onelflg==1)
 		exit();
-	if(read(0, &amp;cc, 1) != 1)
+	if(read(0, &cc, 1) != 1)
 		exit();
-	if (cc==&#39;\n&#39; &amp;&amp; onelflg)
+	if (cc=='\n' && onelflg)
 		onelflg--;
 	return(cc);
 }
@@ -327,7 +327,7 @@ char **p1, **p2;
 {
 
 	while(p1 != p2) {
-		if(any(**p1, &quot;;&amp;\n&quot;))
+		if(any(**p1, ";&\n"))
 			p1++; else
 			return(syn1(p1, p2));
 	}
@@ -337,7 +337,7 @@ char **p1, **p2;
 /*
  * syn1
  *	syn2
- *	syn2 &amp; syntax
+ *	syn2 & syntax
  *	syn2 ; syntax
  */
 
@@ -352,26 +352,26 @@ char **p1, **p2;
 	for(p=p1; p!=p2; p++)
 	switch(**p) {
 
-	case &#39;(&#39;:
+	case '(':
 		l++;
 		continue;
 
-	case &#39;)&#39;:
+	case ')':
 		l--;
-		if(l &lt; 0)
+		if(l < 0)
 			error++;
 		continue;
 
-	case &#39;&amp;&#39;:
-	case &#39;;&#39;:
-	case &#39;\n&#39;:
+	case '&':
+	case ';':
+	case '\n':
 		if(l == 0) {
 			l = **p;
 			t = tree(4);
 			t[DTYP] = TLST;
 			t[DLEF] = syn2(p1, p);
 			t[DFLG] = 0;
-			if(l == &#39;&amp;&#39;) {
+			if(l == '&') {
 				t1 = t[DLEF];
 				t1[DFLG] =| FAND|FPRS|FINT;
 			}
@@ -400,16 +400,16 @@ char **p1, **p2;
 	for(p=p1; p!=p2; p++)
 	switch(**p) {
 
-	case &#39;(&#39;:
+	case '(':
 		l++;
 		continue;
 
-	case &#39;)&#39;:
+	case ')':
 		l--;
 		continue;
 
-	case &#39;|&#39;:
-	case &#39;^&#39;:
+	case '|':
+	case '^':
 		if(l == 0) {
 			t = tree(4);
 			t[DTYP] = TFIL;
@@ -424,8 +424,8 @@ char **p1, **p2;
 
 /*
  * syn3
- *	( syn1 ) [ &lt; in  ] [ &gt; out ]
- *	word word* [ &lt; in ] [ &gt; out ]
+ *	( syn1 ) [ < in  ] [ > out ]
+ *	word word* [ < in ] [ > out ]
  */
 
 syn3(p1, p2)
@@ -437,7 +437,7 @@ char **p1, **p2;
 	int n, l, i, o, c, flg;
 
 	flg = 0;
-	if(**p2 == &#39;)&#39;)
+	if(**p2 == ')')
 		flg =| FPAR;
 	lp = 0;
 	rp = 0;
@@ -448,7 +448,7 @@ char **p1, **p2;
 	for(p=p1; p!=p2; p++)
 	switch(c = **p) {
 
-	case &#39;(&#39;:
+	case '(':
 		if(l == 0) {
 			if(lp != 0)
 				error++;
@@ -457,28 +457,28 @@ char **p1, **p2;
 		l++;
 		continue;
 
-	case &#39;)&#39;:
+	case ')':
 		l--;
 		if(l == 0)
 			rp = p;
 		continue;
 
-	case &#39;&gt;&#39;:
+	case '>':
 		p++;
-		if(p!=p2 &amp;&amp; **p==&#39;&gt;&#39;)
+		if(p!=p2 && **p=='>')
 			flg =| FCAT; else
 			p--;
 
-	case &#39;&lt;&#39;:
+	case '<':
 		if(l == 0) {
 			p++;
 			if(p == p2) {
 				error++;
 				p--;
 			}
-			if(any(**p, &quot;&lt;&gt;(&quot;))
+			if(any(**p, "<>("))
 				error++;
-			if(c == &#39;&lt;&#39;) {
+			if(c == '<') {
 				if(i != 0)
 					error++;
 				i = *p;
@@ -507,7 +507,7 @@ char **p1, **p2;
 	p1[n++] = 0;
 	t = tree(n+5);
 	t[DTYP] = TCOM;
-	for(l=0; l&lt;n; l++)
+	for(l=0; l<n; l++)
 		t[l+DCOM] = p1[l];
 out:
 	t[DFLG] = flg;
@@ -533,7 +533,7 @@ tglob(c)
 int c;
 {
 
-	if(any(c, &quot;[?*&quot;))
+	if(any(c, "[?*"))
 		gflg = 1;
 	return(c);
 }
@@ -542,7 +542,7 @@ trim(c)
 int c;
 {
 
-	return(c&amp;0177);
+	return(c&0177);
 }
 
 execute(t, pf1, pf2)
@@ -558,17 +558,17 @@ int *t, *pf1, *pf2;
 
 	case TCOM:
 		cp1 = t[DCOM];
-		if(equal(cp1, &quot;chdir&quot;)) {
+		if(equal(cp1, "chdir")) {
 			if(t[DCOM+1] != 0) {
-				if(chdir(t[DCOM+1]) &lt; 0)
-					err(&quot;chdir: bad directory&quot;);
+				if(chdir(t[DCOM+1]) < 0)
+					err("chdir: bad directory");
 			} else
-				err(&quot;chdir: arg count&quot;);
+				err("chdir: arg count");
 			return;
 		}
-		if(equal(cp1, &quot;shift&quot;)) {
-			if(dolc &lt; 1) {
-				prs(&quot;shift: no args\n&quot;);
+		if(equal(cp1, "shift")) {
+			if(dolc < 1) {
+				prs("shift: no args\n");
 				return;
 			}
 			dolv[1] = dolv[0];
@@ -576,74 +576,74 @@ int *t, *pf1, *pf2;
 			dolc--;
 			return;
 		}
-		if(equal(cp1, &quot;login&quot;)) {
+		if(equal(cp1, "login")) {
 			if(promp != 0) {
 				close(acctf);
-				execv(&quot;/bin/login&quot;, t+DCOM);
+				execv("/bin/login", t+DCOM);
 			}
-			prs(&quot;login: cannot execute\n&quot;);
+			prs("login: cannot execute\n");
 			return;
 		}
-		if(equal(cp1, &quot;newgrp&quot;)) {
+		if(equal(cp1, "newgrp")) {
 			if(promp != 0) {
 				close(acctf);
-				execv(&quot;/bin/newgrp&quot;, t+DCOM);
+				execv("/bin/newgrp", t+DCOM);
 			}
-			prs(&quot;newgrp: cannot execute\n&quot;);
+			prs("newgrp: cannot execute\n");
 			return;
 		}
-		if(equal(cp1, &quot;wait&quot;)) {
+		if(equal(cp1, "wait")) {
 			pwait(-1, 0);
 			return;
 		}
-		if(equal(cp1, &quot;:&quot;))
+		if(equal(cp1, ":"))
 			return;
 
 	case TPAR:
 		f = t[DFLG];
 		i = 0;
-		if((f&amp;FPAR) == 0)
+		if((f&FPAR) == 0)
 			i = fork();
 		if(i == -1) {
-			err(&quot;try again&quot;);
+			err("try again");
 			return;
 		}
 		if(i != 0) {
-			if((f&amp;FPIN) != 0) {
+			if((f&FPIN) != 0) {
 				close(pf1[0]);
 				close(pf1[1]);
 			}
-			if((f&amp;FPRS) != 0) {
+			if((f&FPRS) != 0) {
 				prn(i);
-				prs(&quot;\n&quot;);
+				prs("\n");
 			}
-			if((f&amp;FAND) != 0)
+			if((f&FAND) != 0)
 				return;
-			if((f&amp;FPOU) == 0)
+			if((f&FPOU) == 0)
 				pwait(i, t);
 			return;
 		}
 		if(t[DLEF] != 0) {
 			close(0);
 			i = open(t[DLEF], 0);
-			if(i &lt; 0) {
+			if(i < 0) {
 				prs(t[DLEF]);
-				err(&quot;: cannot open&quot;);
+				err(": cannot open");
 				exit();
 			}
 		}
 		if(t[DRIT] != 0) {
-			if((f&amp;FCAT) != 0) {
+			if((f&FCAT) != 0) {
 				i = open(t[DRIT], 1);
-				if(i &gt;= 0) {
+				if(i >= 0) {
 					seek(i, 0, 2);
 					goto f1;
 				}
 			}
 			i = creat(t[DRIT], 0666);
-			if(i &lt; 0) {
+			if(i < 0) {
 				prs(t[DRIT]);
-				err(&quot;: cannot create&quot;);
+				err(": cannot create");
 				exit();
 			}
 		f1:
@@ -651,46 +651,46 @@ int *t, *pf1, *pf2;
 			dup(i);
 			close(i);
 		}
-		if((f&amp;FPIN) != 0) {
+		if((f&FPIN) != 0) {
 			close(0);
 			dup(pf1[0]);
 			close(pf1[0]);
 			close(pf1[1]);
 		}
-		if((f&amp;FPOU) != 0) {
+		if((f&FPOU) != 0) {
 			close(1);
 			dup(pf2[1]);
 			close(pf2[0]);
 			close(pf2[1]);
 		}
-		if((f&amp;FINT)!=0 &amp;&amp; t[DLEF]==0 &amp;&amp; (f&amp;FPIN)==0) {
+		if((f&FINT)!=0 && t[DLEF]==0 && (f&FPIN)==0) {
 			close(0);
-			open(&quot;/dev/null&quot;, 0);
+			open("/dev/null", 0);
 		}
-		if((f&amp;FINT) == 0 &amp;&amp; setintr) {
+		if((f&FINT) == 0 && setintr) {
 			signal(INTR, 0);
 			signal(QUIT, 0);
 		}
 		if(t[DTYP] == TPAR) {
 			if(t1 = t[DSPR])
-				t1[DFLG] =| f&amp;FINT;
+				t1[DFLG] =| f&FINT;
 			execute(t1);
 			exit();
 		}
 		close(acctf);
 		gflg = 0;
-		scan(t, &amp;tglob);
+		scan(t, &tglob);
 		if(gflg) {
-			t[DSPR] = &quot;/etc/glob&quot;;
+			t[DSPR] = "/etc/glob";
 			execv(t[DSPR], t+DSPR);
-			prs(&quot;glob: cannot execute\n&quot;);
+			prs("glob: cannot execute\n");
 			exit();
 		}
-		scan(t, &amp;trim);
+		scan(t, &trim);
 		*linep = 0;
 		texec(t[DCOM], t);
 		cp1 = linep;
-		cp2 = &quot;/usr/bin/&quot;;
+		cp2 = "/usr/bin/";
 		while(*cp1 = *cp2++)
 			cp1++;
 		cp2 = t[DCOM];
@@ -698,22 +698,22 @@ int *t, *pf1, *pf2;
 		texec(linep+4, t);
 		texec(linep, t);
 		prs(t[DCOM]);
-		err(&quot;: not found&quot;);
+		err(": not found");
 		exit();
 
 	case TFIL:
 		f = t[DFLG];
 		pipe(pv);
 		t1 = t[DLEF];
-		t1[DFLG] =| FPOU | (f&amp;(FPIN|FINT|FPRS));
+		t1[DFLG] =| FPOU | (f&(FPIN|FINT|FPRS));
 		execute(t1, pf1, pv);
 		t1 = t[DRIT];
-		t1[DFLG] =| FPIN | (f&amp;(FPOU|FINT|FAND|FPRS));
+		t1[DFLG] =| FPIN | (f&(FPOU|FINT|FAND|FPRS));
 		execute(t1, pv, pf2);
 		return;
 
 	case TLST:
-		f = t[DFLG]&amp;FINT;
+		f = t[DFLG]&FINT;
 		if(t1 = t[DLEF])
 			t1[DFLG] =| f;
 		execute(t1);
@@ -736,14 +736,14 @@ int *at;
 	if (errno==ENOEXEC) {
 		if (*linep)
 			t[DCOM] = linep;
-		t[DSPR] = &quot;/bin/sh&quot;;
+		t[DSPR] = "/bin/sh";
 		execv(t[DSPR], t+DSPR);
-		prs(&quot;No shell!\n&quot;);
+		prs("No shell!\n");
 		exit();
 	}
 	if (errno==ENOMEM) {
 		prs(t[DCOM]);
-		err(&quot;: too large&quot;);
+		err(": too large");
 		exit();
 	}
 }
@@ -753,7 +753,7 @@ char *s;
 {
 
 	prs(s);
-	prs(&quot;\n&quot;);
+	prs("\n");
 	if(promp == 0) {
 		seek(0, 0, 2);
 		exit();
@@ -773,7 +773,7 @@ char *as;
 putc(c)
 {
 
-	write(2, &amp;c, 1);
+	write(2, &c, 1);
 }
 
 prn(n)
@@ -783,7 +783,7 @@ int n;
 
 	if(a=ldiv(0,n,10))
 		prn(a);
-	putc(lrem(0,n,10)+&#39;0&#39;);
+	putc(lrem(0,n,10)+'0');
 }
 
 any(c, as)
@@ -807,7 +807,7 @@ char *as1, *as2;
 	s1 = as1;
 	s2 = as2;
 	while(*s1++ == *s2)
-		if(*s2++ == &#39;\0&#39;)
+		if(*s2++ == '\0')
 			return(1);
 	return(0);
 }
@@ -820,23 +820,23 @@ int i, *t;
 
 	if(i != 0)
 	for(;;) {
-		times(&amp;timeb);
+		times(&timeb);
 		time(timeb.proct);
-		p = wait(&amp;s);
+		p = wait(&s);
 		if(p == -1)
 			break;
-		e = s&amp;0177;
+		e = s&0177;
 		if(mesg[e] != 0) {
 			if(p != i) {
 				prn(p);
-				prs(&quot;: &quot;);
+				prs(": ");
 			}
 			prs(mesg[e]);
-			if(s&amp;0200)
-				prs(&quot; -- Core dumped&quot;);
+			if(s&0200)
+				prs(" -- Core dumped");
 		}
 		if(e != 0)
-			err(&quot;&quot;);
+			err("");
 		if(i == p) {
 			acct(t);
 			break;
@@ -849,9 +849,9 @@ acct(t)
 int *t;
 {
 	if(t == 0)
-		enacct(&quot;**gok&quot;); else
+		enacct("**gok"); else
 	if(*t == TPAR)
-		enacct(&quot;()&quot;); else
+		enacct("()"); else
 	enacct(t[DCOM]);
 }
 
@@ -872,17 +872,17 @@ char *as;
 	register char *np, *s;
 
 	s = as;
-	times(&amp;timbuf);
+	times(&timbuf);
 	time(timbuf.proct);
 	lsub(tbuf.realt, timbuf.proct, timeb.proct);
 	lsub(tbuf.bcput, timbuf.cputim, timeb.cputim);
 	lsub(tbuf.bsyst, timbuf.systim, timeb.systim);
 	do {
 		np = s;
-		while (*s != &#39;\0&#39; &amp;&amp; *s != &#39;/&#39;)
+		while (*s != '\0' && *s != '/')
 			s++;
-	} while (*s++ != &#39;\0&#39;);
-	for (i=0; i&lt;14; i++) {
+	} while (*s++ != '\0');
+	for (i=0; i<14; i++) {
 		tbuf.cname[i] = *np;
 		if (*np)
 			np++;
@@ -894,5 +894,5 @@ char *as;
 	if (promp==0)
 		tbuf.shf = 1;
 	seek(acctf, 0, 2);
-	write(acctf, &amp;tbuf, sizeof(tbuf));
+	write(acctf, &tbuf, sizeof(tbuf));
 }

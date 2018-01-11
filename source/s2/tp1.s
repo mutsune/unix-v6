@@ -72,7 +72,7 @@ optap:
 	rts	pc
 1:
 	jsr	r5,mesg
-		&lt;Tape open error\n\0&gt;; .even
+		<Tape open error\n\0>; .even
 	jmp	done
 
 setcom:
@@ -92,29 +92,29 @@ noflag:
 
 useerr:
 	jsr	r5,mesg
-		&lt;Bad usage\n\0&gt;; .even
+		<Bad usage\n\0>; .even
 	jmp	done
 
 swtab:
-	&#39;0; dcof
-	&#39;1; dcof
-	&#39;2; dcof
-	&#39;3; dcof
-	&#39;4; dcof
-	&#39;5; dcof
-	&#39;6; dcof
-	&#39;7; dcof
-	&#39;c; dcc
-	&#39;d; dcd
-	&#39;f; dcf
-	&#39;i; dci
-	&#39;m; dcm
-	&#39;r; dcr
-	&#39;t; dct
-	&#39;u; dcu
-	&#39;v; dcv
-	&#39;w; dcw
-	&#39;x; dcx
+	'0; dcof
+	'1; dcof
+	'2; dcof
+	'3; dcof
+	'4; dcof
+	'5; dcof
+	'6; dcof
+	'7; dcof
+	'c; dcc
+	'd; dcd
+	'f; dcf
+	'i; dci
+	'm; dcm
+	'r; dcr
+	't; dct
+	'u; dcu
+	'v; dcv
+	'w; dcw
+	'x; dcx
 	 0; 0
 
 dcof:
@@ -200,7 +200,7 @@ cmt:
 	tstb	flv
 	beq	1f
 	jsr	r5,mesg
-	&lt;   mode    uid gid tapa    size   date    time name\n\0&gt;; .even
+	<   mode    uid gid tapa    size   date    time name\n\0>; .even
 1:
 	jsr	r5,gettape; taboc
 	br	check1
@@ -218,7 +218,7 @@ check1:
 
 done:
 	jsr	r5,mesg
-		&lt;END\n\0&gt;; .even
+		<END\n\0>; .even
 	sys	exit
 
 encode:
@@ -263,5 +263,5 @@ setb:
 
 2:
 	jsr	r5,mesg
-		&lt;Out of core\n\0&gt;; .even
+		<Out of core\n\0>; .even
 	jmp	done

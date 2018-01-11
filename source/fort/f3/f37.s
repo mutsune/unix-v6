@@ -22,22 +22,22 @@ sgoto:
 	jsr	r5,getlab
 		br 8f
 	jsr	r5,code
-		&lt;	goto; .%d\n\0&gt;; .even
+		<	goto; .%d\n\0>; .even
 		r0
 	br	9f
 1:
-	cmpb	(r1),$&#39;(
+	cmpb	(r1),$'(
 	beq	1f
 	jsr	r5,intexp
 	cmp	r0,$36.			/ ,
 	beq	2f
 	jsr	r5,code
-		&lt;	agoto\n\0&gt;; .even
+		<	agoto\n\0>; .even
 	br	9f
 2:
 	jsr	r5,code
-		&lt;	cagoto\n\0&gt;; .even
-	cmpb	(r1)+,$&#39;(
+		<	cagoto\n\0>; .even
+	cmpb	(r1)+,$'(
 	bne	8f			/ syntax
 	jsr	pc,stmlist
 	br	9f
@@ -46,14 +46,14 @@ sgoto:
 1:
 	movb	(r1)+,r0
 	beq	8f
-	cmp	r0,$&#39;)
+	cmp	r0,$')
 	bne	1b
-	cmpb	(r1)+,$&#39;,
+	cmpb	(r1)+,$',
 	bne	8f
 	jsr	r5,intexp
 	mov	r1,-(sp)
 	jsr	r5,code
-		&lt;	cgoto\n\0&gt;; .even
+		<	cgoto\n\0>; .even
 	mov	r4,r1
 	tstb	(r1)+
 	jsr	pc,stmlist
@@ -70,15 +70,15 @@ stmlist:
 	jsr	r5,getlab
 		br 9f
 	jsr	r5,code
-		&lt;	.%d\n\0&gt;; .even
+		<	.%d\n\0>; .even
 		r0
 	movb	(r1)+,r0
-	cmp	r0,$&#39;,
+	cmp	r0,$',
 	beq	stmlist
-	cmp	r0,$&#39;)
+	cmp	r0,$')
 	bne	8f
 	jsr	r5,code
-		&lt;	0\n\0&gt;; .even
+		<	0\n\0>; .even
 	rts	pc
 8:
 	jsr	r5,error; 35.

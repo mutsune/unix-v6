@@ -1,7 +1,7 @@
 .RP 75-1271-8 39199 39199-11
 .TL
 DC \- An Interactive Desk Calculator
-.AU &quot;MH 2C-524&quot; 3878
+.AU "MH 2C-524" 3878
 Robert Morris
 .AU
 Lorinda Cherry
@@ -172,7 +172,7 @@ is capitalized,
 the top value on the stack is popped and the string execution level is popped
 by that value.
 .SH
-&lt;\fIx\fP  &gt;\fIx\fP  =\fIx\fP  !&lt;\fIx\fP  !&gt;\fIx\fP  !=\fIx\fP
+<\fIx\fP  >\fIx\fP  =\fIx\fP  !<\fIx\fP  !>\fIx\fP  !=\fIx\fP
 .IP
 The
 top two elements of the stack are popped and compared.
@@ -253,8 +253,8 @@ that all digits are in the range 0\-99 and that
 the number has no leading zeros.
 The number zero is represented by the empty string.
 .PP
-Negative numbers are represented in the 100&#39;s complement
-notation, which is analogous to two&#39;s complement notation for binary
+Negative numbers are represented in the 100's complement
+notation, which is analogous to two's complement notation for binary
 numbers.
 The high order digit of a negative number is always \-1
 and all other digits are in the range 0\-99.
@@ -314,7 +314,7 @@ Since all strings are the result
 of splitting large strings,
 each string has a neighbor that is next to it in core
 and, if free, can be combined with it to make a string twice as long.
-This is an implementation of the `buddy system&#39; of allocation
+This is an implementation of the `buddy system' of allocation
 described in [2].
 .PP
 Failing to find a string of the proper length after coalescing,
@@ -461,7 +461,7 @@ the internal quantity
 \fBscale\fP
 and the scale of the operand.
 .PP
-The method used to compute sqrt(y) is Newton&#39;s method
+The method used to compute sqrt(y) is Newton's method
 with successive approximations by the rule
 .EQ
 x sub {n+1} = \(12 ( x sub n + y over x sub n )
@@ -557,7 +557,7 @@ Internal Registers \- Programming DC
 .PP
 The load and store
 commands together with \fB[]\fP to store strings, \fBx\fP to execute
-and the testing commands `&lt;&#39;, `&gt;&#39;, `=&#39;, `!&lt;&#39;, `!&gt;&#39;, `!=&#39; can be used to program
+and the testing commands `<', `>', `=', `!<', `!>', `!=' can be used to program
 DC.
 The \fBx\fP command assumes the top of the stack is an string of DC commands
 and executes it.
@@ -565,7 +565,7 @@ The testing commands compare the top two elements on the stack and if the relati
 that follows the relation.
 For example, to print the numbers 0-9,
 .DS
-[lip1+  si  li10&gt;a]sa
+[lip1+  si  li10>a]sa
 0si  lax
 .DE
 .SH
@@ -583,7 +583,7 @@ the register \fIx\fP.
 stack.
 The commands \fBs\fP and \fBl\fP also work on registers but not as push-down
 stacks.
-\fBl\fP doesn&#39;t effect the top of the
+\fBl\fP doesn't effect the top of the
 register stack, and \fBs\fP destroys what was there before.
 .PP
 The commands to work on arrays are \fB:\fP and \fB;\fP.

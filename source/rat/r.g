@@ -23,7 +23,7 @@ stat	: if stat	={ outcont($1); }
 	| label stat
 	| error		={ errcode($1); yyclearin; }
 	;
-label	: DIGITS	={ outcode($1); outcode(&quot;\t&quot;); }
+label	: DIGITS	={ outcode($1); outcode("\t"); }
 	;
 if	: XIF		={ ifcode($1); }
 	;

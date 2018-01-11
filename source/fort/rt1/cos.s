@@ -1,7 +1,7 @@
 /
 /
 
-/ cos &amp; dcos fortran functions
+/ cos & dcos fortran functions
 
 .globl	cos.
 .globl	dcos.

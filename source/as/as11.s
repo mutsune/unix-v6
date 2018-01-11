@@ -28,7 +28,7 @@ go:
 	sys	close
 	sys	exec; 2f; 1f
 	mov	$2f,r0
-	jsr	r5,filerr; &quot;?\n
+	jsr	r5,filerr; "?\n
 
 aexit:
 	sys	unlink; a.tmp1
@@ -47,9 +47,9 @@ unglob:
 	.text
 2:
 fpass2:
-	&lt;/lib/as2\0&gt;
+	</lib/as2\0>
 3:
-	&lt;-g\0&gt;
+	<-g\0>
 	.even
 
 filerr:
@@ -99,8 +99,8 @@ fcreat:
 	rts	r5
 2:
 	incb	9.(r4)
-	cmpb	9.(r4),$&#39;z
+	cmpb	9.(r4),$'z
 	blos	1b
 	mov	r4,r0
-	jsr	r5,filerr; &quot;?\n
+	jsr	r5,filerr; "?\n
 	sys	exit

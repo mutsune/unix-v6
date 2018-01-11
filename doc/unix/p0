@@ -1,17 +1,17 @@
 .ll 6.5i
 .lt 6.5i
 .br
-&#39;tl &#39;-&#39;&#39;&#39;
+'tl '-'''
 .nr r 0 1
 .pl 11i
 .ps 10
-.// &quot;t&quot; is &quot;teeny&quot; size
-.// &quot;s&quot; is small caps
-.// &quot;n&quot; is normal
+.// "t" is "teeny" size
+.// "s" is small caps
+.// "n" is normal
 .ds t \s6
 .ds n \s10
 .ds s \s8
-.ds r \s6\|\v&#39;-.5m&#39;\\n+r\v&#39;.5m&#39;\*n\|
+.ds r \s6\|\v'-.5m'\\n+r\v'.5m'\*n\|
 .vs 12p
 .de pg
 .sp .5
@@ -20,14 +20,14 @@
 .ti 1
 ..
 .de fo
-&#39;bp
+'bp
 ..
 .de hd
-&#39;tl &#39;-&#39;&#39;&#39;
-&#39;sp .5i
-.if e .tl &#39;\fIU\*sNIX\*n Time-Sharing System - %\fP&#39;&#39;&#39;
-.if o .tl &#39;&#39;&#39;\fIU\*sNIX\*n Time-Sharing System - %\fP&#39;
-&#39;sp .4i
+'tl '-'''
+'sp .5i
+.if e .tl '\fIU\*sNIX\*n Time-Sharing System - %\fP'''
+.if o .tl '''\fIU\*sNIX\*n Time-Sharing System - %\fP'
+'sp .4i
 ..
 .de s1
 .sp 1.7
@@ -52,7 +52,7 @@
 .sp .5
 ..
 .de it
-&#39;ft I
+'ft I
 \\$1
-&#39;ft
+'ft
 ..

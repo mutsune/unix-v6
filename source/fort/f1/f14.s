@@ -25,7 +25,7 @@ scomm:
 	br	2f
 
 ncom:
-	cmpb	(r1),$&#39;/
+	cmpb	(r1),$'/
 	bne	3f
 	inc	r1
 	jsr	r5,getsym

@@ -33,7 +33,7 @@ outw:
 	cmp	r3,$34
 	bne	7f
 6:
-	jsr	r5,error; &#39;r
+	jsr	r5,error; 'r
 7:
 	mov	$1,r3		/ make absolute
 4:
@@ -65,13 +65,13 @@ outw:
 8:
 	rts	pc
 1:
-	jsr	r5,error; &#39;o
+	jsr	r5,error; 'o
 	clr	r3
 	jsr	pc,outb
 	rts	pc
 
 9:
-	jsr	r5,error; &#39;x
+	jsr	r5,error; 'x
 	rts	pc
 
 outb:
@@ -79,7 +79,7 @@ outb:
 	beq	9b
 	cmp	r3,$1
 	blos	1f
-	jsr	r5,error; &#39;r
+	jsr	r5,error; 'r
 1:
 	tstb	passno
 	beq	2f
@@ -122,7 +122,7 @@ error:
 2:
 	clr	r2
 	dvd	$10.,r2
-	add	$&#39;0,r3
+	add	$'0,r3
 	movb	r3,-(r0)
 	mov	r2,r3
 	sob	r1,2b
@@ -135,7 +135,7 @@ error:
 	rts	r5
 
 	.data
-0:	&lt;f xxxx\n&gt;
+0:	<f xxxx\n>
 	.even
 	.text
 

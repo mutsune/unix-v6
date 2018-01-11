@@ -1,12 +1,12 @@
 #
 
-#include &quot;m6.h&quot;
+#include "m6.h"
 
 char *
 finddef(n) {
 	char *p;
 	if((p = lookup(arg(n)))==0)
-		if((p = lookup(&quot;&quot;))==0) diag(&quot;Software error&quot;);
+		if((p = lookup(""))==0) diag("Software error");
 	return(p); 
 }
 
@@ -14,9 +14,9 @@ char *
 lookup(s) {
 	char *dt;
 	dt = df;
-	while(dt&gt;d0) {
-		if(dt-&gt;dswitch&gt;=0 &amp;&amp; comp(s,&amp;dt-&gt;dident)) return(dt);
-		dt =+ dt-&gt;prev; 
+	while(dt>d0) {
+		if(dt->dswitch>=0 && comp(s,&dt->dident)) return(dt);
+		dt =+ dt->prev; 
 	}
 	return(0); 
 }
@@ -31,33 +31,33 @@ char *s, *t;
 
 remove(n) {
 	char *p;
-	if(p = lookup(arg(n))) if(p&gt;d0+2) {
+	if(p = lookup(arg(n))) if(p>d0+2) {
 		trashflag++;
-		p-&gt;dswitch = -1; 
+		p->dswitch = -1; 
 	} 
 }
 
 trash() {
 	char *p,*q,*r;
-	if(lg&gt;0) return;
-	while(df-&gt;dswitch&lt;0) {
+	if(lg>0) return;
+	while(df->dswitch<0) {
 		de = df;
-		df =+ df-&gt;prev;
+		df =+ df->prev;
 		trashflag--; 
 	}
-	if(trashflag&lt;=0) return;
-	de = (de+1)&amp;0177776;
-	revptr(de,df,&amp;p,&amp;q);
+	if(trashflag<=0) return;
+	de = (de+1)&0177776;
+	revptr(de,df,&p,&q);
 	q = p;
-	for(;p-&gt;word!=0;p=+r-&gt;word) {
+	for(;p->word!=0;p=+r->word) {
 		r = p;
-		if(p-&gt;dswitch&gt;=0) {
+		if(p->dswitch>=0) {
 			r = q;
-			q = move(p,q,p-&gt;word); 
+			q = move(p,q,p->word); 
 		} 
 	}
-	q-&gt;word = 0;
-	revptr(d0,d0+2,&amp;df,&amp;de); 
+	q->word = 0;
+	revptr(d0,d0+2,&df,&de); 
 }
 
 
@@ -65,12 +65,12 @@ revptr(p,q,np,nq)
 char *p, *q, **np, **nq;
 {
 	int t;
-	p-&gt;word = 0;
-	while((t = q-&gt;word)!=0) {
-		q-&gt;word = p-q; 
+	p->word = 0;
+	while((t = q->word)!=0) {
+		q->word = p-q; 
 		p = q; 
 		q =+ t;
-		if(q&lt;d0 || q&gt;dmax) diag(&quot;Software error&quot;); 
+		if(q<d0 || q>dmax) diag("Software error"); 
 	}
 	*np = p;
 	*nq = q; 
@@ -80,6 +80,6 @@ char *
 move(from,to,count) 
 char *from, *to;
 {
-	while(count--&gt;0) *to++ = *from++;
+	while(count-->0) *to++ = *from++;
 	return(to); 
 }

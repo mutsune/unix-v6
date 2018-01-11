@@ -4,17 +4,17 @@
 	jsr	pc,rew
 2:
 	jsr	pc,4(r5)
-		&lt;disk offset\n\0&gt;
+		<disk offset\n\0>
 		.even
 	jsr	pc,numb
 	mov	r0,dska
 	jsr	pc,4(r5)
-		&lt;tape offset\n\0&gt;
+		<tape offset\n\0>
 		.even
 	jsr	pc,numb
 	mov	r0,tapa
 	jsr	pc,4(r5)
-		&lt;count\n\0&gt;
+		<count\n\0>
 		.even
 	jsr	pc,numb
 	mov	r0,r2
@@ -32,9 +32,9 @@ numb:
 	clr	r1
 1:
 	jsr	pc,2(r5)
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	1f
-	sub	$&#39;0,r0
+	sub	$'0,r0
 	cmp	r0,$9
 	bhi	2f
 	mul	$10.,r1
@@ -45,7 +45,7 @@ numb:
 	rts	pc
 2:
 	jsr	pc,4(r5)
-		&lt;illegal digit\n\0&gt;
+		<illegal digit\n\0>
 		.even
 	tst	(sp)+
 	rts	pc

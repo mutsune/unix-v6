@@ -107,7 +107,7 @@ rddir:
 	tst	sum
 	beq	1f
 	jsr	r5,mesg
-		&lt;Directory checksum\n\0&gt;; .even
+		<Directory checksum\n\0>; .even
 	tstb	fli
 	bne	1f
 	jmp	done
@@ -193,7 +193,7 @@ tread:
 
 trderr:
 	jsr	r5,mesg
-		&lt;Tape read error\n\0&gt;; .even
+		<Tape read error\n\0>; .even
 	tstb	fli
 	beq	1f
 	mov	$tapeb,r0
@@ -216,7 +216,7 @@ twrite:
 
 twrerr:
 	jsr	r5,mesg
-		&lt;Tape write error\n\0&gt;; .even
+		<Tape write error\n\0>; .even
 	jmp	done
 
 rseek:
@@ -265,7 +265,7 @@ wseek:
 
 seekerr:
 	jsr	r5,mesg
-&lt;Tape seek error\n\0&gt;; .even
+<Tape seek error\n\0>; .even
 	jmp	done
 
 verify:
@@ -280,7 +280,7 @@ verify:
 .data
 9:
 	jsr	r5,mesg
-		0:&lt;x \0&gt;; .even
+		0:<x \0>; .even
 	rts	pc
 .text
 	mov	r1,-(sp)
@@ -290,28 +290,28 @@ verify:
 	tstb	flw
 	beq	1f
 	jsr	r5,mesg
-		&lt; \0&gt;
+		< \0>
 	jsr	pc,getc
-	cmp	r0,$&#39;x
+	cmp	r0,$'x
 	bne	3f
 	jsr	pc,getc
 	jmp	done
 3:
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	3f
-	cmp	r0,$&#39;y
+	cmp	r0,$'y
 	bne	4f
 	jsr	pc,getc
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	beq	2f
 4:
 	jsr	pc,getc
-	cmp	r0,$&#39;\n
+	cmp	r0,$'\n
 	bne	4b
 	br	1b
 1:
 	jsr	r5,mesg
-		&lt;\n\0&gt;
+		<\n\0>
 2:
 	tst	(r5)+
 3:
@@ -320,7 +320,7 @@ verify:
 getfiles:
 	cmp	narg,$2
 	bne	1f
-	mov	$&quot;.\0,name
+	mov	$".\0,name
 	jsr	pc,callout
 1:
 	cmp	narg,$2
@@ -351,16 +351,16 @@ expand:
 	beq	1b
 	mov	$name,r0
 	mov	$catlb+2,r1
-	cmpb	(r1),$&#39;.
+	cmpb	(r1),$'.
 	beq	1b
 2:
 	tstb	(r0)+
 	bne	2b
 	dec	r0
 	mov	r0,-(sp)
-	cmpb	-1(r0),$&#39;/
+	cmpb	-1(r0),$'/
 	beq	2f
-	movb	$&#39;/,(r0)+
+	movb	$'/,(r0)+
 2:
 	movb	(r1)+,(r0)+
 	bne	2b
@@ -376,7 +376,7 @@ fserr:
 	mov	$name,r1
 	jsr	pc,pstr
 	jsr	r5,mesg
-		&lt; -- Cannot open file\n\0&gt;; .even
+		< -- Cannot open file\n\0>; .even
 	jmp	done
 
 callout:
@@ -404,10 +404,10 @@ callout:
 	mov	(sp)+,r1
 	bne	4f
 	jsr	r5,mesg
-		&lt;Directory overflow\n\0&gt;; .even
+		<Directory overflow\n\0>; .even
 	jmp	done
 4:
-	jsr	r5,verify; &#39;a
+	jsr	r5,verify; 'a
 		rts pc
 	jsr	r5,encode; name
 	br	2f
@@ -429,7 +429,7 @@ callout:
 	cmp	time1(r1),statb+34.
 	bhis	1f
 3:
-	jsr	r5,verify; &#39;r
+	jsr	r5,verify; 'r
 		rts pc
 2:
 	mov	statb+4,mode(r1)

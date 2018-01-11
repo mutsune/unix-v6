@@ -37,10 +37,10 @@
 .lt \\n(LTu
 .if n .tc ~
 .if n .tr ~ 
-.if n .ds CH &quot;- % -
-.if t .ds CH &quot;\(en % \(en
+.if n .ds CH "- % -
+.if t .ds CH "\(en % \(en
 .ds Ch \\*(CH
-.if n .ds CF &quot;\\*(DY
+.if n .ds CF "\\*(DY
 .wh 0 NP
 .if t .wh -1i FO
 .if n .wh -6 FO
@@ -199,7 +199,7 @@ ABSTRACT
 .if \\n(ST-1 .SY
 .rm SY
 ..
-.	OK - &quot;other keywords&quot; for cover sheet.
+.	OK - "other keywords" for cover sheet.
 .de OK
 .br
 .di
@@ -221,7 +221,7 @@ ABSTRACT
 .nf
        \s24\(bs\s12\fB  Bell Laboratories        \s16\fRCover Sheet for Technical Memorandum
 .sp
-.if t \s6\l&#39;7i&#39;
+.if t \s6\l'7i'
 .fi
 .ps 9
 .ft I
@@ -229,7 +229,7 @@ ABSTRACT
 The information contained herein is for the use of employees of Bell Laboratories and is not for publication.  (See GEI 13.9-3)\p
 .ft R
 .nf
-.if t \s6\l&#39;7i&#39;
+.if t \s6\l'7i'
 .sp
 .if t .ll 6.0i
 .if n .ll 30
@@ -304,26 +304,26 @@ Author	Location	Extension	Charging Case- \s10\fB\\*(CA
 .if t .po 0.5i
 .if t .ll 7i
 .nf
-.if t \l&#39;7i&#39;
+.if t \l'7i'
 .if t .ta 1.4i 2.8i 4.2i
 .if n .ta 15 30 45
 .if t .sp 8p
 Pages Text   \\$1	Other   \\$2	Total   \\$3
 .if t .sp 8p
 .if n .sp 
-.if t No. Figures   \\$4	No. Tables   \\$5	No. Refs.   \\$6	\b&#39;|||||~~&#39;
+.if t No. Figures   \\$4	No. Tables   \\$5	No. Refs.   \\$6	\b'|||||~~'
 .if n No. Figures   \\$4	No. Tables   \\$5	No. Refs.   \\$6
-.if t \l&#39;7i&#39;
+.if t \l'7i'
 .ps 7
 .if n .sp
-.tl &#39;E-1932-C (6-73)&#39;SEE REVERSE SIDE FOR DISTRIBUTION LIST&#39;&#39;
+.tl 'E-1932-C (6-73)'SEE REVERSE SIDE FOR DISTRIBUTION LIST''
 .if t .po 0.5i
 .ll \\n(LLu
 .fi
 .if t .sp |10.8i
 .if t .po 0
 .ps 10
-.if t .tl &#39;-&#39;&#39;&#39;
+.if t .tl '-'''
 .if t .pl
 .bp 1
 .if t .po \\n(DOu
@@ -334,10 +334,10 @@ Pages Text   \\$1	Other   \\$2	Total   \\$3
 .mk
 .A\\$1
 .rt
-.if \\$1-1 .if !\\$1-2 \&amp;	\\*(R2	\\*(E2
-.if \\$1-2 .if !\\$1-3 \&amp;	\\*(R3	\\*(E3
-.if \\$1-3 .if !\\$1-4 \&amp;	\\*(R4	\\*(E4
-.if \\$1-4 .if !\\$1-5 \&amp;	\\*(R5	\\*(E5
+.if \\$1-1 .if !\\$1-2 \&	\\*(R2	\\*(E2
+.if \\$1-2 .if !\\$1-3 \&	\\*(R3	\\*(E3
+.if \\$1-3 .if !\\$1-4 \&	\\*(R4	\\*(E4
+.if \\$1-4 .if !\\$1-5 \&	\\*(R5	\\*(E5
 .br
 ..
 .de CT
@@ -623,10 +623,10 @@ MEMORANDUM FOR FILE
 .ce 0
 .lt \\n(.lu
 .if \\n(LE .if n .sp -1
-.if \\n(LE .if n .tl &#39;&#39;&#39;\\*(EL&#39;
+.if \\n(LE .if n .tl '''\\*(EL'
 .if n .sp 1
 .if \\n(LE .if t .sp -1-\\n(.au
-.if \\n(LE .if t .tl &#39;&#39;&#39;\\*(EL&#39;
+.if \\n(LE .if t .tl '''\\*(EL'
 .if \\n(LE .if t .sp \\n(.au
 .if t .sp 0.5
 .ns
@@ -640,16 +640,16 @@ MEMORANDUM FOR FILE
 .	NP new page
 .de NP
 .if t .CM
-.if t &#39;sp 0.5i
-.if n &#39;sp 3
+.if t 'sp 0.5i
+.if n 'sp 3
 .ft R
 .lt \\n(LTu
 .ps \\n(PS
 .PT
 .ps
 .ft P
-.if t &#39;sp 0.5i
-.if n &#39;sp 3
+.if t 'sp 0.5i
+.if n 'sp 3
 .nr x 0 1
 .if t .nr y 0-1i
 .if n .nr y 0-6
@@ -666,7 +666,7 @@ MEMORANDUM FOR FILE
 .mk
 ..
 .de PT
-.if \\n%-1 .tl &#39;\\*(LH&#39;\\*(Ch&#39;\\*(RH&#39;
+.if \\n%-1 .tl '\\*(LH'\\*(Ch'\\*(RH'
 ..
 .	FO - footer of page
 .de FO
@@ -678,7 +678,7 @@ MEMORANDUM FOR FILE
 .if t .ch FO -1i
 .if n .ch FO -6
 .if !\\n(FC-1 .if \\n(NX .RC
-.if !\\n(FC-1 .if !\\n(NX &#39;bp
+.if !\\n(FC-1 .if !\\n(NX 'bp
 .nr FC -1
 ..
 .	2C - begin double column
@@ -713,7 +713,7 @@ MEMORANDUM FOR FILE
 ..
 .de C2
 .po \\n(DOu
-&#39;bp
+'bp
 .nr ND 1
 ..
 .	1C - return to single column format
@@ -738,7 +738,7 @@ Murray Hill, New Jersey 07974
 .de BT
 .ft R
 .lt \\n(LTu
-.tl &#39;\\*(LF&#39;\\*(CF&#39;\\*(RF&#39;
+.tl '\\*(LF'\\*(CF'\\*(RF'
 .ft P
 ..
 .	PP - paragraph
@@ -846,7 +846,7 @@ Murray Hill, New Jersey 07974
 .if n .sp
 .ne 3
 .if \\n(.$-1 .nr IQ \\$2
-.LB &quot;\\$1&quot;
+.LB "\\$1"
 ..
 .	LP - left aligned (block) paragraph
 .de LP
@@ -881,7 +881,7 @@ Murray Hill, New Jersey 07974
 .	CM - cut mark
 .de CM
 .po 0
-.tl &#39;-&#39;&#39;&#39;
+.tl '-'''
 .po
 ..
 .	B - bold font
@@ -952,7 +952,7 @@ Murray Hill, New Jersey 07974
 ..
 .	FS - begin footnote
 .de FS
-&#39;ce 0
+'ce 0
 .di
 .da FF
 .ev1
@@ -973,7 +973,7 @@ Murray Hill, New Jersey 07974
 ..
 .de fs SEPARATOR
 .if n __________________________
-.if t \l&#39;1i&#39;
+.if t \l'1i'
 .br
 ..
 .de fz
@@ -1018,8 +1018,8 @@ Whippany, New Jersey 07981
 .ll \n(LLu
 .if n .ll -\\n(.l/12
 .if t .ll -\\n(.lu/12u
-&#39;ps8
-&#39;vs10p
+'ps8
+'vs10p
 .ev
 .br
 .em EM

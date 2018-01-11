@@ -111,22 +111,22 @@ cr106:
 / ++,-- postfix
 cr32:
 %a,1
-	movB1	A1&#39;,R
-	I&#39;B1	A1
+	movB1	A1',R
+	I'B1	A1
 
 %aw,n
-	mov	A1&#39;,R
+	mov	A1',R
 	I	A2,A1
 
 %e*,1
 	F1*
 	movB1	#1(R1),R
-	I&#39;B1	#1(R1)
+	I'B1	#1(R1)
 
 %n*,1
 	F*
 	movB1	#1(R),-(sp)
-	I&#39;B1	#1(R)
+	I'B1	#1(R)
 	movB1	(sp)+,R
 
 %ew*,n
@@ -227,14 +227,14 @@ cr80:
 	S
 	movfo	R,*(sp)+
 
-/ +, -, |, &amp;~, &lt;&lt;
+/ +, -, |, &~, <<
 cr40:
 %n,z
 	F
 
 %n,1
 	F
-	I&#39;	R
+	I'	R
 
 %[add1:]
 %n,aw
@@ -306,7 +306,7 @@ cr49:
 	xor	R,(sp)
 	mov	(sp)+,R
 
-/ &gt;&gt; (all complicated cases taken care of by &lt;&lt; -)
+/ >> (all complicated cases taken care of by << -)
 cr45:
 %n,1
 	F
@@ -371,30 +371,30 @@ cr43:
 %nf,nf
 %	[add5]
 
-/ =+, =-, =|, =&amp;~
+/ =+, =-, =|, =&~
 cr70:
 %[addq1:]
 %aw,aw
-	I	A2,A1&#39;
+	I	A2,A1'
 	mov	A1,R
 
 %[addq1a:]
 %a,aw
 %ad,ad
-	movB1	A1&#39;,R
+	movB1	A1',R
 	IBF	A2,R
 	movB1	R,A1
 
 %[addq2:]
 %aw,nw*
 	S*
-	I	#2(R),A1&#39;
+	I	#2(R),A1'
 	mov	A1,R
 
 %[addq3:]
 %aw,n
 	S
-	I	R,A1&#39;
+	I	R,A1'
 	mov	A1,R
 
 %[addq4:]
@@ -406,7 +406,7 @@ cr70:
 
 %[addq4a:]
 %ad,ef
-	movf	A1&#39;,R
+	movf	A1',R
 	S1
 	IBF	R1,R
 	movf	R,A1
@@ -415,14 +415,14 @@ cr70:
 %a,n
 %ad,nf
 	SS
-	movB1	A1&#39;,R
+	movB1	A1',R
 	IBF	(sp)+,R
 	movB1	R,A1
 
 %[addq6:]
 %af,nf
 	SS
-	movof	A1&#39;,R
+	movof	A1',R
 	IBF	(sp)+,R
 	movfo	R,A1
 
@@ -465,7 +465,7 @@ cr70:
 	movfo	R1,#1(R)
 	movf	R1,R
 
-/ =*, =&lt;&lt; (for integer multiply, R must be odd)
+/ =*, =<< (for integer multiply, R must be odd)
 cr72:
 %a,aw
 %ad,ad
@@ -493,14 +493,14 @@ cr72:
 / =/ ;  R must be odd on integers
 cr73:
 %a,aw
-	movB1	A1&#39;,R
+	movB1	A1',R
 	sxt	R-
 	divBF	A2,R-
 	movB1	R-,A1
 
 %a,n
 	SS
-	movB1	A1&#39;,R
+	movB1	A1',R
 	sxt	R-
 	div	(sp)+,R-
 	movB1	R-,A1
@@ -542,14 +542,14 @@ cr73:
 / =mod; R must be odd on integers
 cr74:
 %a,aw
-	movB1	A1&#39;,R
+	movB1	A1',R
 	sxt	R-
 	div	A2,R-
 	movB1	R,A1
 
 %a,n
 	SS
-	movB1	A1&#39;,R
+	movB1	A1',R
 	sxt	R-
 	div	(sp)+,R-
 	movB1	R,A1
@@ -577,7 +577,7 @@ cr79:
 
 %ab,n
 	SS
-	movb	A1&#39;,R
+	movb	A1',R
 	xor	R,(sp)
 	mov	(sp)+,R
 	movb	R,A1
@@ -590,10 +590,10 @@ cr79:
 	movB1	(sp)+,R
 	movB1	R,*(sp)+
 
-/ =&gt;&gt; (all complicated cases done by =&lt;&lt; -)
+/ =>> (all complicated cases done by =<< -)
 cr75:
 %a,1
-	asrB1	A1&#39;
+	asrB1	A1'
 	movB1	A1,R
 
 %n*,1
@@ -601,7 +601,7 @@ cr75:
 	asrB1	#1(R)
 	movB1	#1(R),R
 
-/ &lt;&lt; for longs
+/ << for longs
 cr91:
 %nl,aw
 %	[add1]
@@ -618,7 +618,7 @@ cr91:
 %nl,n
 %	[add5]
 
-/ int -&gt; float
+/ int -> float
 cr51:
 %aw,n
 	movif	A1,R
@@ -631,7 +631,7 @@ cr51:
 	F
 	movif	R,R
 
-/ float, double -&gt; int
+/ float, double -> int
 cr52:
 %nf,n
 	F
@@ -694,7 +694,7 @@ cr82:
 	add	$10,sp
 
 / =*, =/, =rem for longs
-/ Operands of the form &amp;x op y, so stack space is known.
+/ Operands of the form &x op y, so stack space is known.
 cr86:
 %n,nl
 	SS
@@ -731,13 +731,13 @@ ci80:
 %[move1:]
 %a,z
 %ad,zf
-	I&#39;B1	A1
+	I'B1	A1
 
 %[move2:]
 %n*,z
 %nd*,zf
 	F*
-	I&#39;B1	#1(R)
+	I'B1	#1(R)
 
 %[move3:]
 %a,aw
@@ -888,7 +888,7 @@ ci80:
 	I	(sp)+,#1+2(R)
 	V	#1(R)
 
-/ =| and =&amp; ~
+/ =| and =& ~
 ci78:
 %a,a
 %	[move3]
@@ -944,7 +944,7 @@ ci70:
 %a,z
 
 %a,1
-	I&#39;B1	A1
+	I'B1	A1
 
 %aw,aw
 %	[move3]
@@ -963,13 +963,13 @@ ci70:
 
 %a,nw*
 	S*
-	movB1	A1&#39;,R1
+	movB1	A1',R1
 	I	#2(R),R1
 	movB1	R1,A1
 
 %a,n
 	S
-	movB1	A1&#39;,R1
+	movB1	A1',R1
 	I	R,R1
 	movB1	R1,A1
 
@@ -1007,7 +1007,7 @@ ci70:
 %nl*,nl
 %	[move17]
 
-/ =&gt;&gt; (all harder cases handled by =&lt;&lt; -)
+/ =>> (all harder cases handled by =<< -)
 ci75:
 %a,1
 	asrB1	A1
@@ -1016,7 +1016,7 @@ ci75:
 	F*
 	asrB1	#1(R)
 
-/ =&lt;&lt;
+/ =<<
 ci76:
 %a,1
 	aslB1	A1
@@ -1036,7 +1036,7 @@ ci76:
 	S
 	ash	R,A1
 
-/ =&lt;&lt; for longs
+/ =<< for longs
 ci92:
 %al,aw
 	F
@@ -1083,7 +1083,7 @@ _cctab=.
 	43.;	rest
 	45.;	rest
 	46.;	rest
-	81.;	cc81	/ &amp; as in &quot;if ((a&amp;b)==0)&quot;
+	81.;	cc81	/ & as in "if ((a&b)==0)"
 	48.;	rest
 	60.;	cc60
 	61.;	cc60
@@ -1160,7 +1160,7 @@ cc60:
 %nf,nf
 %	[add5]
 
-/ &amp; as in &quot;if ((a&amp;b) ==0)&quot;
+/ & as in "if ((a&b) ==0)"
 cc81:
 %a,a
 %	[move3]
@@ -1219,11 +1219,11 @@ cs106:
 	mov	A1+,-(sp)
 	mov	A1,-(sp)
 
-/ +, -, |, &amp;~
+/ +, -, |, &~
 cs40:
 %n,1
 	FS
-	I&#39;	(sp)
+	I'	(sp)
 
 %n,aw
 	FS

@@ -1,6 +1,6 @@
 / C floating mod
 / fmod(a,b) returns a number n such that
-/	i*b + n is a and 0 &lt;= n &lt; b
+/	i*b + n is a and 0 <= n < b
 
 .globl	_fmod
 _fmod:

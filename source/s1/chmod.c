@@ -5,21 +5,21 @@ char **argv;
 	register char *c;
 	int count;
 
-	if(argc &lt; 3) {
-		printf(&quot;arg count\n&quot;);
+	if(argc < 3) {
+		printf("arg count\n");
 		exit(1);
 	}
 	c = argv[1];
 	m = 0;
 	for(m=0; *c; c++) {
-		if(*c &lt; &#39;0&#39; || *c &gt; &#39;7&#39;) {
-			printf(&quot;bad mode\n&quot;);
+		if(*c < '0' || *c > '7') {
+			printf("bad mode\n");
 			exit(1);
 		}
-		m = (m&lt;&lt;3) | *c - &#39;0&#39;;
+		m = (m<<3) | *c - '0';
 	}
-	for(i=2; i&lt;argc; i++)
-		if(chmod(argv[i], m) &lt; 0) {
+	for(i=2; i<argc; i++)
+		if(chmod(argv[i], m) < 0) {
 			count++;
 			perror(argv[i]);
 		}

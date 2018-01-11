@@ -4,20 +4,20 @@ rti = 2
 /
 accept:
 	mov	r0,-(sp)
-	movb	$&#39;:,r0
+	movb	$':,r0
 	jsr	r5,tfoput
-	movb	$&#39; ,r0
+	movb	$' ,r0
 	jsr	r5,tfoput
 2:
 	jsr	r5,tfiget
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	beq	1f
 	jsr	pc,putchar
 	br	2b
 1:
 	jsr	pc,putchar
 	jsr	r5,tfiget
-	cmpb	r0,$&#39;\n
+	cmpb	r0,$'\n
 	beq	1f
 	jsr	pc,putchar
 	br	2b

@@ -79,7 +79,7 @@ seek.:
 /	integer function seek0(f, n)
 /	integer f, n
 /		same as seek(f, n, 0)
-/		but with 24 bit `n&#39;
+/		but with 24 bit `n'
 
 seek0.:
 	temp
@@ -108,7 +108,7 @@ seek0.:
 /	integer function open(a, m)
 /	logical*1 a(n)
 /	integer m
-/		same as C, name is ` &#39; terminated
+/		same as C, name is ` ' terminated
 
 open.:
 	temp
@@ -120,7 +120,7 @@ open.:
 	mov	(sp)+,r0
 	mov	r0,9f+2
 1:
-	cmpb	(r0)+,$&#39; /
+	cmpb	(r0)+,$' /
 	bne	1b
 	clrb	-(r0)
 	sys	indir; 9f
@@ -133,7 +133,7 @@ open.:
 /	integer function creat(a, m)
 /	logical*1 a(n)
 /	integer m
-/		same as C, name is ` &#39; terminated
+/		same as C, name is ` ' terminated
 
 creat.:
 	temp
@@ -145,7 +145,7 @@ creat.:
 	mov	(sp)+,r0
 	mov	r0,9f+2
 1:
-	cmpb	(r0)+,$&#39; /
+	cmpb	(r0)+,$' /
 	bne	1b
 	clrb	-(r0)
 	sys	indir; 9f

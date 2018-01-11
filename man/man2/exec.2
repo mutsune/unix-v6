@@ -10,16 +10,16 @@ sys exec; name; args
 .li
 ...
 .br
-name: &lt;...\\0&gt;
+name: <...\\0>
 .br
 .li
 ...
 .br
 args: arg0; arg1; ...; 0
 .br
-arg0: &lt;...\\0&gt;
+arg0: <...\\0>
 .br
-arg1: &lt;...\\0&gt;
+arg1: <...\\0>
 .br
    ...
 .s3
@@ -65,8 +65,8 @@ ID
 determines his access privileges.
 .it Exec
 changes the effective user and group ID to
-the owner of the executed file if the file has the ``set-user-ID&#39;&#39;
-or ``set-group-ID&#39;&#39;
+the owner of the executed file if the file has the ``set-user-ID''
+or ``set-group-ID''
 modes.
 The
 real
@@ -93,7 +93,7 @@ Just above
 this number is a list of pointers to the argument strings.
 The arguments are placed as high as possible in core.
 .s3
-  sp\*&gt;	nargs
+  sp\*>	nargs
 .br
 	arg0
 .br
@@ -103,11 +103,11 @@ The arguments are placed as high as possible in core.
 .br
 	\*-1
 .s3
- arg0:	&lt;arg0\\0&gt;
+ arg0:	<arg0\\0>
 .br
 	...
 .br
- argn:	&lt;argn\\0&gt;
+ argn:	<argn\\0>
 .s3
 From C, two interfaces are available.
 .it execl
@@ -155,7 +155,7 @@ is not directly usable in another
 since
 .it argv[argc]
 is \*-1 and not 0.
-.sh &quot;SEE ALSO&quot;
+.sh "SEE ALSO"
 fork (II)
 .sh DIAGNOSTICS
 If the file cannot be found,

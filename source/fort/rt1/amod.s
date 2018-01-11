@@ -1,7 +1,7 @@
 /
 /
 
-/ amod &amp; dmod fortran functions
+/ amod & dmod fortran functions
 
 .globl	amod.
 .globl	dmod.

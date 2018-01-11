@@ -24,16 +24,16 @@ sif:
 	cmp	r0,$34.			/ )
 	bne	9f
 	jsr	r5,rvalue
-	mov	$&quot;if,r0
+	mov	$"if,r0
 	jsr	r5,genop
 	bic	$!7,r3
 	cmp	r3,$3			/ logical
 	bne	1f
 	jsr	r5,code
-		&lt;; 1f\n\0&gt;; .even
+		<; 1f\n\0>; .even
 	jsr	r5,ifstmt
 	jsr	r5,code
-		&lt;1:\n\0&gt;; .even
+		<1:\n\0>; .even
 	rts	r5
 1:
 	mov	$3,-(sp)
@@ -41,7 +41,7 @@ sif:
 	jsr	r5,getlab
 		br 8f
 	jsr	r5,code
-		&lt;; .%d\0&gt;; .even
+		<; .%d\0>; .even
 		r0
 	dec	(sp)
 	beq	1f

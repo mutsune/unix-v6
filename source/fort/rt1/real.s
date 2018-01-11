@@ -1,7 +1,7 @@
 /
 /
 
-/ real &amp; dreal fortran function
+/ real & dreal fortran function
 
 .globl	real.
 .globl	dreal.

@@ -19,30 +19,30 @@ char **argv;
 	int n, i, j;
 	int compare();
 
-	if (--argc &gt; 0 &amp;&amp; *argv[1] == &#39;-&#39;) {
+	if (--argc > 0 && *argv[1] == '-') {
 		argv++;
 		while (*++*argv) switch (**argv) {
-		case &#39;n&#39;:
+		case 'n':
 			nflg++;
 			continue;
 
-		case &#39;c&#39;:
+		case 'c':
 			cflg++;
 			continue;
 
-		case &#39;g&#39;:
+		case 'g':
 			gflg++;
 			continue;
 
-		case &#39;u&#39;:
+		case 'u':
 			uflg++;
 			continue;
 
-		case &#39;r&#39;:
+		case 'r':
 			rflg = -1;
 			continue;
 
-		case &#39;p&#39;:
+		case 'p':
 			pflg ++;
 			continue;
 
@@ -52,15 +52,15 @@ char **argv;
 		argc--;
 	}
 	if (argc==0)
-		fi = open(&quot;a.out&quot;, 0); else
+		fi = open("a.out", 0); else
 		fi = open(*++argv, 0);
-	if(fi &lt; 0) {
-		printf(&quot;cannot open input\n&quot;);
+	if(fi < 0) {
+		printf("cannot open input\n");
 		exit();
 	}
 	read(fi, buf, 020);
-	if(buf[0]!=0407 &amp;&amp; buf[0]!=0410 &amp;&amp; buf[0]!=0411) {
-		printf(&quot;bad format\n&quot;);
+	if(buf[0]!=0407 && buf[0]!=0410 && buf[0]!=0411) {
+		printf("bad format\n");
 		exit();
 	}
 	seek(fi, buf[1], 1);		/* text */
@@ -71,7 +71,7 @@ char **argv;
 	}
 	n = ldiv(0, buf[4], 12);
 	if(n == 0) {
-		printf(&quot;no name list\n&quot;);
+		printf("no name list\n");
 		exit();
 	}
 	nlp = sbrk(12*n);
@@ -80,30 +80,30 @@ char **argv;
 		qsort(nlp, n, 12, compare);
 	fout = dup(1);
 	close(1);
-	for(i=0; i&lt;n; i++) {
-		if(gflg &amp;&amp; (nlp-&gt;typ&amp;040)==0)
+	for(i=0; i<n; i++) {
+		if(gflg && (nlp->typ&040)==0)
 			goto out;
 		if(cflg) {
-			if(nlp-&gt;name[0] != &#39;_&#39;)
+			if(nlp->name[0] != '_')
 				goto out;
-			for(j=0; j&lt;7; j++)
-				nlp-&gt;name[j] = nlp-&gt;name[j+1];
-			nlp-&gt;name[7] = &#39;\0&#39;;
+			for(j=0; j<7; j++)
+				nlp->name[j] = nlp->name[j+1];
+			nlp->name[7] = '\0';
 		}
-		j = nlp-&gt;typ&amp;037;
-		if(j &gt; 4)
+		j = nlp->typ&037;
+		if(j > 4)
 			j = 1;
-		if(j==0 &amp;&amp; nlp-&gt;val)
+		if(j==0 && nlp->val)
 			j = 5;
-		if(uflg &amp;&amp; j!=0)
+		if(uflg && j!=0)
 			goto out;
 		if(!uflg) {
 			if(j==0)
-				printf(&quot;      &quot;); else
-				printo(nlp-&gt;val);
-			printf(&quot;%c &quot;, (nlp-&gt;typ&amp;040? &quot;UATDBC&quot;:&quot;uatdbc&quot;)[j]);
+				printf("      "); else
+				printo(nlp->val);
+			printf("%c ", (nlp->typ&040? "UATDBC":"uatdbc")[j]);
 		}
-		printf(&quot;%.8s\n&quot;, nlp);
+		printf("%.8s\n", nlp);
 	out:
 		nlp++;
 	}
@@ -117,18 +117,18 @@ struct nl *p1, *p2;
 
 	a = 0;
 	if(nflg) {
-		if(p1-&gt;val &gt; p2-&gt;val) {
+		if(p1->val > p2->val) {
 			a = 1;
 			goto out;
 		}
-		if(p1-&gt;val &lt; p2-&gt;val) {
+		if(p1->val < p2->val) {
 			a = -1;
 			goto out;
 		}
 	}
-	for(i=0; i&lt;8; i++)
-	if(p1-&gt;name[i] != p2-&gt;name[i]) {
-		if(p1-&gt;name[i] &gt; p2-&gt;name[i])
+	for(i=0; i<8; i++)
+	if(p1->name[i] != p2->name[i]) {
+		if(p1->name[i] > p2->name[i])
 			a = 1; else
 			a = -1;
 		goto out;
@@ -141,9 +141,9 @@ printo(v)
 {
 	int i;
 
-	printf(&quot;%c&quot;, v&lt;0?&#39;1&#39;:&#39;0&#39;);
-	for(i=0; i&lt;5; i++) {
-		printf(&quot;%c&quot;, ((v&gt;&gt;12)&amp;7)+&#39;0&#39;);
-		v =&lt;&lt;3;
+	printf("%c", v<0?'1':'0');
+	for(i=0; i<5; i++) {
+		printf("%c", ((v>>12)&7)+'0');
+		v =<<3;
 	}
 }
